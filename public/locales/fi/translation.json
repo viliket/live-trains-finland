@@ -1,0 +1,25 @@
+{
+  "title": "Junien aikataulut ja sijainnit | Junaan.fi",
+  "choosewhichstation": "Valitse haluamasi asema",
+  "choosestation": "Valitse asema",
+  "search_station_by_name": "Hae asemaa nimellä",
+  "search_station_by_name_placeholder": "Esim. Pasila tai Turenki",
+  "train": "Juna",
+  "train_details": "Junan tiedot",
+  "destination": "Määränpää",
+  "departure": "Lähtee",
+  "departures": "Lähtevät",
+  "arrival": "Saapuu",
+  "arrivals": "Saapuvat",
+  "track": "Raide",
+  "station": "Asema",
+  "canceled": "Peruttu",
+  "page_not_found": "Etsimääsi sivua ei löytynyt.",
+  "train_current_composition": "Nykyinen kokoonpano",
+  "train_composition_change_from_to_station_text": "Nämä junayksiköt jatkavat asemalta {{from}} asemalle {{to}}",
+  "home": {
+    "title": "Junien aikataulut, sijainnit, ja kokoonpanot reaaliajassa",
+    "welcome_text": "Tässä palvelussa voit katsoa junien aikatauluja ja sijainteja kartalla reaaliaikaisesti. Tietolähteet: Fintraffic, Digitraffic, HSL sekä Digitransit."
+  },
+  "license_text": "Liikennetietojen lähde <1>Fintraffic</1> / <3>Digitraffic</3> sekä <5>Helsingin seudun liikenne</5> / <7>Digitransit</7>, <9>CC BY 4.0</9>"
+}

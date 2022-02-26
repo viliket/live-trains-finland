@@ -1,0 +1,12 @@
+fragment RouteForRail on Route {
+  gtfsId
+  shortName
+  longName
+  patterns {
+    headsign
+    geometry {
+      lat
+      lon
+    }
+  }
+}

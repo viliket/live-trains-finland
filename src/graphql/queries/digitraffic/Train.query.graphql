@@ -1,0 +1,5 @@
+query Train($trainNumber: Int!, $departureDate: Date!) {
+  train(trainNumber: $trainNumber, departureDate: $departureDate) {
+    ...TrainDetails
+  }
+}

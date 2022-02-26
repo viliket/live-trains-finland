@@ -1,0 +1,5 @@
+query Station {
+  stations(where: { passengerTraffic: { equals: true } }) {
+    ...StationSummary
+  }
+}

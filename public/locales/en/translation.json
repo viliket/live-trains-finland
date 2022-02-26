@@ -1,0 +1,25 @@
+{
+  "title": "Train schedules and locations in Finland | Junaan.fi",
+  "choosewhichstation": "Which station do you want to view?",
+  "choosestation": "Choose a station",
+  "search_station_by_name": "Search station by name",
+  "search_station_by_name_placeholder": "E.g. Pasila or Turenki",
+  "train": "Train",
+  "train_details": "Train details",
+  "destination": "Destination",
+  "departure": "Departure",
+  "departures": "Departures",
+  "arrival": "Arrival",
+  "arrivals": "Arrivals",
+  "track": "Track",
+  "station": "Station",
+  "canceled": "Canceled",
+  "page_not_found": "Page could not be found.",
+  "train_current_composition": "Current composition",
+  "train_composition_change_from_to_station_text": "These train units continue from {{from}} to {{to}}",
+  "home": {
+    "title": "Train schedules, locations, and compositions in real-time",
+    "welcome_text": "Using this service you can check train schedules and trains' real-time locations. The data is provided by the open APIs by Fintraffic, Digitraffic, HSL, and Digitransit."
+  },
+  "license_text": "Traffic data source <1>Fintraffic</1> / <3>Digitraffic</3> and <5>Helsinki regional traffic</5> / <7>Digitransit</7>, <9>CC BY 4.0</9>"
+}

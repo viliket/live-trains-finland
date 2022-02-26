@@ -1,38 +1,37 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+:not(.leaflet-zoom-anim) .leaflet-zoom-animated.leaflet-marker-icon {
+  transition: transform 0.7s ease-in-out;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+:not(.leaflet-zoom-anim) .leaflet-zoom-animated.leaflet-popup {
+  transition: transform 0.7s ease-in-out;
+}
+
+.leaflet-zoom-anim .leaflet-zoom-animated.leaflet-marker-icon,
+.leaflet-zoom-anim .leaflet-zoom-animated.leaflet-popup {
+  transition: transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+}
+
+.leaflet-marker-icon > div {
+  width: inherit;
+  height: inherit;
+}
+
+.leaflet-control-attribution,
+.leaflet-control-attribution a {
+  color: #666;
+}
+
+.dark .leaflet-container .leaflet-control-attribution {
+  background: rgba(55, 55, 55, 0.7);
+}
+
+.dark .leaflet-control-attribution,
+.dark .leaflet-control-attribution a {
+  color: #818181;
 }

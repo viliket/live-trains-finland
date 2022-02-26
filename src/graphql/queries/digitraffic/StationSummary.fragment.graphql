@@ -1,0 +1,4 @@
+fragment StationSummary on Station {
+  name
+  shortCode
+}

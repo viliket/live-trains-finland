@@ -1,0 +1,17 @@
+overwrite: true
+schema:
+  - https://rata.digitraffic.fi/api/v2/graphql/graphql
+  - src/graphql/queries/digitraffic/client-schema.graphql
+documents: src/graphql/queries/digitraffic/**/*.graphql
+generates:
+  src/graphql/generated/digitraffic.tsx:
+    plugins:
+      - add:
+          content: '/* eslint-disable */'
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      scalars:
+        Date: string
+        DateTime: string

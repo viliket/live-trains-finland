@@ -1,0 +1,21 @@
+fragment TrainByStation on Train {
+  commuterLineid
+  runningCurrently
+  trainNumber
+  trainType {
+    name
+    trainCategory {
+      name
+    }
+  }
+  timeTableRows(where: { and: [{ trainStopping: { equals: true } }] }) {
+    ...TrainTimeTableRow
+  }
+  operator {
+    shortCode
+    uicCode
+  }
+  trainType {
+    name
+  }
+}

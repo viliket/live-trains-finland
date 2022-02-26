@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+
+import { ApolloProvider } from '@apollo/client';
+import { CircularProgress } from '@mui/material';
 import ReactDOM from 'react-dom';
+
 import './index.css';
 import App from './App';
+import { client } from './graphql/client';
+import './i18n';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <Suspense
+        fallback={
+          <CircularProgress
+            sx={{ position: 'absolute', top: '50%', left: '50%' }}
+          />
+        }
+      >
+        <App />
+      </Suspense>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

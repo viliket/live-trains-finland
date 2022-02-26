@@ -1,0 +1,7 @@
+type Locomotive {
+  vehicleId: Int
+}
+
+type Wagon {
+  vehicleId: Int
+}

@@ -1,0 +1,95 @@
+fragment TrainDetails on Train {
+  trainNumber
+  runningCurrently
+  operator {
+    name
+  }
+  commuterLineid
+  trainType {
+    name
+    trainCategory {
+      name
+    }
+  }
+  operator {
+    shortCode
+    uicCode
+  }
+  compositions {
+    journeySections {
+      startTimeTableRow {
+        scheduledTime
+        liveEstimateTime
+        actualTime
+        station {
+          name
+        }
+      }
+      endTimeTableRow {
+        scheduledTime
+        liveEstimateTime
+        actualTime
+        station {
+          name
+        }
+      }
+      maximumSpeed
+      totalLength
+      locomotives {
+        vehicleNumber
+        powerTypeAbbreviation
+        locomotiveType
+        location
+        vehicleId @client
+      }
+      wagons {
+        vehicleNumber
+        salesNumber
+        wagonType
+        location
+        length
+        playground
+        pet
+        catering
+        video
+        luggage
+        smoking
+        disabled
+        vehicleId @client
+      }
+    }
+  }
+  timeTableRows(where: { and: [{ trainStopping: { equals: true } }] }) {
+    ...TrainTimeTableRow
+  }
+}
+
+fragment TrainTimeTableRow on TimeTableRow {
+  trainStopping
+  scheduledTime
+  liveEstimateTime
+  actualTime
+  differenceInMinutes
+  unknownDelay
+  cancelled
+  causes {
+    categoryCode {
+      code
+      name
+    }
+    detailedCategoryCode {
+      name
+      code
+    }
+    thirdCategoryCode {
+      name
+      code
+    }
+  }
+  type
+  station {
+    name
+    shortCode
+  }
+  commercialTrack
+}
