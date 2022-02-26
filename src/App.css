@@ -27,6 +27,14 @@
   color: #666;
 }
 
+.dark .leaflet-container .leaflet-layer:first-of-type {
+  filter: invert(1);
+}
+
+.dark .leaflet-container .leaflet-layer:nth-of-type(2) {
+  filter: invert(1);
+}
+
 .dark .leaflet-container .leaflet-control-attribution {
   background: rgba(55, 55, 55, 0.7);
 }

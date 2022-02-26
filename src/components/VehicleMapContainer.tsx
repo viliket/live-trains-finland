@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useTheme } from '@mui/material';
-import { Map as LMap, TileLayer as LeafletTileLayer } from 'leaflet';
+import { Map as LMap } from 'leaflet';
 import {
   AttributionControl,
   CircleMarker,
@@ -24,10 +24,8 @@ type VehicleMapContainerProps = {
   onVehicleSelected: (vehicleId: number) => void;
 };
 
-const tileLayerUrl = {
-  light: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
-  dark: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
-};
+const tileLayerUrl =
+  'https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png';
 
 const VehicleMapContainer = ({
   selectedVehicleId,
@@ -38,21 +36,12 @@ const VehicleMapContainer = ({
 }: VehicleMapContainerProps) => {
   const [map, setMap] = useState<LMap | null>(null);
   const theme = useTheme();
-  const baseTileLayerRef = useRef<LeafletTileLayer | null>(null);
 
   useEffect(() => {
     if (map && station) {
       map.panTo({ lat: station.latitude, lng: station.longitude });
     }
   }, [map, station]);
-
-  useEffect(() => {
-    if (baseTileLayerRef.current) {
-      baseTileLayerRef.current.setUrl(
-        theme.palette.mode === 'light' ? tileLayerUrl.light : tileLayerUrl.dark
-      );
-    }
-  }, [map?.attributionControl, theme.palette.mode]);
 
   return (
     <MapContainer
@@ -66,16 +55,11 @@ const VehicleMapContainer = ({
       }}
     >
       <TileLayer
-        ref={baseTileLayerRef}
-        url={
-          theme.palette.mode === 'light'
-            ? tileLayerUrl.light
-            : tileLayerUrl.dark
-        }
+        url={tileLayerUrl}
         id="hsl-map"
         attribution={
           '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, ' +
-          '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
+          '&copy; <a href="http://stamen.com">Stamen Design</a>'
         }
       />
       <TileLayer
