@@ -72,8 +72,8 @@ export default function getTrainCompositionDetailsForStation(
   if (!prevWagons.length || !nextWagons.length) return null;
 
   const commonWagons = longestCommonSubsequence(
-    prevWagons as Wagon[],
     nextWagons as Wagon[],
+    prevWagons as Wagon[],
     (w: Wagon) => w.vehicleNumber ?? w.salesNumber.toString()
   );
 
