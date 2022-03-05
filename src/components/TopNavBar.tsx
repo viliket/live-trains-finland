@@ -8,6 +8,7 @@ import { Brightness7, Brightness3 } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { ReactComponent as Icon } from '../icon.svg';
 import { ReactComponent as Logo } from '../logo.svg';
 
 const lngs: Record<string, { shortCode: string }> = {
@@ -39,7 +40,11 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
         <Toolbar>
           <Typography
             variant="h6"
-            sx={{ marginRight: 'auto', display: 'inline-flex' }}
+            sx={{
+              marginRight: 'auto',
+              display: 'inline-flex',
+              alignItems: 'center',
+            }}
             component={Link}
             color="inherit"
             style={{ textDecoration: 'none' }}
@@ -48,12 +53,14 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
             <Box
               sx={(theme) => ({
                 height: '2rem',
+                display: 'flex',
                 color:
                   theme.palette.mode === 'light'
                     ? 'primary.main'
                     : theme.palette.grey[300],
               })}
             >
+              <Icon />
               <Logo />
             </Box>
             &nbsp;
