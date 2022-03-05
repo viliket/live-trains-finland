@@ -15,7 +15,14 @@ function Footer() {
       }}
     >
       <Typography variant="body2" gutterBottom>
-        © Copyright Vili Ketonen 2022,{' '}
+        <Link
+          href="https://github.com/viliket/live-trains-finland"
+          underline="none"
+          color="inherit"
+        >
+          © Copyright Junaan.fi 2022
+        </Link>
+        ,{' '}
         <Link href="https://www.gnu.org/licenses/gpl-3.0.html" color="inherit">
           GPL-3.0
         </Link>
