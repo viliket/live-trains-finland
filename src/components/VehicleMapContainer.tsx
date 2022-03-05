@@ -63,7 +63,7 @@ const VehicleMapContainer = ({
         }
       />
       <TileLayer
-        url="http://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png"
+        url="https://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png"
         id="openrailway-map"
         attribution='&copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a>'
       />
