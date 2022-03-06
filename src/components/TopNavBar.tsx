@@ -60,7 +60,7 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
                     : theme.palette.grey[300],
               })}
             >
-              <Icon />
+              <Icon style={{ marginRight: '4px' }} />
               <Logo />
             </Box>
             &nbsp;
