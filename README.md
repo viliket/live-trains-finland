@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/62a70830-6ab5-4a0e-9299-ed99b72b67a0/deploy-status)](https://app.netlify.com/sites/junaan/deploys)
+
 # Junaan.fi
 
 A web application made with React that allows checking real-time train schedules, locations, and compositions of trains in Finland. The app uses open APIs provided by Fintraffic / Digitraffic and HSL / Digitransit.
