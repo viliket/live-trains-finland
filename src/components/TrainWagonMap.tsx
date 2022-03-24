@@ -38,6 +38,10 @@ const StyledReactSVG = styled(ReactSVG)`
     transform-box: fill-box;
   }
 
+  svg.vr-wagon g#Seats g[transform^='matrix(-1'] g path {
+    transform: scaleX(-1) rotate(-90deg);
+  }
+
   svg.vr-wagon g#Service-badges g g path {
     transform: rotate(-90deg);
     transform-origin: center;
