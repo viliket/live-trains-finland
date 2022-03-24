@@ -2,7 +2,7 @@
 
 A web application made with React that allows checking real-time train schedules, locations, and compositions of trains in Finland. The app uses open APIs provided by Fintraffic / Digitraffic and HSL / Digitransit.
 
-Live version running at [junaan.fi](junaan.fi).
+Live version running at [junaan.fi](https://junaan.fi).
 
 ## Development
 
