@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import StationTimeTable from '../components/StationTimeTable';
 import SubNavBar from '../components/SubNavBar';
 import VehicleMapContainer from '../components/VehicleMapContainer';
-import { digiTrafficClient, vehiclesVar } from '../graphql/client';
+import { gqlClients, vehiclesVar } from '../graphql/client';
 import {
   TimeTableRowType,
   TrainByStationFragment,
@@ -57,7 +57,7 @@ const Station = () => {
           arrivingTrains: 100,
           arrivedTrains: 0,
         },
-        context: { clientName: digiTrafficClient },
+        context: { clientName: gqlClients.digitraffic },
       });
     }
   }, [stationCode, timeTableType, getTrainsByStation]);

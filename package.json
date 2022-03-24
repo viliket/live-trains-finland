@@ -37,6 +37,7 @@
     "react-move": "^6.5.0",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^4.0.3",
+    "react-svg": "^14.1.14",
     "typescript": "^4.5.5",
     "web-vitals": "^1.1.2"
   },

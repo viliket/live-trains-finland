@@ -6,7 +6,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import TrainInfoContainer from '../components/TrainInfoContainer';
 import TrainSubNavBar from '../components/TrainSubNavBar';
 import VehicleMapContainer from '../components/VehicleMapContainer';
-import { digiTrafficClient } from '../graphql/client';
+import { gqlClients } from '../graphql/client';
 import { useTrainLazyQuery } from '../graphql/generated/digitraffic';
 import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
@@ -39,7 +39,7 @@ const Train = () => {
           trainNumber: trainNumberInt,
           departureDate: departureDate,
         },
-        context: { clientName: digiTrafficClient },
+        context: { clientName: gqlClients.digitraffic },
       });
     }
   }, [trainNumber, departureDate, getTrain]);

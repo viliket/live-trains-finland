@@ -1,14 +1,17 @@
+import { useState } from 'react';
+
 import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
 import { Box, Grid } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 
-import { digiTrafficClient } from '../graphql/client';
+import { gqlClients } from '../graphql/client';
 import {
   TimeTableRowType,
   TrainByStationFragment,
   TrainTimeTableRowFragment,
   useTrainQuery,
+  Wagon,
 } from '../graphql/generated/digitraffic';
 import getTrainCurrentStation from '../utils/getTrainCurrentStation';
 import getTrainLatestArrivalRow from '../utils/getTrainLatestArrivalRow';
@@ -21,6 +24,7 @@ import {
 import TimelineRouteStopSeparator from './TimelineRouteStopSeparator';
 import TimeTableRowTime from './TimeTableRowTime';
 import TrainComposition from './TrainComposition';
+import TrainWagonDetailsDialog from './TrainWagonDetailsDialog';
 
 type TrainInfoContainerProps = {
   train: TrainByStationFragment;
@@ -28,6 +32,8 @@ type TrainInfoContainerProps = {
 
 function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const { t } = useTranslation();
+  const [wagonDialogOpen, setWagonDialogOpen] = useState(false);
+  const [selectedWagon, setSelectedWagon] = useState<Wagon | null>(null);
   const departureDate = getTrainScheduledDepartureTime(train);
   const { error, data: realTimeData } = useTrainQuery(
     departureDate
@@ -36,13 +42,22 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
             trainNumber: train.trainNumber,
             departureDate: format(departureDate, 'yyyy-MM-dd'),
           },
-          context: { clientName: digiTrafficClient },
+          context: { clientName: gqlClients.digitraffic },
           pollInterval: 10000,
         }
       : { skip: true }
   );
 
   const realTimeTrain = realTimeData?.train?.[0];
+
+  const handleWagonDialogClose = () => {
+    setWagonDialogOpen(false);
+  };
+
+  const handleWagonClick = (w: Wagon | null | undefined) => {
+    setSelectedWagon(w ?? null);
+    setWagonDialogOpen(true);
+  };
 
   const getStops = () => {
     const trainCurrentStation = getTrainCurrentStation(train);
@@ -128,6 +143,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
                     <TrainComposition
                       train={realTimeTrain}
                       stationName={station.name}
+                      onWagonClick={handleWagonClick}
                     />
                   </div>
                 )}
@@ -150,7 +166,12 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
           paddingTop: 2,
         }}
       >
-        {realTimeTrain && <TrainComposition train={realTimeTrain} />}
+        {realTimeTrain && (
+          <TrainComposition
+            train={realTimeTrain}
+            onWagonClick={handleWagonClick}
+          />
+        )}
       </Box>
       <Timeline>
         <TimelineItem
@@ -192,6 +213,12 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         </TimelineItem>
         {getStops()}
       </Timeline>
+      <TrainWagonDetailsDialog
+        train={train}
+        selectedWagon={selectedWagon}
+        open={wagonDialogOpen}
+        onClose={handleWagonDialogClose}
+      />
     </>
   );
 }

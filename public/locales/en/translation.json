@@ -17,6 +17,12 @@
   "page_not_found": "Page could not be found.",
   "train_current_composition": "Current composition",
   "train_composition_change_from_to_station_text": "These train units continue from {{from}} to {{to}}",
+  "train_composition": "Train composition",
+  "wagon_class": "Class",
+  "train_unit": "Train unit",
+  "wagon": "Wagon",
+  "upstairs": "Upstairs",
+  "downstairs": "Downstairs",
   "home": {
     "title": "Train schedules, locations, and compositions in real-time",
     "welcome_text": "Using this service you can check train schedules and trains' real-time locations. The data is provided by the open APIs by Fintraffic, Digitraffic, HSL, and Digitransit."

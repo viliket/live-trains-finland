@@ -13,16 +13,25 @@ import { VehicleDetails } from '../types/vehicles';
  */
 export const vehiclesVar = makeVar<Record<number, VehicleDetails>>({});
 
-export const digiTrafficClient = 'digitraffic';
+export const gqlClients = {
+  digitraffic: 'digitraffic',
+  digitransit: 'digitransit',
+  vr: 'vr',
+};
 
 // Digitransit: HSL
 const digitransitLink = new HttpLink({
   uri: 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql',
 });
 
-// Digitraffic: VR
+// Digitraffic / Fintraffic
 const digitrafficLink = new HttpLink({
   uri: 'https://rata.digitraffic.fi/api/v2/graphql/graphql',
+});
+
+// VR
+const vrLink = new HttpLink({
+  uri: 'https://www.vr.fi/api/v4',
 });
 
 /**
@@ -104,9 +113,13 @@ const getTrainVehicleIdFromTrainEuropeanVehicleNumber = (
 
 export const client = new ApolloClient({
   link: ApolloLink.split(
-    (operation) => operation.getContext().clientName === digiTrafficClient,
+    (operation) => operation.getContext().clientName === gqlClients.digitraffic,
     digitrafficLink,
-    digitransitLink
+    ApolloLink.split(
+      (operation) => operation.getContext().clientName === gqlClients.vr,
+      vrLink,
+      digitransitLink
+    )
   ),
   cache: new InMemoryCache({
     typePolicies: {

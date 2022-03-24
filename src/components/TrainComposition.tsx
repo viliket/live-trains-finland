@@ -25,9 +25,14 @@ import TrainWagonSm5 from './TrainWagonSm5';
 type TrainCompositionProps = {
   train: TrainDetailsFragment;
   stationName?: string;
+  onWagonClick: (w: Wagon | null | undefined) => void;
 };
 
-function TrainComposition({ train, stationName }: TrainCompositionProps) {
+function TrainComposition({
+  train,
+  stationName,
+  onWagonClick,
+}: TrainCompositionProps) {
   const vehicles = useReactiveVar(vehiclesVar);
   const { t } = useTranslation();
 
@@ -166,6 +171,7 @@ function TrainComposition({ train, stationName }: TrainCompositionProps) {
           orderBy(wagons, (w) => w?.location, 'desc').map((w, i) => (
             <span
               key={w?.location}
+              onClick={(e) => onWagonClick(w)}
               style={{
                 display: 'inline-flex',
                 flexDirection: 'column',
@@ -177,6 +183,7 @@ function TrainComposition({ train, stationName }: TrainCompositionProps) {
                     : '2rem'
                   : getWagonElementWidth(getWagonType(w?.wagonType)),
                 borderBottom: '2px solid transparent',
+                cursor: 'pointer',
               }}
             >
               <span>
