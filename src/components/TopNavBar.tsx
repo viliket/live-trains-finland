@@ -76,7 +76,7 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
               sx={{
                 mr: 1,
                 minWidth: 'auto',
-                fontWeight: i18n.language === lng ? 'bold' : 'normal',
+                fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal',
               }}
               type="submit"
               onClick={() => i18n.changeLanguage(lng)}

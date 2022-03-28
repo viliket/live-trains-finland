@@ -30,9 +30,9 @@ function App() {
         {
           ...(isDarkMode ? darkTheme : lightTheme),
         },
-        i18n.language === 'fi' ? fiFI : enUS
+        i18n.resolvedLanguage === 'fi' ? fiFI : enUS
       ),
-    [isDarkMode, i18n.language]
+    [isDarkMode, i18n.resolvedLanguage]
   );
 
   const toggleDarkMode = () => {
