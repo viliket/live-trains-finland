@@ -53,7 +53,8 @@ const updateWagonMapPlaceReservations = (
             if (seatNoEl) {
               seatNoEl.style.fill = 'white';
             }
-            const seatLineEl = seatEl.querySelector<HTMLElement>('#Line');
+            const seatLineEl =
+              seatEl.querySelector<HTMLElement>(`path[id^="Line"]`);
             if (seatLineEl) {
               seatLineEl.style.stroke = 'white';
             }
@@ -68,7 +69,7 @@ const updateWagonMapPlaceReservations = (
             let bedNoEl = document.getElementById('bednumber_' + p.number);
             if (!bedNoEl) {
               bedNoEl = document.querySelector<HTMLElement>(
-                `[id^="bednumber_${p.number}-"]`
+                `path[id^="bednumber_${p.number}-"]`
               );
             }
             if (bedNoEl) {

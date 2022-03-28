@@ -38,6 +38,14 @@ const StyledReactSVG = styled(ReactSVG)`
     transform-box: fill-box;
   }
 
+  svg.vr-wagon g#Seats g[transform^='rotate(90'] g path {
+    transform: rotate(180deg);
+  }
+
+  svg.vr-wagon g#Seats g[transform^='rotate(-90'] g path {
+    transform: rotate(0deg);
+  }
+
   svg.vr-wagon g#Seats g[transform^='matrix(-1'] g path {
     transform: scaleX(-1) rotate(-90deg);
   }
