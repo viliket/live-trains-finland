@@ -1,6 +1,5 @@
 import { useReactiveVar } from '@apollo/client';
 import {
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -45,7 +44,7 @@ function StationTimeTable({
   };
 
   return (
-    <TableContainer component={Paper} elevation={0}>
+    <TableContainer sx={{ overflow: 'initial' }}>
       <Table
         size="medium"
         aria-label={
@@ -53,6 +52,12 @@ function StationTimeTable({
             ? t('departure')
             : t('arrival')
         }
+        stickyHeader
+        sx={{
+          'thead tr th': {
+            top: '3.5rem',
+          },
+        }}
       >
         <TableHead>
           <TableRow>
