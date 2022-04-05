@@ -18,6 +18,7 @@ import {
 } from '../graphql/generated/digitraffic';
 import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
+import { isDefined } from '../utils/common';
 import getRouteForTrain from '../utils/getRouteForTrain';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
@@ -38,7 +39,7 @@ const Station = () => {
   const [getTrainsByStation, { loading, error, data, called }] =
     useTrainsByStationLazyQuery();
   const [executeRouteSearch, { data: routeData }] = useRoutesForRailLazyQuery();
-  useTrainLiveTracking(data?.trainsByStationAndQuantity);
+  useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
 
   const station = stationName
     ? trainStations.find(

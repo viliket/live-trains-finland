@@ -6,10 +6,11 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import TrainInfoContainer from '../components/TrainInfoContainer';
 import TrainSubNavBar from '../components/TrainSubNavBar';
 import VehicleMapContainer from '../components/VehicleMapContainer';
-import { gqlClients } from '../graphql/client';
+import { gqlClients, vehiclesVar } from '../graphql/client';
 import { useTrainLazyQuery } from '../graphql/generated/digitraffic';
 import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
+import { isDefined } from '../utils/common';
 import getHeadTrainVehicleId from '../utils/getHeadTrainVehicleId';
 import getRouteForTrain from '../utils/getRouteForTrain';
 import { trainStations } from '../utils/stations';
@@ -44,7 +45,19 @@ const Train = () => {
     }
   }, [trainNumber, departureDate, getTrain]);
 
-  useTrainLiveTracking(trainData?.train);
+  useEffect(() => {
+    // Stop tracking any already tracked vehicles except current train
+    const vehicles = vehiclesVar();
+    Object.keys(vehicles).forEach((v) => {
+      const vId = Number.parseInt(v, 10);
+      if (vehicles[vId].jrn?.toString() !== trainNumber) {
+        delete vehicles[vId];
+      }
+    });
+    vehiclesVar(vehicles);
+  }, [trainNumber]);
+
+  useTrainLiveTracking(trainData?.train?.filter(isDefined));
 
   const train = trainData?.train?.[0];
   const stationCode = searchParams.get('station');
