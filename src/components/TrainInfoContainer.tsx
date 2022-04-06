@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
 import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
-import { Box, Grid } from '@mui/material';
+import { Box, Link, Grid } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { gqlClients } from '../graphql/client';
 import {
@@ -126,7 +127,14 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
               })}
             >
               <Grid item xs={4}>
-                {getTrainStationName(station)}
+                <Link
+                  component={RouterLink}
+                  to={`/${getTrainStationName(station)}`}
+                  color="inherit"
+                  underline="none"
+                >
+                  {getTrainStationName(station)}
+                </Link>
               </Grid>
               <Grid item xs={3}>
                 {g.arrival ? <TimeTableRowTime row={g.arrival} /> : '-'}

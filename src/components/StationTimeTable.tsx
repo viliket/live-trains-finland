@@ -1,5 +1,6 @@
 import { useReactiveVar } from '@apollo/client';
 import {
+  Link,
   Table,
   TableBody,
   TableCell,
@@ -10,6 +11,7 @@ import {
 import { parseISO } from 'date-fns';
 import { MapMarkerOff, MapMarkerCheck } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { vehiclesVar } from '../graphql/client';
 import {
@@ -42,6 +44,8 @@ function StationTimeTable({
       Object.values(vehicles).find((v) => v.jrn === trainNumber) ?? undefined;
     return vehicle;
   };
+
+  const handleStationClick = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
     <TableContainer sx={{ overflow: 'initial' }}>
@@ -112,7 +116,17 @@ function StationTimeTable({
                       : trn.trainType.name + trn.trainNumber}{' '}
                   </span>
                 </TableCell>
-                <TableCell>{destinationStationName}</TableCell>
+                <TableCell>
+                  <Link
+                    component={RouterLink}
+                    to={`/${destinationStationName}`}
+                    color="inherit"
+                    underline="none"
+                    onClick={handleStationClick}
+                  >
+                    {destinationStationName}
+                  </Link>
+                </TableCell>
                 <TableCell align="center">
                   {stationRow ? <TimeTableRowTime row={stationRow} /> : '?'}
                 </TableCell>
