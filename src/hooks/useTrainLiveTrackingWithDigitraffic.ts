@@ -87,15 +87,18 @@ function useTrainLiveTrackingWithDigitraffic(
   const subscribedTopics = useRef(new Set<string>());
 
   useEffect(() => {
-    if (client) {
-      const callback = (_topic: string, message: Buffer) =>
-        handleTrainLocationMessage(message, trains);
-      client.on('message', callback);
+    const callback = (_topic: string, message: Buffer) =>
+      handleTrainLocationMessage(message, trains);
 
-      return function cleanup() {
-        client.off('message', callback);
-      };
+    if (client) {
+      client.on('message', callback);
     }
+
+    return () => {
+      if (client) {
+        client.off('message', callback);
+      }
+    };
   }, [client, trains]);
 
   useEffect(() => {

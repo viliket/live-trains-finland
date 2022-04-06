@@ -18,7 +18,7 @@ const useMqttClient = (brokerUrl: string, opts?: mqtt.IClientOptions) => {
       setError(err);
     });
 
-    return function cleanup() {
+    return () => {
       client.end(true);
     };
   }, [brokerUrl, opts]);
