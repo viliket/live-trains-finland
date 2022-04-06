@@ -124,8 +124,8 @@ const Train = () => {
               ? Array.from(
                   new Set(
                     train.timeTableRows
-                      .filter((r) => r?.station && r.station.shortCode)
-                      .map((r) => r?.station.shortCode as string)
+                      .map((r) => r?.station.shortCode)
+                      .filter(isDefined)
                   )
                 )
               : undefined

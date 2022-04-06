@@ -1,12 +1,12 @@
 import { concat, differenceBy, orderBy } from 'lodash';
 
 import { TrainDetailsFragment, Wagon } from '../graphql/generated/digitraffic';
+import getTrainJourneySectionForStation from './getTrainJourneySectionForStation';
 
-function longestCommonSubsequence<T>(
-  a: T[],
-  b: T[],
-  selector: (x: T) => keyof T | string
-) {
+/**
+ * Finds the longest common subsequence (LCS).
+ */
+function lcs<T>(a: T[], b: T[], selector: (x: T) => keyof T | string | null) {
   let m = a.length,
     n = b.length,
     C = [],
@@ -38,61 +38,40 @@ type WagonCompositionDetails = {
   status: WagonStatus;
 };
 
+const getWagonLoc = (w?: Wagon | null) => w?.salesNumber || w?.location;
+const getWagonNo = (w?: Wagon | null) =>
+  w?.vehicleNumber ?? w?.salesNumber.toString() ?? null;
+
 export default function getTrainCompositionDetailsForStation(
   stationName: string,
   train: TrainDetailsFragment
 ): WagonCompositionDetails[] | null {
-  // Note that train has only single composition for specific depature date
-  const composition = train.compositions?.[0];
-
-  const prevSection = composition?.journeySections?.find((s) =>
-    s?.endTimeTableRow?.station.name
-      .toLowerCase()
-      .includes(stationName.toLowerCase())
+  const prevSection = getTrainJourneySectionForStation(
+    train,
+    stationName,
+    'end'
   );
+  let prevWagons = orderBy(prevSection?.wagons, getWagonLoc, 'desc');
 
-  let prevWagons = orderBy(
-    prevSection?.wagons,
-    (w) => w?.salesNumber || w?.location,
-    'desc'
+  const nextSection = getTrainJourneySectionForStation(
+    train,
+    stationName,
+    'start'
   );
-
-  const nextSection = composition?.journeySections?.find((s) =>
-    s?.startTimeTableRow?.station.name
-      .toLowerCase()
-      .includes(stationName.toLowerCase())
-  );
-
-  let nextWagons = orderBy(
-    nextSection?.wagons,
-    (w) => w?.salesNumber || w?.location,
-    'desc'
-  );
+  let nextWagons = orderBy(nextSection?.wagons, getWagonLoc, 'desc');
 
   if (!prevWagons.length || !nextWagons.length) return null;
 
-  const commonWagons = longestCommonSubsequence(
-    nextWagons as Wagon[],
-    prevWagons as Wagon[],
-    (w: Wagon) => w.vehicleNumber ?? w.salesNumber.toString()
-  );
+  const commonWagons = lcs(nextWagons, prevWagons, getWagonNo);
 
-  const removedWagons = differenceBy(
-    prevWagons,
-    commonWagons,
-    (w) => w?.vehicleNumber ?? w?.salesNumber.toString()
-  ).map(
+  const removedWagons = differenceBy(prevWagons, commonWagons, getWagonNo).map(
     (w): WagonCompositionDetails => ({
       status: 'removed',
       wagon: w,
     })
   );
 
-  const addedWagons = differenceBy(
-    nextWagons,
-    commonWagons,
-    (w) => w?.vehicleNumber ?? w?.salesNumber.toString()
-  ).map(
+  const addedWagons = differenceBy(nextWagons, commonWagons, getWagonNo).map(
     (w): WagonCompositionDetails => ({
       status: 'added',
       wagon: w,

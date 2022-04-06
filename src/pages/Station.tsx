@@ -13,7 +13,6 @@ import VehicleMapContainer from '../components/VehicleMapContainer';
 import { gqlClients, vehiclesVar } from '../graphql/client';
 import {
   TimeTableRowType,
-  TrainByStationFragment,
   useTrainsByStationLazyQuery,
 } from '../graphql/generated/digitraffic';
 import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
@@ -106,9 +105,7 @@ const Station = () => {
 
   const trains = data?.trainsByStationAndQuantity
     ? orderBy(
-        data.trainsByStationAndQuantity.filter(
-          (t): t is TrainByStationFragment => t != null
-        ),
+        data.trainsByStationAndQuantity.filter(isDefined),
         (t) =>
           getTimeTableRowForStation(stationCode, t, timeTableType)
             ?.scheduledTime

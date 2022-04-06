@@ -18,6 +18,7 @@ import { vehiclesVar } from '../graphql/client';
 import { TrainDetailsFragment, Wagon } from '../graphql/generated/digitraffic';
 import getTrainCompositionDetailsForStation from '../utils/getTrainCompositionDetailsForStation';
 import getTrainCurrentJourneySection from '../utils/getTrainCurrentJourneySection';
+import getTrainJourneySectionForStation from '../utils/getTrainJourneySectionForStation';
 import { getTrainDepartureStation, getTrainStationName } from '../utils/train';
 import TrainWagonSm2And4 from './TrainWagonSm2And4';
 import TrainWagonSm5 from './TrainWagonSm5';
@@ -36,17 +37,8 @@ function TrainComposition({
   const vehicles = useReactiveVar(vehiclesVar);
   const { t } = useTranslation();
 
-  const getTrainJourneySectionForStation = (stationName: string) => {
-    const journeySection = train.compositions?.[0]?.journeySections?.find((s) =>
-      s?.startTimeTableRow?.station.name
-        .toLowerCase()
-        .includes(stationName.toLowerCase())
-    );
-    return journeySection;
-  };
-
   const journeySection = stationName
-    ? getTrainJourneySectionForStation(stationName)
+    ? getTrainJourneySectionForStation(train, stationName)
     : getTrainCurrentJourneySection(train);
   const compositionChangeDetailsForStation = stationName
     ? getTrainCompositionDetailsForStation(stationName, train)
