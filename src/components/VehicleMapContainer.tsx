@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
-
 import { useTheme } from '@mui/material';
-import { Map as LMap } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 import {
   AttributionControl,
   CircleMarker,
@@ -27,6 +25,11 @@ type VehicleMapContainerProps = {
 const tileLayerUrl =
   'https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png';
 
+const hkiStation = trainStations.find((s) => s.stationShortCode === 'HKI');
+const defaultCenter: LatLngTuple | undefined = hkiStation
+  ? [hkiStation.latitude, hkiStation.longitude]
+  : undefined;
+
 const VehicleMapContainer = ({
   selectedVehicleId,
   station,
@@ -34,25 +37,20 @@ const VehicleMapContainer = ({
   routeStationCodes,
   onVehicleSelected,
 }: VehicleMapContainerProps) => {
-  const [map, setMap] = useState<LMap | null>(null);
   const theme = useTheme();
 
-  useEffect(() => {
-    if (map && station) {
-      map.panTo({ lat: station.latitude, lng: station.longitude });
-    }
-  }, [map, station]);
+  let initialCenter = defaultCenter;
+  if (station) {
+    initialCenter = [station.latitude, station.longitude];
+  }
 
   return (
     <MapContainer
       attributionControl={false}
+      center={initialCenter}
       zoom={13}
       scrollWheelZoom={true}
       style={{ height: '100%' }}
-      whenCreated={(map) => {
-        setTimeout(() => map.invalidateSize(), 500);
-        setMap(map);
-      }}
     >
       <TileLayer
         url={tileLayerUrl}
@@ -75,7 +73,7 @@ const VehicleMapContainer = ({
       />
       {route?.patterns?.[0]?.geometry && (
         <Polyline
-          pathOptions={{ color: theme.palette.secondary.main }}
+          color={theme.palette.secondary.main}
           positions={route.patterns?.[0]?.geometry.map((p) => ({
             lat: p!.lat!,
             lng: p!.lon!,

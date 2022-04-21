@@ -127,11 +127,12 @@ export default function VehicleMarkerContainer({
             </h4>
             <Button
               variant="outlined"
-              onClick={() =>
+              onClick={(e) => {
                 navigate(
                   `/train/${message.jrn}/${format(new Date(), 'yyyy-MM-dd')}`
-                )
-              }
+                );
+                e.stopPropagation();
+              }}
             >
               {t('train_details')}
             </Button>
