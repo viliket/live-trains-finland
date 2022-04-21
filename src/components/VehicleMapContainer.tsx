@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
+
 import { useTheme } from '@mui/material';
-import { LatLngTuple } from 'leaflet';
+import { LatLngTuple, Map as LMap } from 'leaflet';
 import {
   AttributionControl,
   CircleMarker,
@@ -26,7 +28,7 @@ const tileLayerUrl =
   'https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png';
 
 const hkiStation = trainStations.find((s) => s.stationShortCode === 'HKI');
-const defaultCenter: LatLngTuple | undefined = hkiStation
+const initialCenter: LatLngTuple | undefined = hkiStation
   ? [hkiStation.latitude, hkiStation.longitude]
   : undefined;
 
@@ -37,12 +39,14 @@ const VehicleMapContainer = ({
   routeStationCodes,
   onVehicleSelected,
 }: VehicleMapContainerProps) => {
+  const [map, setMap] = useState<LMap | null>(null);
   const theme = useTheme();
 
-  let initialCenter = defaultCenter;
-  if (station) {
-    initialCenter = [station.latitude, station.longitude];
-  }
+  useEffect(() => {
+    if (map && station) {
+      map.panTo({ lat: station.latitude, lng: station.longitude });
+    }
+  }, [map, station]);
 
   return (
     <MapContainer
@@ -51,6 +55,7 @@ const VehicleMapContainer = ({
       zoom={13}
       scrollWheelZoom={true}
       style={{ height: '100%' }}
+      ref={setMap}
     >
       <TileLayer
         url={tileLayerUrl}
