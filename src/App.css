@@ -4,12 +4,20 @@
   flex-direction: column;
 }
 
-:not(.leaflet-zoom-anim) .leaflet-zoom-animated.leaflet-marker-icon {
+.leaflet-zoom-animated.leaflet-marker-icon,
+.leaflet-zoom-animated.leaflet-popup {
   transition: transform 0.7s ease-in-out;
 }
 
-:not(.leaflet-zoom-anim) .leaflet-zoom-animated.leaflet-popup {
-  transition: transform 0.7s ease-in-out;
+.leaflet-map-pane:not(.leaflet-zoom-anim)
+  .leaflet-marker-pane
+  svg.leaflet-zoom-animated[style*='scale']
+  ~ .leaflet-zoom-animated.leaflet-marker-icon,
+.leaflet-map-pane:not(.leaflet-zoom-anim)
+  .leaflet-marker-pane
+  svg.leaflet-zoom-animated[style*='scale']
+  ~ .leaflet-zoom-animated.leaflet-popup {
+  transition: transform 0.05s cubic-bezier(0, 0, 0.25, 1);
 }
 
 .leaflet-zoom-anim .leaflet-zoom-animated.leaflet-marker-icon,
