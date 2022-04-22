@@ -70,21 +70,6 @@ const VehicleMapContainer = ({
         id="openrailway-map"
         attribution='&copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a>'
       />
-      <VehicleMarkerContainer
-        selectedVehicleId={selectedVehicleId}
-        onVehicleMarkerClick={(id) => {
-          onVehicleSelected(id);
-        }}
-      />
-      {route?.patterns?.[0]?.geometry && (
-        <Polyline
-          color={theme.palette.secondary.main}
-          positions={route.patterns?.[0]?.geometry.map((p) => ({
-            lat: p!.lat!,
-            lng: p!.lon!,
-          }))}
-        />
-      )}
       {trainStations
         .filter((s) => s.passengerTraffic)
         .map((s) => (
@@ -101,11 +86,26 @@ const VehicleMapContainer = ({
               fillOpacity: 1,
             }}
             radius={5}
-            pane={'markerPane'}
+            pane="markerPane"
           >
             <Popup>{s.stationName}</Popup>
           </CircleMarker>
         ))}
+      <VehicleMarkerContainer
+        selectedVehicleId={selectedVehicleId}
+        onVehicleMarkerClick={(id) => {
+          onVehicleSelected(id);
+        }}
+      />
+      {route?.patterns?.[0]?.geometry && (
+        <Polyline
+          color={theme.palette.secondary.main}
+          positions={route.patterns?.[0]?.geometry.map((p) => ({
+            lat: p!.lat!,
+            lng: p!.lon!,
+          }))}
+        />
+      )}
       <AttributionControl prefix="" />
     </MapContainer>
   );
