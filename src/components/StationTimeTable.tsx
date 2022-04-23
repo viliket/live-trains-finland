@@ -1,4 +1,5 @@
-import { useReactiveVar } from '@apollo/client';
+import { useState } from 'react';
+
 import {
   Link,
   Table,
@@ -18,6 +19,7 @@ import {
   TimeTableRowType,
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
+import useInterval from '../hooks/useInterval';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { getTrainDestinationStationName } from '../utils/train';
 import TimeTableRowTime from './TimeTableRowTime';
@@ -35,14 +37,24 @@ function StationTimeTable({
   trains,
   tableRowOnClick,
 }: StationTimeTableProps) {
-  const vehicles = useReactiveVar(vehiclesVar);
   const { t } = useTranslation();
+  const [trackedTrains, setTrackedTrains] = useState<Record<number, number>>(
+    {}
+  );
 
-  const findVehicleForTrain = (trainNumber: number) => {
+  useInterval(() => {
+    const vehicles = Object.values(vehiclesVar());
+    setTrackedTrains(
+      vehicles.reduce(
+        (s: Record<number, number>, v) => ({ ...s, [v.jrn ?? v.veh]: v.veh }),
+        {}
+      )
+    );
+  }, 1000);
+
+  const findVehicleForTrain = (train: TrainByStationFragment) => {
     // TODO: Should also compare scheduled time as the train may appear multiple times in time table
-    const vehicle =
-      Object.values(vehicles).find((v) => v.jrn === trainNumber) ?? undefined;
-    return vehicle;
+    return trackedTrains[train.trainNumber];
   };
 
   const handleStationClick = (e: React.MouseEvent) => e.stopPropagation();
@@ -77,7 +89,7 @@ function StationTimeTable({
         </TableHead>
         <TableBody>
           {trains.map((trn) => {
-            const vehicleForTrain = findVehicleForTrain(trn.trainNumber);
+            const vehicleForTrain = findVehicleForTrain(trn);
             const destinationStationName = getTrainDestinationStationName(trn);
             const stationRow = getTimeTableRowForStation(
               stationCode,
