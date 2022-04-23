@@ -56,6 +56,7 @@ const VehicleMapContainer = ({
       scrollWheelZoom={true}
       style={{ height: '100%' }}
       ref={setMap}
+      preferCanvas
     >
       <TileLayer
         url={tileLayerUrl}
