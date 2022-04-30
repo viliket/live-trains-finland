@@ -1449,14 +1449,14 @@ export type StopAtDistanceEdge = {
   node?: Maybe<StopAtDistance>;
 };
 
-export type RouteForRailFragment = { __typename?: 'Route', gtfsId: string, shortName?: string | null | undefined, longName?: string | null | undefined, patterns?: Array<{ __typename?: 'Pattern', headsign?: string | null | undefined, geometry?: Array<{ __typename?: 'Coordinates', lat?: number | null | undefined, lon?: number | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+export type RouteForRailFragment = { __typename?: 'Route', gtfsId: string, shortName?: string | null, longName?: string | null, patterns?: Array<{ __typename?: 'Pattern', headsign?: string | null, geometry?: Array<{ __typename?: 'Coordinates', lat?: number | null, lon?: number | null } | null> | null } | null> | null };
 
 export type RoutesForRailQueryVariables = Exact<{
   name: Scalars['String'];
 }>;
 
 
-export type RoutesForRailQuery = { __typename?: 'QueryType', routes?: Array<{ __typename?: 'Route', gtfsId: string, shortName?: string | null | undefined, longName?: string | null | undefined, patterns?: Array<{ __typename?: 'Pattern', headsign?: string | null | undefined, geometry?: Array<{ __typename?: 'Coordinates', lat?: number | null | undefined, lon?: number | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+export type RoutesForRailQuery = { __typename?: 'QueryType', routes?: Array<{ __typename?: 'Route', gtfsId: string, shortName?: string | null, longName?: string | null, patterns?: Array<{ __typename?: 'Pattern', headsign?: string | null, geometry?: Array<{ __typename?: 'Coordinates', lat?: number | null, lon?: number | null } | null> | null } | null> | null } | null> | null };
 
 export const RouteForRailFragmentDoc = gql`
     fragment RouteForRail on Route {

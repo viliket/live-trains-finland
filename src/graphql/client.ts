@@ -151,6 +151,13 @@ export const client = new ApolloClient({
           },
         },
       },
+      Query: {
+        fields: {
+          trainsByStationAndQuantity: {
+            merge: false,
+          },
+        },
+      },
     },
   }),
 });
