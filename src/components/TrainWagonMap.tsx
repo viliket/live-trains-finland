@@ -103,7 +103,7 @@ const TrainWagonMap = ({
         sx={{ borderRadius: '1rem' }}
       />
     )}
-    beforeInjection={(svg: SVGSVGElement) => {
+    beforeInjection={(svg) => {
       svg.setAttribute('style', `height: ${height}px`);
       if (type === 'VR') {
         svg.classList.add('vr-wagon');
@@ -111,7 +111,7 @@ const TrainWagonMap = ({
         svg.setAttribute('viewBox', '0 0 237 1586');
       }
     }}
-    afterInjection={(error: unknown) => {
+    afterInjection={(error) => {
       if (!error) {
         onLoad();
       }
