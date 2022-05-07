@@ -13,7 +13,7 @@ import VehicleMapContainer from '../components/VehicleMapContainer';
 import { gqlClients, vehiclesVar } from '../graphql/client';
 import {
   TimeTableRowType,
-  useTrainsByStationLazyQuery,
+  useTrainsByStationQuery,
 } from '../graphql/generated/digitraffic';
 import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
@@ -35,32 +35,29 @@ const Station = () => {
     null
   );
   const [selectedTrainNo, setSelectedTrainNo] = useState<number | null>(null);
-  const [getTrainsByStation, { loading, error, data, called }] =
-    useTrainsByStationLazyQuery();
   const [executeRouteSearch, { data: routeData }] = useRoutesForRailLazyQuery();
-  useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
-
   const station = stationName
     ? trainStations.find(
         (s) => s.stationName.toUpperCase() === stationName.toUpperCase()
       )
     : undefined;
   const stationCode = station?.stationShortCode;
-
-  useEffect(() => {
-    if (stationCode) {
-      getTrainsByStation({
-        variables: {
+  const { loading, error, data } = useTrainsByStationQuery({
+    variables: stationCode
+      ? {
           station: stationCode,
           departingTrains: 100,
           departedTrains: 0,
           arrivingTrains: 100,
           arrivedTrains: 0,
-        },
-        context: { clientName: gqlClients.digitraffic },
-      });
-    }
-  }, [stationCode, timeTableType, getTrainsByStation]);
+        }
+      : undefined,
+    skip: stationCode == null,
+    context: { clientName: gqlClients.digitraffic },
+    pollInterval: 10000,
+    fetchPolicy: 'network-only',
+  });
+  useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
 
   const selectedTrain = selectedTrainNo
     ? data?.trainsByStationAndQuantity?.find(
@@ -167,7 +164,7 @@ const Station = () => {
           {t('arrivals')} <ClockEnd />
         </ToggleButton>
       </ToggleButtonGroup>
-      {called && !loading && data?.trainsByStationAndQuantity && (
+      {!loading && data?.trainsByStationAndQuantity && (
         <StationTimeTable
           stationCode={stationCode}
           timeTableType={timeTableType}
@@ -182,7 +179,7 @@ const Station = () => {
           }}
         />
       )}
-      {called && loading && getLoadingSkeleton()}
+      {loading && getLoadingSkeleton()}
       {error && (
         <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
       )}
