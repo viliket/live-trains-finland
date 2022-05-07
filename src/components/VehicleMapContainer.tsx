@@ -7,8 +7,8 @@ import {
   CircleMarker,
   MapContainer,
   Polyline,
-  Popup,
   TileLayer,
+  Tooltip,
 } from 'react-leaflet';
 
 import { RouteForRailFragment } from '../graphql/generated/digitransit';
@@ -89,7 +89,17 @@ const VehicleMapContainer = ({
             radius={5}
             pane="markerPane"
           >
-            <Popup>{s.stationName}</Popup>
+            {routeStationCodes && (
+              <Tooltip
+                direction="left"
+                offset={[-4, 0]}
+                permanent={routeStationCodes.some(
+                  (c) => c === s.stationShortCode
+                )}
+              >
+                {s.stationName}
+              </Tooltip>
+            )}
           </CircleMarker>
         ))}
       <VehicleMarkerContainer
