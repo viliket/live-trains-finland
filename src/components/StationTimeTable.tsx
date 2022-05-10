@@ -9,7 +9,6 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { parseISO } from 'date-fns';
 import { MapMarkerOff, MapMarkerCheck } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
@@ -21,7 +20,10 @@ import {
 } from '../graphql/generated/digitraffic';
 import useInterval from '../hooks/useInterval';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
-import { getTrainDestinationStationName } from '../utils/train';
+import {
+  getTrainDestinationStationName,
+  getTrainScheduledDepartureTime,
+} from '../utils/train';
 import TimeTableRowTime from './TimeTableRowTime';
 
 type StationTimeTableProps = {
@@ -91,6 +93,7 @@ function StationTimeTable({
           {trains.map((trn) => {
             const vehicleForTrain = findVehicleForTrain(trn);
             const destinationStationName = getTrainDestinationStationName(trn);
+            const departureTime = getTrainScheduledDepartureTime(trn);
             const stationRow = getTimeTableRowForStation(
               stationCode,
               trn,
@@ -102,11 +105,8 @@ function StationTimeTable({
                 key={`${trn.trainNumber}-${stationRow?.scheduledTime}`}
                 hover
                 onClick={() => {
-                  if (stationRow) {
-                    tableRowOnClick(
-                      trn.trainNumber,
-                      parseISO(stationRow.scheduledTime)
-                    );
+                  if (departureTime) {
+                    tableRowOnClick(trn.trainNumber, departureTime);
                   }
                 }}
               >
