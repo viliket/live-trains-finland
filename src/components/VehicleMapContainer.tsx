@@ -8,12 +8,12 @@ import {
   MapContainer,
   Polyline,
   TileLayer,
-  Tooltip,
 } from 'react-leaflet';
 
 import { RouteForRailFragment } from '../graphql/generated/digitransit';
 import { TrainStation } from '../utils/stations';
 import { trainStations } from '../utils/stations';
+import StationTooltip from './StationTooltip';
 import VehicleMarkerContainer from './VehicleMarkerContainer';
 
 type VehicleMapContainerProps = {
@@ -89,17 +89,16 @@ const VehicleMapContainer = ({
             radius={5}
             pane="markerPane"
           >
-            {routeStationCodes && (
-              <Tooltip
-                direction="left"
-                offset={[-4, 0]}
-                permanent={routeStationCodes.some(
-                  (c) => c === s.stationShortCode
-                )}
-              >
-                {s.stationName}
-              </Tooltip>
-            )}
+            <StationTooltip
+              direction="left"
+              offset={[-4, 0]}
+              permanent={
+                station?.stationShortCode === s.stationShortCode ||
+                routeStationCodes?.some((c) => c === s.stationShortCode)
+              }
+            >
+              {s.stationName}
+            </StationTooltip>
           </CircleMarker>
         ))}
       <VehicleMarkerContainer
