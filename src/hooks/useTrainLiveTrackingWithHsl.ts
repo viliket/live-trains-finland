@@ -123,11 +123,11 @@ function getTrainDepartureTimeForHslMqttTopic(
 
 function getTopic(train: TrainByStationFragment) {
   if (!train.commuterLineid) return null;
-  const routerId = trainCommuterLineToHSLRouteGtfsIdMap[train.commuterLineid];
+  const routeId = trainCommuterLineToHSLRouteGtfsIdMap[train.commuterLineid];
   const departureTime = getTrainDepartureTimeForHslMqttTopic(train);
   if (!departureTime) return null;
   const depTimeString = format(departureTime, 'HH:mm');
-  const topic = `/hfp/v2/journey/ongoing/vp/+/+/+/${routerId}/+/+/${depTimeString}/#`;
+  const topic = `/hfp/v2/journey/ongoing/vp/+/+/+/${routeId}/+/+/${depTimeString}/#`;
   return topic;
 }
 
