@@ -78,8 +78,8 @@ function TrainComposition({
     // Total length of train stopping area (A=200, B=160, C=160, D=200) = 720
     const stoppingAreaLength = 720;
     const standardWagonLength = 40; // Length of long distance train wagons
-    const sm2And4WagonLength = 100;
-    const sm5WagonLength = 150;
+    const sm2And4WagonLength = 158;
+    const sm5WagonLength = 236;
     let wagonLength: number;
     if (wagonType === 'Sm2' || wagonType === 'Sm4') {
       wagonLength = sm2And4WagonLength;
@@ -150,7 +150,12 @@ function TrainComposition({
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'inline-block',
+        maxWidth: '800px',
+      }}
+    >
       <div
         className="composition"
         style={{
