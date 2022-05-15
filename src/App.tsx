@@ -12,6 +12,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import './App.css';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import { TopNavBar } from './components/TopNavBar';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
@@ -43,6 +44,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
+        <ScrollToTop />
         <div className={`App ${isDarkMode ? 'dark' : ''}`}>
           <TopNavBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
           <Routes>
