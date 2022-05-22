@@ -23,6 +23,8 @@
   "wagon": "Wagon",
   "upstairs": "Upstairs",
   "downstairs": "Downstairs",
+  "reload": "Reload",
+  "update_available": "A new version of the app is available!",
   "home": {
     "title": "Train schedules, locations, and compositions in real-time",
     "welcome_text": "Using this service you can check train schedules and trains' real-time locations. The data is provided by the open APIs by Fintraffic, Digitraffic, HSL, and Digitransit."

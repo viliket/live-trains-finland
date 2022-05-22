@@ -23,6 +23,8 @@
   "wagon": "Vaunu",
   "upstairs": "Yläkerta",
   "downstairs": "Alakerta",
+  "reload": "Päivitä",
+  "update_available": "Uusi versio sovelluksesta saatavilla!",
   "home": {
     "title": "Junien aikataulut, sijainnit, ja kokoonpanot reaaliajassa",
     "welcome_text": "Tässä palvelussa voit katsoa junien aikatauluja ja sijainteja kartalla reaaliaikaisesti. Tietolähteet: Fintraffic, Digitraffic, HSL sekä Digitransit."
