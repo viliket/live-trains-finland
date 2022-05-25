@@ -16,14 +16,15 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
 
   return (
     <Box
-      sx={{
+      sx={(theme) => ({
         display: 'flex',
         alignItems: 'center',
         position: 'sticky',
         top: 0,
         zIndex: 1001,
         backgroundColor: 'background.default',
-      }}
+        borderBottom: `solid 1px ${theme.palette.divider}`,
+      })}
     >
       <IconButton
         aria-label="back"

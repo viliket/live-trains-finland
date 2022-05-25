@@ -79,6 +79,7 @@ export function TrainWagonSm5({ doorsOpen }: TrainWagonSm5Props) {
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
+        className="door"
         transform={doorsXOffset.to((x) => `translate(${-x},0)`)}
         d="M15.362,4.424c-0.728-0.008-1.023,0.401-1.026,1.035
 		c-0.016,3.265-0.019,6.528,0.001,9.795c0.004,0.623,0.3,1.026,1.037,1.014c0.939-0.017,1.879-0.019,2.818-0.015
@@ -88,6 +89,7 @@ export function TrainWagonSm5({ doorsOpen }: TrainWagonSm5Props) {
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
+        className="door"
         transform={doorsXOffset.to((x) => `translate(${x},0)`)}
         d="M21.685,5.522c-0.006-0.751-0.33-1.086-1.042-1.09
 		c-0.816-0.004-1.633-0.005-2.45-0.004c0,3.787,0,8.173,0,11.825c0.769,0,1.539,0.005,2.309,0.005
@@ -97,6 +99,7 @@ export function TrainWagonSm5({ doorsOpen }: TrainWagonSm5Props) {
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
+        className="door"
         transform={doorsXOffset.to((x) => `translate(${-x},0)`)}
         d="M57.475,4.42c-0.728-0.007-1.023,0.402-1.026,1.036
 		c-0.017,3.265-0.019,6.528,0.001,9.796c0.004,0.622,0.3,1.024,1.037,1.013c0.939-0.017,1.879-0.019,2.819-0.016
@@ -106,6 +109,7 @@ export function TrainWagonSm5({ doorsOpen }: TrainWagonSm5Props) {
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
+        className="door"
         transform={doorsXOffset.to((x) => `translate(${x},0)`)}
         d="M63.798,5.52c-0.006-0.751-0.329-1.086-1.042-1.09
 		c-0.817-0.004-1.634-0.005-2.45-0.004c0,3.787,0,8.173,0,11.824c0.769,0.001,1.539,0.006,2.308,0.006
@@ -115,6 +119,7 @@ export function TrainWagonSm5({ doorsOpen }: TrainWagonSm5Props) {
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
+        className="door"
         transform={doorsXOffset.to((x) => `translate(${-x},0)`)}
         d="M99.328,4.424c-0.729-0.008-1.024,0.401-1.027,1.035
 		c-0.017,3.265-0.02,6.528,0.001,9.795c0.004,0.623,0.3,1.026,1.038,1.014c0.938-0.017,1.878-0.019,2.817-0.015
@@ -124,6 +129,7 @@ export function TrainWagonSm5({ doorsOpen }: TrainWagonSm5Props) {
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
+        className="door"
         transform={doorsXOffset.to((x) => `translate(${x},0)`)}
         d="M105.65,5.522c-0.006-0.751-0.33-1.086-1.042-1.09
 		c-0.817-0.004-1.635-0.005-2.451-0.004c0,3.787,0,8.173,0,11.825c0.77,0,1.54,0.005,2.309,0.005
@@ -133,6 +139,7 @@ export function TrainWagonSm5({ doorsOpen }: TrainWagonSm5Props) {
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
+        className="door"
         transform={doorsXOffset.to((x) => `translate(${-x},0)`)}
         d="M130.935,4.417c-0.729-0.008-1.024,0.402-1.027,1.035
 		c-0.017,3.264-0.019,6.529,0.001,9.795c0.004,0.623,0.3,1.026,1.037,1.015c0.939-0.017,1.879-0.019,2.818-0.016
@@ -142,6 +149,7 @@ export function TrainWagonSm5({ doorsOpen }: TrainWagonSm5Props) {
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
+        className="door"
         transform={doorsXOffset.to((x) => `translate(${x},0)`)}
         d="M137.257,5.517c-0.005-0.751-0.329-1.086-1.042-1.091
 		c-0.817-0.004-1.634-0.005-2.451-0.004c0,3.788,0,8.173,0,11.825c0.77,0.001,1.54,0.005,2.31,0.005

@@ -22,7 +22,7 @@ const lightTheme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      default: '#fdfdfd',
+      default: '#fff',
     },
     primary: {
       main: '#023a73',
@@ -30,6 +30,7 @@ const lightTheme = createTheme({
     secondary: {
       main: '#00A651',
     },
+    divider: '#eee',
   },
 });
 

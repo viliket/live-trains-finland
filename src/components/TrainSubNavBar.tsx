@@ -1,4 +1,4 @@
-import { Chip } from '@mui/material';
+import { Avatar, Chip } from '@mui/material';
 
 import { TrainDetailsFragment } from '../graphql/generated/digitraffic';
 import { useTrainSpeed } from '../hooks/useTrainSpeed';
@@ -27,10 +27,22 @@ function TrainSubNavBar({ train }: TrainSubNavBarProps) {
             <Chip
               label={
                 train?.trainType?.trainCategory?.name === 'Commuter'
-                  ? `${train.commuterLineid} ${train.trainNumber}`
+                  ? `${train.trainNumber}`
                   : `${train.trainType?.name} ${train.trainNumber}`
               }
-              variant="filled"
+              variant="outlined"
+              avatar={
+                train.commuterLineid ? (
+                  <Avatar>{train.commuterLineid}</Avatar>
+                ) : undefined
+              }
+              sx={{
+                borderColor: 'divider',
+                '& .MuiChip-avatar': {
+                  color: 'white',
+                  bgcolor: 'secondary.main',
+                },
+              }}
             />
             <span style={{ verticalAlign: 'middle', marginLeft: '1ch' }}>
               {train &&

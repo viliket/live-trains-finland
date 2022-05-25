@@ -169,10 +169,11 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
       )}
       <Box
-        sx={{
+        sx={(theme) => ({
           textAlign: 'center',
           paddingTop: 2,
-        }}
+          borderTop: `solid 1px ${theme.palette.divider}`,
+        })}
       >
         {realTimeTrain && (
           <TrainComposition
@@ -189,7 +190,9 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
             zIndex: 1002,
             backgroundColor: 'background.default',
             minHeight: 'auto',
-            marginLeft: '12px',
+            marginX: '-16px', // Negate parent padding to span whole horizontal space
+            paddingRight: '16px', // Original parent padding
+            paddingLeft: 'calc(16px + 12px)', // Original parent padding + timeline dot width
             marginBottom: '0.2rem',
             '&:before': {
               display: 'none',

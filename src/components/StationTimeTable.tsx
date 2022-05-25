@@ -71,11 +71,15 @@ function StationTimeTable({
             : t('arrival')
         }
         stickyHeader
-        sx={{
+        sx={(theme) => ({
           'thead tr th': {
             top: '3.5rem',
+            zIndex: 1002,
           },
-        }}
+          'tr td, tr th': {
+            borderBottom: `1px solid ${theme.palette.divider}`,
+          },
+        })}
       >
         <TableHead>
           <TableRow>
@@ -110,7 +114,7 @@ function StationTimeTable({
                   }
                 }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell scope="row">
                   <span
                     style={{
                       display: 'flex',

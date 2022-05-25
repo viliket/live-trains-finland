@@ -52,7 +52,7 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
           >
             <Box
               sx={(theme) => ({
-                height: '2rem',
+                height: '1.6rem',
                 display: 'flex',
                 color:
                   theme.palette.mode === 'light'
@@ -63,8 +63,6 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
               <Icon style={{ marginRight: '4px' }} />
               <Logo />
             </Box>
-            &nbsp;
-            <Chip label="Beta" size="small" variant="outlined" />
           </Typography>
           {Object.keys(lngs).map((lng) => (
             <Button
@@ -77,6 +75,7 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
                 mr: 1,
                 minWidth: 'auto',
                 fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal',
+                borderColor: 'divider',
               }}
               type="submit"
               onClick={() => i18n.changeLanguage(lng)}

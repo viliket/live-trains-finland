@@ -203,7 +203,28 @@ function TrainComposition({
                 <CarSide titleAccess="Katettu autovaunu" />
               )}
               {w?.wagonType === 'Edm' && <BunkBed titleAccess="Makuuvaunu" />}
-              {getWagonElement(w)}
+              <Box
+                sx={(theme) => ({
+                  display: 'flex',
+                  color:
+                    theme.palette.mode === 'dark'
+                      ? theme.palette.grey[200]
+                      : theme.palette.primary.main,
+                  'svg path.door': {
+                    fill:
+                      theme.palette.mode === 'dark'
+                        ? theme.palette.grey[400]
+                        : theme.palette.primary.light,
+                    stroke:
+                      theme.palette.mode === 'dark'
+                        ? theme.palette.grey[400]
+                        : theme.palette.primary.light,
+                    strokeWidth: '0.5px',
+                  },
+                })}
+              >
+                {getWagonElement(w)}
+              </Box>
             </span>
           ))}
       </div>
