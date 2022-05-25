@@ -1,4 +1,4 @@
-import { Box, Chip } from '@mui/material';
+import { Box } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
