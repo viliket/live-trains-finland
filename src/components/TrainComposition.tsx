@@ -206,6 +206,8 @@ function TrainComposition({
               <Box
                 sx={(theme) => ({
                   display: 'flex',
+                  width: '100%',
+                  justifyContent: 'center',
                   color:
                     theme.palette.mode === 'dark'
                       ? theme.palette.grey[200]
