@@ -151,7 +151,7 @@ const Station = () => {
         />
       </Box>
       <ToggleButtonGroup
-        color="secondary"
+        color="primary"
         value={timeTableType}
         exclusive
         fullWidth
