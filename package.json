@@ -50,7 +50,8 @@
     "digitransit-codegen": "graphql-codegen --config digitransit-codegen.yml",
     "digitraffic-codegen": "graphql-codegen --config digitraffic-codegen.yml",
     "gql-codegen": "npm run digitransit-codegen && npm run digitraffic-codegen",
-    "prestart": "npm run gql-codegen"
+    "prestart": "npm run gql-codegen",
+    "prepare": "is-ci || husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -70,11 +71,17 @@
     "@graphql-codegen/typescript-operations": "^2.3.5",
     "@graphql-codegen/typescript-react-apollo": "^3.2.11",
     "eslint-import-resolver-typescript": "^2.7.1",
-    "eslint-plugin-import": "^2.26.0"
+    "eslint-plugin-import": "^2.26.0",
+    "husky": "^8.0.0",
+    "is-ci": "^3.0.1",
+    "lint-staged": "^13.0.0"
   },
   "jest": {
     "transformIgnorePatterns": [
       "/node_modules/(?!react-leaflet|@react-leaflet/core)"
     ]
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --max-warnings=0 ./src"
   }
 }
