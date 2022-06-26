@@ -11,10 +11,7 @@ import {
 import { VehiclePositionMessage } from '../types/vehicles';
 import { isDefined } from '../utils/common';
 import { toKmsPerHour } from '../utils/math';
-import {
-  getTrainDepartureStation,
-  getTrainDestinationStation,
-} from '../utils/train';
+import { getTrainDestinationStation } from '../utils/train';
 import useMqttClient from './useMqttClient';
 
 const hslEndpointUrl = 'wss://mqtt.hsl.fi:443/';
@@ -99,14 +96,10 @@ function getTrainDepartureTimeForHslMqttTopic(
     (t) => t?.scheduledTime,
     'asc'
   );
-  const depStation = getTrainDepartureStation(train);
   const destStation = getTrainDestinationStation(train);
 
   let departureRow;
-  if (
-    (depStation?.shortCode === 'TPE' || depStation?.shortCode === 'HL') &&
-    destStation?.shortCode === 'HKI'
-  ) {
+  if (train.commuterLineid === 'R' && destStation?.shortCode === 'HKI') {
     // R TPE -> HKI and R HL -> HKI are actually RI -> HKI from HSL MQTT topic perspective
     // so we have to get departure time from RI station
     departureRow = orderedDepartureRows?.find(
