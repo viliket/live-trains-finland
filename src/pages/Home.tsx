@@ -1,6 +1,7 @@
 import { Box, Container, keyframes } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
+import FavoriteStationList from '../components/FavoriteStationList';
 import StationAutocomplete from '../components/StationAutocomplete';
 import TrainWagon from '../components/TrainWagon';
 import { useTime } from '../hooks/useTime';
@@ -52,11 +53,12 @@ const Home = () => {
         </Box>
       </Box>
       <Box>
-        <h1>{t('home.title')}</h1>
+        <h2>{t('home.title')}</h2>
         <p>{t('home.welcome_text')}</p>
       </Box>
       <Box>
         <StationAutocomplete />
+        <FavoriteStationList />
       </Box>
     </Container>
   );

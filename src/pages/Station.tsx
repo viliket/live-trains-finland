@@ -7,6 +7,7 @@ import { ClockStart, ClockEnd } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import FavoriteStation from '../components/FavoriteStation';
 import StationTimeTable from '../components/StationTimeTable';
 import SubNavBar from '../components/SubNavBar';
 import VehicleMapContainer from '../components/VehicleMapContainer';
@@ -126,6 +127,9 @@ const Station = () => {
     <div style={{ width: '100%' }}>
       <SubNavBar>
         <h4>{station?.stationName}</h4>
+        {station && (
+          <FavoriteStation stationShortCode={station.stationShortCode} />
+        )}
       </SubNavBar>
       <Box sx={{ height: '30vh' }}>
         <VehicleMapContainer
