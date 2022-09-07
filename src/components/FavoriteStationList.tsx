@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 
 import { Divider, List, ListItem, ListItemText } from '@mui/material';
+import { Star } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
@@ -19,7 +20,10 @@ const FavoriteStationList = () => {
 
   return (
     <div>
-      <h2>{t('favorite_stations')}</h2>
+      <h2>
+        {t('favorite_stations')}{' '}
+        <Star color="primary" sx={{ verticalAlign: 'middle' }} />
+      </h2>
       {favStations.length !== 0 && (
         <List>
           {favStations.map((station, i) => (

@@ -24,43 +24,65 @@ const Home = () => {
   const currentTime = useTime();
 
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        textAlign: 'center',
-      }}
-    >
+    <>
       <Box
-        sx={{
-          width: '60%',
-          alignSelf: 'center',
-          marginTop: '2rem',
-          borderBottomWidth: '1px',
-          borderBottomStyle: 'solid',
-          borderBottomColor: 'divider',
-        }}
+        sx={(theme) => ({
+          display: 'flex',
+          justifyContent: 'center',
+          background:
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[800],
+          boxShadow: `inset 0px -40px 0px 0px ${
+            theme.palette.mode === 'light'
+              ? theme.palette.secondary.light
+              : theme.palette.secondary.dark
+          }`,
+        })}
       >
         <Box
-          sx={{
-            animation: `${move} 8s infinite ease-in-out`,
-          }}
+          sx={(theme) => ({
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            marginY: '1rem',
+            borderBottomWidth: '5px',
+            borderBottomStyle: 'double',
+            borderBottomColor:
+              theme.palette.mode === 'light' ? 'grey.700' : 'grey.800',
+          })}
         >
-          <TrainWagon doorsOpen={currentTime.getSeconds() % 4 === 0} />
+          <Box
+            sx={{
+              maxWidth: '60%',
+              marginBottom: '-0.2rem',
+              animation: `${move} 8s infinite ease-in-out`,
+            }}
+          >
+            <TrainWagon doorsOpen={currentTime.getSeconds() % 4 === 0} />
+          </Box>
         </Box>
       </Box>
-      <Box>
-        <h2>{t('home.title')}</h2>
-        <p>{t('home.welcome_text')}</p>
-      </Box>
-      <Box>
-        <StationAutocomplete />
-        <FavoriteStationList />
-      </Box>
-    </Container>
+      <Container
+        maxWidth="md"
+        sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          textAlign: 'center',
+        }}
+      >
+        <Box>
+          <h2>{t('home.title')}</h2>
+          <p>{t('home.welcome_text')}</p>
+        </Box>
+        <Box>
+          <StationAutocomplete />
+          <FavoriteStationList />
+        </Box>
+      </Container>
+    </>
   );
 };
 
