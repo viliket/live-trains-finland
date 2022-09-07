@@ -15,7 +15,7 @@ import {
   TrainByStationFragment,
   Wagon,
 } from '../graphql/generated/digitraffic';
-import { useTrainInfoQuery, WagonInfo } from '../graphql/queries/vr';
+import { useWagonMapDataQuery, WagonInfo } from '../graphql/queries/vr';
 import {
   getTrainDepartureStation,
   getTrainDestinationStation,
@@ -89,28 +89,22 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
   const departureDate = getTrainScheduledDepartureTime(train);
   const departureStation = getTrainDepartureStation(train)?.shortCode;
   const destinationStation = getTrainDestinationStation(train)?.shortCode;
-  const { data: trainData } = useTrainInfoQuery(
+  const { data: wagonMapData } = useWagonMapDataQuery(
     departureDate && departureStation && destinationStation
       ? {
           variables: {
-            legs: [
-              {
-                trainNumber: train.trainNumber.toString(),
-                departureTime: departureDate.toISOString(),
-                departureStation: departureStation,
-                arrivalStation: destinationStation,
-              },
-            ],
+            departureStation: departureStation,
+            arrivalStation: destinationStation,
+            departureTime: departureDate.toISOString(),
+            trainNumber: train.trainNumber.toString(),
+            trainType: train.trainType.name,
           },
           context: { clientName: gqlClients.vr },
         }
       : { skip: true }
   );
 
-  const coaches = trainData?.trainInfoForLegs?.[0]?.wagonMap.coaches;
-  const wagons: Record<string, WagonInfo> | undefined = coaches
-    ? JSON.parse(coaches)
-    : undefined;
+  const wagons = wagonMapData?.wagonMapData;
 
   useEffect(() => {
     if (wagons && selectedWagon) {

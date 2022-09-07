@@ -27,53 +27,42 @@ export type WagonInfo = {
   servicesDown: string[];
 };
 
-type WagonMap = {
-  /** Record<string, WagonInfo> serialized as JSON string */
-  coaches: string;
+type WagonMapData = {
+  wagonMapData: Record<string, WagonInfo>;
 };
 
-type TrainInfoForLeg = {
-  id: string;
-  wagonMap: WagonMap;
-};
-
-type TrainInfoData = {
-  trainInfoForLegs: TrainInfoForLeg[];
-};
-
-type Leg = {
-  departureTime: string;
+type WagonMapDataVariables = {
   departureStation: string;
   arrivalStation: string;
+  departureTime: string;
   trainNumber: string;
+  trainType: string;
 };
 
-type TrainInfoVariables = {
-  legs: Leg[];
-};
-
-const GET_TRAIN_INFO = gql`
-  query getTrainInfo($legs: [LegInput!]!) {
-    trainInfoForLegs(legs: $legs) {
-      id
-      stops {
-        station
-        arrivalTime
-        departureTime
-        __typename
-      }
-      wagonMap {
-        coaches
-        __typename
-      }
-      __typename
-    }
+const GET_WAGON_MAP_DATA = gql`
+  query getWagonMapData(
+    $departureStation: String!
+    $arrivalStation: String!
+    $departureTime: String!
+    $trainNumber: String!
+    $trainType: String!
+  ) {
+    wagonMapData(
+      departureStation: $departureStation
+      arrivalStation: $arrivalStation
+      departureTime: $departureTime
+      trainNumber: $trainNumber
+      trainType: $trainType
+    )
   }
 `;
 
-export function useTrainInfoQuery(
-  baseOptions: QueryHookOptions<TrainInfoData, TrainInfoVariables>
+export function useWagonMapDataQuery(
+  baseOptions: QueryHookOptions<WagonMapData, WagonMapDataVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return useQuery<TrainInfoData, TrainInfoVariables>(GET_TRAIN_INFO, options);
+  return useQuery<WagonMapData, WagonMapDataVariables>(
+    GET_WAGON_MAP_DATA,
+    options
+  );
 }
