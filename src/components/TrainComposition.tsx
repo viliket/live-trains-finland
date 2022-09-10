@@ -167,8 +167,8 @@ function TrainComposition({
         {wagons &&
           orderBy(wagons, (w) => w?.location, 'desc').map((w, i) => (
             <span
-              key={w?.location}
-              onClick={(e) => onWagonClick(w)}
+              key={`${w?.location}-${wagonStatuses?.[i]}`}
+              onClick={() => onWagonClick(w)}
               style={{
                 display: 'inline-flex',
                 flexDirection: 'column',
