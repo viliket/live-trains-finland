@@ -66,14 +66,14 @@ Extract the map tile files (.pbf) from MBTiles in `data` and output the files to
 2. Unzip the downloaded archive and convert the shape to GeoJSON using [ogr2ogr](https://gdal.org/programs/ogr2ogr.html).
 
 ```
-ogr2ogr -f GeoJSON data/railway_tracks.geojson locationtracks_simplifiedLine.shp -s_srs EPSG:3
+ogr2ogr -f GeoJSON ./data/railway_tracks.geojson locationtracks_simplifiedLine.shp -s_srs EPSG:3
 067 -t_srs EPSG:4326
 ```
 
 3. Generate MBTiles using [tippecanoe](https://github.com/mapbox/tippecanoe) by Mapbox.
 
 ```
-tippecanoe -o data/railway_tracks.mbtiles --drop-densest-as-needed data/railway_tracks.geojson --no-tile-compression --maximum-zoom=14
+tippecanoe -o ./data/railway_tracks.mbtiles --drop-densest-as-needed ./data/railway_tracks.geojson --no-tile-compression --maximum-zoom=14
 ```
 
 #### Generate MBTiles for railway_platforms
@@ -92,7 +92,7 @@ tippecanoe -o data/railway_tracks.mbtiles --drop-densest-as-needed data/railway_
 2. Generate MBTiles using [tippecanoe](https://github.com/mapbox/tippecanoe) by Mapbox.
 
 ```
-tippecanoe -o data/railway_platforms.mbtiles --drop-densest-as-needed data/railway_platforms.json --no-tile-compression --minimum-zoom=14 --maximum-zoom=18
+tippecanoe -o ./data/railway_platforms.mbtiles --drop-densest-as-needed ./data/railway_platforms.json --no-tile-compression --minimum-zoom=14 --maximum-zoom=18
 ```
 
 ## License
