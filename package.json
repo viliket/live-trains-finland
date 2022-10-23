@@ -50,8 +50,8 @@
     "build": "npm run extract-tiles && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "extract-tiles-railway-tracks": "mbtiles-extractor --input=./data/railway_tracks.mbtiles --outputType=local --localOutDir=./public/tiles --tileDir=railway_tracks",
-    "extract-tiles-railway-platforms": "mbtiles-extractor --input=./data/railway_platforms.mbtiles --outputType=local --localOutDir=./public/tiles --tileDir=railway_platforms",
+    "extract-tiles-railway-tracks": "make-dir public/tiles && mbtiles-extractor --input=./data/railway_tracks.mbtiles --outputType=local --localOutDir=./public/tiles --tileDir=railway_tracks",
+    "extract-tiles-railway-platforms": "make-dir public/tiles && mbtiles-extractor --input=./data/railway_platforms.mbtiles --outputType=local --localOutDir=./public/tiles --tileDir=railway_platforms",
     "extract-tiles": "npm run extract-tiles-railway-tracks && npm run extract-tiles-railway-platforms",
     "digitransit-codegen": "graphql-codegen --config digitransit-codegen.yml",
     "digitraffic-codegen": "graphql-codegen --config digitraffic-codegen.yml",
@@ -81,6 +81,7 @@
     "husky": "^8.0.1",
     "is-ci": "^3.0.1",
     "lint-staged": "^13.0.3",
+    "make-dir-cli": "^3.0.0",
     "mbtiles-extractor": "^0.1.1"
   },
   "jest": {
