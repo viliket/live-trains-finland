@@ -9,6 +9,10 @@
   transition: transform 0.7s ease-in-out;
 }
 
+.leaflet-pane .leaflet-layer:first-of-type {
+  filter: saturate(0.5);
+}
+
 .leaflet-map-pane:not(.leaflet-zoom-anim)
   .leaflet-marker-pane
   canvas.leaflet-zoom-animated[style*='scale']
@@ -36,7 +40,7 @@
 }
 
 .dark .leaflet-container .leaflet-layer:first-of-type {
-  filter: invert(1);
+  filter: invert(1) saturate(0.1);
 }
 
 .dark .leaflet-container .leaflet-layer:nth-of-type(2) {

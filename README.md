@@ -53,6 +53,48 @@ npm run build
 
 Builds the app for production to the `build` folder.
 
+### Regenerate the map tiles
+
+Extract the map tile files (.pbf) from MBTiles in `data` and output the files to `public/tiles` using `npm run extract-tiles`.
+
+#### Generate MBTiles for railway_tracks
+
+1. Download the railway network map layer data from [Finnish Transport Infrastructure Agency's Download- and viewing service](https://julkinen.vayla.fi/oskari/?lang=en)
+
+   - Choose Map layers -> Rail traffic -> Finnish rail network -> Railway network (multi-track).
+
+2. Unzip the downloaded archive and convert the shape to GeoJSON using [ogr2ogr](https://gdal.org/programs/ogr2ogr.html).
+
+```
+ogr2ogr -f GeoJSON data/railway_tracks.geojson locationtracks_simplifiedLine.shp -s_srs EPSG:3
+067 -t_srs EPSG:4326
+```
+
+3. Generate MBTiles using [tippecanoe](https://github.com/mapbox/tippecanoe) by Mapbox.
+
+```
+tippecanoe -o data/railway_tracks.mbtiles --drop-densest-as-needed data/railway_tracks.geojson --no-tile-compression --maximum-zoom=14
+```
+
+#### Generate MBTiles for railway_platforms
+
+1. Fetch the OpenStreetMap (OSM) railway platform GeoJSON data through Overpass API for each station. See steps to do this below (CLI tool to be released later).
+   - Make the following query for each station:
+     ```
+     [out:json];
+     nwr(around:1000,<station lat>,<station lon>)[railway=platform];
+     out geom;
+     ```
+
+- Convert the response OSM data to GeoJSON using [osmtogeojson](https://www.npmjs.com/package/osmtogeojson).
+- Merge the features from all platforms into single feature collection and save the file to `data/railway_platforms.json`.
+
+2. Generate MBTiles using [tippecanoe](https://github.com/mapbox/tippecanoe) by Mapbox.
+
+```
+tippecanoe -o data/railway_platforms.mbtiles --drop-densest-as-needed data/railway_platforms.json --no-tile-compression --minimum-zoom=14 --maximum-zoom=18
+```
+
 ## License
 
 Copyright (C) 2022 [Vili Ketonen](https://github.com/viliket)

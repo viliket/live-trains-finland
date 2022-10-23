@@ -15,6 +15,7 @@
     "@types/autosuggest-highlight": "^3.2.0",
     "@types/jest": "^29.0.0",
     "@types/leaflet": "^1.7.11",
+    "@types/leaflet.vectorgrid": "^1.3.0",
     "@types/lodash": "^4.14.184",
     "@types/node": "^18.7.16",
     "@types/react": "^18.0.18",
@@ -27,6 +28,7 @@
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-http-backend": "^1.4.1",
     "leaflet": "^1.8.0",
+    "leaflet.vectorgrid": "^1.3.0",
     "lodash": "^4.17.21",
     "mdi-material-ui": "^7.5.0",
     "mqtt": "^4.3.7",
@@ -45,9 +47,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run extract-tiles && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "extract-tiles-railway-tracks": "mbtiles-extractor --input=data/railway_tracks.mbtiles --outputType=local --localOutDir=public/tiles --tileDir=railway_tracks",
+    "extract-tiles-railway-platforms": "mbtiles-extractor --input=data/railway_platforms.mbtiles --outputType=local --localOutDir=public/tiles --tileDir=railway_platforms",
+    "extract-tiles": "npm run extract-tiles-railway-tracks && npm run extract-tiles-railway-platforms",
     "digitransit-codegen": "graphql-codegen --config digitransit-codegen.yml",
     "digitraffic-codegen": "graphql-codegen --config digitraffic-codegen.yml",
     "gql-codegen": "npm run digitransit-codegen && npm run digitraffic-codegen",
@@ -75,7 +80,8 @@
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
     "is-ci": "^3.0.1",
-    "lint-staged": "^13.0.3"
+    "lint-staged": "^13.0.3",
+    "mbtiles-extractor": "^0.1.1"
   },
   "jest": {
     "transformIgnorePatterns": [

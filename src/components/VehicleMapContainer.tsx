@@ -14,6 +14,7 @@ import { RouteForRailFragment } from '../graphql/generated/digitransit';
 import { TrainStation } from '../utils/stations';
 import { trainStations } from '../utils/stations';
 import StationTooltip from './StationTooltip';
+import VectorGrid from './VectorGrid';
 import VehicleMarkerContainer from './VehicleMarkerContainer';
 
 type VehicleMapContainerProps = {
@@ -23,9 +24,6 @@ type VehicleMapContainerProps = {
   routeStationCodes?: string[];
   onVehicleSelected: (vehicleId: number) => void;
 };
-
-const tileLayerUrl =
-  'https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png';
 
 const hkiStation = trainStations.find((s) => s.stationShortCode === 'HKI');
 const initialCenter: LatLngTuple | undefined = hkiStation
@@ -52,24 +50,33 @@ const VehicleMapContainer = ({
     <MapContainer
       attributionControl={false}
       center={initialCenter}
-      zoom={13}
+      maxZoom={18}
+      zoom={17}
       scrollWheelZoom={true}
       style={{ height: '100%' }}
       ref={setMap}
       preferCanvas
     >
       <TileLayer
-        url={tileLayerUrl}
+        url="https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png"
         id="hsl-map"
-        attribution={
-          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, ' +
-          '&copy; <a href="http://stamen.com">Stamen Design</a>'
-        }
+        attribution='&copy; <a href="https://digitransit.fi/">Digitransit</a>'
       />
-      <TileLayer
-        url="https://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png"
-        id="openrailway-map"
-        attribution='&copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a>'
+      <VectorGrid
+        url="/tiles/railway_tracks/{z}/{x}/{y}.pbf"
+        attribution='&copy; <a href="https://vayla.fi/">Väylävirasto</a>'
+        interactive={false}
+        maxZoom={14}
+        zIndex={1}
+        vectorTileLayerStyles={{
+          railway_tracks: {
+            weight: 1,
+            opacity: 0.9,
+            color: '#666',
+            fill: false,
+            stroke: true,
+          },
+        }}
       />
       {trainStations
         .filter((s) => s.passengerTraffic)
@@ -78,7 +85,7 @@ const VehicleMapContainer = ({
             key={s.stationShortCode}
             center={[s.latitude, s.longitude]}
             pathOptions={{
-              color: 'white',
+              color: '#666',
               fillColor: routeStationCodes?.find(
                 (stationCode) => stationCode === s.stationShortCode
               )
@@ -116,6 +123,23 @@ const VehicleMapContainer = ({
           }))}
         />
       )}
+      <VectorGrid
+        url="/tiles/railway_platforms/{z}/{x}/{y}.pbf"
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+        interactive={false}
+        zIndex={1}
+        vectorTileLayerStyles={{
+          railway_platforms: {
+            weight: 0.5,
+            opacity: 1,
+            color: '#ccc',
+            fillColor: theme.palette.secondary.main,
+            fillOpacity: 0.6,
+            fill: true,
+            stroke: true,
+          },
+        }}
+      />
       <AttributionControl prefix="" />
     </MapContainer>
   );

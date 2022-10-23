@@ -9,6 +9,9 @@
 # production
 /build
 
+# auto-generated map tiles
+/public/tiles
+
 # misc
 .DS_Store
 .env.local
