@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
 import {
+  alpha,
+  Box,
   Link,
   Table,
   TableBody,
@@ -9,7 +11,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { MapMarkerOff, MapMarkerCheck } from 'mdi-material-ui';
+import { SignalVariant, ChevronRight } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -108,6 +110,9 @@ function StationTimeTable({
               <TableRow
                 key={`${trn.trainNumber}-${stationRow?.scheduledTime}`}
                 hover
+                sx={{
+                  cursor: 'pointer',
+                }}
                 onClick={() => {
                   if (departureTime) {
                     tableRowOnClick(trn.trainNumber, departureTime);
@@ -121,15 +126,41 @@ function StationTimeTable({
                       alignItems: 'center',
                     }}
                   >
-                    {!vehicleForTrain && (
-                      <MapMarkerOff sx={{ color: 'grey.700' }} />
-                    )}
-                    {vehicleForTrain && (
-                      <MapMarkerCheck sx={{ color: 'success.main' }} />
-                    )}
-                    {trn.commuterLineid
-                      ? trn.commuterLineid
-                      : trn.trainType.name + trn.trainNumber}{' '}
+                    <Box
+                      component="span"
+                      sx={(theme) => ({
+                        position: 'relative',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: '1em',
+                        textAlign: 'center',
+                        backgroundColor: alpha(
+                          theme.palette.primary.main,
+                          theme.palette.action.selectedOpacity
+                        ),
+                        minWidth: '1.8em',
+                        height: '1.8em',
+                        padding: '0.5em',
+                        lineHeight: 'normal',
+                      })}
+                    >
+                      {trn.commuterLineid
+                        ? trn.commuterLineid
+                        : trn.trainType.name + trn.trainNumber}
+                      {vehicleForTrain && (
+                        <SignalVariant
+                          sx={{
+                            color: 'success.main',
+                            position: 'absolute',
+                            width: '0.5em',
+                            height: '0.5em',
+                            top: '-0.25em',
+                            right: '-0.5em',
+                          }}
+                        />
+                      )}
+                    </Box>
                   </span>
                 </TableCell>
                 <TableCell>
@@ -137,7 +168,6 @@ function StationTimeTable({
                     component={RouterLink}
                     to={`/${destinationStationName}`}
                     color="inherit"
-                    underline="none"
                     onClick={handleStationClick}
                   >
                     {destinationStationName}
@@ -147,7 +177,18 @@ function StationTimeTable({
                   {stationRow ? <TimeTableRowTime row={stationRow} /> : '?'}
                 </TableCell>
                 <TableCell align="right">
-                  {stationRow?.commercialTrack ?? '?'}
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      lineHeight: 'normal',
+                    }}
+                  >
+                    {stationRow?.commercialTrack ?? '?'}
+                    <ChevronRight
+                      sx={{ color: 'grey.400', marginRight: '-8px' }}
+                    />
+                  </span>
                 </TableCell>
               </TableRow>
             );
