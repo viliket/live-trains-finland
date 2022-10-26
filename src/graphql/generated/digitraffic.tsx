@@ -772,6 +772,7 @@ export type TrainCollectionWhere = {
 
 export type TrainLocation = {
   __typename?: 'TrainLocation';
+  accuracy?: Maybe<Scalars['Int']>;
   location?: Maybe<Array<Maybe<Scalars['Float']>>>;
   speed: Scalars['Int'];
   timestamp: Scalars['DateTime'];
@@ -783,12 +784,14 @@ export type TrainLocationCollectionWhere = {
 };
 
 export type TrainLocationOrderBy = {
+  accuracy?: InputMaybe<OrderDirection>;
   speed?: InputMaybe<OrderDirection>;
   timestamp?: InputMaybe<OrderDirection>;
   train?: InputMaybe<TrainOrderBy>;
 };
 
 export type TrainLocationWhere = {
+  accuracy?: InputMaybe<IntWhere>;
   and?: InputMaybe<Array<InputMaybe<TrainLocationWhere>>>;
   or?: InputMaybe<Array<InputMaybe<TrainLocationWhere>>>;
   speed?: InputMaybe<IntWhere>;
