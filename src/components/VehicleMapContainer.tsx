@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useTheme } from '@mui/material';
 import { LatLngTuple, Map as LMap } from 'leaflet';
+import L from 'leaflet';
 import {
   AttributionControl,
   CircleMarker,
@@ -68,6 +69,7 @@ const VehicleMapContainer = ({
         interactive={false}
         maxZoom={14}
         zIndex={1}
+        rendererFactory={L.canvas.tile}
         vectorTileLayerStyles={{
           railway_tracks: {
             weight: 1,
