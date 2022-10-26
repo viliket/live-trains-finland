@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { alpha, createTheme } from '@mui/material';
 
 const baseTheme = createTheme({});
 const darkTheme = createTheme({
@@ -16,6 +16,30 @@ const darkTheme = createTheme({
     },
   },
 });
+
+darkTheme.components = {
+  MuiToggleButton: {
+    styleOverrides: {
+      root: ({ theme, ownerState }) => {
+        const selectedColor =
+          ownerState.color && ownerState.color !== 'standard'
+            ? theme.palette[ownerState.color].main
+            : theme.palette.primary.main;
+        return {
+          color: theme.palette.grey[300],
+          '&.Mui-selected': {
+            color: '#fff',
+            borderColor: alpha(selectedColor, 0.2),
+            backgroundColor: alpha(selectedColor, 0.2),
+            '&:hover': {
+              backgroundColor: alpha(selectedColor, 0.3),
+            },
+          },
+        };
+      },
+    },
+  },
+};
 
 const lightTheme = createTheme({
   ...baseTheme,
