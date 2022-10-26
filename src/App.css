@@ -44,7 +44,7 @@
 }
 
 .dark .leaflet-container .leaflet-layer:first-of-type {
-  filter: invert(1) saturate(0.1);
+  filter: invert(1) saturate(0.5) hue-rotate(210deg);
 }
 
 .dark .leaflet-container .leaflet-layer:nth-of-type(2) {
