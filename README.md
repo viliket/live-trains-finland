@@ -55,7 +55,7 @@ Builds the app for production to the `build` folder.
 
 ### Regenerate the map tiles
 
-Extract the map tile files (.pbf) from MBTiles in `data` and output the files to `public/tiles` using `npm run extract-tiles`.
+Extract the map tile files (.pbf) from MBTiles in `data` and output the files to `public/tiles` using `npm run extract-tiles-public`.
 
 #### Generate MBTiles for railway_tracks
 
