@@ -68,9 +68,9 @@
     ]
   },
   "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
+    "> 0.2% in FI",
+    "not op_mini all",
+    "not IE 11"
   ],
   "devDependencies": {
     "@graphql-codegen/add": "^3.2.1",
