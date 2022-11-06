@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
+import React from 'react';
 
 import { Box, Skeleton } from '@mui/material';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import TrainInfoContainer from '../components/TrainInfoContainer';
 import TrainSubNavBar from '../components/TrainSubNavBar';
-import VehicleMapContainer from '../components/VehicleMapContainer';
 import { gqlClients, vehiclesVar } from '../graphql/client';
 import { useTrainLazyQuery } from '../graphql/generated/digitraffic';
 import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
@@ -15,6 +15,10 @@ import getHeadTrainVehicleId from '../utils/getHeadTrainVehicleId';
 import getRouteForTrain from '../utils/getRouteForTrain';
 import { trainStations } from '../utils/stations';
 import NotFound from './NotFound';
+
+const VehicleMapContainer = React.lazy(
+  () => import('../components/map/VehicleMapContainer')
+);
 
 const Train = () => {
   const { trainNumber, departureDate } = useParams<{
@@ -115,23 +119,25 @@ const Train = () => {
     <div style={{ width: '100%' }}>
       <TrainSubNavBar train={train} />
       <Box sx={{ height: '30vh' }}>
-        <VehicleMapContainer
-          selectedVehicleId={selectedVehicleId}
-          station={station}
-          route={selectedRoute}
-          routeStationCodes={
-            train?.timeTableRows
-              ? Array.from(
-                  new Set(
-                    train.timeTableRows
-                      .map((r) => r?.station.shortCode)
-                      .filter(isDefined)
+        <Suspense>
+          <VehicleMapContainer
+            selectedVehicleId={selectedVehicleId}
+            station={station}
+            route={selectedRoute}
+            routeStationCodes={
+              train?.timeTableRows
+                ? Array.from(
+                    new Set(
+                      train.timeTableRows
+                        .map((r) => r?.station.shortCode)
+                        .filter(isDefined)
+                    )
                   )
-                )
-              : undefined
-          }
-          onVehicleSelected={handleVehicleIdSelected}
-        />
+                : undefined
+            }
+            onVehicleSelected={handleVehicleIdSelected}
+          />
+        </Suspense>
       </Box>
       {train && <TrainInfoContainer train={train} />}
       {loading && getLoadingSkeleton()}
