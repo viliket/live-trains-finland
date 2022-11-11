@@ -10,6 +10,7 @@ type VehicleMarkerIconImageProps = {
   height?: number;
   colorPrimary?: string;
   colorSecondary?: string;
+  drawText?: boolean;
 };
 
 export const getVehicleMarkerIconImage = ({
@@ -19,6 +20,7 @@ export const getVehicleMarkerIconImage = ({
   height = 80,
   colorPrimary = '#00A651',
   colorSecondary = '#eee',
+  drawText = false,
 }: VehicleMarkerIconImageProps) => {
   // Check whether we can generate an image from this icon ID
   if (id.indexOf('vehiclemarker') !== 0) return;
@@ -67,13 +69,15 @@ export const getVehicleMarkerIconImage = ({
     ctx.rotate(toRadians(-heading));
   }
 
-  // Draw text (route)
-  ctx.fillStyle = '#eee';
-  ctx.font = '20px Arial';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.rotate(toRadians(mapBearing));
-  ctx.fillText(route, 0, 0);
+  if (drawText) {
+    // Draw text (route)
+    ctx.fillStyle = '#eee';
+    ctx.font = '20px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.rotate(toRadians(mapBearing));
+    ctx.fillText(route, 0, 0);
+  }
 
   ctx.restore();
 

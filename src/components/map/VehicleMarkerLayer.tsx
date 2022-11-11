@@ -42,7 +42,6 @@ export default function VehicleMarkerLayer({
     null
   );
   const [isTracking, setIsTracking] = useState<boolean>(false);
-  const vehicles = useReactiveVar(vehiclesVar);
   const vehiclesOnMap = useReactiveVar(vehiclesOnMapVar);
   const { t } = useTranslation();
   const theme = useTheme();
@@ -77,28 +76,13 @@ export default function VehicleMarkerLayer({
       }
     };
 
-    const rotateCallback = (e: ViewStateChangeEvent) => {
-      missingImages.forEach((id) => {
-        const image = getVehicleMarkerIconImage({
-          id,
-          mapBearing: e.viewState.bearing,
-          colorPrimary: theme.palette.secondary.main,
-        });
-        if (image) {
-          map?.updateImage(id, image);
-        }
-      });
-    };
-
     if (map) {
       map.on('styleimagemissing', styleImageMissingCallback);
-      map.on('rotate', rotateCallback);
     }
 
     return () => {
       if (map) {
         map.off('styleimagemissing', styleImageMissingCallback);
-        map.off('rotate', rotateCallback);
         missingImages.forEach((img) => {
           if (map.loaded()) {
             map.removeImage(img);
@@ -134,8 +118,9 @@ export default function VehicleMarkerLayer({
 
   useEffect(() => {
     if (map && isTracking && selectedVehicleId) {
-      const vehicle = vehicles[selectedVehicleId];
+      const vehicle = vehiclesOnMap[selectedVehicleId];
       if (!vehicle) return;
+      if (map.isMoving()) return;
       map.flyTo(
         {
           center: [vehicle.lng, vehicle.lat],
@@ -147,7 +132,7 @@ export default function VehicleMarkerLayer({
         { triggerSource: 'flyTo' }
       );
     }
-  }, [vehicles, map, isTracking, selectedVehicleId, vehicleIdForPopup]);
+  }, [vehiclesOnMap, map, isTracking, selectedVehicleId, vehicleIdForPopup]);
 
   useEffect(() => {
     const clickCallback = (e: MapLayerMouseEvent) => {
@@ -252,11 +237,25 @@ export default function VehicleMarkerLayer({
             source: 'point',
             type: 'symbol',
             layout: {
-              'icon-image': 'vehiclemarker-{vehicleNumber}-{bearing}',
+              'icon-image': 'vehiclemarker-x-0',
+              'icon-rotate': ['get', 'bearing'],
               'icon-size': 0.6,
               'icon-offset': [0, 0],
+              'icon-padding': 0,
               'icon-rotation-alignment': 'map',
               'icon-allow-overlap': true,
+              'icon-ignore-placement': true,
+              'text-allow-overlap': false,
+              'text-optional': true,
+              'text-padding': 0,
+              'text-size': 12,
+              'text-anchor': 'top',
+              'text-offset': [0, -0.4],
+              'text-field': '{vehicleNumber}',
+              'text-font': ['Gotham Rounded Medium'],
+            },
+            paint: {
+              'text-color': '#fff',
             },
           }}
         />
