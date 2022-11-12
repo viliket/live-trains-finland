@@ -3,3 +3,32 @@
   display: flex;
   flex-direction: column;
 }
+
+.maplibregl-ctrl-attrib.maplibregl-compact-show {
+  max-width: 58%;
+}
+
+.dark .maplibregl-ctrl-attrib.maplibregl-compact-show {
+  background-color: hsla(0, 0%, 100%, 0.7);
+}
+
+.dark .maplibregl-ctrl-attrib.maplibregl-compact-show {
+  background-color: hsla(0, 0%, 28%, 0.7);
+}
+
+.dark .maplibregl-ctrl-attrib.mapboxgl-compact-show a {
+  color: #818181;
+}
+
+.dark
+  .maplibregl-ctrl-attrib.maplibregl-compact-show
+  .maplibregl-ctrl-attrib-button {
+  filter: contrast(0.01);
+}
+
+.dark .maplibregl-ctrl-scale {
+  background-color: hsla(0, 0%, 100%, 0.15);
+  border: 2px solid #bbb;
+  border-top: #bbb;
+  color: #bbb;
+}
