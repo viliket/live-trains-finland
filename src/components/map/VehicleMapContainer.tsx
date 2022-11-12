@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useTheme } from '@mui/material';
 import { generateStyle, Options } from 'hsl-map-style';
@@ -46,7 +46,8 @@ type VehicleMapContainerProps = {
   onVehicleSelected: (vehicleId: number) => void;
 };
 
-const hkiStation = trainStations.find((s) => s.stationShortCode === 'HKI');
+const fallbackStation = trainStations.find((s) => s.stationShortCode === 'HKI');
+const initialZoom = 15;
 
 const VehicleMapContainer = ({
   selectedVehicleId,
@@ -57,15 +58,32 @@ const VehicleMapContainer = ({
 }: VehicleMapContainerProps) => {
   const mapRef = useRef<MapRef>(null);
   const theme = useTheme();
+  const map = mapRef.current;
+
+  useEffect(() => {
+    // Set map initial view state
+    // Note: We need to do this when "reuseMaps" flag is set
+    if (map) {
+      const stationToCenter = station ?? fallbackStation;
+      if (stationToCenter) {
+        map.setCenter({
+          lng: stationToCenter.longitude,
+          lat: stationToCenter.latitude,
+        });
+      }
+      map.setZoom(initialZoom);
+    }
+  }, [map, station]);
 
   return (
     <Map
       mapLib={maplibregl}
       ref={mapRef}
+      reuseMaps
       initialViewState={{
-        longitude: station?.longitude ?? hkiStation?.longitude,
-        latitude: station?.latitude ?? hkiStation?.latitude,
-        zoom: 15,
+        longitude: station?.longitude ?? fallbackStation?.longitude,
+        latitude: station?.latitude ?? fallbackStation?.latitude,
+        zoom: initialZoom,
       }}
       mapStyle={theme.palette.mode === 'light' ? mapStyle : mapStyleDark}
     >
