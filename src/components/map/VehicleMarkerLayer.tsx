@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { makeVar, useReactiveVar } from '@apollo/client';
 import { Button, useTheme } from '@mui/material';
 import { along, distance, lineString } from '@turf/turf';
 import { format } from 'date-fns';
@@ -19,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { vehiclesVar } from '../../graphql/client';
 import useAnimationFrame from '../../hooks/useAnimationFrame';
+import useInterval from '../../hooks/useInterval';
 import { VehicleDetails } from '../../types/vehicles';
 import {
   getVehicleMarkerIconImage,
@@ -31,8 +31,6 @@ type VehicleMarkerLayerProps = {
   selectedVehicleId: number | null;
 };
 
-export const vehiclesOnMapVar = makeVar<Record<number, VehicleDetails>>({});
-
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
   selectedVehicleId,
@@ -42,7 +40,10 @@ export default function VehicleMarkerLayer({
     null
   );
   const [isTracking, setIsTracking] = useState<boolean>(false);
-  const vehiclesOnMap = useReactiveVar(vehiclesOnMapVar);
+  const [vehiclesOnMap, setVehiclesOnMap] = useState<
+    Record<number, VehicleDetails>
+  >({});
+  const vehiclesOnMapRef = useRef(vehiclesOnMap);
   const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -116,11 +117,10 @@ export default function VehicleMarkerLayer({
     }
   }, [selectedVehicleId]);
 
-  useEffect(() => {
+  useInterval(() => {
     if (map && isTracking && selectedVehicleId) {
       const vehicle = vehiclesOnMap[selectedVehicleId];
       if (!vehicle) return;
-      if (map.isMoving()) return;
       map.flyTo(
         {
           center: [vehicle.lng, vehicle.lat],
@@ -132,7 +132,7 @@ export default function VehicleMarkerLayer({
         { triggerSource: 'flyTo' }
       );
     }
-  }, [vehiclesOnMap, map, isTracking, selectedVehicleId, vehicleIdForPopup]);
+  }, 500);
 
   useEffect(() => {
     const clickCallback = (e: MapLayerMouseEvent) => {
@@ -189,27 +189,27 @@ export default function VehicleMarkerLayer({
 
   useAnimationFrame(() => {
     // TODO: Improve vehicle marker animation logic
-    const previousVehicles = vehiclesOnMapVar();
-    const currentVehicles = vehiclesVar();
-    const updatedVehicles: Record<number, VehicleDetails> = {};
-    Object.entries(currentVehicles).forEach(([id, cur]) => {
+    const previousVehicles = vehiclesOnMapRef.current;
+    const currentVehicles = { ...vehiclesVar() };
+    Object.keys(currentVehicles).forEach((id) => {
+      const cur = currentVehicles[Number.parseInt(id)];
       const prev = previousVehicles[Number.parseInt(id)];
       if (prev) {
         const start = [prev.lng, prev.lat];
         const end = [cur.lng, cur.lat];
         const line = lineString([start, end]);
         const d = distance(start, end, { units: 'meters' });
-        const newPos = along(line, d / 100, { units: 'meters' });
-        updatedVehicles[Number.parseInt(id)] = {
+        const newPos = along(line, d / 100, { units: 'meters' }).geometry
+          .coordinates;
+        currentVehicles[Number.parseInt(id)] = {
           ...cur,
-          lng: newPos.geometry.coordinates[0],
-          lat: newPos.geometry.coordinates[1],
+          lng: newPos[0],
+          lat: newPos[1],
         };
-      } else {
-        updatedVehicles[Number.parseInt(id)] = { ...cur };
       }
     });
-    vehiclesOnMapVar(updatedVehicles);
+    vehiclesOnMapRef.current = currentVehicles;
+    setVehiclesOnMap(currentVehicles);
   });
 
   return (
