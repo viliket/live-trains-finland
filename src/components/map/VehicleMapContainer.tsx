@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 
 import { useTheme } from '@mui/material';
-import { generateStyle } from 'hsl-map-style';
+import { generateStyle, Options } from 'hsl-map-style';
+import { VectorSource } from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
 import Map, {
   Layer,
@@ -18,9 +19,18 @@ import StopsLayer from './StopsLayer';
 import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
 
-const mapStyle = generateStyle();
+const generateMapStyle = (options?: Options) => {
+  const mapStyle = generateStyle(options);
+  (mapStyle.sources['vector'] as VectorSource).attribution =
+    '<a href="https://digitransit.fi/" target="_blank">&copy; Digitransit</a> ' +
+    '<a href="https://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> ' +
+    '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap</a>';
+  return mapStyle;
+};
 
-const mapStyleDark = generateStyle({
+const mapStyle = generateMapStyle();
+
+const mapStyleDark = generateMapStyle({
   components: {
     greyscale: {
       enabled: true,
