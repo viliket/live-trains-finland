@@ -1,4 +1,3 @@
-import { useReactiveVar } from '@apollo/client';
 import { Box } from '@mui/material';
 import { orderBy } from 'lodash';
 import {
@@ -14,7 +13,6 @@ import {
 } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 
-import { vehiclesVar } from '../graphql/client';
 import { TrainDetailsFragment, Wagon } from '../graphql/generated/digitraffic';
 import getTrainCompositionDetailsForStation from '../utils/getTrainCompositionDetailsForStation';
 import getTrainCurrentJourneySection from '../utils/getTrainCurrentJourneySection';
@@ -34,7 +32,6 @@ function TrainComposition({
   stationName,
   onWagonClick,
 }: TrainCompositionProps) {
-  const vehicles = useReactiveVar(vehiclesVar);
   const { t } = useTranslation();
 
   const journeySection = stationName
@@ -116,23 +113,9 @@ function TrainComposition({
     return (
       <>
         {(wagonType === 'Sm2' || wagonType === 'Sm4') && (
-          <TrainWagonSm2And4
-            doorsOpen={
-              w != null &&
-              w.vehicleId != null &&
-              vehicles[w.vehicleId]?.drst === 1
-            }
-          />
+          <TrainWagonSm2And4 vehicleId={w?.vehicleId} />
         )}
-        {wagonType === 'Sm5' && (
-          <TrainWagonSm5
-            doorsOpen={
-              w != null &&
-              w.vehicleId != null &&
-              vehicles[w.vehicleId]?.drst === 1
-            }
-          />
-        )}
+        {wagonType === 'Sm5' && <TrainWagonSm5 vehicleId={w?.vehicleId} />}
         {!train.commuterLineid && (
           <Box
             sx={{
