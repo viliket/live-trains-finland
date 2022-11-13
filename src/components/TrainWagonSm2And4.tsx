@@ -1,11 +1,11 @@
 type TrainWagonSm2And4Props = {
-  doorsOpen: boolean;
+  vehicleId?: number | null;
 };
 
 /**
  * Sm2 and Sm4 wagon, used for e.g. by R trains in VR region
  */
-export function TrainWagonSm2And4({ doorsOpen }: TrainWagonSm2And4Props) {
+export function TrainWagonSm2And4({ vehicleId }: TrainWagonSm2And4Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

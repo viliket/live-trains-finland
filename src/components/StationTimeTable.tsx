@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import {
   alpha,
   Box,
@@ -11,22 +9,21 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { SignalVariant, ChevronRight } from 'mdi-material-ui';
+import { ChevronRight } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { vehiclesVar } from '../graphql/client';
 import {
   TimeTableRowType,
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
-import useInterval from '../hooks/useInterval';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import {
   getTrainDestinationStationName,
   getTrainScheduledDepartureTime,
 } from '../utils/train';
 import TimeTableRowTime from './TimeTableRowTime';
+import VehicleTrackingIcon from './VehicleTrackingIcon';
 
 type StationTimeTableProps = {
   stationCode: string;
@@ -42,24 +39,6 @@ function StationTimeTable({
   tableRowOnClick,
 }: StationTimeTableProps) {
   const { t } = useTranslation();
-  const [trackedTrains, setTrackedTrains] = useState<Record<number, number>>(
-    {}
-  );
-
-  useInterval(() => {
-    const vehicles = Object.values(vehiclesVar());
-    setTrackedTrains(
-      vehicles.reduce(
-        (s: Record<number, number>, v) => ({ ...s, [v.jrn ?? v.veh]: v.veh }),
-        {}
-      )
-    );
-  }, 1000);
-
-  const findVehicleForTrain = (train: TrainByStationFragment) => {
-    // TODO: Should also compare scheduled time as the train may appear multiple times in time table
-    return trackedTrains[train.trainNumber];
-  };
 
   const handleStationClick = (e: React.MouseEvent) => e.stopPropagation();
 
@@ -97,7 +76,6 @@ function StationTimeTable({
         </TableHead>
         <TableBody>
           {trains.map((trn) => {
-            const vehicleForTrain = findVehicleForTrain(trn);
             const destinationStationName = getTrainDestinationStationName(trn);
             const departureTime = getTrainScheduledDepartureTime(trn);
             const stationRow = getTimeTableRowForStation(
@@ -148,18 +126,7 @@ function StationTimeTable({
                       {trn.commuterLineid
                         ? trn.commuterLineid
                         : trn.trainType.name + trn.trainNumber}
-                      {vehicleForTrain && (
-                        <SignalVariant
-                          sx={{
-                            color: 'success.main',
-                            position: 'absolute',
-                            width: '0.5em',
-                            height: '0.5em',
-                            top: '-0.25em',
-                            right: '-0.5em',
-                          }}
-                        />
-                      )}
+                      <VehicleTrackingIcon trainNumber={trn.trainNumber} />
                     </Box>
                   </span>
                 </TableCell>

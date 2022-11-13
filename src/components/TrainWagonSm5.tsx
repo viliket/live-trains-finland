@@ -1,13 +1,22 @@
 import { useSpring, animated, config } from '@react-spring/web';
 
+import { vehiclesVar } from '../graphql/client';
+import useReactiveVarWithSelector from '../hooks/useReactiveVarWithSelector';
+
 type TrainWagonSm5Props = {
-  doorsOpen: boolean;
+  vehicleId?: number | null;
 };
 
 /**
  * Sm5 wagon, used for e.g. by U and E trains in HSL region
  */
-export function TrainWagonSm5({ doorsOpen }: TrainWagonSm5Props) {
+export function TrainWagonSm5({ vehicleId }: TrainWagonSm5Props) {
+  const vehicleDoorStatus = useReactiveVarWithSelector(vehiclesVar, (v) =>
+    vehicleId ? v[vehicleId].drst : null
+  );
+
+  const doorsOpen = vehicleDoorStatus === 1;
+
   const { doorsXOffset } = useSpring({
     doorsXOffset: doorsOpen ? 4 : 0,
     config: {
