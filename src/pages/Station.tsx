@@ -56,7 +56,7 @@ const Station = () => {
     skip: stationCode == null,
     context: { clientName: gqlClients.digitraffic },
     pollInterval: 10000,
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'no-cache',
   });
   useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
 
