@@ -121,6 +121,7 @@ export const client = new ApolloClient({
       digitransitLink
     )
   ),
+  assumeImmutableResults: true,
   cache: new InMemoryCache({
     typePolicies: {
       Locomotive: {

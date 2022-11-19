@@ -60,9 +60,27 @@ const Station = () => {
     skip: stationCode == null,
     context: { clientName: gqlClients.digitraffic },
     pollInterval: 10000,
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'no-cache',
   });
   useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
+
+  const handleVehicleIdSelected = useCallback((vehicleId: number) => {
+    setSelectedVehicleId(vehicleId);
+    const trainNumber = vehiclesVar()[vehicleId].jrn;
+    setSelectedTrainNo(trainNumber);
+  }, []);
+
+  const handleTimeTableRowClick = useCallback(
+    (trainNumber: number, scheduledTime: Date) => {
+      navigate(
+        `/train/${trainNumber}/${format(
+          scheduledTime,
+          'yyyy-MM-dd'
+        )}?station=${stationCode}`
+      );
+    },
+    [navigate, stationCode]
+  );
 
   const selectedTrain = selectedTrainNo
     ? data?.trainsByStationAndQuantity?.find(
@@ -82,12 +100,6 @@ const Station = () => {
       });
     }
   }, [selectedTrain, executeRouteSearch]);
-
-  const handleVehicleIdSelected = useCallback((vehicleId: number) => {
-    setSelectedVehicleId(vehicleId);
-    const trainNumber = vehiclesVar()[vehicleId].jrn;
-    setSelectedTrainNo(trainNumber);
-  }, []);
 
   const getLoadingSkeleton = () => {
     const row = (
@@ -181,14 +193,7 @@ const Station = () => {
           stationCode={stationCode}
           timeTableType={timeTableType}
           trains={trains}
-          tableRowOnClick={(trainNumber, scheduledTime) => {
-            navigate(
-              `/train/${trainNumber}/${format(
-                scheduledTime,
-                'yyyy-MM-dd'
-              )}?station=${stationCode}`
-            );
-          }}
+          tableRowOnClick={handleTimeTableRowClick}
         />
       )}
       {loading && getLoadingSkeleton()}
