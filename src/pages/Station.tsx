@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { format } from 'date-fns';
@@ -59,6 +59,24 @@ const Station = () => {
     fetchPolicy: 'no-cache',
   });
   useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
+
+  const handleVehicleIdSelected = useCallback((vehicleId: number) => {
+    setSelectedVehicleId(vehicleId);
+    const trainNumber = vehiclesVar()[vehicleId].jrn;
+    setSelectedTrainNo(trainNumber);
+  }, []);
+
+  const handleTimeTableRowClick = useCallback(
+    (trainNumber: number, scheduledTime: Date) => {
+      navigate(
+        `/train/${trainNumber}/${format(
+          scheduledTime,
+          'yyyy-MM-dd'
+        )}?station=${stationCode}`
+      );
+    },
+    [navigate, stationCode]
+  );
 
   const selectedTrain = selectedTrainNo
     ? data?.trainsByStationAndQuantity?.find(
@@ -147,11 +165,7 @@ const Station = () => {
                 )
               : undefined
           }
-          onVehicleSelected={(id) => {
-            setSelectedVehicleId(id);
-            const trainNumber = vehiclesVar()[id].jrn;
-            setSelectedTrainNo(trainNumber);
-          }}
+          onVehicleSelected={handleVehicleIdSelected}
         />
       </Box>
       <ToggleButtonGroup
@@ -173,14 +187,7 @@ const Station = () => {
           stationCode={stationCode}
           timeTableType={timeTableType}
           trains={trains}
-          tableRowOnClick={(trainNumber, scheduledTime) => {
-            navigate(
-              `/train/${trainNumber}/${format(
-                scheduledTime,
-                'yyyy-MM-dd'
-              )}?station=${stationCode}`
-            );
-          }}
+          tableRowOnClick={handleTimeTableRowClick}
         />
       )}
       {loading && getLoadingSkeleton()}

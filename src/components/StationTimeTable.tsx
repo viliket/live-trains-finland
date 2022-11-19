@@ -1,7 +1,4 @@
 import {
-  alpha,
-  Box,
-  Link,
   Table,
   TableBody,
   TableCell,
@@ -9,21 +6,14 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { ChevronRight } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 
 import {
   TimeTableRowType,
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
-import {
-  getTrainDestinationStationName,
-  getTrainScheduledDepartureTime,
-} from '../utils/train';
-import TimeTableRowTime from './TimeTableRowTime';
-import VehicleTrackingIcon from './VehicleTrackingIcon';
+import StationTimeTableRow from './StationTimeTableRow';
 
 type StationTimeTableProps = {
   stationCode: string;
@@ -39,8 +29,6 @@ function StationTimeTable({
   tableRowOnClick,
 }: StationTimeTableProps) {
   const { t } = useTranslation();
-
-  const handleStationClick = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
     <TableContainer sx={{ overflow: 'initial' }}>
@@ -76,8 +64,6 @@ function StationTimeTable({
         </TableHead>
         <TableBody>
           {trains.map((trn) => {
-            const destinationStationName = getTrainDestinationStationName(trn);
-            const departureTime = getTrainScheduledDepartureTime(trn);
             const stationRow = getTimeTableRowForStation(
               stationCode,
               trn,
@@ -85,79 +71,13 @@ function StationTimeTable({
             );
 
             return (
-              <TableRow
+              <StationTimeTableRow
                 key={`${trn.trainNumber}-${stationRow?.scheduledTime}`}
-                hover
-                sx={{
-                  cursor: 'pointer',
-                }}
-                onClick={() => {
-                  if (departureTime) {
-                    tableRowOnClick(trn.trainNumber, departureTime);
-                  }
-                }}
-              >
-                <TableCell scope="row">
-                  <span
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={(theme) => ({
-                        position: 'relative',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: '1em',
-                        textAlign: 'center',
-                        backgroundColor: alpha(
-                          theme.palette.primary.main,
-                          theme.palette.action.selectedOpacity
-                        ),
-                        minWidth: '1.8em',
-                        height: '1.8em',
-                        padding: '0.5em',
-                        lineHeight: 'normal',
-                      })}
-                    >
-                      {trn.commuterLineid
-                        ? trn.commuterLineid
-                        : trn.trainType.name + trn.trainNumber}
-                      <VehicleTrackingIcon trainNumber={trn.trainNumber} />
-                    </Box>
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <Link
-                    component={RouterLink}
-                    to={`/${destinationStationName}`}
-                    color="inherit"
-                    onClick={handleStationClick}
-                  >
-                    {destinationStationName}
-                  </Link>
-                </TableCell>
-                <TableCell align="center">
-                  {stationRow ? <TimeTableRowTime row={stationRow} /> : '?'}
-                </TableCell>
-                <TableCell align="right">
-                  <span
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      lineHeight: 'normal',
-                    }}
-                  >
-                    {stationRow?.commercialTrack ?? '?'}
-                    <ChevronRight
-                      sx={{ color: 'grey.400', marginRight: '-8px' }}
-                    />
-                  </span>
-                </TableCell>
-              </TableRow>
+                train={trn}
+                stationCode={stationCode}
+                timeTableType={timeTableType}
+                tableRowOnClick={tableRowOnClick}
+              />
             );
           })}
         </TableBody>
