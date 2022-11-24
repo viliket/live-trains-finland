@@ -1,5 +1,14 @@
 import { alpha, createTheme } from '@mui/material';
 
+declare module '@mui/material/styles/createPalette' {
+  interface CommonColors {
+    secondaryBackground: {
+      default: string;
+      text: string;
+    };
+  }
+}
+
 const baseTheme = createTheme({});
 const darkTheme = createTheme({
   ...baseTheme,
@@ -13,6 +22,12 @@ const darkTheme = createTheme({
     },
     secondary: {
       main: '#00A651',
+    },
+    common: {
+      secondaryBackground: {
+        default: '#1e1e1e',
+        text: '#eee',
+      },
     },
   },
 });
@@ -53,6 +68,12 @@ const lightTheme = createTheme({
     },
     secondary: {
       main: '#00A651',
+    },
+    common: {
+      secondaryBackground: {
+        default: '#f9f9fb',
+        text: 'rgba(0, 0, 0, 0.87)',
+      },
     },
     divider: '#eee',
   },
