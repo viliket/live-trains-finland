@@ -173,6 +173,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         sx={(theme) => ({
           textAlign: 'center',
           paddingTop: 2,
+          backgroundColor: theme.palette.common.secondaryBackground.default,
           borderTop: `solid 1px ${theme.palette.divider}`,
         })}
       >
@@ -183,31 +184,32 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
           />
         )}
       </Box>
-      <Timeline>
+      <Timeline
+        sx={{
+          marginTop: 0,
+          paddingTop: 0,
+        }}
+      >
         <TimelineItem
-          sx={{
+          sx={(theme) => ({
             position: 'sticky',
             top: '4rem',
             zIndex: 1002,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.common.secondaryBackground.default,
+            boxShadow: `inset 0px -1px 1px ${theme.palette.divider}`,
             minHeight: 'auto',
             marginX: '-16px', // Negate parent padding to span whole horizontal space
+            padding: '0.4rem',
             paddingRight: '16px', // Original parent padding
             paddingLeft: 'calc(16px + 12px)', // Original parent padding + timeline dot width
-            marginBottom: '0.2rem',
+            marginBottom: '0.4rem',
             '&:before': {
               display: 'none',
             },
-          }}
+          })}
         >
           <TimelineContent>
-            <Grid
-              container
-              spacing={2}
-              sx={(theme) => ({
-                borderBottom: `solid 1px ${theme.palette.divider}`,
-              })}
-            >
+            <Grid container spacing={2}>
               <Grid item xs={4}>
                 {t('station')}
               </Grid>

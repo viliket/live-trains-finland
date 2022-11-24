@@ -31,11 +31,9 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
       <AppBar
         position="static"
         elevation={0}
-        sx={{
-          borderBottomWidth: '1px',
-          borderBottomStyle: 'solid',
-          borderBottomColor: 'divider',
-        }}
+        sx={(theme) => ({
+          boxShadow: `inset 0px -1px 1px ${theme.palette.divider}`,
+        })}
       >
         <Toolbar>
           <Typography
