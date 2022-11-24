@@ -32,3 +32,13 @@
   border-top: #bbb;
   color: #bbb;
 }
+
+/**
+ * Custom maplibre control class to avoid pre-made maplibre styles
+ * from overriding React custom overlay component styles
+ */
+.maplibregl-ctrl-custom {
+  pointer-events: auto;
+  float: right;
+  margin: 10px 10px 0 0;
+}

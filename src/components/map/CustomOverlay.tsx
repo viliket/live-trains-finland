@@ -15,7 +15,7 @@ class OverlayControl implements IControl {
   onAdd(map: MapboxMap) {
     this._map = map;
     this._container = document.createElement('div');
-    this._container.classList.add('maplibregl-ctrl');
+    this._container.classList.add('maplibregl-ctrl-custom');
     return this._container;
   }
 
