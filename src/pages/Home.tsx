@@ -29,10 +29,7 @@ const Home = () => {
         sx={(theme) => ({
           display: 'flex',
           justifyContent: 'center',
-          background:
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[800],
+          background: theme.palette.common.secondaryBackground.default,
           boxShadow: `inset 0px -40px 0px 0px ${
             theme.palette.mode === 'light'
               ? theme.palette.secondary.light

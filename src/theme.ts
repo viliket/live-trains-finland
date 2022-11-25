@@ -9,13 +9,32 @@ declare module '@mui/material/styles/createPalette' {
   }
 }
 
-const baseTheme = createTheme({});
+const baseTheme = createTheme({
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: ({ theme }) => ({
+          backgroundColor: theme.palette.common.secondaryBackground.default,
+          color: theme.palette.primary.main,
+        }),
+      },
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
+    },
+  },
+});
+
 const darkTheme = createTheme({
   ...baseTheme,
   palette: {
     mode: 'dark',
     background: {
-      default: '#1e1e1e',
+      default: '#232323',
     },
     primary: {
       main: '#066fdb',
@@ -29,10 +48,12 @@ const darkTheme = createTheme({
         text: '#eee',
       },
     },
+    divider: '#2b2b2b',
   },
 });
 
 darkTheme.components = {
+  ...baseTheme.components,
   MuiToggleButton: {
     styleOverrides: {
       root: ({ theme, ownerState }) => {
@@ -41,6 +62,7 @@ darkTheme.components = {
             ? theme.palette[ownerState.color].main
             : theme.palette.primary.main;
         return {
+          textTransform: 'none',
           color: theme.palette.grey[300],
           '&.Mui-selected': {
             color: '#fff',
@@ -64,30 +86,22 @@ const lightTheme = createTheme({
       default: '#fff',
     },
     primary: {
-      main: '#023a73',
+      main: '#004994',
     },
     secondary: {
       main: '#00A651',
     },
+    text: {
+      primary: 'rgb(26, 32, 39)',
+    },
     common: {
       secondaryBackground: {
-        default: '#f9f9fb',
+        default: 'rgb(249, 249, 251)',
         text: 'rgba(0, 0, 0, 0.87)',
       },
     },
     divider: '#eee',
   },
 });
-
-lightTheme.components = {
-  MuiAppBar: {
-    styleOverrides: {
-      colorPrimary: {
-        backgroundColor: 'white',
-        color: lightTheme.palette.primary.main,
-      },
-    },
-  },
-};
 
 export { darkTheme, lightTheme };

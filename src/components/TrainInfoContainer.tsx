@@ -193,7 +193,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         <TimelineItem
           sx={(theme) => ({
             position: 'sticky',
-            top: '4rem',
+            top: '3.5rem',
             zIndex: 1002,
             backgroundColor: theme.palette.common.secondaryBackground.default,
             boxShadow: `inset 0px -1px 1px ${theme.palette.divider}`,

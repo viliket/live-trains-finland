@@ -137,6 +137,7 @@ function TrainComposition({
       style={{
         display: 'inline-block',
         maxWidth: '800px',
+        padding: '0 0.5rem',
       }}
     >
       <div
@@ -221,7 +222,7 @@ function TrainComposition({
           <div style={{ border: '1px solid #ddd', flex: 1 }}>D</div>
         </div>
       )}
-      <div>
+      <div style={{ fontSize: '0.95rem' }}>
         {!stationName && (
           <>
             {t('train_current_composition')} (

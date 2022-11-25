@@ -30,13 +30,14 @@ function TrainSubNavBar({ train }: TrainSubNavBarProps) {
                   ? `${train.trainNumber}`
                   : `${train.trainType?.name} ${train.trainNumber}`
               }
-              variant="outlined"
+              variant="filled"
               avatar={
                 train.commuterLineid ? (
                   <Avatar>{train.commuterLineid}</Avatar>
                 ) : undefined
               }
               sx={{
+                bgcolor: 'divider',
                 borderColor: 'divider',
                 '& .MuiChip-avatar': {
                   color: 'white',

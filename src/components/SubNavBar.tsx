@@ -22,9 +22,13 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
         position: 'sticky',
         top: 0,
         zIndex: 1001,
+        padding: '0.6rem 0',
         backgroundColor: theme.palette.common.secondaryBackground.default,
         boxShadow: `inset 0px -1px 1px ${theme.palette.divider}`,
         color: theme.palette.common.secondaryBackground.text,
+        h4: {
+          margin: 0,
+        },
       })}
     >
       <IconButton

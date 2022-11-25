@@ -28,13 +28,7 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
 
   return (
     <div>
-      <AppBar
-        position="static"
-        elevation={0}
-        sx={(theme) => ({
-          boxShadow: `inset 0px -1px 1px ${theme.palette.divider}`,
-        })}
-      >
+      <AppBar position="static" elevation={0}>
         <Toolbar>
           <Typography
             variant="h6"
@@ -66,15 +60,22 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
             <Button
               key={lng}
               size="small"
-              color="inherit"
-              variant="outlined"
+              color={i18n.resolvedLanguage === lng ? 'primary' : 'inherit'}
+              variant="contained"
+              disableElevation
               aria-label={lngs[lng].shortCode}
-              sx={{
+              sx={(theme) => ({
                 mr: 1,
                 minWidth: 'auto',
                 fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal',
                 borderColor: 'divider',
-              }}
+                color:
+                  i18n.resolvedLanguage === lng
+                    ? 'white'
+                    : theme.palette.primary.main,
+                backgroundColor:
+                  i18n.resolvedLanguage === lng ? 'primary' : 'divider',
+              })}
               type="submit"
               onClick={() => i18n.changeLanguage(lng)}
             >

@@ -92,6 +92,7 @@ function StationTimeTableRow({
           component={RouterLink}
           to={`/${destinationStationName}`}
           color="inherit"
+          underline="none"
           onClick={handleStationClick}
         >
           {destinationStationName}
