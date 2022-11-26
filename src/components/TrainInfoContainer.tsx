@@ -45,7 +45,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
           },
           context: { clientName: gqlClients.digitraffic },
           pollInterval: 10000,
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'network-only',
         }
       : { skip: true }
   );
