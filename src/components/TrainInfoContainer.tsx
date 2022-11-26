@@ -166,9 +166,6 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
 
   return (
     <>
-      {error && (
-        <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
-      )}
       <Box
         sx={(theme) => ({
           textAlign: 'center',
@@ -177,6 +174,9 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
           borderTop: `solid 1px ${theme.palette.divider}`,
         })}
       >
+        {error && (
+          <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
+        )}
         {realTimeTrain && (
           <TrainComposition
             train={realTimeTrain}
