@@ -45,7 +45,13 @@ function TrainSubNavBar({ train }: TrainSubNavBarProps) {
                 },
               }}
             />
-            <span style={{ verticalAlign: 'middle', marginLeft: '1ch' }}>
+            <span
+              style={{
+                verticalAlign: 'middle',
+                marginLeft: '1ch',
+                fontWeight: 500,
+              }}
+            >
               {train &&
                 `${getTrainDepartureStationName(
                   train

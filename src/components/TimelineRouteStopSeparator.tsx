@@ -18,7 +18,7 @@ const TimelineRouteStopSeparator = ({
     <TimelineSeparator>
       {(isVehicleAtStation || wasVehicleAtStation) && (
         <TimelineDot
-          color="success"
+          color="secondary"
           sx={{
             position: 'absolute',
             top: wasVehicleAtStation ? '50%' : 'auto',

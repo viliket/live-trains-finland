@@ -42,6 +42,9 @@ const darkTheme = createTheme({
     secondary: {
       main: '#00A651',
     },
+    error: {
+      main: '#d67a7a',
+    },
     common: {
       secondaryBackground: {
         default: '#1e1e1e',
@@ -90,6 +93,9 @@ const lightTheme = createTheme({
     },
     secondary: {
       main: '#00A651',
+    },
+    error: {
+      main: '#c92424',
     },
     text: {
       primary: 'rgb(26, 32, 39)',
