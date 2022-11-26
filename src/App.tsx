@@ -1,8 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import {
   createTheme,
   CssBaseline,
+  Theme,
   ThemeProvider,
   useMediaQuery,
 } from '@mui/material';
@@ -20,6 +21,24 @@ import Station from './pages/Station';
 import Train from './pages/Train';
 import { darkTheme, lightTheme } from './theme';
 
+const updateThemeColor = (prefersDarkMode: boolean, theme: Theme): void => {
+  const themeColorElements = document.querySelectorAll(
+    'meta[name="theme-color"]'
+  );
+  const systemColorScheme = prefersDarkMode ? 'dark' : 'light';
+
+  themeColorElements.forEach((meta) => {
+    const mediaAttr = meta.getAttribute('media');
+
+    if (mediaAttr?.includes(systemColorScheme)) {
+      meta.setAttribute(
+        'content',
+        theme.palette.common.secondaryBackground.default
+      );
+    }
+  });
+};
+
 function App() {
   const { i18n } = useTranslation();
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -35,6 +54,14 @@ function App() {
       ),
     [isDarkMode, i18n.resolvedLanguage]
   );
+
+  useEffect(() => {
+    updateThemeColor(prefersDarkMode, theme);
+  }, [prefersDarkMode, theme]);
+
+  useEffect(() => {
+    setIsDarkMode(prefersDarkMode);
+  }, [prefersDarkMode]);
 
   const toggleDarkMode = () => {
     setIsDarkMode((isDarkMode) => !isDarkMode);
