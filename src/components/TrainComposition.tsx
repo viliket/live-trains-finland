@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { orderBy } from 'lodash';
 import {
   BagChecked,
@@ -215,14 +215,25 @@ function TrainComposition({
           ))}
       </div>
       {stationName && (
-        <div className="stopping-sectors" style={{ display: 'flex' }}>
-          <div style={{ border: '1px solid #ddd', flex: 1 }}>A</div>
-          <div style={{ border: '1px solid #ddd', flex: 0.8 }}>B</div>
-          <div style={{ border: '1px solid #ddd', flex: 0.8 }}>C</div>
-          <div style={{ border: '1px solid #ddd', flex: 1 }}>D</div>
-        </div>
+        <Box
+          className="stopping-sectors"
+          sx={{
+            display: 'flex',
+            div: {
+              border: '1px solid transparent',
+              backgroundColor: '#e5e5e5',
+              color: 'black',
+              backgroundClip: 'padding-box',
+            },
+          }}
+        >
+          <Box sx={{ flex: 1 }}>A</Box>
+          <Box sx={{ flex: 0.8 }}>B</Box>
+          <Box sx={{ flex: 0.8 }}>C</Box>
+          <Box sx={{ flex: 1 }}>D</Box>
+        </Box>
       )}
-      <div style={{ fontSize: '0.95rem' }}>
+      <Typography variant="body2">
         {!stationName && (
           <>
             {t('train_current_composition')} (
@@ -246,7 +257,7 @@ function TrainComposition({
             })}
           </>
         )}
-      </div>
+      </Typography>
     </div>
   );
 }

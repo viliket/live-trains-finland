@@ -185,10 +185,13 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         )}
       </Box>
       <Timeline
-        sx={{
+        sx={(theme) => ({
           marginTop: 0,
           paddingTop: 0,
-        }}
+          '.MuiTimelineContent-root': {
+            ...theme.typography.body2,
+          },
+        })}
       >
         <TimelineItem
           sx={(theme) => ({
@@ -209,7 +212,13 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
           })}
         >
           <TimelineContent>
-            <Grid container spacing={2}>
+            <Grid
+              container
+              spacing={2}
+              sx={(theme) => ({
+                fontWeight: theme.typography.fontWeightMedium,
+              })}
+            >
               <Grid item xs={4}>
                 {t('station')}
               </Grid>
