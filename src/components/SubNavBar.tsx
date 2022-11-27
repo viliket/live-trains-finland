@@ -20,7 +20,7 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
         display: 'flex',
         alignItems: 'center',
         position: 'sticky',
-        top: 0,
+        top: '-1px',
         zIndex: 1001,
         padding: '0.6rem 0',
         backgroundColor: theme.palette.common.secondaryBackground.default,
