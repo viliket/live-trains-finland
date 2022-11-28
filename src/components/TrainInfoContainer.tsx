@@ -170,6 +170,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         sx={(theme) => ({
           textAlign: 'center',
           paddingTop: 2,
+          paddingX: 1,
           backgroundColor: theme.palette.common.secondaryBackground.default,
           borderTop: `solid 1px ${theme.palette.divider}`,
         })}
@@ -190,6 +191,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
           paddingTop: 0,
           '.MuiTimelineContent-root': {
             ...theme.typography.body2,
+            paddingRight: 0,
           },
         })}
       >

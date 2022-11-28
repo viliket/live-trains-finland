@@ -123,6 +123,7 @@ function TrainComposition({
               width: 'calc(100% - 2px)',
               borderRadius: '4px',
               color: 'black',
+              fontSize: 'x-small',
             }}
           >
             {w?.salesNumber}
@@ -133,11 +134,14 @@ function TrainComposition({
   };
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: 'inline-block',
+        width: '100%',
         maxWidth: '800px',
-        padding: '0 0.5rem',
+        '.MuiSvgIcon-root': {
+          fontSize: '1rem',
+        },
       }}
     >
       <div
@@ -258,7 +262,7 @@ function TrainComposition({
           </>
         )}
       </Typography>
-    </div>
+    </Box>
   );
 }
 
