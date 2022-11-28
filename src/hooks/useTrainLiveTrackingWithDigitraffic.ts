@@ -62,7 +62,7 @@ const handleTrainLocationMessage = (
       transport_mode: 'train',
       heading: heading,
       routeShortName: train
-        ? train.commuterLineid ?? train.trainNumber.toString()
+        ? train.commuterLineid || train.trainNumber.toString()
         : null,
       jrn: tl.trainNumber,
     },

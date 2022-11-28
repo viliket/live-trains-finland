@@ -25,7 +25,9 @@ const Train = () => {
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
-  const [executeRouteSearch, { data: routeData }] = useRoutesForRailLazyQuery();
+  const [executeRouteSearch, { data: routeData }] = useRoutesForRailLazyQuery({
+    fetchPolicy: 'no-cache',
+  });
 
   const [
     getTrain,
@@ -73,7 +75,7 @@ const Train = () => {
     if (train) {
       executeRouteSearch({
         variables: {
-          name: train.commuterLineid ?? train.trainNumber.toString(),
+          name: train.commuterLineid || train.trainNumber.toString(),
         },
       });
     }

@@ -90,7 +90,7 @@ const Station = () => {
       executeRouteSearch({
         variables: {
           name:
-            selectedTrain.commuterLineid ??
+            selectedTrain.commuterLineid ||
             selectedTrain.trainNumber.toString(),
         },
       });
