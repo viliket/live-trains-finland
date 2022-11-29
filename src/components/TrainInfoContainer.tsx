@@ -120,31 +120,26 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
             isFinalStop={i === length - 1}
           />
           <TimelineContent>
-            <Grid
-              container
-              spacing={2}
-              sx={(theme) => ({
-                borderBottom: `solid 1px ${theme.palette.divider}`,
-              })}
-            >
-              <Grid item xs={4}>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
                 <Link
                   component={RouterLink}
                   to={`/${getTrainStationName(station)}`}
                   color="inherit"
                   underline="none"
+                  sx={{ fontWeight: 500 }}
                 >
                   {getTrainStationName(station)}
                 </Link>
+                <Box sx={{ color: 'text.secondary' }}>
+                  {t('track')} {r.commercialTrack}
+                </Box>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={3} sx={{ marginTop: '1rem' }}>
                 {g.arrival ? <TimeTableRowTime row={g.arrival} /> : '-'}
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={3} sx={{ marginTop: '1rem' }}>
                 {g.departure ? <TimeTableRowTime row={g.departure} /> : '-'}
-              </Grid>
-              <Grid item xs={2}>
-                {r.commercialTrack}
               </Grid>
               <Grid item xs={12}>
                 {realTimeTrain && (
@@ -156,6 +151,11 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
                     />
                   </div>
                 )}
+                <Box
+                  sx={(theme) => ({
+                    borderBottom: `solid 1px ${theme.palette.divider}`,
+                  })}
+                ></Box>
               </Grid>
             </Grid>
           </TimelineContent>
@@ -221,7 +221,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
                 fontWeight: theme.typography.fontWeightMedium,
               })}
             >
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 {t('station')}
               </Grid>
               <Grid item xs={3}>
@@ -229,9 +229,6 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
               </Grid>
               <Grid item xs={3}>
                 {t('departure')}
-              </Grid>
-              <Grid item xs={2}>
-                {t('track')}
               </Grid>
             </Grid>
           </TimelineContent>
