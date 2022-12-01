@@ -237,7 +237,7 @@ function TrainComposition({
           <Box sx={{ flex: 1 }}>D</Box>
         </Box>
       )}
-      <Typography variant="body2">
+      <Typography variant="body2" color="text.secondary">
         {!stationName && (
           <>
             {t('train_current_composition')} (
