@@ -23,28 +23,29 @@ function TimeTableRowTime({ row }: TimeTableRowTimeProps) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       {(delayInMinutes > 0 || row.cancelled) && (
-        <span
-          style={{
+        <Box
+          sx={{
             textDecoration: 'line-through',
             fontSize: 'smaller',
             marginTop: '-0.8rem',
+            color: 'text.secondary',
           }}
         >
           {scheduledTime ? format(scheduledTime, 'HH:mm') : '?'}
-        </span>
+        </Box>
       )}
       {!row.cancelled && (
         <Box
           sx={{
-            color: delayInMinutes > 0 ? 'error.light' : undefined,
-            fontWeight: 'bold',
+            color: delayInMinutes > 0 ? 'error.main' : undefined,
+            fontWeight: '500',
           }}
         >
           {format(actualTime, 'HH:mm')}
         </Box>
       )}
       {row.cancelled && (
-        <Box sx={{ color: 'error.light', fontWeight: 'bold' }}>
+        <Box sx={{ color: 'error.main', fontWeight: '500' }}>
           {t('canceled')}
         </Box>
       )}

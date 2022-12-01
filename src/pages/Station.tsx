@@ -94,7 +94,7 @@ const Station = () => {
       executeRouteSearch({
         variables: {
           name:
-            selectedTrain.commuterLineid ??
+            selectedTrain.commuterLineid ||
             selectedTrain.trainNumber.toString(),
         },
       });
@@ -174,20 +174,33 @@ const Station = () => {
           />
         </Suspense>
       </Box>
-      <ToggleButtonGroup
-        color="primary"
-        value={timeTableType}
-        exclusive
-        fullWidth
-        onChange={handleTimeTableTypeChange}
+      <Box
+        sx={{
+          padding: '0.5rem',
+          bgcolor: 'common.secondaryBackground.default',
+        }}
       >
-        <ToggleButton value={TimeTableRowType.Departure}>
-          {t('departures')} <ClockStart />
-        </ToggleButton>
-        <ToggleButton value={TimeTableRowType.Arrival}>
-          {t('arrivals')} <ClockEnd />
-        </ToggleButton>
-      </ToggleButtonGroup>
+        <ToggleButtonGroup
+          color="primary"
+          value={timeTableType}
+          exclusive
+          fullWidth
+          onChange={handleTimeTableTypeChange}
+          sx={{
+            borderRadius: '24px',
+            button: {
+              borderRadius: '24px',
+            },
+          }}
+        >
+          <ToggleButton value={TimeTableRowType.Departure}>
+            {t('departures')} <ClockStart />
+          </ToggleButton>
+          <ToggleButton value={TimeTableRowType.Arrival}>
+            <ClockEnd /> {t('arrivals')}
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
       {!loading && data?.trainsByStationAndQuantity && (
         <StationTimeTable
           stationCode={stationCode}
