@@ -95,7 +95,7 @@ const lightTheme = createTheme({
       main: '#00A651',
     },
     error: {
-      main: '#c92424',
+      main: '#b72727',
     },
     text: {
       primary: 'rgb(26, 32, 39)',

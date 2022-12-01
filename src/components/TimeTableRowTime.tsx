@@ -27,7 +27,7 @@ function TimeTableRowTime({ row }: TimeTableRowTimeProps) {
           sx={{
             textDecoration: 'line-through',
             fontSize: 'smaller',
-            marginTop: '-1rem',
+            marginTop: '-0.8rem',
             color: 'text.secondary',
           }}
         >

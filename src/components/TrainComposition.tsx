@@ -198,7 +198,7 @@ function TrainComposition({
                   justifyContent: 'center',
                   color:
                     theme.palette.mode === 'dark'
-                      ? theme.palette.grey[200]
+                      ? theme.palette.grey[300]
                       : theme.palette.primary.main,
                   'svg path.door': {
                     fill:
