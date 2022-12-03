@@ -1,46 +1,44 @@
 import { Box, Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import TrainWagon from '../components/TrainWagon';
-import { useTime } from '../hooks/useTime';
+import Hero from '../components/Hero';
 
 const NotFound = () => {
   const { t } = useTranslation();
-  const currentTime = useTime();
 
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        textAlign: 'center',
-      }}
-    >
+    <>
       <Box
-        sx={{
-          width: '60%',
-          alignSelf: 'center',
-          marginTop: '2rem',
-          borderBottomWidth: '1px',
-          borderBottomStyle: 'solid',
-          borderBottomColor: 'divider',
-        }}
+        sx={(theme) => ({
+          display: 'flex',
+          justifyContent: 'center',
+          background: theme.palette.common.secondaryBackground.default,
+        })}
       >
         <Box
           sx={{
-            transform: 'rotate(180deg)',
+            width: '100%',
+            marginTop: '1rem',
           }}
         >
-          <TrainWagon doorsOpen={currentTime.getSeconds() % 4 === 0} />
+          <Hero />
         </Box>
       </Box>
-      <Box>
-        <h1>{t('page_not_found')}</h1>
-      </Box>
-    </Container>
+      <Container
+        maxWidth="md"
+        sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          textAlign: 'center',
+        }}
+      >
+        <Box>
+          <h1>{t('page_not_found')}</h1>
+        </Box>
+      </Container>
+    </>
   );
 };
 
