@@ -59,7 +59,7 @@ const VehicleMapContainer = ({
       preferCanvas
     >
       <TileLayer
-        url="https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png"
+        url={`https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png?digitransit-subscription-key=${process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY}`}
         id="hsl-map"
         attribution='&copy; <a href="https://digitransit.fi/">Digitransit</a>'
       />

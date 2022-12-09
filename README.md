@@ -10,10 +10,16 @@ Live version running at [junaan.fi](https://junaan.fi).
 
 See the instructions below for development.
 
-### Requirements
+### Prerequisites
+
+You need the following tools:
 
 - Node.js >= 16
 - npm >= 8
+
+Register to the [Digitransit API Portal](https://portal-api.digitransit.fi/) and create yourself a new API subscription key.
+
+Copy the example configuration values from the `.env` file to a new file named `.env.local` and replace the values with your own.
 
 ### Run the app
 
