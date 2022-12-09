@@ -27,6 +27,9 @@ const digitransitLink = new HttpLink({
 // Digitraffic / Fintraffic
 const digitrafficLink = new HttpLink({
   uri: 'https://rata.digitraffic.fi/api/v2/graphql/graphql',
+  headers: {
+    'Digitraffic-User': 'Junaan.fi',
+  },
 });
 
 // VR
