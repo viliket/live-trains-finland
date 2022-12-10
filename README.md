@@ -1,8 +1,17 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/62a70830-6ab5-4a0e-9299-ed99b72b67a0/deploy-status)](https://app.netlify.com/sites/junaan/deploys)
-
 # Junaan.fi
 
-A web application made with React that allows checking real-time train schedules, locations, and compositions of trains in Finland. The app uses open APIs provided by Fintraffic / Digitraffic and HSL / Digitransit.
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/464c726470b649b18f7b4fad710db235)](https://www.codacy.com/gh/viliket/live-trains-finland/dashboard?utm_source=github.com&utm_medium=referral&utm_content=viliket/live-trains-finland&utm_campaign=Badge_Grade)
+![GitHub top language](https://img.shields.io/github/languages/top/viliket/live-trains-finland)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fjunaan.fi)](https://junaan.fi)
+
+A web application made with React that allows checking real-time train
+schedules, locations, and compositions of trains in Finland.
+The app uses data from open APIs provided by
+[Fintraffic](https://tmfg.fi/) /
+[Digitraffic](https://www.digitraffic.fi/)
+and [Helsinki regional traffic](https://hsl.fi/) /
+[Digitransit](https://digitransit.fi/), licensed by
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 Live version running at [junaan.fi](https://junaan.fi).
 
@@ -10,14 +19,22 @@ Live version running at [junaan.fi](https://junaan.fi).
 
 See the instructions below for development.
 
-### Requirements
+### Prerequisites
+
+You need the following tools:
 
 - Node.js >= 16
 - npm >= 8
 
+Register to the [Digitransit API Portal](https://portal-api.digitransit.fi/)
+and create yourself a new API subscription key.
+
+Copy the example configuration values from the `.env` file to a new file named
+`.env.local` and replace the values with your own.
+
 ### Run the app
 
-```
+```bash
 npm start
 ```
 
@@ -29,17 +46,19 @@ You will also see any lint errors in the console.
 
 ### Regenerate GraphQL operations
 
-```
+```bash
 npm run gql-codegen
 ```
 
-Run the above command whenever you modify the GraphQL queries in the `src/graphql/queries` folder or when the remote GraphQL schema is modified.
+Run the above command whenever you modify the GraphQL queries in the
+`src/graphql/queries` folder or when the remote GraphQL schema is modified.
 
-Note that the above command is also run as part of the `prestart` script when running `npm start`.
+Note that the above command is also run as part of the `prestart` script when
+running `npm start`.
 
 ### Run the tests
 
-```
+```bash
 npm test
 ```
 
@@ -47,7 +66,7 @@ Launches the test runner in the interactive watch mode.
 
 ### Create production build
 
-```
+```bash
 npm run build
 ```
 
@@ -55,45 +74,55 @@ Builds the app for production to the `build` folder.
 
 ### Regenerate the map tiles
 
-Extract the map tile files (.pbf) from MBTiles in `data` and output the files to `public/tiles` using `npm run extract-tiles-public`.
+Extract the map tile files (.pbf) from MBTiles in `data` and output the files
+to `public/tiles` using `npm run extract-tiles-public`.
 
 #### Generate MBTiles for railway_tracks
 
-1. Download the railway network map layer data from [Finnish Transport Infrastructure Agency's Download- and viewing service](https://julkinen.vayla.fi/oskari/?lang=en)
+1. Download the railway network map layer data from
+   [Finnish Transport Infrastructure Agency's Download- and viewing service](https://julkinen.vayla.fi/oskari/?lang=en)
 
-   - Choose Map layers -> Rail traffic -> Finnish rail network -> Railway network (multi-track).
+   - Choose Map layers -> Rail traffic -> Finnish rail network
+     -> Railway network (multi-track).
 
-2. Unzip the downloaded archive and convert the shape to GeoJSON using [ogr2ogr](https://gdal.org/programs/ogr2ogr.html).
+2. Unzip the downloaded archive and convert the shape to GeoJSON using
+   [ogr2ogr](https://gdal.org/programs/ogr2ogr.html).
 
-```
-ogr2ogr -f GeoJSON ./data/railway_tracks.geojson locationtracks_simplifiedLine.shp -s_srs EPSG:3
-067 -t_srs EPSG:4326
-```
+   ```bash
+   ogr2ogr -f GeoJSON ./data/railway_tracks.geojson locationtracks_simplifiedLine.shp -s_srs EPSG:3
+   067 -t_srs EPSG:4326
+   ```
 
-3. Generate MBTiles using [tippecanoe](https://github.com/mapbox/tippecanoe) by Mapbox.
+3. Generate MBTiles using [tippecanoe](https://github.com/mapbox/tippecanoe)
+   by Mapbox.
 
-```
-tippecanoe -o ./data/railway_tracks.mbtiles --drop-densest-as-needed ./data/railway_tracks.geojson --no-tile-compression --maximum-zoom=14
-```
+   ```bash
+   tippecanoe -o ./data/railway_tracks.mbtiles --drop-densest-as-needed ./data/railway_tracks.geojson --no-tile-compression --maximum-zoom=14
+   ```
 
 #### Generate MBTiles for railway_platforms
 
-1. Fetch the OpenStreetMap (OSM) railway platform GeoJSON data through Overpass API for each station. See steps to do this below (CLI tool to be released later).
-   - Make the following query for each station:
-     ```
+1. Fetch the OpenStreetMap (OSM) railway platform GeoJSON data through Overpass
+   API for each station. See steps to do this below (CLI tool to be released later).
+
+   - Perform the following query for each station:
+
+     ```overpassql
      [out:json];
      nwr(around:1000,<station lat>,<station lon>)[railway=platform];
      out geom;
      ```
 
-- Convert the response OSM data to GeoJSON using [osmtogeojson](https://www.npmjs.com/package/osmtogeojson).
-- Merge the features from all platforms into single feature collection and save the file to `data/railway_platforms.json`.
+   - Convert the response OSM data to GeoJSON using [osmtogeojson](https://www.npmjs.com/package/osmtogeojson).
+   - Merge the features from all platforms into single feature collection and
+     save the file to `data/railway_platforms.json`.
 
-2. Generate MBTiles using [tippecanoe](https://github.com/mapbox/tippecanoe) by Mapbox.
+2. Generate MBTiles using [tippecanoe](https://github.com/mapbox/tippecanoe)
+   by Mapbox.
 
-```
-tippecanoe -o ./data/railway_platforms.mbtiles --drop-densest-as-needed ./data/railway_platforms.json --no-tile-compression --minimum-zoom=14 --maximum-zoom=18
-```
+   ```bash
+   tippecanoe -o ./data/railway_platforms.mbtiles --drop-densest-as-needed ./data/railway_platforms.json --no-tile-compression --minimum-zoom=14 --maximum-zoom=18
+   ```
 
 ## License
 

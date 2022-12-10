@@ -22,11 +22,18 @@ export const gqlClients = {
 // Digitransit: HSL
 const digitransitLink = new HttpLink({
   uri: 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql',
+  headers: {
+    'digitransit-subscription-key':
+      process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY,
+  },
 });
 
 // Digitraffic / Fintraffic
 const digitrafficLink = new HttpLink({
   uri: 'https://rata.digitraffic.fi/api/v2/graphql/graphql',
+  headers: {
+    'Digitraffic-User': 'Junaan.fi',
+  },
 });
 
 // VR
