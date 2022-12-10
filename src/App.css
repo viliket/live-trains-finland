@@ -6,9 +6,6 @@
 
 .maplibregl-ctrl-attrib.maplibregl-compact-show {
   max-width: 58%;
-}
-
-.dark .maplibregl-ctrl-attrib.maplibregl-compact-show {
   background-color: hsla(0, 0%, 100%, 0.7);
 }
 
