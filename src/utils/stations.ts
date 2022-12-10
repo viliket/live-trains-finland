@@ -5510,4 +5510,4 @@ export const trainStations: TrainStation[] = [
     longitude: 25.747629,
     latitude: 62.596862,
   },
-].filter((s) => s.passengerTraffic);
+];

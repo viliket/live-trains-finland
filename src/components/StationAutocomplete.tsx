@@ -10,6 +10,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { TrainStation, trainStations } from '../utils/stations';
 
+const trainStationsWithPassengerTraffic = trainStations.filter(
+  (s) => s.passengerTraffic
+);
+
 export default function StationAutocomplete() {
   const [value, setValue] = useState<TrainStation | null>(null);
   const [inputValue, setInputValue] = useState('');
@@ -23,7 +27,7 @@ export default function StationAutocomplete() {
       getOptionLabel={(option) =>
         typeof option === 'string' ? option : option.stationName
       }
-      options={trainStations}
+      options={trainStationsWithPassengerTraffic}
       autoComplete
       includeInputInList
       filterSelectedOptions={false}
