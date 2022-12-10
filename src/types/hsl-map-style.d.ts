@@ -6,8 +6,17 @@ declare module 'hsl-map-style' {
   type Option = {
     enabled: boolean;
   };
+  type QueryParam = {
+    /**
+     *  Url pattern where the parameter should be added.
+     */
+    url: string;
+    name: string;
+    value: string;
+  };
   type Options = {
     sourcesUrl?: string; // <-- You can override the default ('https://cdn.digitransit.fi/') sources URL.
+    queryParams?: QueryParam[];
     components?: {
       // Set each layer you want to include to true
 

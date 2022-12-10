@@ -20,7 +20,17 @@ import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
 
 const generateMapStyle = (options?: Options) => {
-  const mapStyle = generateStyle(options);
+  const mapStyle = generateStyle({
+    ...options,
+    sourcesUrl: 'https://cdn.digitransit.fi/',
+    queryParams: [
+      {
+        url: 'https://cdn.digitransit.fi/',
+        name: 'digitransit-subscription-key',
+        value: process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
+      },
+    ],
+  });
   (mapStyle.sources['vector'] as VectorSource).attribution =
     '<a href="https://digitransit.fi/" target="_blank">&copy; Digitransit</a> ' +
     '<a href="https://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> ' +
@@ -86,6 +96,24 @@ const VehicleMapContainer = ({
         zoom: initialZoom,
       }}
       mapStyle={theme.palette.mode === 'light' ? mapStyle : mapStyleDark}
+      transformRequest={(url) => {
+        if (
+          url.includes('api.digitransit.fi') ||
+          url.includes('cdn.digitransit.fi') ||
+          url.includes('digitransit-prod-cdn-origin.azureedge.net')
+        ) {
+          return {
+            url: url.replace('api.digitransit.fi', 'cdn.digitransit.fi'),
+            headers: {
+              'digitransit-subscription-key':
+                process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY,
+            },
+          };
+        }
+        return {
+          url: url,
+        };
+      }}
     >
       <NavigationControl position="top-left" />
       <ScaleControl />
