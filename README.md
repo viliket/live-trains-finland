@@ -2,12 +2,16 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/464c726470b649b18f7b4fad710db235)](https://www.codacy.com/gh/viliket/live-trains-finland/dashboard?utm_source=github.com&utm_medium=referral&utm_content=viliket/live-trains-finland&utm_campaign=Badge_Grade)
 ![GitHub top language](https://img.shields.io/github/languages/top/viliket/live-trains-finland)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fjunaan.fi)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fjunaan.fi)](https://junaan.fi)
 
 A web application made with React that allows checking real-time train
 schedules, locations, and compositions of trains in Finland.
-The app uses data from open APIs provided by [Fintraffic](https://tmfg.fi/) / [Digitraffic](https://www.digitraffic.fi/)
-and [Helsinki regional traffic](https://hsl.fi/) / [Digitransit](https://digitransit.fi/), licensed by [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+The app uses data from open APIs provided by
+[Fintraffic](https://tmfg.fi/) /
+[Digitraffic](https://www.digitraffic.fi/)
+and [Helsinki regional traffic](https://hsl.fi/) /
+[Digitransit](https://digitransit.fi/), licensed by
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 Live version running at [junaan.fi](https://junaan.fi).
 
