@@ -33,8 +33,11 @@ export type VehicleDetails = {
   routeShortName: string | null;
   /** Internal journey descriptor - for trains this is the train number */
   jrn: number | null;
-  /** Timestamp of the real-time event details */
-  timestamp: number;
+  /**
+   * Timestamp of the latest real-time event represented as the time elapsed since
+   * the beginning of the current document's lifetime.
+   */
+  timestamp: DOMHighResTimeStamp;
 };
 
 /**

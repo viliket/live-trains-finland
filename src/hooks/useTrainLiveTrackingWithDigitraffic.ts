@@ -68,7 +68,7 @@ const handleTrainLocationMessage = (
         ? train.commuterLineid || train.trainNumber.toString()
         : null,
       jrn: tl.trainNumber,
-      timestamp: Date.now(),
+      timestamp: performance.now(),
     },
   });
 };

@@ -194,8 +194,7 @@ export default function VehicleMarkerLayer({
       const prevPos = vehicle.prevPosition;
       const curPos = vehicle.position;
 
-      const elapsedTime =
-        performance.timeOrigin + timestamp - vehicle.timestamp;
+      const elapsedTime = timestamp - vehicle.timestamp;
       let progress = elapsedTime / animDurationInMs;
       if (progress > 1) progress = 1;
 

@@ -78,7 +78,7 @@ const handleVehiclePositionMessage = (topic: string, message: Buffer) => {
       heading: vp.hdg,
       routeShortName: vp.desi,
       jrn: vp.jrn ?? null,
-      timestamp: Date.now(),
+      timestamp: performance.now(),
     },
   });
 };
