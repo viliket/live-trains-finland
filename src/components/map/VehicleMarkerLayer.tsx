@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { Button, useTheme } from '@mui/material';
+import { Box, Button, useTheme } from '@mui/material';
 import { format } from 'date-fns';
 import { MapStyleImageMissingEvent } from 'maplibre-gl';
-import { CrosshairsGps } from 'mdi-material-ui';
+import { Crosshairs, CrosshairsGps } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import {
   Layer,
@@ -216,15 +216,23 @@ export default function VehicleMarkerLayer({
       {selectedVehicle && (
         <CustomOverlay
           children={
-            <Button
-              variant="contained"
-              size="small"
-              color={isTracking ? 'primary' : 'inherit'}
-              sx={{ minWidth: 'auto', padding: '4px' }}
+            <Box
+              component="button"
               onClick={() => setIsTracking(!isTracking)}
+              sx={{
+                svg: {
+                  verticalAlign: 'middle',
+                  padding: '4px',
+                  color: isTracking ? 'primary.main' : 'text.primary',
+                },
+              }}
             >
-              <CrosshairsGps />
-            </Button>
+              {isTracking ? (
+                <CrosshairsGps className="maplibregl-ctrl-icon" />
+              ) : (
+                <Crosshairs className="maplibregl-ctrl-icon" />
+              )}
+            </Box>
           }
         />
       )}

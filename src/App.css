@@ -30,12 +30,27 @@
   color: #bbb;
 }
 
-/**
- * Custom maplibre control class to avoid pre-made maplibre styles
- * from overriding React custom overlay component styles
- */
-.maplibregl-ctrl-custom {
-  pointer-events: auto;
-  float: right;
-  margin: 10px 10px 0 0;
+.dark .maplibregl-ctrl-group {
+  background: #111;
+}
+
+.dark .maplibregl-ctrl-group:not(:empty) {
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 10%);
+}
+
+.dark .maplibregl-ctrl button:not(:disabled):hover {
+  background-color: rgb(255 255 255/5%);
+}
+
+.dark .maplibregl-ctrl-group button + button {
+  border-top: 1px solid #2b2b2b;
+}
+
+.dark .maplibregl-ctrl button span.maplibregl-ctrl-icon {
+  filter: invert(1);
+}
+
+.dark .maplibregl-popup-content {
+  background: #111;
+  box-shadow: 0 1px 2px rgb(255 255 255 / 10%);
 }
