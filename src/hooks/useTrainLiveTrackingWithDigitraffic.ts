@@ -53,7 +53,7 @@ const handleTrainLocationMessage = (
     [tl.trainNumber]: {
       position: tl.location.coordinates,
       prevPosition:
-        oldVehicles[tl.trainNumber]?.prevPosition ?? tl.location.coordinates,
+        oldVehicles[tl.trainNumber]?.position ?? tl.location.coordinates,
       drst: null,
       acc: 0,
       spd: tl.speed,
