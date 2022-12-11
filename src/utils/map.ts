@@ -95,7 +95,7 @@ export function getVehiclesGeoJsonData(
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: [message.lng, message.lat],
+        coordinates: message.position,
       },
       properties: {
         title: 'Car',
@@ -106,7 +106,7 @@ export function getVehiclesGeoJsonData(
           ? message.routeShortName
           : message.jrn?.toString() ?? '?',
         bearing: message.heading ?? null,
-        nextPosition: [message.lng, message.lat],
+        nextPosition: message.position,
       },
     })),
   };

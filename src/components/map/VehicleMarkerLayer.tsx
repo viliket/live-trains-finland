@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button, useTheme } from '@mui/material';
-import { along, distance, lineString } from '@turf/turf';
 import { format } from 'date-fns';
 import { MapStyleImageMissingEvent } from 'maplibre-gl';
 import { CrosshairsGps } from 'mdi-material-ui';
@@ -31,6 +30,8 @@ type VehicleMarkerLayerProps = {
   selectedVehicleId: number | null;
 };
 
+const animDurationInMs = 700;
+
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
   selectedVehicleId,
@@ -43,7 +44,6 @@ export default function VehicleMarkerLayer({
   const [vehiclesOnMap, setVehiclesOnMap] = useState<
     Record<number, VehicleDetails>
   >({});
-  const vehiclesOnMapRef = useRef(vehiclesOnMap);
   const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -123,7 +123,7 @@ export default function VehicleMarkerLayer({
       if (!vehicle) return;
       map.flyTo(
         {
-          center: [vehicle.lng, vehicle.lat],
+          center: vehicle.position,
           animate: true,
           duration: 1000,
           // When popup is open, offset the y location by the popup height
@@ -187,28 +187,27 @@ export default function VehicleMarkerLayer({
     };
   }, [map, onVehicleMarkerClick]);
 
-  useAnimationFrame(() => {
-    // TODO: Improve vehicle marker animation logic
-    const previousVehicles = vehiclesOnMapRef.current;
+  useAnimationFrame((timestamp) => {
     const currentVehicles = { ...vehiclesVar() };
     Object.keys(currentVehicles).forEach((id) => {
-      const cur = currentVehicles[Number.parseInt(id)];
-      const prev = previousVehicles[Number.parseInt(id)];
-      if (prev) {
-        const start = [prev.lng, prev.lat];
-        const end = [cur.lng, cur.lat];
-        const line = lineString([start, end]);
-        const d = distance(start, end, { units: 'meters' });
-        const newPos = along(line, d / 100, { units: 'meters' }).geometry
-          .coordinates;
-        currentVehicles[Number.parseInt(id)] = {
-          ...cur,
-          lng: newPos[0],
-          lat: newPos[1],
-        };
-      }
+      const vehicle = currentVehicles[Number.parseInt(id)];
+      const prevPos = vehicle.prevPosition;
+      const curPos = vehicle.position;
+
+      const elapsedTime =
+        performance.timeOrigin + timestamp - vehicle.timestamp;
+      let progress = elapsedTime / animDurationInMs;
+      if (progress > 1) progress = 1;
+
+      currentVehicles[Number.parseInt(id)] = {
+        ...vehicle,
+        // Calculate the interpolated coordinates based on the elapsed time
+        position: [
+          prevPos[0] + (curPos[0] - prevPos[0]) * progress,
+          prevPos[1] + (curPos[1] - prevPos[1]) * progress,
+        ],
+      };
     });
-    vehiclesOnMapRef.current = currentVehicles;
     setVehiclesOnMap(currentVehicles);
   });
 
@@ -263,8 +262,8 @@ export default function VehicleMarkerLayer({
       {selectedVehicleForPopup && map && (
         <Popup
           anchor="bottom"
-          longitude={selectedVehicleForPopup.lng}
-          latitude={selectedVehicleForPopup.lat}
+          longitude={selectedVehicleForPopup.position[0]}
+          latitude={selectedVehicleForPopup.position[1]}
           onClose={() => setVehicleIdForPopup(null)}
         >
           <h4 style={{ margin: '0.5em 0' }}>

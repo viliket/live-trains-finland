@@ -2,14 +2,9 @@ import { useEffect, useRef } from 'react';
 
 const useAnimationFrame = (callback: FrameRequestCallback) => {
   const requestIdRef = useRef<number>();
-  const previousTimeRef = useRef<number>();
 
   const animate = (time: DOMHighResTimeStamp) => {
-    if (previousTimeRef.current !== undefined) {
-      const deltaTime = time - previousTimeRef.current;
-      callback(deltaTime);
-    }
-    previousTimeRef.current = time;
+    callback(time);
     requestIdRef.current = requestAnimationFrame(animate);
   };
 

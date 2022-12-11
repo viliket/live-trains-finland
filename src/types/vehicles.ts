@@ -11,8 +11,8 @@ export type VehicleDetails = {
    * For Sm4 (MT): 63xx and for Sm4 (M): 64xx
    */
   veh: number;
-  lat: number;
-  lng: number;
+  position: GeoJSONPosition;
+  prevPosition: GeoJSONPosition;
   /** Door status (0 if all the doors are closed, 1 if any of the doors are open). */
   drst: number | null;
   /** Speed of the vehicle, in kilometers per hour (km/h). */
@@ -33,6 +33,8 @@ export type VehicleDetails = {
   routeShortName: string | null;
   /** Internal journey descriptor - for trains this is the train number */
   jrn: number | null;
+  /** Timestamp of the real-time event details */
+  timestamp: number;
 };
 
 /**
