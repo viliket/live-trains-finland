@@ -5,6 +5,7 @@ import { generateStyle, Options } from 'hsl-map-style';
 import { VectorSource } from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
 import Map, {
+  FullscreenControl,
   Layer,
   MapRef,
   NavigationControl,
@@ -117,6 +118,7 @@ const VehicleMapContainer = ({
     >
       <NavigationControl position="top-left" />
       <ScaleControl />
+      <FullscreenControl />
       {
         /**
          * Create empty base layers for dynamically changing the layer order
