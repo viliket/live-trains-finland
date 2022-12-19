@@ -18,7 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import { vehiclesVar } from '../../graphql/client';
 import useAnimationFrame from '../../hooks/useAnimationFrame';
 import useInterval from '../../hooks/useInterval';
-import { VehicleDetails } from '../../types/vehicles';
 import {
   getVehicleMarkerIconImage,
   getVehiclesGeoJsonData,
@@ -41,20 +40,12 @@ export default function VehicleMarkerLayer({
     null
   );
   const [isTracking, setIsTracking] = useState<boolean>(false);
-  const [vehiclesOnMap, setVehiclesOnMap] = useState<
-    Record<number, VehicleDetails>
+  const [interpolatedPositions, setInterpolatedPositions] = useState<
+    Record<number, GeoJSON.Position>
   >({});
   const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
-
-  const selectedVehicle = selectedVehicleId
-    ? vehiclesOnMap[selectedVehicleId]
-    : null;
-
-  const selectedVehicleForPopup = vehicleIdForPopup
-    ? vehiclesOnMap[vehicleIdForPopup]
-    : null;
 
   useEffect(() => {
     const missingImages: string[] = [];
@@ -119,7 +110,7 @@ export default function VehicleMarkerLayer({
 
   useInterval(() => {
     if (map && isTracking && selectedVehicleId) {
-      const vehicle = vehiclesOnMap[selectedVehicleId];
+      const vehicle = vehiclesVar()[selectedVehicleId];
       if (!vehicle) return;
       map.flyTo(
         {
@@ -188,7 +179,8 @@ export default function VehicleMarkerLayer({
   }, [map, onVehicleMarkerClick]);
 
   useAnimationFrame((timestamp) => {
-    const currentVehicles = { ...vehiclesVar() };
+    const currentVehicles = vehiclesVar();
+    const vehiclePositions: Record<number, GeoJSON.Position> = {};
     Object.keys(currentVehicles).forEach((id) => {
       const vehicle = currentVehicles[Number.parseInt(id)];
       const prevPos = vehicle.prevPosition;
@@ -198,21 +190,21 @@ export default function VehicleMarkerLayer({
       let progress = elapsedTime / animDurationInMs;
       if (progress > 1) progress = 1;
 
-      currentVehicles[Number.parseInt(id)] = {
-        ...vehicle,
-        // Calculate the interpolated coordinates based on the elapsed time
-        position: [
-          prevPos[0] + (curPos[0] - prevPos[0]) * progress,
-          prevPos[1] + (curPos[1] - prevPos[1]) * progress,
-        ],
-      };
+      vehiclePositions[Number.parseInt(id)] = [
+        prevPos[0] + (curPos[0] - prevPos[0]) * progress,
+        prevPos[1] + (curPos[1] - prevPos[1]) * progress,
+      ];
     });
-    setVehiclesOnMap(currentVehicles);
+    setInterpolatedPositions(vehiclePositions);
   });
+
+  const selectedVehicleForPopup = vehicleIdForPopup
+    ? vehiclesVar()[vehicleIdForPopup]
+    : null;
 
   return (
     <>
-      {selectedVehicle && (
+      {selectedVehicleId != null && (
         <CustomOverlay
           children={
             <Box
@@ -235,7 +227,10 @@ export default function VehicleMarkerLayer({
           }
         />
       )}
-      <Source type="geojson" data={getVehiclesGeoJsonData(vehiclesOnMap)}>
+      <Source
+        type="geojson"
+        data={getVehiclesGeoJsonData(vehiclesVar(), interpolatedPositions)}
+      >
         <Layer
           {...{
             id: 'vehicles',

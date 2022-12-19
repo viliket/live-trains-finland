@@ -87,7 +87,8 @@ export const getVehicleMarkerIconImage = ({
 };
 
 export function getVehiclesGeoJsonData(
-  vehicles: Record<number, VehicleDetails>
+  vehicles: Record<number, VehicleDetails>,
+  interpolatedPositions: Record<number, GeoJSON.Position>
 ): GeoJSON.FeatureCollection<GeoJSON.Geometry> {
   return {
     type: 'FeatureCollection',
@@ -95,7 +96,8 @@ export function getVehiclesGeoJsonData(
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: message.position,
+        coordinates:
+          interpolatedPositions[Number.parseInt(id)] ?? message.position,
       },
       properties: {
         title: 'Car',
@@ -106,7 +108,6 @@ export function getVehiclesGeoJsonData(
           ? message.routeShortName
           : message.jrn?.toString() ?? '?',
         bearing: message.heading ?? null,
-        nextPosition: message.position,
       },
     })),
   };
