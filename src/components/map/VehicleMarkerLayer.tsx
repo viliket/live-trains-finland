@@ -238,6 +238,7 @@ export default function VehicleMarkerLayer({
             source: 'point',
             type: 'symbol',
             layout: {
+              'symbol-z-order': 'viewport-y',
               'icon-image': 'vehiclemarker-x-0',
               'icon-rotate': ['get', 'bearing'],
               'icon-size': 0.6,
