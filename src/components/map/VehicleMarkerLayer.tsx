@@ -29,7 +29,7 @@ type VehicleMarkerLayerProps = {
   selectedVehicleId: number | null;
 };
 
-const animDurationInMs = 700;
+const animDurationInMs = 1000;
 
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
@@ -116,14 +116,15 @@ export default function VehicleMarkerLayer({
         {
           center: vehicle.position,
           animate: true,
-          duration: 1000,
+          easing: (t) => t,
+          duration: animDurationInMs,
           // When popup is open, offset the y location by the popup height
           offset: vehicleIdForPopup ? [0, 40] : [0, 0],
         },
         { triggerSource: 'flyTo' }
       );
     }
-  }, 500);
+  }, animDurationInMs);
 
   useEffect(() => {
     const clickCallback = (e: MapLayerMouseEvent) => {
@@ -247,7 +248,8 @@ export default function VehicleMarkerLayer({
               'icon-rotation-alignment': 'map',
               'icon-allow-overlap': true,
               'icon-ignore-placement': true,
-              'text-allow-overlap': false,
+              // Prevent text flickering on larger zoom levels when vehicle marker icon is moving fast
+              'text-allow-overlap': map && map.getZoom() > 15,
               'text-optional': true,
               'text-padding': 0,
               'text-size': 12,
@@ -265,8 +267,14 @@ export default function VehicleMarkerLayer({
       {selectedVehicleForPopup && map && (
         <Popup
           anchor="bottom"
-          longitude={selectedVehicleForPopup.position[0]}
-          latitude={selectedVehicleForPopup.position[1]}
+          longitude={
+            interpolatedPositions[selectedVehicleForPopup.veh][0] ??
+            selectedVehicleForPopup.position[0]
+          }
+          latitude={
+            interpolatedPositions[selectedVehicleForPopup.veh][1] ??
+            selectedVehicleForPopup.position[1]
+          }
           onClose={() => setVehicleIdForPopup(null)}
         >
           <h4 style={{ margin: '0.5em 0' }}>
