@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useTheme } from '@mui/material';
+import { MapLibreZoomEvent } from 'maplibre-gl';
 import { Layer, Source, useMap } from 'react-map-gl';
 
 import { trainStations } from '../../utils/stations';
@@ -13,13 +14,14 @@ type StopsLayerProps = {
 const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
   const { current: map } = useMap();
   const theme = useTheme();
+  const [currentZoom, setCurrentZoom] = useState<number>();
 
   const routeStationNames = routeStationCodes?.map(
     (c) => trainStations.find((s) => s.stationShortCode === c)?.stationName
   );
 
   useEffect(() => {
-    let img = new Image(64, 64);
+    const img = new Image(64, 64);
     img.onload = () => {
       if (map && !map.hasImage('stop-marker')) {
         map.addImage('stop-marker', img);
@@ -27,6 +29,23 @@ const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
     };
     img.onerror = (e) => console.error(e);
     img.src = stopSignSvgPath;
+  }, [map]);
+
+  useEffect(() => {
+    const callback = (e: MapLibreZoomEvent) => {
+      const zoom = Math.round(e.target.getZoom());
+      setCurrentZoom(zoom);
+    };
+
+    if (map) {
+      map.on('zoom', callback);
+    }
+
+    return () => {
+      if (map) {
+        map.off('zoom', callback);
+      }
+    };
   }, [map]);
 
   return (
@@ -74,6 +93,7 @@ const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
           filter: ['all', ['==', 'type', 'RAIL'], ['==', 'platform', 'null']],
           layout: {
             'text-optional': true,
+            'text-allow-overlap': currentZoom != null && currentZoom > 10,
             'text-size': 10,
             'text-field': '{name}',
             'text-font': ['Gotham Rounded Medium'],
