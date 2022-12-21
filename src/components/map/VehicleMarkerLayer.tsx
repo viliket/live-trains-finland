@@ -251,7 +251,7 @@ export default function VehicleMarkerLayer({
               // Prevent text flickering on larger zoom levels when vehicle marker icon is moving fast
               'text-allow-overlap': map && map.getZoom() > 15,
               'text-optional': true,
-              'text-padding': 0,
+              'text-padding': 3,
               'text-size': 12,
               'text-anchor': 'top',
               'text-offset': [0, -0.4],
