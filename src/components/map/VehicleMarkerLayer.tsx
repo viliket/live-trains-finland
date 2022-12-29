@@ -205,29 +205,30 @@ export default function VehicleMarkerLayer({
 
   return (
     <>
-      {selectedVehicleId != null && (
-        <CustomOverlay
-          children={
-            <Box
-              component="button"
-              onClick={() => setIsTracking(!isTracking)}
-              sx={{
-                svg: {
-                  verticalAlign: 'middle',
-                  padding: '4px',
-                  color: isTracking ? 'primary.main' : 'text.primary',
-                },
-              }}
-            >
-              {isTracking ? (
-                <CrosshairsGps className="maplibregl-ctrl-icon" />
-              ) : (
-                <Crosshairs className="maplibregl-ctrl-icon" />
-              )}
-            </Box>
-          }
-        />
-      )}
+      {selectedVehicleId != null &&
+        interpolatedPositions[selectedVehicleId] && (
+          <CustomOverlay
+            children={
+              <Box
+                component="button"
+                onClick={() => setIsTracking(!isTracking)}
+                sx={{
+                  svg: {
+                    verticalAlign: 'middle',
+                    padding: '4px',
+                    color: isTracking ? 'primary.main' : 'text.primary',
+                  },
+                }}
+              >
+                {isTracking ? (
+                  <CrosshairsGps className="maplibregl-ctrl-icon" />
+                ) : (
+                  <Crosshairs className="maplibregl-ctrl-icon" />
+                )}
+              </Box>
+            }
+          />
+        )}
       <Source
         type="geojson"
         data={getVehiclesGeoJsonData(vehiclesVar(), interpolatedPositions)}
