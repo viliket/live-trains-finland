@@ -97,9 +97,9 @@ const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
             'text-size': 10,
             'text-field': '{name}',
             'text-font': ['Gotham Rounded Medium'],
-            'text-anchor': 'top',
+            'text-variable-anchor': ['left', 'right'],
             'text-max-width': 8,
-            'text-offset': [0, 0.75],
+            'text-offset': [0.75, 0.25],
           },
           paint: {
             'text-color': theme.palette.text.primary,
