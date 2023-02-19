@@ -229,13 +229,9 @@ export default function VehicleMarkerLayer({
     }),
     // Disable billboarding so that our marker icon facing is not affected by map bearing
     iconBillboard: false,
-    _subLayerProps: {
-      'points-text': {
-        parameters: {
-          // Disable depth test from points-text layer to avoid text clipping with the icon underneath
-          depthTest: false,
-        },
-      },
+    parameters: {
+      // Disable depth test from this layer to avoid z-fighting issues
+      depthTest: false,
     },
     getIconSize: 50,
     getIconAngle: (d) => -d.properties?.bearing,
