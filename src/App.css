@@ -4,6 +4,24 @@
   flex-direction: column;
 }
 
+/**
+ * Makes the deck.gl vehicle layer (located in top-left control) appear lowest in z order.
+ * This makes the maplibre popups (.maplibregl-popup) appear over the vehicle layer.
+ */
+.maplibregl-ctrl-top-left {
+  z-index: auto;
+}
+
+/**
+ * Makes the the first "actual" top-left control highest in z-order.
+ * Restores the order changed by the rule above so that the actual top-left control is still
+ * higher than maplibre popups (.maplibregl-popup).
+ */
+.maplibregl-ctrl-top-left div:first-child {
+  z-index: 1;
+  position: absolute;
+}
+
 .maplibregl-ctrl-attrib.maplibregl-compact-show {
   max-width: 58%;
   background-color: hsla(0, 0%, 100%, 0.7);
