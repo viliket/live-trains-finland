@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import { GeoJsonLayer } from '@deck.gl/layers/typed';
+import { MapboxOverlay } from '@deck.gl/mapbox/typed';
 import { Box, Button, useTheme } from '@mui/material';
 import { format } from 'date-fns';
-import { MapStyleImageMissingEvent } from 'maplibre-gl';
+import { mapValues } from 'lodash';
 import { Crosshairs, CrosshairsGps } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import {
-  Layer,
   MapLayerMouseEvent,
   Popup,
-  Source,
   useMap,
   ViewStateChangeEvent,
 } from 'react-map-gl';
@@ -29,7 +29,15 @@ type VehicleMarkerLayerProps = {
   selectedVehicleId: number | null;
 };
 
+type VehicleInterpolatedPosition = {
+  animStartTimestamp: number;
+  startPos: GeoJSON.Position;
+  animPos: GeoJSON.Position;
+};
+
 const animDurationInMs = 1000;
+
+const deckOverlay = new MapboxOverlay({});
 
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
@@ -41,48 +49,33 @@ export default function VehicleMarkerLayer({
   );
   const [isTracking, setIsTracking] = useState<boolean>(false);
   const [interpolatedPositions, setInterpolatedPositions] = useState<
-    Record<number, GeoJSON.Position>
+    Record<number, VehicleInterpolatedPosition>
   >({});
   const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
 
+  const iconUrl = useMemo(() => {
+    return getVehicleMarkerIconImage({
+      id: `vehiclemarker${theme.palette.mode}-x-0`,
+      mapBearing: map?.getBearing() ?? 0,
+      colorPrimary: theme.palette.secondary.main,
+      colorSecondary: theme.palette.mode === 'light' ? '#eee' : '#ccc',
+      colorShadow: theme.palette.mode === 'light' ? '#aaa' : '#aaa',
+    });
+  }, [map, theme.palette.mode, theme.palette.secondary.main]);
+
   useEffect(() => {
-    const missingImages: string[] = [];
-
-    const styleImageMissingCallback = (e: MapStyleImageMissingEvent) => {
-      if (!map) return;
-      const id = e.id;
-
-      // Only create if not already added
-      if (missingImages.indexOf(id) !== -1) return;
-      missingImages.push(id);
-
-      const image = getVehicleMarkerIconImage({
-        id,
-        mapBearing: map.getBearing(),
-        colorPrimary: theme.palette.secondary.main,
-      });
-      if (image) {
-        map.addImage(id, image);
-      }
-    };
-
     if (map) {
-      map.on('styleimagemissing', styleImageMissingCallback);
+      map.addControl(deckOverlay);
     }
 
     return () => {
       if (map) {
-        map.off('styleimagemissing', styleImageMissingCallback);
-        missingImages.forEach((img) => {
-          if (map.loaded()) {
-            map.removeImage(img);
-          }
-        });
+        map.removeControl(deckOverlay);
       }
     };
-  }, [map, theme.palette.secondary.main]);
+  }, [map]);
 
   useEffect(() => {
     const moveStartCallback = (e: ViewStateChangeEvent) => {
@@ -179,29 +172,88 @@ export default function VehicleMarkerLayer({
     };
   }, [map, onVehicleMarkerClick]);
 
-  useAnimationFrame((timestamp) => {
-    const currentVehicles = vehiclesVar();
-    const vehiclePositions: Record<number, GeoJSON.Position> = {};
-    Object.keys(currentVehicles).forEach((id) => {
-      const vehicle = currentVehicles[Number.parseInt(id)];
-      const prevPos = vehicle.prevPosition;
-      const curPos = vehicle.position;
+  useAnimationFrame(() => {
+    setInterpolatedPositions((prevPositions) => {
+      const currentVehicles = vehiclesVar();
+      const nextPositions: Record<number, VehicleInterpolatedPosition> = {};
+      Object.keys(currentVehicles).forEach((idString) => {
+        const id = Number.parseInt(idString);
+        const vehicle = currentVehicles[id];
+        const curPos = vehicle.position;
+        const vehiclePrevInterpolatedPos = prevPositions[id];
+        let startPos =
+          vehiclePrevInterpolatedPos?.startPos ?? vehicle.prevPosition;
+        if (
+          vehiclePrevInterpolatedPos &&
+          vehicle.timestamp > vehiclePrevInterpolatedPos.animStartTimestamp
+        ) {
+          // Vehicle has received new position from MQTT, set previous position to latest interpolated position
+          startPos = vehiclePrevInterpolatedPos.animPos;
+        }
 
-      const elapsedTime = timestamp - vehicle.timestamp;
-      let progress = elapsedTime / animDurationInMs;
-      if (progress > 1) progress = 1;
+        const elapsedTime = performance.now() - vehicle.timestamp;
+        let progress = elapsedTime / animDurationInMs;
+        if (progress > 1) progress = 1;
+        if (progress < 0) progress = 0;
 
-      vehiclePositions[Number.parseInt(id)] = [
-        prevPos[0] + (curPos[0] - prevPos[0]) * progress,
-        prevPos[1] + (curPos[1] - prevPos[1]) * progress,
-      ];
+        nextPositions[id] = {
+          animStartTimestamp: vehicle.timestamp,
+          startPos,
+          animPos: [
+            startPos[0] + (curPos[0] - startPos[0]) * progress,
+            startPos[1] + (curPos[1] - startPos[1]) * progress,
+          ],
+        };
+      });
+      return nextPositions;
     });
-    setInterpolatedPositions(vehiclePositions);
   });
 
   const selectedVehicleForPopup = vehicleIdForPopup
     ? vehiclesVar()[vehicleIdForPopup]
     : null;
+
+  const vehiclesLayer = new GeoJsonLayer({
+    id: 'vehicles',
+    data: getVehiclesGeoJsonData(
+      vehiclesVar(),
+      mapValues(interpolatedPositions, (p) => p.animPos)
+    ) as any, // TODO: Proper typing
+    pointType: 'icon+text',
+    getIcon: () => ({
+      url: iconUrl,
+      width: 80,
+      height: 80,
+      anchorY: 40,
+      anchorX: 40,
+    }),
+    // Disable billboarding so that our marker icon facing is not affected by map bearing
+    iconBillboard: false,
+    _subLayerProps: {
+      'points-text': {
+        parameters: {
+          // Disable depth test from points-text layer to avoid text clipping with the icon underneath
+          depthTest: false,
+        },
+      },
+    },
+    getIconSize: 50,
+    getIconAngle: (d) => -d.properties?.bearing,
+    getText: (d: any) => d.properties?.vehicleNumber, // TODO: Proper typing
+    getTextColor: [255, 255, 255],
+    textFontFamily: 'sans-serif',
+    getTextSize: 15,
+    pickable: true,
+    onClick: (info) => {
+      const id = info.object.properties!.vehicleId;
+      setVehicleIdForPopup(id);
+      onVehicleMarkerClick(Number.parseInt(id, 10));
+    },
+  });
+
+  deckOverlay.setProps({
+    layers: [vehiclesLayer],
+  });
 
   return (
     <>
@@ -229,51 +281,15 @@ export default function VehicleMarkerLayer({
             }
           />
         )}
-      <Source
-        type="geojson"
-        data={getVehiclesGeoJsonData(vehiclesVar(), interpolatedPositions)}
-      >
-        <Layer
-          {...{
-            id: 'vehicles',
-            beforeId: 'z10',
-            source: 'point',
-            type: 'symbol',
-            layout: {
-              'symbol-z-order': 'viewport-y',
-              'icon-image': 'vehiclemarker-x-0',
-              'icon-rotate': ['get', 'bearing'],
-              'icon-size': 0.6,
-              'icon-offset': [0, 0],
-              'icon-padding': 0,
-              'icon-rotation-alignment': 'map',
-              'icon-allow-overlap': true,
-              'icon-ignore-placement': true,
-              // Prevent text flickering on larger zoom levels when vehicle marker icon is moving fast
-              'text-allow-overlap': map && map.getZoom() > 15,
-              'text-optional': true,
-              'text-padding': 3,
-              'text-size': 12,
-              'text-anchor': 'top',
-              'text-offset': [0, -0.4],
-              'text-field': '{vehicleNumber}',
-              'text-font': ['Gotham Rounded Medium'],
-            },
-            paint: {
-              'text-color': '#fff',
-            },
-          }}
-        />
-      </Source>
       {selectedVehicleForPopup && map && (
         <Popup
           anchor="bottom"
           longitude={
-            interpolatedPositions[selectedVehicleForPopup.veh][0] ??
+            interpolatedPositions[selectedVehicleForPopup.veh].animPos[0] ??
             selectedVehicleForPopup.position[0]
           }
           latitude={
-            interpolatedPositions[selectedVehicleForPopup.veh][1] ??
+            interpolatedPositions[selectedVehicleForPopup.veh].animPos[1] ??
             selectedVehicleForPopup.position[1]
           }
           onClose={() => setVehicleIdForPopup(null)}

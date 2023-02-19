@@ -10,6 +10,7 @@ type VehicleMarkerIconImageProps = {
   height?: number;
   colorPrimary?: string;
   colorSecondary?: string;
+  colorShadow?: string;
   drawText?: boolean;
 };
 
@@ -20,10 +21,14 @@ export const getVehicleMarkerIconImage = ({
   height = 80,
   colorPrimary = '#00A651',
   colorSecondary = '#eee',
+  colorShadow = '#aaa',
   drawText = false,
 }: VehicleMarkerIconImageProps) => {
   // Check whether we can generate an image from this icon ID
   if (id.indexOf('vehiclemarker') !== 0) return;
+
+  canvas.width = width;
+  canvas.height = height;
 
   // Extract details from the icon ID
   const idDetails = id.split('-');
@@ -44,7 +49,7 @@ export const getVehicleMarkerIconImage = ({
   ctx.translate(width / 2, height / 2);
 
   // Draw base (circle)
-  ctx.shadowColor = '#aaa';
+  ctx.shadowColor = colorShadow;
   ctx.shadowBlur = 5;
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, 2 * Math.PI);
@@ -82,8 +87,7 @@ export const getVehicleMarkerIconImage = ({
   ctx.restore();
 
   // Extract data
-  const imageData = ctx.getImageData(0, 0, width, height);
-  return imageData;
+  return canvas.toDataURL();
 };
 
 export function getVehiclesGeoJsonData(
