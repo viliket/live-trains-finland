@@ -18,7 +18,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { vehiclesVar } from '../../graphql/client';
 import useAnimationFrame from '../../hooks/useAnimationFrame';
-import useInterval from '../../hooks/useInterval';
 import {
   getVehicleMarkerIconImage,
   getVehiclesGeoJsonData,
@@ -85,13 +84,63 @@ export default function VehicleMarkerLayer({
       }
     };
 
+    let isInteracting = false;
+    let mouseOrTouchStartEvent:
+      | maplibregl.MapMouseEvent
+      | maplibregl.MapTouchEvent
+      | null = null;
+
+    const mouseOrTouchStartCallback = (
+      e: maplibregl.MapMouseEvent | maplibregl.MapTouchEvent
+    ) => {
+      isInteracting = true;
+      mouseOrTouchStartEvent = e;
+    };
+
+    const mouseOrTouchMoveCallback = () => {
+      if (isInteracting) {
+        // Stop vehicle tracking if currently tracking as the user has performed drag gesture inside the map view.
+        setIsTracking((isTracking) => {
+          if (isTracking) {
+            if (map && mouseOrTouchStartEvent) {
+              // Re-dispatch original mouse down event to immediately trigger Maplibre drag panning.
+              map
+                .getCanvasContainer()
+                .dispatchEvent(mouseOrTouchStartEvent.originalEvent);
+            }
+          }
+
+          return false;
+        });
+        isInteracting = false;
+      }
+    };
+
+    const mouseOrTouchEndCallback = () => {
+      isInteracting = false;
+    };
+
+    const eventListenerMap = {
+      movestart: moveStartCallback,
+      mousedown: mouseOrTouchStartCallback,
+      mousemove: mouseOrTouchMoveCallback,
+      mouseup: mouseOrTouchEndCallback,
+      touchstart: mouseOrTouchStartCallback,
+      touchmove: mouseOrTouchMoveCallback,
+      touchend: mouseOrTouchEndCallback,
+    };
+
     if (map) {
-      map.on('movestart', moveStartCallback);
+      Object.entries(eventListenerMap).forEach(([type, listener]) => {
+        map.on(type, listener);
+      });
     }
 
     return () => {
       if (map) {
-        map.off('movestart', moveStartCallback);
+        Object.entries(eventListenerMap).forEach(([type, listener]) => {
+          map.off(type, listener);
+        });
       }
     };
   }, [map]);
@@ -102,10 +151,9 @@ export default function VehicleMarkerLayer({
     }
   }, [selectedVehicleId]);
 
-  useInterval(() => {
-    if (map && isTracking && selectedVehicleId) {
-      const vehicle = vehiclesVar()[selectedVehicleId];
-      if (!vehicle) return;
+  if (map && isTracking && selectedVehicleId) {
+    const vehicle = vehiclesVar()[selectedVehicleId];
+    if (vehicle && !map.isMoving()) {
       map.flyTo(
         {
           center: vehicle.position,
@@ -118,7 +166,7 @@ export default function VehicleMarkerLayer({
         { triggerSource: 'flyTo' }
       );
     }
-  }, animDurationInMs);
+  }
 
   useEffect(() => {
     const clickCallback = (e: MapLayerMouseEvent) => {
