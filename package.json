@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.1",
+    "@deck.gl/core": "^8.9.0-beta.2",
+    "@deck.gl/extensions": "^8.9.0-beta.2",
+    "@deck.gl/layers": "^8.9.0-beta.2",
+    "@deck.gl/mapbox": "^8.9.0-beta.2",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/lab": "^5.0.0-alpha.98",
@@ -23,7 +27,6 @@
     "autosuggest-highlight": "^3.3.4",
     "buffer": "^6.0.3",
     "date-fns": "^2.29.2",
-    "deck.gl": "^8.8.24",
     "graphql": "^16.6.0",
     "hsl-map-style": "github:HSLdevcom/hsl-map-style#master",
     "i18next": "^21.9.1",
