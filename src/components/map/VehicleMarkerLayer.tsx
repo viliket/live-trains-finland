@@ -8,12 +8,7 @@ import { format } from 'date-fns';
 import { mapValues } from 'lodash';
 import { Crosshairs, CrosshairsGps } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
-import {
-  MapLayerMouseEvent,
-  Popup,
-  useMap,
-  ViewStateChangeEvent,
-} from 'react-map-gl';
+import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl';
 import { useNavigate } from 'react-router-dom';
 
 import { vehiclesVar } from '../../graphql/client';
@@ -168,59 +163,6 @@ export default function VehicleMarkerLayer({
     }
   }
 
-  useEffect(() => {
-    const clickCallback = (e: MapLayerMouseEvent) => {
-      if (!e.features) return;
-
-      // Copy coordinates array
-      const feature = e.features[0];
-      if (feature.geometry.type !== 'Point') return;
-      const coordinates = feature.geometry.coordinates.slice();
-      const id = feature.properties!.vehicleId;
-
-      // Ensure that if the map is zoomed out such that multiple
-      // copies of the feature are visible, the popup appears
-      // over the copy being pointed to.
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-      }
-
-      setVehicleIdForPopup(id);
-      onVehicleMarkerClick(Number.parseInt(id, 10));
-    };
-
-    const mouseEnterCallback = () => {
-      if (map) {
-        map.getCanvas().style.cursor = 'pointer';
-      }
-    };
-
-    const mouseLeaveCallback = () => {
-      if (map) {
-        map.getCanvas().style.cursor = '';
-      }
-    };
-
-    if (map) {
-      // When a click event occurs on a feature in the vehicles layer, open a popup with vehicle details
-      map.on('click', 'vehicles', clickCallback);
-
-      // Change the cursor to a pointer when the mouse is over the vehicles layer
-      map.on('mouseenter', 'vehicles', mouseEnterCallback);
-
-      // Change it back to a pointer when it leaves
-      map.on('mouseleave', 'vehicles', mouseLeaveCallback);
-    }
-
-    return () => {
-      if (map) {
-        map.off('click', 'vehicles', clickCallback);
-        map.off('mouseenter', 'vehicles', mouseEnterCallback);
-        map.off('mouseleave', 'vehicles', mouseLeaveCallback);
-      }
-    };
-  }, [map, onVehicleMarkerClick]);
-
   useAnimationFrame(() => {
     setInterpolatedPositions((prevPositions) => {
       const currentVehicles = vehiclesVar();
@@ -301,6 +243,11 @@ export default function VehicleMarkerLayer({
       const id = info.object.properties!.vehicleId;
       setVehicleIdForPopup(id);
       onVehicleMarkerClick(Number.parseInt(id, 10));
+    },
+    onHover: (info) => {
+      if (map) {
+        map.getCanvas().style.cursor = info.picked ? 'pointer' : '';
+      }
     },
   });
 
