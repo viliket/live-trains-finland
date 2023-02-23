@@ -1,7 +1,9 @@
-import { useSpring, animated, config } from '@react-spring/web';
+import { styled } from '@mui/material';
 
 import { vehiclesVar } from '../graphql/client';
 import useReactiveVarWithSelector from '../hooks/useReactiveVarWithSelector';
+
+const WagonSvg = styled('svg')({});
 
 type TrainWagonSm5Props = {
   vehicleId?: number | null;
@@ -16,20 +18,25 @@ export function TrainWagonSm5({ vehicleId }: TrainWagonSm5Props) {
   );
 
   const doorsOpen = vehicleDoorStatus === 1;
-
-  const { doorsXOffset } = useSpring({
-    doorsXOffset: doorsOpen ? 4 : 0,
-    config: {
-      ...config.slow,
-    },
-  });
+  const doorsXOffset = doorsOpen ? 4 : 0;
 
   return (
-    <svg
+    <WagonSvg
       xmlns="http://www.w3.org/2000/svg"
       width="100%"
       height="100%"
       viewBox="0 0 150.334 20.5"
+      sx={{
+        '.door': {
+          transition: 'transform 1000ms',
+          '&.left': {
+            transform: `translate(${-doorsXOffset}px, 0)`,
+          },
+          '&.right': {
+            transform: `translate(${doorsXOffset}px, 0)`,
+          },
+        },
+      }}
     >
       <path
         fillRule="evenodd"
@@ -84,87 +91,79 @@ export function TrainWagonSm5({ vehicleId }: TrainWagonSm5Props) {
 			c-0.32,0.024-0.763,0.341-0.897,0.638c-0.873,1.924-1.681,3.879-2.499,5.828c-0.344,0.822,0,1.355,0.892,1.361
 			c1.912,0.013,3.824,0.009,5.736,0.001c0.847-0.003,1.067-0.229,1.077-1.095C11.429,10.272,11.42,9.354,11.419,8.437z"
       />
-      <animated.path
+      <path
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
-        className="door"
-        transform={doorsXOffset.to((x) => `translate(${-x},0)`)}
+        className="door left"
         d="M15.362,4.424c-0.728-0.008-1.023,0.401-1.026,1.035
 		c-0.016,3.265-0.019,6.528,0.001,9.795c0.004,0.623,0.3,1.026,1.037,1.014c0.939-0.017,1.879-0.019,2.818-0.015
 		c0-3.652,0-8.038,0-11.825C17.249,4.43,16.306,4.434,15.362,4.424z"
       />
-      <animated.path
+      <path
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
-        className="door"
-        transform={doorsXOffset.to((x) => `translate(${x},0)`)}
+        className="door right"
         d="M21.685,5.522c-0.006-0.751-0.33-1.086-1.042-1.09
 		c-0.816-0.004-1.633-0.005-2.45-0.004c0,3.787,0,8.173,0,11.825c0.769,0,1.539,0.005,2.309,0.005
 		c0.882-0.001,1.182-0.291,1.186-1.168c0.007-1.583,0.002-3.163,0.002-4.745C21.689,8.737,21.697,7.13,21.685,5.522z"
       />
-      <animated.path
+      <path
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
-        className="door"
-        transform={doorsXOffset.to((x) => `translate(${-x},0)`)}
+        className="door left"
         d="M57.475,4.42c-0.728-0.007-1.023,0.402-1.026,1.036
 		c-0.017,3.265-0.019,6.528,0.001,9.796c0.004,0.622,0.3,1.024,1.037,1.013c0.939-0.017,1.879-0.019,2.819-0.016
 		c0-3.651,0-8.037,0-11.824C59.362,4.427,58.418,4.431,57.475,4.42z"
       />
-      <animated.path
+      <path
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
-        className="door"
-        transform={doorsXOffset.to((x) => `translate(${x},0)`)}
+        className="door right"
         d="M63.798,5.52c-0.006-0.751-0.329-1.086-1.042-1.09
 		c-0.817-0.004-1.634-0.005-2.45-0.004c0,3.787,0,8.173,0,11.824c0.769,0.001,1.539,0.006,2.308,0.006
 		c0.882-0.002,1.182-0.291,1.186-1.168c0.007-1.583,0.002-3.163,0.002-4.745C63.801,8.734,63.81,7.127,63.798,5.52z"
       />
-      <animated.path
+      <path
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
-        className="door"
-        transform={doorsXOffset.to((x) => `translate(${-x},0)`)}
+        className="door left"
         d="M99.328,4.424c-0.729-0.008-1.024,0.401-1.027,1.035
 		c-0.017,3.265-0.02,6.528,0.001,9.795c0.004,0.623,0.3,1.026,1.038,1.014c0.938-0.017,1.878-0.019,2.817-0.015
 		c0-3.652,0-8.038,0-11.825C101.214,4.43,100.271,4.434,99.328,4.424z"
       />
-      <animated.path
+      <path
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
-        className="door"
-        transform={doorsXOffset.to((x) => `translate(${x},0)`)}
+        className="door right"
         d="M105.65,5.522c-0.006-0.751-0.33-1.086-1.042-1.09
 		c-0.817-0.004-1.635-0.005-2.451-0.004c0,3.787,0,8.173,0,11.825c0.77,0,1.54,0.005,2.309,0.005
 		c0.883-0.001,1.182-0.291,1.186-1.168c0.006-1.583,0.002-3.163,0.002-4.745C105.654,8.737,105.661,7.13,105.65,5.522z"
       />
-      <animated.path
+      <path
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
-        className="door"
-        transform={doorsXOffset.to((x) => `translate(${-x},0)`)}
+        className="door left"
         d="M130.935,4.417c-0.729-0.008-1.024,0.402-1.027,1.035
 		c-0.017,3.264-0.019,6.529,0.001,9.795c0.004,0.623,0.3,1.026,1.037,1.015c0.939-0.017,1.879-0.019,2.818-0.016
 		c0-3.651,0-8.037,0-11.825C132.821,4.424,131.878,4.428,130.935,4.417z"
       />
-      <animated.path
+      <path
         fillRule="evenodd"
         clipRule="evenodd"
         fill="#d4d4d4"
-        className="door"
-        transform={doorsXOffset.to((x) => `translate(${x},0)`)}
+        className="door right"
         d="M137.257,5.517c-0.005-0.751-0.329-1.086-1.042-1.091
 		c-0.817-0.004-1.634-0.005-2.451-0.004c0,3.788,0,8.173,0,11.825c0.77,0.001,1.54,0.005,2.31,0.005
 		c0.882-0.001,1.181-0.29,1.185-1.168c0.007-1.582,0.002-3.162,0.002-4.744C137.26,8.731,137.269,7.124,137.257,5.517z"
       />
-    </svg>
+    </WagonSvg>
   );
 }
 
