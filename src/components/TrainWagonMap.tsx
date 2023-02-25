@@ -111,10 +111,8 @@ const TrainWagonMap = ({
         svg.setAttribute('viewBox', '0 0 237 1586');
       }
     }}
-    afterInjection={(error) => {
-      if (!error) {
-        onLoad();
-      }
+    afterInjection={() => {
+      onLoad();
     }}
   />
 );
