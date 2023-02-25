@@ -22,7 +22,7 @@
     "@types/use-sync-external-store": "^0.0.3",
     "autosuggest-highlight": "^3.3.4",
     "buffer": "^6.0.3",
-    "date-fns": "^2.29.2",
+    "date-fns": "^2.29.3",
     "graphql": "^16.6.0",
     "i18next": "^21.9.1",
     "i18next-browser-languagedetector": "^6.1.5",
