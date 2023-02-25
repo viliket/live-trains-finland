@@ -24,7 +24,7 @@ const digitransitLink = new HttpLink({
   uri: 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql',
   headers: {
     'digitransit-subscription-key':
-      process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY,
+      process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
   },
 });
 
