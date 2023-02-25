@@ -9,10 +9,7 @@ export default function getHeadTrainVehicleId(train: TrainDetailsFragment) {
   if (locomotives) {
     const headTrain = minBy(locomotives, (l) => l?.location);
     if (headTrain) {
-      const headTrainVehicleId = headTrain.vehicleId ?? train.trainNumber;
-      if (headTrainVehicleId) {
-        return headTrainVehicleId;
-      }
+      return headTrain.vehicleId ?? train.trainNumber;
     }
   }
   return null;
