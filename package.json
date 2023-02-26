@@ -81,7 +81,7 @@
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
-    "lint-staged": "^13.0.3",
+    "lint-staged": "^13.1.2",
     "make-dir-cli": "^3.0.0",
     "mbtiles-extractor": "^0.1.1"
   },
