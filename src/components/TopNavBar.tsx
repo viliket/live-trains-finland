@@ -8,8 +8,8 @@ import { Brightness7, Brightness3 } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { ReactComponent as Icon } from '../icon.svg';
-import { ReactComponent as Logo } from '../logo.svg';
+import { ReactComponent as Icon } from '../assets/icon.svg';
+import { ReactComponent as Logo } from '../assets/logo.svg';
 
 const lngs: Record<string, { shortCode: string }> = {
   en: { shortCode: 'EN' },
