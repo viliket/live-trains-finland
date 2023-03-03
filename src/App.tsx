@@ -71,7 +71,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ScrollToTop />
-      <div className={`App ${isDarkMode ? 'dark' : ''}`}>
+      <div className={`App ${isDarkMode ? 'dark' : ''}`} data-testid="app">
         <TopNavBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
         <Routes>
           <Route
