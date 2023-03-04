@@ -91,6 +91,9 @@
   "jest": {
     "transformIgnorePatterns": [
       "/node_modules/(?!react-leaflet|@react-leaflet/core)"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/graphql/generated/*"
     ]
   },
   "lint-staged": {
