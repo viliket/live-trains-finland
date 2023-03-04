@@ -1,3 +1,4 @@
+import { parseISO } from 'date-fns';
 import { orderBy } from 'lodash';
 
 import {
@@ -10,7 +11,12 @@ export default function getTrainLatestArrivalRow(
 ) {
   const latestArrivalRow = orderBy(
     train.timeTableRows?.filter(
-      (r) => r?.type === TimeTableRowType.Arrival && r?.actualTime
+      (r) =>
+        r?.type === TimeTableRowType.Arrival &&
+        r?.actualTime &&
+        // Note that actualTime may be set even to (near) future. Thus, we need to check
+        // that the actualTime has actually been passed.
+        parseISO(r.actualTime) <= new Date()
     ),
     (r) => r?.actualTime,
     'desc'
