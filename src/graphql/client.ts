@@ -38,7 +38,7 @@ const digitrafficLink = new HttpLink({
 
 // VR
 const vrLink = new HttpLink({
-  uri: 'https://www.vr.fi/api/v4',
+  uri: 'https://www.vr.fi/api/v6',
 });
 
 /**
