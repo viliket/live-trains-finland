@@ -229,8 +229,10 @@ const Hero = () => {
         '#Person3': {
           animation: `${person3AnimKeyframes} ${animDuration}s infinite ease-in-out`,
           animationDelay: `0s`,
-          transformBox: 'fill-box',
-          transformOrigin: 'center',
+          // Note: We cannot use transform-box: fill-box here because Firefox has
+          // a bug with nested fill-boxes that causes odd behavior with animations.
+          // See https://bugzilla.mozilla.org/show_bug.cgi?id=1612347
+          transformOrigin: '109px', // #Person3 X coordinate in the original SVG viewBox.
         },
         '#Person3 #Leg_right': {
           animation: `${getPerson3LimbAnimKeyframes(
