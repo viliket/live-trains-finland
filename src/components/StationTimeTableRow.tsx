@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { alpha, Box, Link, TableCell, TableRow } from '@mui/material';
+import { format } from 'date-fns';
 import { ChevronRight } from 'mdi-material-ui';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -83,7 +84,12 @@ function StationTimeTableRow({
             })}
           >
             {trainName}
-            <VehicleTrackingIcon trainNumber={trainNumber} />
+            <VehicleTrackingIcon
+              trainNumber={trainNumber}
+              departureDate={
+                departureTime ? format(departureTime, 'yyyy-MM-dd') : undefined
+              }
+            />
           </Box>
         </span>
       </TableCell>
