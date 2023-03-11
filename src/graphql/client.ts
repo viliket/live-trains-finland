@@ -13,6 +13,11 @@ import { VehicleDetails } from '../types/vehicles';
  */
 export const vehiclesVar = makeVar<Record<number, VehicleDetails>>({});
 
+/**
+ * Holds the identification details of trains that are currently being tracked in real-time.
+ */
+export const trainsVar = makeVar<Record<number, { departureDate: string }>>({});
+
 export const gqlClients = {
   digitraffic: 'digitraffic',
   digitransit: 'digitransit',
