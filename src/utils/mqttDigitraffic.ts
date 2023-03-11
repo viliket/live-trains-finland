@@ -1,8 +1,9 @@
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 
 import { vehiclesVar, trainsVar } from '../graphql/client';
 import { TrainByStationFragment } from '../graphql/generated/digitraffic';
 import { TrainLocationMessage } from '../types/vehicles';
+import { formatEET } from './date';
 import { getBearing } from './math';
 import { getDepartureTimeTableRow } from './train';
 
@@ -83,7 +84,7 @@ export function getTopic(train: TrainByStationFragment) {
   const departureRow = getDepartureTimeTableRow(train);
   if (!departureRow) return null;
   const departureDate = parseISO(departureRow.scheduledTime);
-  const topic = `train-locations/${format(departureDate, 'yyyy-MM-dd')}/${
+  const topic = `train-locations/${formatEET(departureDate, 'yyyy-MM-dd')}/${
     train.trainNumber
   }/#`;
   return topic;

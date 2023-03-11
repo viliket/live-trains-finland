@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { alpha, Box, Link, TableCell, TableRow } from '@mui/material';
-import { format } from 'date-fns';
 import { ChevronRight } from 'mdi-material-ui';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -9,6 +8,7 @@ import {
   TimeTableRowType,
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
+import { formatEET } from '../utils/date';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import {
   getTrainDestinationStationName,
@@ -87,7 +87,9 @@ function StationTimeTableRow({
             <VehicleTrackingIcon
               trainNumber={trainNumber}
               departureDate={
-                departureTime ? format(departureTime, 'yyyy-MM-dd') : undefined
+                departureTime
+                  ? formatEET(departureTime, 'yyyy-MM-dd')
+                  : undefined
               }
             />
           </Box>

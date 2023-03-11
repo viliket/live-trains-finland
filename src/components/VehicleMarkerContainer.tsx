@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { useReactiveVar } from '@apollo/client';
 import { Button, useTheme } from '@mui/material';
-import { format } from 'date-fns';
 import { CrosshairsGps } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import { Popup, useMapEvents } from 'react-leaflet';
 import { useNavigate } from 'react-router-dom';
 
 import { vehiclesVar } from '../graphql/client';
+import { formatEET } from '../utils/date';
 import Control from './Control';
 import DivIconMarker from './DivIconMarker';
 import VehicleMarkerIcon from './VehicleMarkerIcon';
@@ -129,7 +129,7 @@ export default function VehicleMarkerContainer({
               variant="outlined"
               onClick={(e) => {
                 navigate(
-                  `/train/${message.jrn}/${format(new Date(), 'yyyy-MM-dd')}`
+                  `/train/${message.jrn}/${formatEET(new Date(), 'yyyy-MM-dd')}`
                 );
                 e.stopPropagation();
               }}

@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { orderBy } from 'lodash';
 
 import { trainsVar, vehiclesVar } from '../graphql/client';
@@ -7,6 +7,7 @@ import {
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
 import { VehiclePositionMessage } from '../types/vehicles';
+import { formatEET } from './date';
 import { toKmsPerHour } from './math';
 import {
   getTrainDestinationStation,
@@ -71,7 +72,7 @@ export const handleVehiclePositionMessage = (
     trainsVar({
       ...trackedTrains,
       [vp.jrn]: {
-        departureDate: format(
+        departureDate: formatEET(
           getTrainScheduledDepartureTime(train) ?? new Date(),
           'yyyy-MM-dd'
         ),
@@ -142,7 +143,7 @@ export function getTopic(train: TrainByStationFragment) {
   const routeId = trainCommuterLineToHSLRouteGtfsIdMap[train.commuterLineid];
   const departureTime = getTrainDepartureTimeForHslMqttTopic(train);
   if (!departureTime) return null;
-  const depTimeString = format(departureTime, 'HH:mm');
+  const depTimeString = formatEET(departureTime, 'HH:mm');
   return getMqttTopic(routeId, depTimeString);
 }
 
