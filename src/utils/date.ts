@@ -1,7 +1,5 @@
-import { format } from 'date-fns-tz';
+import { formatInTimeZone } from 'date-fns-tz';
 
 export function formatEET(date: number | Date, dateFormat: string): string {
-  return format(date, dateFormat, {
-    timeZone: 'Europe/Helsinki',
-  });
+  return formatInTimeZone(date, 'Europe/Helsinki', dateFormat);
 }
