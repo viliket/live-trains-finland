@@ -113,8 +113,18 @@ describe('getTopic', () => {
 describe('handleVehiclePositionMessage', () => {
   const getMessage = (msg: VehiclePositionMessage | null) =>
     Buffer.from(JSON.stringify({ VP: msg }));
-  it('should update train location message details to vehiclesVar', () => {
+  it('should update vehicle position message details to vehiclesVar', () => {
     const topicToTrain = new Map<string, TrainByStationFragment>();
+    const train: TrainByStationFragment = {
+      ...trainBase,
+      timeTableRows: [
+        {
+          ...timeTableRowDepartureBase,
+          scheduledTime: '2023-03-11T10:01:00Z',
+          station: { name: 'Helsinki', shortCode: 'HKI' },
+        },
+      ],
+    };
 
     expect(vehiclesVar()).toEqual({});
 
@@ -156,7 +166,7 @@ describe('handleVehiclePositionMessage', () => {
 
     topicToTrain.set(
       '/hfp/v2/journey/ongoing/vp/+/+/+/3002U/+/+/12:01/#',
-      trainBase
+      train
     );
 
     handleVehiclePositionMessage(
