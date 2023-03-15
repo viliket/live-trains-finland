@@ -66,6 +66,8 @@ function useTrainLiveTrackingWithEndpoint(
           });
         });
         subscribedTopics.current = new Map<string, TrainByStationFragment>();
+      } else if (cb) {
+        cb();
       }
     },
     [client]
