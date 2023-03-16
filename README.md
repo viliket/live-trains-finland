@@ -1,5 +1,7 @@
 # Junaan.fi
 
+![Test workflow](https://github.com/viliket/live-trains-finland/actions/workflows/test.yml/badge.svg?branch=main)
+[![codecov](https://codecov.io/gh/viliket/live-trains-finland/branch/main/graph/badge.svg?token=X4IG4JLOK9)](https://codecov.io/gh/viliket/live-trains-finland)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/464c726470b649b18f7b4fad710db235)](https://www.codacy.com/gh/viliket/live-trains-finland/dashboard?utm_source=github.com&utm_medium=referral&utm_content=viliket/live-trains-finland&utm_campaign=Badge_Grade)
 ![GitHub top language](https://img.shields.io/github/languages/top/viliket/live-trains-finland)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fjunaan.fi)](https://junaan.fi)
@@ -23,8 +25,8 @@ See the instructions below for development.
 
 You need the following tools:
 
-- Node.js >= 16
-- npm >= 8
+- Node.js `>= 16`
+- npm `>= 8`
 
 Register to the [Digitransit API Portal](https://portal-api.digitransit.fi/)
 and create yourself a new API subscription key.
@@ -126,6 +128,6 @@ to `public/tiles` using `npm run extract-tiles`.
 
 ## License
 
-Copyright (C) 2022 [Vili Ketonen](https://github.com/viliket)
+Copyright (C) 2023 [Vili Ketonen](https://github.com/viliket)
 
 [GNU General Public License version 3 (GPLv3)](gpl-3.0.txt)
