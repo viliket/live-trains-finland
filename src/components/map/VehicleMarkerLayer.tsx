@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { CollideExtension } from '@deck.gl/extensions/typed';
+import { CollisionFilterExtension } from '@deck.gl/extensions/typed';
 import { GeoJsonLayer } from '@deck.gl/layers/typed';
 import { MapboxOverlay } from '@deck.gl/mapbox/typed';
 import { Box, Button, useTheme } from '@mui/material';
@@ -209,13 +209,13 @@ export default function VehicleMarkerLayer({
     data: getVehiclesGeoJsonData(
       vehiclesVar(),
       mapValues(interpolatedPositions, (p) => p.animPos)
-    ) as any, // Correct type does not work - see https://github.com/visgl/deck.gl/issues/7571
+    ),
     _subLayerProps: {
       'points-text': {
-        // Use CollideExtension to hide overlapping texts.
-        extensions: [new CollideExtension()],
+        // Use CollisionFilterExtension to hide overlapping texts.
+        extensions: [new CollisionFilterExtension()],
         // Increase text size when computing collisions to provide greater spacing between visible features.
-        collideTestProps: { sizeScale: 3 },
+        collisionTestProps: { sizeScale: 3 },
       },
     },
     pointType: 'icon+text',
