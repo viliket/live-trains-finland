@@ -3,6 +3,7 @@ import {
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
 import getTrainLatestArrivalRow from './getTrainLatestArrivalRow';
+import { getDepartureTimeTableRow } from './train';
 
 export default function getTrainCurrentStation(train: TrainByStationFragment) {
   const latestArrivalRow = getTrainLatestArrivalRow(train);
@@ -14,17 +15,17 @@ export default function getTrainCurrentStation(train: TrainByStationFragment) {
           r?.type === TimeTableRowType.Departure &&
           r.scheduledTime > latestArrivalRow.scheduledTime
       )
-    : undefined;
+    : getDepartureTimeTableRow(train);
 
   if (!nextDepatureRow) {
-    // If there is no departureTimeTableRow, it means that this station
-    // is the destination station
+    // If there is no departureTimeTableRow, it means that the latest
+    // arrival row is the destination station
     return latestArrivalRow?.station;
   }
 
   if (
-    !nextDepatureRow?.actualTime &&
-    new Date(nextDepatureRow?.scheduledTime) < new Date()
+    !nextDepatureRow.actualTime ||
+    new Date() < new Date(nextDepatureRow.actualTime)
   ) {
     // Train has arrived at station and is waiting to depart from that station
     return nextDepatureRow?.station;

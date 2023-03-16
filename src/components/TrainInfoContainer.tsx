@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
 import { Box, Link, Grid } from '@mui/material';
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ import {
   useTrainQuery,
   Wagon,
 } from '../graphql/generated/digitraffic';
+import { formatEET } from '../utils/date';
 import getTrainCurrentStation from '../utils/getTrainCurrentStation';
 import getTrainLatestArrivalRow from '../utils/getTrainLatestArrivalRow';
 import getTrainLatestDepartureTimeTableRow from '../utils/getTrainLatestDepartureTimeTableRow';
@@ -41,11 +42,12 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
       ? {
           variables: {
             trainNumber: train.trainNumber,
-            departureDate: format(departureDate, 'yyyy-MM-dd'),
+            departureDate: formatEET(departureDate, 'yyyy-MM-dd'),
           },
           context: { clientName: gqlClients.digitraffic },
           pollInterval: 10000,
           fetchPolicy: 'network-only',
+          notifyOnNetworkStatusChange: true,
         }
       : { skip: true }
   );

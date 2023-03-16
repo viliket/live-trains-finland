@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { fiFI, enUS } from '@mui/material/locale';
 import { useTranslation } from 'react-i18next';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
 import Footer from './components/Footer';
@@ -70,22 +70,20 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <ScrollToTop />
-        <div className={`App ${isDarkMode ? 'dark' : ''}`}>
-          <TopNavBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
-          <Routes>
-            <Route
-              path="/train/:trainNumber/:departureDate"
-              element={<Train />}
-            />
-            <Route path="/:station" element={<Station />} />
-            <Route path="/" element={<Home />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Footer />
-        </div>
-      </Router>
+      <ScrollToTop />
+      <div className={`App ${isDarkMode ? 'dark' : ''}`} data-testid="app">
+        <TopNavBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+        <Routes>
+          <Route
+            path="/train/:trainNumber/:departureDate"
+            element={<Train />}
+          />
+          <Route path="/:station" element={<Station />} />
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </div>
     </ThemeProvider>
   );
 }

@@ -1,0 +1,570 @@
+{
+  "trainNumber": 143,
+  "version": "284981554789",
+  "runningCurrently": false,
+  "operator": {
+    "name": "VR-Yhtymä Oyj",
+    "__typename": "Operator",
+    "shortCode": "vr",
+    "uicCode": 10
+  },
+  "commuterLineid": "",
+  "trainType": {
+    "name": "IC",
+    "trainCategory": {
+      "name": "Long-distance",
+      "__typename": "TrainCategory"
+    },
+    "__typename": "TrainType"
+  },
+  "compositions": [
+    {
+      "journeySections": [
+        {
+          "startTimeTableRow": {
+            "scheduledTime": "2023-02-25T08:24:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Helsinki asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "endTimeTableRow": {
+            "scheduledTime": "2023-02-25T09:58:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Tampere asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "maximumSpeed": 200,
+          "totalLength": 178,
+          "locomotives": [
+            {
+              "vehicleNumber": null,
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sr2",
+              "location": 1,
+              "__typename": "Locomotive"
+            }
+          ],
+          "wagons": [
+            {
+              "vehicleNumber": null,
+              "salesNumber": 6,
+              "wagonType": "Ed",
+              "location": 2,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 4,
+              "wagonType": "Edfs",
+              "location": 4,
+              "length": 2640,
+              "playground": true,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": true,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 1,
+              "wagonType": "Edo",
+              "location": 7,
+              "length": 2740,
+              "playground": null,
+              "pet": true,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 5,
+              "wagonType": "Ed",
+              "location": 3,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 2,
+              "wagonType": "CEd",
+              "location": 6,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 3,
+              "wagonType": "ERd",
+              "location": 5,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": true,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            }
+          ],
+          "__typename": "JourneySection"
+        },
+        {
+          "startTimeTableRow": {
+            "scheduledTime": "2023-02-25T10:12:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Tampere asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "endTimeTableRow": {
+            "scheduledTime": "2023-02-25T12:30:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Pieksämäki asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "maximumSpeed": 160,
+          "totalLength": 178,
+          "locomotives": [
+            {
+              "vehicleNumber": null,
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sr2",
+              "location": 7,
+              "__typename": "Locomotive"
+            }
+          ],
+          "wagons": [
+            {
+              "vehicleNumber": null,
+              "salesNumber": 4,
+              "wagonType": "Edfs",
+              "location": 4,
+              "length": 2640,
+              "playground": true,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": true,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 5,
+              "wagonType": "Ed",
+              "location": 5,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 2,
+              "wagonType": "CEd",
+              "location": 2,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 3,
+              "wagonType": "ERd",
+              "location": 3,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": true,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 1,
+              "wagonType": "Edo",
+              "location": 1,
+              "length": 2740,
+              "playground": null,
+              "pet": true,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 6,
+              "wagonType": "Ed",
+              "location": 6,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            }
+          ],
+          "__typename": "JourneySection"
+        }
+      ],
+      "__typename": "Composition"
+    }
+  ],
+  "timeTableRows": [
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T08:24:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Helsinki asema",
+        "shortCode": "HKI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "8",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T08:29:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Pasila asema",
+        "shortCode": "PSL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T08:30:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Pasila asema",
+        "shortCode": "PSL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T08:39:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tikkurila asema",
+        "shortCode": "TKL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T08:41:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Tikkurila asema",
+        "shortCode": "TKL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T09:58:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tampere asema",
+        "shortCode": "TPE",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T10:12:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Tampere asema",
+        "shortCode": "TPE",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T10:36:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Orivesi",
+        "shortCode": "OV",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T10:37:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Orivesi",
+        "shortCode": "OV",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T11:11:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Jämsä",
+        "shortCode": "JÄS",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T11:12:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Jämsä",
+        "shortCode": "JÄS",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T11:39:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Jyväskylä",
+        "shortCode": "JY",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T11:43:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Jyväskylä",
+        "shortCode": "JY",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T12:07:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Hankasalmi",
+        "shortCode": "HKS",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T12:08:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Hankasalmi",
+        "shortCode": "HKS",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T12:30:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Pieksämäki asema",
+        "shortCode": "PM",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    }
+  ],
+  "__typename": "Train"
+}

@@ -1,21 +1,20 @@
 import { SignalVariant } from 'mdi-material-ui';
 
-import { vehiclesVar } from '../graphql/client';
+import { trainsVar } from '../graphql/client';
 import useReactiveVarWithSelector from '../hooks/useReactiveVarWithSelector';
 
 type VehicleTrackingIconProps = {
   trainNumber: number;
+  departureDate?: string;
 };
 
-const VehicleTrackingIcon = ({ trainNumber }: VehicleTrackingIconProps) => {
-  const vehicleId = useReactiveVarWithSelector(
-    vehiclesVar,
-    (v) =>
-      // TODO: Should also compare scheduled time as the train number may appear multiple times in time table
-      Object.values(v).find((v) => v.jrn === trainNumber)?.veh
-  );
-
-  const isTracked = vehicleId != null;
+const VehicleTrackingIcon = ({
+  trainNumber,
+  departureDate,
+}: VehicleTrackingIconProps) => {
+  const isTracked = useReactiveVarWithSelector(trainsVar, (v) => {
+    return v[trainNumber] && v[trainNumber].departureDate === departureDate;
+  });
 
   return (
     <>

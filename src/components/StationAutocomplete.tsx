@@ -47,7 +47,7 @@ export default function StationAutocomplete() {
           {...params}
           autoFocus
           label={t('search_station_by_name')}
-          placeholder={t('search_station_by_name_placeholder')}
+          placeholder={t('search_station_by_name_placeholder') ?? undefined}
           variant="outlined"
           fullWidth
         />

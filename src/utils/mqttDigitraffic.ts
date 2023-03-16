@@ -1,14 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { parseISO } from 'date-fns';
 
-import { format, parseISO } from 'date-fns';
-
-import { vehiclesVar } from '../graphql/client';
+import { vehiclesVar, trainsVar } from '../graphql/client';
 import { TrainByStationFragment } from '../graphql/generated/digitraffic';
 import { TrainLocationMessage } from '../types/vehicles';
-import { isDefined } from '../utils/common';
-import { getBearing } from '../utils/math';
-import { getDepartureTimeTableRow } from '../utils/train';
-import useMqttClient from './useMqttClient';
+import { formatEET } from './date';
+import { getBearing } from './math';
+import { getDepartureTimeTableRow } from './train';
 
 const digitrafficEndpointUrl = 'wss://rata.digitraffic.fi:443/mqtt';
 
@@ -36,15 +33,28 @@ function getTrainCurrentHeading(tl: TrainLocationMessage): number | null {
   return heading;
 }
 
-const handleTrainLocationMessage = (
+export const handleTrainLocationMessage = (
+  topic: string,
   message: Buffer,
-  trains?: TrainByStationFragment[]
+  topicToTrain: Map<string, TrainByStationFragment>
 ) => {
   const tl: TrainLocationMessage | undefined = JSON.parse(message.toString());
-  if (!tl || !trains) return;
+  if (!tl) return;
 
-  const train = trains.find((t) => t.trainNumber === tl.trainNumber);
+  const train = topicToTrain.get(
+    `train-locations/${tl.departureDate}/${tl.trainNumber}/#`
+  );
   const heading = getTrainCurrentHeading(tl);
+
+  const trackedTrains = trainsVar();
+  if (!(tl.trainNumber in trackedTrains)) {
+    trainsVar({
+      ...trackedTrains,
+      [tl.trainNumber]: {
+        departureDate: tl.departureDate,
+      },
+    });
+  }
 
   const oldVehicles = vehiclesVar();
 
@@ -73,50 +83,19 @@ const handleTrainLocationMessage = (
   });
 };
 
-function getTopic(train: TrainByStationFragment) {
+export function getTopic(train: TrainByStationFragment) {
   if (!train.timeTableRows) return null;
   const departureRow = getDepartureTimeTableRow(train);
   if (!departureRow) return null;
   const departureDate = parseISO(departureRow.scheduledTime);
-  const topic = `train-locations/${format(departureDate, 'yyyy-MM-dd')}/${
+  const topic = `train-locations/${formatEET(departureDate, 'yyyy-MM-dd')}/${
     train.trainNumber
   }/#`;
   return topic;
 }
 
-function useTrainLiveTrackingWithDigitraffic(
-  trains?: TrainByStationFragment[]
-) {
-  const { client, error } = useMqttClient(digitrafficEndpointUrl);
-  const subscribedTopics = useRef(new Set<string>());
-
-  useEffect(() => {
-    const callback = (_topic: string, message: Buffer) =>
-      handleTrainLocationMessage(message, trains);
-
-    if (client) {
-      client.on('message', callback);
-    }
-
-    return () => {
-      if (client) {
-        client.off('message', callback);
-      }
-    };
-  }, [client, trains]);
-
-  useEffect(() => {
-    if (client && trains) {
-      const topics = trains.map(getTopic).filter(isDefined);
-      const newTopics = [...topics].filter(
-        (t) => !subscribedTopics.current.has(t)
-      );
-      client.subscribe(newTopics);
-      newTopics.forEach((t) => subscribedTopics.current.add(t));
-    }
-  }, [client, trains]);
-
-  return { error };
-}
-
-export default useTrainLiveTrackingWithDigitraffic;
+export const mqttDigitraffic = {
+  endpointUrl: digitrafficEndpointUrl,
+  getTopic: getTopic,
+  handleMessage: handleTrainLocationMessage,
+};

@@ -17,6 +17,8 @@ export default function getTrainLatestDepartureTimeTableRow(
     (r) =>
       r?.type === TimeTableRowType.Departure &&
       r?.actualTime &&
+      // Note that actualTime may be set even to (near) future. Thus, we need to check
+      // that the actualTime has actually been passed.
       parseISO(r.actualTime) <= new Date()
   );
 

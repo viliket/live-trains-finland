@@ -38,7 +38,7 @@ function TrainComposition({
     ? getTrainJourneySectionForStation(train, stationName)
     : getTrainCurrentJourneySection(train);
   const compositionChangeDetailsForStation = stationName
-    ? getTrainCompositionDetailsForStation(stationName, train)
+    ? getTrainCompositionDetailsForStation(stationName, train)?.reverse()
     : null;
 
   let wagons: (Wagon | undefined | null)[] | undefined | null =
@@ -61,13 +61,13 @@ function TrainComposition({
         numJourneySections > 1
       ) {
         // Display composition for first station on journey if there are more than 1 section
-        wagons = journeySection?.wagons;
+        wagons = orderBy(journeySection?.wagons, (w) => w?.location, 'desc');
       } else {
         return <></>;
       }
     } else {
       // No station given, use wagons from current journey section
-      wagons = journeySection?.wagons;
+      wagons = orderBy(journeySection?.wagons, (w) => w?.location, 'desc');
     }
   }
 
@@ -153,7 +153,7 @@ function TrainComposition({
         }}
       >
         {wagons &&
-          orderBy(wagons, (w) => w?.location, 'desc').map((w, i) => (
+          wagons.map((w, i) => (
             <span
               key={`${w?.location}-${wagonStatuses?.[i]}`}
               onClick={() => onWagonClick(w)}

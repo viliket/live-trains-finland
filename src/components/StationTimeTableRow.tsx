@@ -8,6 +8,7 @@ import {
   TimeTableRowType,
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
+import { formatEET } from '../utils/date';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import {
   getTrainDestinationStationName,
@@ -83,7 +84,14 @@ function StationTimeTableRow({
             })}
           >
             {trainName}
-            <VehicleTrackingIcon trainNumber={trainNumber} />
+            <VehicleTrackingIcon
+              trainNumber={trainNumber}
+              departureDate={
+                departureTime
+                  ? formatEET(departureTime, 'yyyy-MM-dd')
+                  : undefined
+              }
+            />
           </Box>
         </span>
       </TableCell>

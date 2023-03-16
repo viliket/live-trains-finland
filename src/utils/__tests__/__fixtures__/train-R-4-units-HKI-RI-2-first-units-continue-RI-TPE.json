@@ -1,0 +1,887 @@
+{
+  "trainNumber": 9705,
+  "version": "284979714959",
+  "runningCurrently": false,
+  "operator": {
+    "name": "VR-Yhtymä Oyj",
+    "__typename": "Operator",
+    "shortCode": "vr",
+    "uicCode": 10
+  },
+  "commuterLineid": "R",
+  "trainType": {
+    "name": "HL",
+    "trainCategory": {
+      "name": "Commuter",
+      "__typename": "TrainCategory"
+    },
+    "__typename": "TrainType"
+  },
+  "compositions": [
+    {
+      "journeySections": [
+        {
+          "startTimeTableRow": {
+            "scheduledTime": "2023-02-24T15:10:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": "2023-02-24T15:10:21.000Z",
+            "station": {
+              "name": "Helsinki asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "endTimeTableRow": {
+            "scheduledTime": "2023-02-24T16:05:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": "2023-02-24T16:16:53.000Z",
+            "station": {
+              "name": "Riihimäki asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "maximumSpeed": 160,
+          "totalLength": 217,
+          "locomotives": [
+            {
+              "vehicleNumber": "94106004017-2",
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sm4",
+              "location": 4,
+              "__typename": "Locomotive"
+            },
+            {
+              "vehicleNumber": "94106004010-7",
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sm4",
+              "location": 1,
+              "__typename": "Locomotive"
+            },
+            {
+              "vehicleNumber": "94106004028-9",
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sm4",
+              "location": 2,
+              "__typename": "Locomotive"
+            },
+            {
+              "vehicleNumber": "94106004021-4",
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sm4",
+              "location": 3,
+              "__typename": "Locomotive"
+            }
+          ],
+          "wagons": [
+            {
+              "vehicleNumber": "94106004028-9",
+              "salesNumber": 0,
+              "wagonType": "Sm4",
+              "location": 2,
+              "length": 5440,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": "94106004017-2",
+              "salesNumber": 0,
+              "wagonType": "Sm4",
+              "location": 4,
+              "length": 5440,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": "94106004010-7",
+              "salesNumber": 0,
+              "wagonType": "Sm4",
+              "location": 1,
+              "length": 5440,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": "94106004021-4",
+              "salesNumber": 0,
+              "wagonType": "Sm4",
+              "location": 3,
+              "length": 5440,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            }
+          ],
+          "__typename": "JourneySection"
+        },
+        {
+          "startTimeTableRow": {
+            "scheduledTime": "2023-02-24T16:15:00.000Z",
+            "liveEstimateTime": "2023-02-24T16:21:00.000Z",
+            "actualTime": "2023-02-24T16:24:39.000Z",
+            "station": {
+              "name": "Riihimäki asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "endTimeTableRow": {
+            "scheduledTime": "2023-02-24T17:25:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": "2023-02-24T17:28:05.000Z",
+            "station": {
+              "name": "Tampere asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "maximumSpeed": 160,
+          "totalLength": 108,
+          "locomotives": [
+            {
+              "vehicleNumber": "94106004010-7",
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sm4",
+              "location": 1,
+              "__typename": "Locomotive"
+            },
+            {
+              "vehicleNumber": "94106004028-9",
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sm4",
+              "location": 2,
+              "__typename": "Locomotive"
+            }
+          ],
+          "wagons": [
+            {
+              "vehicleNumber": "94106004028-9",
+              "salesNumber": 0,
+              "wagonType": "Sm4",
+              "location": 2,
+              "length": 5440,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": "94106004010-7",
+              "salesNumber": 0,
+              "wagonType": "Sm4",
+              "location": 1,
+              "length": 5440,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            }
+          ],
+          "__typename": "JourneySection"
+        }
+      ],
+      "__typename": "Composition"
+    }
+  ],
+  "timeTableRows": [
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:10:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:10:21.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Helsinki asema",
+        "shortCode": "HKI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "5",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:14:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:16:24.000Z",
+      "differenceInMinutes": 2,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Pasila asema",
+        "shortCode": "PSL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:15:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:19:35.000Z",
+      "differenceInMinutes": 5,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Pasila asema",
+        "shortCode": "PSL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:23:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:26:45.000Z",
+      "differenceInMinutes": 4,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tikkurila asema",
+        "shortCode": "TKL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:24:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:27:47.000Z",
+      "differenceInMinutes": 4,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Tikkurila asema",
+        "shortCode": "TKL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:32:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:35:41.000Z",
+      "differenceInMinutes": 4,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Kerava asema",
+        "shortCode": "KE",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:33:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:36:22.000Z",
+      "differenceInMinutes": 3,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kerava asema",
+        "shortCode": "KE",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:36:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:41:11.000Z",
+      "differenceInMinutes": 5,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Ainola",
+        "shortCode": "AIN",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:37:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:42:17.000Z",
+      "differenceInMinutes": 5,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Ainola",
+        "shortCode": "AIN",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:39:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:44:11.000Z",
+      "differenceInMinutes": 5,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Järvenpää asema",
+        "shortCode": "JP",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:40:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:45:02.000Z",
+      "differenceInMinutes": 5,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Järvenpää asema",
+        "shortCode": "JP",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:42:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:46:56.000Z",
+      "differenceInMinutes": 4,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Saunakallio",
+        "shortCode": "SAU",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:43:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T15:47:46.000Z",
+      "differenceInMinutes": 5,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Saunakallio",
+        "shortCode": "SAU",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:48:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:02:28.000Z",
+      "differenceInMinutes": 14,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Jokela",
+        "shortCode": "JK",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:49:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:03:13.000Z",
+      "differenceInMinutes": 14,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Jokela",
+        "shortCode": "JK",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:55:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:09:14.000Z",
+      "differenceInMinutes": 14,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Hyvinkää",
+        "shortCode": "HY",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T15:56:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:10:05.000Z",
+      "differenceInMinutes": 14,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Hyvinkää",
+        "shortCode": "HY",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:05:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:16:53.000Z",
+      "differenceInMinutes": 12,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": [
+        {
+          "categoryCode": {
+            "code": "L",
+            "name": "Liikenteenhoito",
+            "__typename": "CategoryCode"
+          },
+          "detailedCategoryCode": {
+            "name": "Junakohtaus, edellä kulkeva juna tai ohitus",
+            "code": "L2",
+            "__typename": "DetailedCategoryCode"
+          },
+          "thirdCategoryCode": {
+            "name": "Edellä kulkeva juna",
+            "code": "L204",
+            "__typename": "ThirdCategoryCode"
+          },
+          "__typename": "Cause"
+        }
+      ],
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Riihimäki asema",
+        "shortCode": "RI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:15:00.000Z",
+      "liveEstimateTime": "2023-02-24T16:21:00.000Z",
+      "actualTime": "2023-02-24T16:24:39.000Z",
+      "differenceInMinutes": 10,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Riihimäki asema",
+        "shortCode": "RI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:21:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:30:13.000Z",
+      "differenceInMinutes": 9,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Ryttylä",
+        "shortCode": "RY",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:22:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:30:37.000Z",
+      "differenceInMinutes": 9,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Ryttylä",
+        "shortCode": "RY",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:29:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:37:08.000Z",
+      "differenceInMinutes": 8,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Turenki",
+        "shortCode": "TU",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:30:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:37:32.000Z",
+      "differenceInMinutes": 8,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Turenki",
+        "shortCode": "TU",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:37:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:44:20.000Z",
+      "differenceInMinutes": 7,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Hämeenlinna",
+        "shortCode": "HL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:38:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:44:53.000Z",
+      "differenceInMinutes": 7,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Hämeenlinna",
+        "shortCode": "HL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:43:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:50:02.000Z",
+      "differenceInMinutes": 7,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Parola",
+        "shortCode": "PRL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:44:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:50:47.000Z",
+      "differenceInMinutes": 7,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Parola",
+        "shortCode": "PRL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:50:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:57:22.000Z",
+      "differenceInMinutes": 7,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Iittala",
+        "shortCode": "ITA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T16:51:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T16:57:42.000Z",
+      "differenceInMinutes": 7,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Iittala",
+        "shortCode": "ITA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T17:00:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T17:06:05.000Z",
+      "differenceInMinutes": 6,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Toijala",
+        "shortCode": "TL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T17:01:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T17:06:53.000Z",
+      "differenceInMinutes": 6,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Toijala",
+        "shortCode": "TL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T17:05:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T17:10:44.000Z",
+      "differenceInMinutes": 6,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Viiala",
+        "shortCode": "VIA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T17:06:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T17:11:21.000Z",
+      "differenceInMinutes": 5,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Viiala",
+        "shortCode": "VIA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T17:12:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T17:17:00.000Z",
+      "differenceInMinutes": 5,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Lempäälä",
+        "shortCode": "LPÄ",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T17:13:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T17:17:29.000Z",
+      "differenceInMinutes": 4,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Lempäälä",
+        "shortCode": "LPÄ",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-24T17:25:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-02-24T17:28:05.000Z",
+      "differenceInMinutes": 3,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tampere asema",
+        "shortCode": "TPE",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    }
+  ],
+  "__typename": "Train"
+}

@@ -13,6 +13,11 @@ import { VehicleDetails } from '../types/vehicles';
  */
 export const vehiclesVar = makeVar<Record<number, VehicleDetails>>({});
 
+/**
+ * Holds the identification details of trains that are currently being tracked in real-time.
+ */
+export const trainsVar = makeVar<Record<number, { departureDate: string }>>({});
+
 export const gqlClients = {
   digitraffic: 'digitraffic',
   digitransit: 'digitransit',
@@ -24,7 +29,7 @@ const digitransitLink = new HttpLink({
   uri: 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql',
   headers: {
     'digitransit-subscription-key':
-      process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY,
+      process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
   },
 });
 
@@ -38,7 +43,7 @@ const digitrafficLink = new HttpLink({
 
 // VR
 const vrLink = new HttpLink({
-  uri: 'https://www.vr.fi/api/v4',
+  uri: 'https://www.vr.fi/api/v6',
 });
 
 /**

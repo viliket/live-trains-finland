@@ -2,7 +2,6 @@ import { Suspense, useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
 import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { format } from 'date-fns';
 import { orderBy } from 'lodash';
 import { ClockStart, ClockEnd } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +18,7 @@ import {
 import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
 import { isDefined } from '../utils/common';
+import { formatEET } from '../utils/date';
 import getRouteForTrain from '../utils/getRouteForTrain';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
@@ -73,7 +73,7 @@ const Station = () => {
   const handleTimeTableRowClick = useCallback(
     (trainNumber: number, scheduledTime: Date) => {
       navigate(
-        `/train/${trainNumber}/${format(
+        `/train/${trainNumber}/${formatEET(
           scheduledTime,
           'yyyy-MM-dd'
         )}?station=${stationCode}`

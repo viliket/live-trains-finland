@@ -36,38 +36,40 @@ type WagonStatus = 'unchanged' | 'removed' | 'added';
 type WagonCompositionDetails = {
   wagon?: Wagon | null;
   status: WagonStatus;
+  wagonLocInPrevComposition?: number;
 };
 
-const getWagonLoc = (w?: Wagon | null) => w?.salesNumber || w?.location;
+const getWagonLoc = (w?: Wagon | null) => w?.location ?? w?.salesNumber;
 const getWagonNo = (w?: Wagon | null) =>
   w?.vehicleNumber ?? w?.salesNumber.toString() ?? null;
 
 export default function getTrainCompositionDetailsForStation(
-  stationName: string,
+  station: string,
   train: TrainDetailsFragment
 ): WagonCompositionDetails[] | null {
-  const prevSection = getTrainJourneySectionForStation(
-    train,
-    stationName,
-    'end'
-  );
+  const prevSection = getTrainJourneySectionForStation(train, station, 'end');
   let prevWagons = orderBy(prevSection?.wagons, getWagonLoc, 'desc');
 
-  const nextSection = getTrainJourneySectionForStation(
-    train,
-    stationName,
-    'start'
-  );
+  const nextSection = getTrainJourneySectionForStation(train, station, 'start');
   let nextWagons = orderBy(nextSection?.wagons, getWagonLoc, 'desc');
 
   if (!prevWagons.length || !nextWagons.length) return null;
 
-  const commonWagons = lcs(nextWagons, prevWagons, getWagonNo);
+  let commonWagons = lcs(nextWagons, prevWagons, getWagonNo);
+  let commonWagonsReversed = lcs(nextWagons.reverse(), prevWagons, getWagonNo);
+  let isDirectionReversed = false;
+  if (commonWagonsReversed.length > commonWagons.length) {
+    commonWagons = commonWagonsReversed;
+    isDirectionReversed = true;
+  }
 
   const removedWagons = differenceBy(prevWagons, commonWagons, getWagonNo).map(
     (w): WagonCompositionDetails => ({
       status: 'removed',
       wagon: w,
+      wagonLocInPrevComposition: getWagonLoc(
+        prevWagons.find((pw) => getWagonNo(pw) === getWagonNo(w))
+      ),
     })
   );
 
@@ -80,11 +82,23 @@ export default function getTrainCompositionDetailsForStation(
 
   const allWagons = concat(
     commonWagons.map(
-      (w): WagonCompositionDetails => ({ status: 'unchanged', wagon: w })
+      (w): WagonCompositionDetails => ({
+        status: 'unchanged',
+        wagon: w,
+        wagonLocInPrevComposition: getWagonLoc(
+          prevWagons.find((pw) => getWagonNo(pw) === getWagonNo(w))
+        ),
+      })
     ),
     removedWagons,
     addedWagons
   );
 
-  return orderBy(allWagons, (w) => w.wagon?.location, 'desc');
+  const sortOrder = !isDirectionReversed ? 'asc' : 'desc';
+
+  return orderBy(
+    allWagons,
+    ['wagonLocInPrevComposition', 'wagon.location'],
+    [sortOrder, sortOrder]
+  );
 }

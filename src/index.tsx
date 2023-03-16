@@ -5,8 +5,10 @@ import React, { Suspense } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { CircularProgress } from '@mui/material';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
+
 import App from './App';
 import ServiceWorkerUpdatePrompt from './components/ServiceWorkerUpdatePrompt';
 import { client } from './graphql/client';
@@ -28,7 +30,9 @@ root.render(
           />
         }
       >
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Suspense>
     </ApolloProvider>
   </React.StrictMode>

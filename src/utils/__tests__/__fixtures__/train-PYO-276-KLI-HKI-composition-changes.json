@@ -1,0 +1,1879 @@
+{
+  "trainNumber": 276,
+  "version": "284983805133",
+  "runningCurrently": false,
+  "operator": {
+    "name": "VR-Yhtymä Oyj",
+    "__typename": "Operator",
+    "shortCode": "vr",
+    "uicCode": 10
+  },
+  "commuterLineid": "",
+  "trainType": {
+    "name": "PYO",
+    "trainCategory": {
+      "name": "Long-distance",
+      "__typename": "TrainCategory"
+    },
+    "__typename": "TrainType"
+  },
+  "compositions": [
+    {
+      "journeySections": [
+        {
+          "startTimeTableRow": {
+            "scheduledTime": "2023-02-25T17:42:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Kolari",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "endTimeTableRow": {
+            "scheduledTime": "2023-02-25T22:10:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Oulu asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "maximumSpeed": 140,
+          "totalLength": 500,
+          "locomotives": [
+            {
+              "vehicleNumber": null,
+              "powerTypeAbbreviation": "D",
+              "locomotiveType": "Dr16",
+              "location": 2,
+              "__typename": "Locomotive"
+            },
+            {
+              "vehicleNumber": null,
+              "powerTypeAbbreviation": "D",
+              "locomotiveType": "Dr16",
+              "location": 1,
+              "__typename": "Locomotive"
+            }
+          ],
+          "wagons": [
+            {
+              "vehicleNumber": null,
+              "salesNumber": 53,
+              "wagonType": "CEmt",
+              "location": 16,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 55,
+              "wagonType": "CEmt",
+              "location": 18,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 999,
+              "wagonType": "De",
+              "location": 19,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 725,
+              "wagonType": "Gd",
+              "location": 5,
+              "length": 3160,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 50,
+              "wagonType": "CEmt",
+              "location": 13,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 737,
+              "wagonType": "Gd",
+              "location": 3,
+              "length": 3160,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 40,
+              "wagonType": "Edm",
+              "location": 8,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 41,
+              "wagonType": "Edm",
+              "location": 9,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 720,
+              "wagonType": "Gfot",
+              "location": 7,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 49,
+              "wagonType": "Rx",
+              "location": 12,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": true,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 52,
+              "wagonType": "CEmt",
+              "location": 15,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 48,
+              "wagonType": "Edg",
+              "location": 11,
+              "length": 2650,
+              "playground": null,
+              "pet": true,
+              "catering": null,
+              "video": null,
+              "luggage": true,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 54,
+              "wagonType": "CEmt",
+              "location": 17,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 42,
+              "wagonType": "Edm",
+              "location": 10,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 721,
+              "wagonType": "Gfot",
+              "location": 6,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 736,
+              "wagonType": "Gd",
+              "location": 4,
+              "length": 3160,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 51,
+              "wagonType": "CEmt",
+              "location": 14,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            }
+          ],
+          "__typename": "JourneySection"
+        },
+        {
+          "startTimeTableRow": {
+            "scheduledTime": "2023-02-25T22:57:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Oulu asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "endTimeTableRow": {
+            "scheduledTime": "2023-02-26T05:13:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Tampere asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "maximumSpeed": 140,
+          "totalLength": 457,
+          "locomotives": [
+            {
+              "vehicleNumber": null,
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sr1",
+              "location": 1,
+              "__typename": "Locomotive"
+            }
+          ],
+          "wagons": [
+            {
+              "vehicleNumber": null,
+              "salesNumber": 737,
+              "wagonType": "Gd",
+              "location": 16,
+              "length": 3160,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 54,
+              "wagonType": "CEmt",
+              "location": 11,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 41,
+              "wagonType": "Edm",
+              "location": 3,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 40,
+              "wagonType": "Edm",
+              "location": 2,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 720,
+              "wagonType": "Gfot",
+              "location": 14,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 55,
+              "wagonType": "CEmt",
+              "location": 12,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 48,
+              "wagonType": "Edg",
+              "location": 5,
+              "length": 2650,
+              "playground": null,
+              "pet": true,
+              "catering": null,
+              "video": null,
+              "luggage": true,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 50,
+              "wagonType": "CEmt",
+              "location": 7,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 725,
+              "wagonType": "Gd",
+              "location": 17,
+              "length": 3160,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 49,
+              "wagonType": "Rx",
+              "location": 6,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": true,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 42,
+              "wagonType": "Edm",
+              "location": 4,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 721,
+              "wagonType": "Gfot",
+              "location": 13,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 52,
+              "wagonType": "CEmt",
+              "location": 9,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 51,
+              "wagonType": "CEmt",
+              "location": 8,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 736,
+              "wagonType": "Gd",
+              "location": 15,
+              "length": 3160,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 53,
+              "wagonType": "CEmt",
+              "location": 10,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            }
+          ],
+          "__typename": "JourneySection"
+        },
+        {
+          "startTimeTableRow": {
+            "scheduledTime": "2023-02-26T05:34:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Tampere asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "endTimeTableRow": {
+            "scheduledTime": "2023-02-26T08:14:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Pasila tavara",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "maximumSpeed": 140,
+          "totalLength": 394,
+          "locomotives": [
+            {
+              "vehicleNumber": null,
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sr1",
+              "location": 1,
+              "__typename": "Locomotive"
+            }
+          ],
+          "wagons": [
+            {
+              "vehicleNumber": null,
+              "salesNumber": 53,
+              "wagonType": "CEmt",
+              "location": 10,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 736,
+              "wagonType": "Gd",
+              "location": 15,
+              "length": 3160,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 50,
+              "wagonType": "CEmt",
+              "location": 7,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 51,
+              "wagonType": "CEmt",
+              "location": 8,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 40,
+              "wagonType": "Edm",
+              "location": 2,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 48,
+              "wagonType": "Edg",
+              "location": 5,
+              "length": 2650,
+              "playground": null,
+              "pet": true,
+              "catering": null,
+              "video": null,
+              "luggage": true,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 52,
+              "wagonType": "CEmt",
+              "location": 9,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 41,
+              "wagonType": "Edm",
+              "location": 3,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 49,
+              "wagonType": "Rx",
+              "location": 6,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": true,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 42,
+              "wagonType": "Edm",
+              "location": 4,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 720,
+              "wagonType": "Gfot",
+              "location": 14,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 55,
+              "wagonType": "CEmt",
+              "location": 12,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 721,
+              "wagonType": "Gfot",
+              "location": 13,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 54,
+              "wagonType": "CEmt",
+              "location": 11,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            }
+          ],
+          "__typename": "JourneySection"
+        },
+        {
+          "startTimeTableRow": {
+            "scheduledTime": "2023-02-26T08:34:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Pasila tavara",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "endTimeTableRow": {
+            "scheduledTime": "2023-02-26T08:45:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": null,
+            "station": {
+              "name": "Helsinki asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "maximumSpeed": 140,
+          "totalLength": 309,
+          "locomotives": [
+            {
+              "vehicleNumber": null,
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sr1",
+              "location": 1,
+              "__typename": "Locomotive"
+            }
+          ],
+          "wagons": [
+            {
+              "vehicleNumber": null,
+              "salesNumber": 41,
+              "wagonType": "Edm",
+              "location": 3,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 49,
+              "wagonType": "Rx",
+              "location": 6,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": true,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 50,
+              "wagonType": "CEmt",
+              "location": 7,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 51,
+              "wagonType": "CEmt",
+              "location": 8,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 52,
+              "wagonType": "CEmt",
+              "location": 9,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 53,
+              "wagonType": "CEmt",
+              "location": 10,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 48,
+              "wagonType": "Edg",
+              "location": 5,
+              "length": 2650,
+              "playground": null,
+              "pet": true,
+              "catering": null,
+              "video": null,
+              "luggage": true,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 40,
+              "wagonType": "Edm",
+              "location": 2,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 55,
+              "wagonType": "CEmt",
+              "location": 12,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 42,
+              "wagonType": "Edm",
+              "location": 4,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            },
+            {
+              "vehicleNumber": null,
+              "salesNumber": 54,
+              "wagonType": "CEmt",
+              "location": 11,
+              "length": 2640,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            }
+          ],
+          "__typename": "JourneySection"
+        }
+      ],
+      "__typename": "Composition"
+    }
+  ],
+  "timeTableRows": [
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T17:42:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kolari",
+        "shortCode": "KLI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T18:29:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Pello",
+        "shortCode": "PEL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T18:32:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Pello",
+        "shortCode": "PEL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T19:20:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Ylitornio",
+        "shortCode": "YTR",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T19:23:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Ylitornio",
+        "shortCode": "YTR",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T20:13:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tornio-Itäinen",
+        "shortCode": "TRI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T20:16:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Tornio-Itäinen",
+        "shortCode": "TRI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T20:33:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Laurila",
+        "shortCode": "LLA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "621",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T20:36:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Laurila",
+        "shortCode": "LLA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "621",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T20:46:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Kemi asema",
+        "shortCode": "KEM",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T20:50:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kemi asema",
+        "shortCode": "KEM",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T21:07:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Simo",
+        "shortCode": "SIM",
+        "__typename": "Station"
+      },
+      "commercialTrack": "421",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T21:11:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Simo",
+        "shortCode": "SIM",
+        "__typename": "Station"
+      },
+      "commercialTrack": "421",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T22:10:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Oulu asema",
+        "shortCode": "OL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T22:57:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Oulu asema",
+        "shortCode": "OL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T23:07:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Kempele",
+        "shortCode": "KML",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T23:17:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kempele",
+        "shortCode": "KML",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T23:34:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Hirvineva",
+        "shortCode": "HVN",
+        "__typename": "Station"
+      },
+      "commercialTrack": "601",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-25T23:38:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Hirvineva",
+        "shortCode": "HVN",
+        "__typename": "Station"
+      },
+      "commercialTrack": "601",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T00:30:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Ylivieska",
+        "shortCode": "YV",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T00:44:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Ylivieska",
+        "shortCode": "YV",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T01:32:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Kokkola",
+        "shortCode": "KOK",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T01:35:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kokkola",
+        "shortCode": "KOK",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T01:56:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Pännäinen",
+        "shortCode": "PNÄ",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T02:00:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Pännäinen",
+        "shortCode": "PNÄ",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T02:41:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Kauhava",
+        "shortCode": "KHA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "002",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T02:44:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kauhava",
+        "shortCode": "KHA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "002",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T03:09:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Seinäjoki asema",
+        "shortCode": "SK",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T03:19:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Seinäjoki asema",
+        "shortCode": "SK",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T03:59:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Ratikylä",
+        "shortCode": "RLÄ",
+        "__typename": "Station"
+      },
+      "commercialTrack": "602",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T04:14:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Ratikylä",
+        "shortCode": "RLÄ",
+        "__typename": "Station"
+      },
+      "commercialTrack": "602",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T05:13:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tampere asema",
+        "shortCode": "TPE",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T05:34:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Tampere asema",
+        "shortCode": "TPE",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T06:00:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Toijala",
+        "shortCode": "TL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T06:02:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Toijala",
+        "shortCode": "TL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T06:27:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Hämeenlinna",
+        "shortCode": "HL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T06:50:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Hämeenlinna",
+        "shortCode": "HL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T07:14:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Riihimäki asema",
+        "shortCode": "RI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T07:17:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Riihimäki asema",
+        "shortCode": "RI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T07:59:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tikkurila asema",
+        "shortCode": "TKL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T08:01:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Tikkurila asema",
+        "shortCode": "TKL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T08:14:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Pasila tavara",
+        "shortCode": "PSLT",
+        "__typename": "Station"
+      },
+      "commercialTrack": "101",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T08:34:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Pasila tavara",
+        "shortCode": "PSLT",
+        "__typename": "Station"
+      },
+      "commercialTrack": "101",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T08:38:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Pasila asema",
+        "shortCode": "PSL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "6",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T08:40:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Pasila asema",
+        "shortCode": "PSL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "6",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-02-26T08:45:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Helsinki asema",
+        "shortCode": "HKI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "8",
+      "__typename": "TimeTableRow"
+    }
+  ],
+  "__typename": "Train"
+}
