@@ -1,18 +1,18 @@
-import { useEffect, useRef } from 'react';
-
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { orderBy } from 'lodash';
 
-import { vehiclesVar } from '../graphql/client';
+import { trainsVar, vehiclesVar } from '../graphql/client';
 import {
   TimeTableRowType,
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
 import { VehiclePositionMessage } from '../types/vehicles';
-import { isDefined } from '../utils/common';
-import { toKmsPerHour } from '../utils/math';
-import { getTrainDestinationStation } from '../utils/train';
-import useMqttClient from './useMqttClient';
+import { formatEET } from './date';
+import { toKmsPerHour } from './math';
+import {
+  getTrainDestinationStation,
+  getTrainScheduledDepartureTime,
+} from './train';
 
 const hslEndpointUrl = 'wss://mqtt.hsl.fi:443/';
 
@@ -32,7 +32,11 @@ const trainCommuterLineToHSLRouteGtfsIdMap: Record<string, string> = {
   Y: '3002Y',
 };
 
-const handleVehiclePositionMessage = (topic: string, message: Buffer) => {
+export const handleVehiclePositionMessage = (
+  topic: string,
+  message: Buffer,
+  topicToTrain: Map<string, TrainByStationFragment>
+) => {
   // prettier-ignore
   const [
     ,
@@ -44,7 +48,7 @@ const handleVehiclePositionMessage = (topic: string, message: Buffer) => {
     , // transport_mode
     , // operator_id
     , // vehicle_number
-    , // route_id
+    routeId,
     , // direction_id
     , // headsign
     startTime,
@@ -60,6 +64,22 @@ const handleVehiclePositionMessage = (topic: string, message: Buffer) => {
     message.toString()
   ).VP;
   if (!vp || !vp.lat || !vp.long) return;
+
+  const train = topicToTrain.get(getMqttTopic(routeId, startTime));
+
+  const trackedTrains = trainsVar();
+  if (vp.jrn != null && !(vp.jrn in trackedTrains) && train) {
+    trainsVar({
+      ...trackedTrains,
+      [vp.jrn]: {
+        departureDate: formatEET(
+          getTrainScheduledDepartureTime(train) ?? new Date(),
+          'yyyy-MM-dd'
+        ),
+      },
+    });
+  }
+
   vehiclesVar({
     ...vehiclesVar(),
     [vp.veh]: {
@@ -114,40 +134,21 @@ function getTrainDepartureTimeForHslMqttTopic(
   return departureTime;
 }
 
-function getTopic(train: TrainByStationFragment) {
+function getMqttTopic(routeId: string, startTime: string) {
+  return `/hfp/v2/journey/ongoing/vp/+/+/+/${routeId}/+/+/${startTime}/#`;
+}
+
+export function getTopic(train: TrainByStationFragment) {
   if (!train.commuterLineid) return null;
   const routeId = trainCommuterLineToHSLRouteGtfsIdMap[train.commuterLineid];
   const departureTime = getTrainDepartureTimeForHslMqttTopic(train);
   if (!departureTime) return null;
-  const depTimeString = format(departureTime, 'HH:mm');
-  const topic = `/hfp/v2/journey/ongoing/vp/+/+/+/${routeId}/+/+/${depTimeString}/#`;
-  return topic;
+  const depTimeString = formatEET(departureTime, 'HH:mm');
+  return getMqttTopic(routeId, depTimeString);
 }
 
-function useTrainLiveTrackingWithHsl(trains?: TrainByStationFragment[]) {
-  const { client, error } = useMqttClient(hslEndpointUrl);
-  const subscribedTopics = useRef(new Set<string>());
-
-  useEffect(() => {
-    if (client) {
-      client.on('message', (topic, message) => {
-        handleVehiclePositionMessage(topic, message);
-      });
-    }
-  }, [client]);
-
-  useEffect(() => {
-    if (client && trains) {
-      const topics = trains.map(getTopic).filter(isDefined);
-      const newTopics = [...topics].filter(
-        (t) => !subscribedTopics.current.has(t)
-      );
-      client.subscribe(newTopics);
-      newTopics.forEach((t) => subscribedTopics.current.add(t));
-    }
-  }, [client, trains]);
-
-  return { error };
-}
-
-export default useTrainLiveTrackingWithHsl;
+export const mqttDigitransit = {
+  endpointUrl: hslEndpointUrl,
+  getTopic: getTopic,
+  handleMessage: handleVehiclePositionMessage,
+};
