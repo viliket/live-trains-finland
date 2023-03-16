@@ -91,8 +91,8 @@ describe('handleTrainLocationMessage', () => {
     expect(vehiclesVar()[123].veh).toEqual(123);
     expect(vehiclesVar()[123].jrn).toEqual(123);
     expect(vehiclesVar()[123].heading).toEqual(null);
-    expect(vehiclesVar()[123].lat).toEqual(20.5);
-    expect(vehiclesVar()[123].lng).toEqual(10.5);
+    expect(vehiclesVar()[123].position[1]).toEqual(20.5);
+    expect(vehiclesVar()[123].position[0]).toEqual(10.5);
     expect(vehiclesVar()[123].spd).toEqual(67);
     expect(vehiclesVar()[123].routeShortName).toBeNull();
 
@@ -114,8 +114,8 @@ describe('handleTrainLocationMessage', () => {
     expect(vehiclesVar()[123].veh).toEqual(123);
     expect(vehiclesVar()[123].jrn).toEqual(123);
     expect(vehiclesVar()[123].heading).toBeCloseTo(76.06);
-    expect(vehiclesVar()[123].lat).toEqual(22.5);
-    expect(vehiclesVar()[123].lng).toEqual(20.5);
+    expect(vehiclesVar()[123].position[1]).toEqual(22.5);
+    expect(vehiclesVar()[123].position[0]).toEqual(20.5);
     expect(vehiclesVar()[123].spd).toEqual(87);
     expect(vehiclesVar()[123].routeShortName).toEqual('123');
 
@@ -140,8 +140,8 @@ describe('handleTrainLocationMessage', () => {
     expect(vehiclesVar()[123].veh).toEqual(123);
     expect(vehiclesVar()[123].jrn).toEqual(123);
     expect(vehiclesVar()[123].heading).toBeCloseTo(76.06);
-    expect(vehiclesVar()[123].lat).toEqual(22.5);
-    expect(vehiclesVar()[123].lng).toEqual(20.5);
+    expect(vehiclesVar()[123].position[1]).toEqual(22.5);
+    expect(vehiclesVar()[123].position[0]).toEqual(20.5);
     expect(vehiclesVar()[123].spd).toEqual(88);
     expect(vehiclesVar()[123].routeShortName).toEqual('R');
   });
