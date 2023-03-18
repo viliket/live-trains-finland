@@ -2,9 +2,10 @@ import { act, renderHook } from '@testing-library/react';
 
 import { vehiclesVar } from '../../graphql/client';
 import { TrainDetailsFragment } from '../../graphql/generated/digitraffic';
+import { VehicleDetails } from '../../types/vehicles';
 import { useTrainSpeed } from '../useTrainSpeed';
 
-const vehicleBase = {
+const vehicleBase: VehicleDetails = {
   spd: 0,
   acc: 0,
   drst: null,
