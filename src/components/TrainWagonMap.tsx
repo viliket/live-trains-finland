@@ -27,6 +27,12 @@ export const wagonMaps: Record<string, WagonMap | undefined> = {
   Gfot: { downstairs: 'GFOT' },
   Rk: { downstairs: 'RK' },
   Rx: { downstairs: 'RX' },
+  Sm3_1: { downstairs: 'SM3_IM1' },
+  Sm3_2: { downstairs: 'SM3_CMH' },
+  Sm3_3: { downstairs: 'SM3_TTC' },
+  Sm3_4: { downstairs: 'SM3_TT' },
+  Sm3_5: { downstairs: 'SM3_CM' },
+  Sm3_6: { downstairs: 'SM3_IM2' },
   Sm4: { downstairs: 'SM4', height: 2500, type: 'custom' },
   Sm5: { downstairs: 'SM5', height: 3690, type: 'custom' },
 };
@@ -38,12 +44,30 @@ const StyledReactSVG = styled(ReactSVG)`
     transform-box: fill-box;
   }
 
+  svg.vr-wagon g#Seats g g[id$='-with-service-icon'] path {
+    transform: rotate(-90deg) translate(0, 9px);
+  }
+
+  svg.vr-wagon g#Seats g g[id$='-with-service-icon'] use {
+    transform: rotate(-90deg) translate(0, -9px);
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
   svg.vr-wagon g#Seats g[transform^='rotate(90'] g path {
     transform: rotate(180deg);
   }
 
   svg.vr-wagon g#Seats g[transform^='rotate(-90'] g path {
     transform: rotate(0deg);
+  }
+
+  svg.vr-wagon g#Seats g g path[transform^='matrix(-1'] {
+    transform: rotate(90deg) scaleX(-1);
+  }
+
+  svg.vr-wagon g#Seats g g path[transform^='rotate(-180'] {
+    transform: rotate(90deg);
   }
 
   svg.vr-wagon g#Seats g[transform^='matrix(-1'] g path {
