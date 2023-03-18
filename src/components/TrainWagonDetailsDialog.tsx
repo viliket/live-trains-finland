@@ -50,8 +50,20 @@ const updateWagonMapPlaceReservations = (
               highlightEl.style.stroke = 'white';
             }
             const seatNoEl = document.getElementById('seatnumber_' + p.number);
-            if (seatNoEl) {
-              seatNoEl.style.fill = 'white';
+            const seatNoElWithServiceIcon = document.getElementById(
+              `seatnumber_${p.number}-with-service-icon`
+            );
+            if (p.services.includes('PETS')) {
+              if (seatNoEl) {
+                seatNoEl.style.fill = 'none';
+              }
+              if (seatNoElWithServiceIcon) {
+                seatNoElWithServiceIcon.style.fill = 'white';
+              }
+            } else {
+              if (seatNoEl) {
+                seatNoEl.style.fill = 'white';
+              }
             }
             const seatLineEl =
               seatEl.querySelector<HTMLElement>(`path[id^="Line"]`);

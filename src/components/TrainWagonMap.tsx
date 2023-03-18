@@ -44,6 +44,16 @@ const StyledReactSVG = styled(ReactSVG)`
     transform-box: fill-box;
   }
 
+  svg.vr-wagon g#Seats g g[id$='-with-service-icon'] path {
+    transform: rotate(-90deg) translate(0, 9px);
+  }
+
+  svg.vr-wagon g#Seats g g[id$='-with-service-icon'] use {
+    transform: rotate(-90deg) translate(0, -9px);
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
   svg.vr-wagon g#Seats g[transform^='rotate(90'] g path {
     transform: rotate(180deg);
   }
