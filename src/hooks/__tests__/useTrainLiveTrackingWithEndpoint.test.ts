@@ -6,6 +6,7 @@ import useTrainLiveTrackingWithEndpoint from '../useTrainLiveTrackingWithEndpoin
 
 const trainBase: TrainDetailsFragment = {
   trainNumber: 123,
+  departureDate: '2023-03-11',
   operator: {
     name: 'VR-Yhtymä Oyj',
     __typename: 'Operator',
