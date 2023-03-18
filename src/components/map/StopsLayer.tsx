@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material';
 import { MapLibreZoomEvent } from 'maplibre-gl';
 import { Layer, Source, useMap } from 'react-map-gl';
 
+import { isDefined } from '../../utils/common';
 import { trainStations } from '../../utils/stations';
 import stopSignSvgPath from './stop-sign.svg';
 
@@ -16,9 +17,11 @@ const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
   const theme = useTheme();
   const [currentZoom, setCurrentZoom] = useState<number>();
 
-  const routeStationNames = routeStationCodes?.map(
-    (c) => trainStations.find((s) => s.stationShortCode === c)?.stationName
-  );
+  const routeStationNames = routeStationCodes
+    ?.map(
+      (c) => trainStations.find((s) => s.stationShortCode === c)?.stationName
+    )
+    .filter(isDefined);
 
   useEffect(() => {
     const img = new Image(64, 64);
@@ -48,6 +51,22 @@ const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
     };
   }, [map]);
 
+  const getPropertyValueByStationName = <T,>(
+    stationNames: string[],
+    valueMatch: T,
+    valueUnmatch: T
+  ): mapboxgl.Expression => {
+    return [
+      'match',
+      // Get station name
+      ['get', 'name'],
+      // When station name matches any of the given station names use valueMatch as the property value
+      ...(stationNames.flatMap((n) => [n, valueMatch]) ?? []),
+      /* Otherwise use valueUnmatch as the property value */
+      valueUnmatch,
+    ];
+  };
+
   return (
     <Source
       type="vector"
@@ -65,16 +84,11 @@ const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
           filter: ['all', ['==', 'type', 'RAIL'], ['==', 'platform', 'null']],
           paint: {
             'circle-color': routeStationNames
-              ? [
-                  'match',
-                  ['get', 'name'],
-                  ...(routeStationNames.flatMap((n) => [
-                    n,
-                    theme.palette.secondary.main,
-                  ]) ?? []),
-                  /* other */
-                  theme.palette.mode === 'light' ? '#ccc' : '#555',
-                ]
+              ? getPropertyValueByStationName(
+                  routeStationNames,
+                  theme.palette.secondary.main,
+                  theme.palette.mode === 'light' ? '#ccc' : '#555'
+                )
               : '#ccc',
             'circle-stroke-color':
               theme.palette.mode === 'light' ? '#fff' : '#000',
@@ -100,9 +114,22 @@ const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
             'text-variable-anchor': ['left', 'right'],
             'text-max-width': 8,
             'text-offset': [0.75, 0.25],
+            'symbol-sort-key': routeStationNames
+              ? getPropertyValueByStationName(routeStationNames, 0, 1)
+              : 0,
           },
           paint: {
-            'text-color': theme.palette.text.primary,
+            'text-color': routeStationNames
+              ? getPropertyValueByStationName(
+                  routeStationNames,
+                  theme.palette.text.primary,
+                  theme.palette.text.secondary
+                )
+              : theme.palette.text.primary,
+            'text-halo-width': 2,
+            'text-halo-color': theme.palette.getContrastText(
+              theme.palette.text.primary
+            ),
           },
         }}
       />
