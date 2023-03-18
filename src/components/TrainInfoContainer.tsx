@@ -8,13 +8,12 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { gqlClients } from '../graphql/client';
 import {
-  TimeTableRowType,
   TrainByStationFragment,
-  TrainTimeTableRowFragment,
   useTrainQuery,
   Wagon,
 } from '../graphql/generated/digitraffic';
 import { formatEET } from '../utils/date';
+import getTimeTableRowsGroupedByStation from '../utils/getTimeTableRowsGroupedByStation';
 import getTrainCurrentStation from '../utils/getTrainCurrentStation';
 import getTrainLatestArrivalRow from '../utils/getTrainLatestArrivalRow';
 import getTrainLatestDepartureTimeTableRow from '../utils/getTrainLatestDepartureTimeTableRow';
@@ -69,26 +68,9 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
     const trainLatestArrivalRow = getTrainLatestArrivalRow(train);
     const trainLatestDepartureRow = getTrainLatestDepartureTimeTableRow(train);
 
-    // Group time table rows by station when consecutive rows have same station
-    const grouped = (realTimeTrain ?? train).timeTableRows?.reduce(
-      (arr, cur, i, a) => {
-        if (!i || cur?.station.shortCode !== a[i - 1]?.station.shortCode) {
-          arr.push([]);
-        }
-        if (cur) {
-          arr[arr.length - 1].push(cur);
-        }
-        return arr;
-      },
-      [] as TrainTimeTableRowFragment[][]
+    const timeTableRows = getTimeTableRowsGroupedByStation(
+      realTimeTrain ?? train
     );
-
-    const timeTableRows = grouped?.map((rows) => {
-      return {
-        arrival: rows.find((r) => r?.type === TimeTableRowType.Arrival),
-        departure: rows.find((r) => r?.type === TimeTableRowType.Departure),
-      };
-    });
 
     return timeTableRows?.map((g, i, { length }) => {
       const r = g.departure ?? g.arrival;
