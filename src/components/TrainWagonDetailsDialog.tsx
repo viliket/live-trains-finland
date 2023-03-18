@@ -140,7 +140,11 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
   };
 
   const wagonMap = selectedWagon?.wagonType
-    ? wagonMaps[selectedWagon.wagonType]
+    ? wagonMaps[
+        selectedWagon.wagonType !== 'Sm3'
+          ? selectedWagon.wagonType
+          : 'Sm3_' + selectedWagon.salesNumber
+      ]
     : null;
 
   return (
