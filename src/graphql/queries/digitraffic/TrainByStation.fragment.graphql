@@ -2,6 +2,7 @@ fragment TrainByStation on Train {
   commuterLineid
   runningCurrently
   trainNumber
+  departureDate
   version
   trainType {
     name

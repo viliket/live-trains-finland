@@ -1,27 +1,53 @@
 import { useEffect, useState } from 'react';
 
 import { useTheme } from '@mui/material';
+import {
+  differenceInMinutes,
+  format,
+  formatDistanceToNowStrict,
+} from 'date-fns';
+import { fi } from 'date-fns/locale';
 import { MapLibreZoomEvent } from 'maplibre-gl';
+import { useTranslation } from 'react-i18next';
 import { Layer, Source, useMap } from 'react-map-gl';
 
+import { gqlClients } from '../../graphql/client';
+import {
+  TrainByStationFragment,
+  useTrainQuery,
+} from '../../graphql/generated/digitraffic';
 import { isDefined } from '../../utils/common';
-import { trainStations } from '../../utils/stations';
+import getTimeTableRowsGroupedByStation from '../../utils/getTimeTableRowsGroupedByStation';
+import {
+  getTimeTableRowRealTime,
+  getTrainStationName,
+} from '../../utils/train';
 import stopSignSvgPath from './stop-sign.svg';
 
 type StopsLayerProps = {
-  routeStationCodes?: string[];
+  train?: TrainByStationFragment | null;
 };
 
-const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
+const StopsLayer = ({ train }: StopsLayerProps) => {
   const { current: map } = useMap();
   const theme = useTheme();
   const [currentZoom, setCurrentZoom] = useState<number>();
+  const { i18n } = useTranslation();
 
-  const routeStationNames = routeStationCodes
-    ?.map(
-      (c) => trainStations.find((s) => s.stationShortCode === c)?.stationName
-    )
-    .filter(isDefined);
+  const { data: realTimeData } = useTrainQuery(
+    train
+      ? {
+          variables: {
+            trainNumber: train.trainNumber,
+            departureDate: train.departureDate,
+          },
+          context: { clientName: gqlClients.digitraffic },
+          pollInterval: 10000,
+          // Fetch only from cache as this data is already polled every 10 seconds in TrainInfoContainer
+          fetchPolicy: 'cache-only',
+        }
+      : { skip: true }
+  );
 
   useEffect(() => {
     const img = new Image(64, 64);
@@ -67,6 +93,22 @@ const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
     ];
   };
 
+  const routeStationNames = train?.timeTableRows
+    ? Array.from(
+        new Set(
+          train.timeTableRows
+            .map((r) => (r ? getTrainStationName(r.station) : undefined))
+            .filter(isDefined)
+        )
+      )
+    : undefined;
+
+  const trainWithRealTimeData = realTimeData?.train?.[0] ?? train;
+
+  const trainTimeTableRows = trainWithRealTimeData
+    ? getTimeTableRowsGroupedByStation(trainWithRealTimeData)
+    : undefined;
+
   return (
     <Source
       type="vector"
@@ -109,7 +151,39 @@ const StopsLayer = ({ routeStationCodes }: StopsLayerProps) => {
             'text-optional': true,
             'text-allow-overlap': currentZoom != null && currentZoom > 10,
             'text-size': 10,
-            'text-field': '{name}',
+            'text-field': trainTimeTableRows
+              ? [
+                  'match',
+                  // Get station name
+                  ['get', 'name'],
+                  // When station name matches one of time table rows, display extra info about the station time table row
+                  ...trainTimeTableRows.flatMap((g) => {
+                    const r = g.departure ?? g.arrival;
+                    if (!r) return ['', ''];
+
+                    const stationName = getTrainStationName(r.station);
+                    const timeTableRowTime = getTimeTableRowRealTime(r);
+                    const diffInMinsToNow = differenceInMinutes(
+                      timeTableRowTime,
+                      new Date()
+                    );
+
+                    return [
+                      stationName,
+                      stationName +
+                        '\n' +
+                        (diffInMinsToNow <= 5 && diffInMinsToNow > 0
+                          ? formatDistanceToNowStrict(timeTableRowTime, {
+                              locale:
+                                i18n.resolvedLanguage === 'fi' ? fi : undefined,
+                            })
+                          : format(timeTableRowTime, 'HH:mm')),
+                    ];
+                  }),
+                  // Otherwise just display the station name
+                  ['get', 'name'],
+                ]
+              : '{name}',
             'text-font': ['Gotham Rounded Medium'],
             'text-variable-anchor': ['left', 'right'],
             'text-max-width': 8,

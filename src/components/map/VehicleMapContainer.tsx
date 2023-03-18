@@ -12,6 +12,7 @@ import Map, {
   ScaleControl,
 } from 'react-map-gl';
 
+import { TrainByStationFragment } from '../../graphql/generated/digitraffic';
 import { RouteForRailFragment } from '../../graphql/generated/digitransit';
 import { TrainStation, trainStations } from '../../utils/stations';
 import RailwayPlatformsLayer from './RailwayPlatformsLayer';
@@ -53,7 +54,7 @@ type VehicleMapContainerProps = {
   selectedVehicleId: number | null;
   station?: TrainStation;
   route?: RouteForRailFragment | null;
-  routeStationCodes?: string[];
+  train?: TrainByStationFragment | null;
   onVehicleSelected: (vehicleId: number) => void;
 };
 
@@ -64,7 +65,7 @@ const VehicleMapContainer = ({
   selectedVehicleId,
   station,
   route,
-  routeStationCodes,
+  train,
   onVehicleSelected,
 }: VehicleMapContainerProps) => {
   const mapRef = useRef<MapRef>(null);
@@ -136,7 +137,7 @@ const VehicleMapContainer = ({
           );
         })
       }
-      <StopsLayer routeStationCodes={routeStationCodes} />
+      <StopsLayer train={train} />
       <RailwayTracksLayer />
       <RailwayPlatformsLayer />
       {route && (

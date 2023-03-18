@@ -126,17 +126,7 @@ const Train = () => {
             selectedVehicleId={selectedVehicleId}
             station={station}
             route={selectedRoute}
-            routeStationCodes={
-              train?.timeTableRows
-                ? Array.from(
-                    new Set(
-                      train.timeTableRows
-                        .map((r) => r?.station.shortCode)
-                        .filter(isDefined)
-                    )
-                  )
-                : undefined
-            }
+            train={train}
             onVehicleSelected={handleVehicleIdSelected}
           />
         </Suspense>
