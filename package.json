@@ -76,6 +76,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230321.0",
     "@graphql-codegen/add": "^4.0.1",
     "@graphql-codegen/cli": "^3.2.1",
     "@graphql-codegen/typescript": "^3.0.1",
