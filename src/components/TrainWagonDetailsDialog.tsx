@@ -102,7 +102,11 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
   const departureStation = getTrainDepartureStation(train)?.shortCode;
   const destinationStation = getTrainDestinationStation(train)?.shortCode;
   const { data: wagonMapData } = useWagonMapDataQuery(
-    departureDate && departureStation && destinationStation
+    departureDate &&
+      departureStation &&
+      destinationStation &&
+      // Only query for non-commmuter trains as commuter trains have no wagon map data
+      !train.commuterLineid
       ? {
           variables: {
             departureStation: departureStation,
