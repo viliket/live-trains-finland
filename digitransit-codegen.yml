@@ -1,6 +1,8 @@
 overwrite: true
 schema:
-  - https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql
+  - https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql:
+      headers:
+        digitransit-subscription-key: ${REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY}
 documents: src/graphql/queries/digitransit/**/*.graphql
 generates:
   src/graphql/generated/digitransit.tsx:
