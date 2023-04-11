@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
 
-import { useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { generateStyle, Options } from 'hsl-map-style';
 import { VectorSource } from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
+import { QualityHigh, QualityLow } from 'mdi-material-ui';
 import Map, {
   FullscreenControl,
   Layer,
@@ -11,15 +13,22 @@ import Map, {
   NavigationControl,
   ScaleControl,
 } from 'react-map-gl';
+import useLocalStorageState from 'use-local-storage-state';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic';
 import { RouteForRailFragment } from '../../graphql/generated/digitransit';
 import { TrainStation, trainStations } from '../../utils/stations';
+import CustomOverlay from './CustomOverlay';
 import RailwayPlatformsLayer from './RailwayPlatformsLayer';
 import RailwayTracksLayer from './RailwayTracksLayer';
 import StopsLayer from './StopsLayer';
 import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
+
+const baseAttribution =
+  '<a href="https://digitransit.fi/" target="_blank">&copy; Digitransit</a> ' +
+  '<a href="https://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> ' +
+  '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap</a>';
 
 const generateMapStyle = (options?: Options) => {
   const mapStyle = generateStyle({
@@ -33,10 +42,7 @@ const generateMapStyle = (options?: Options) => {
       },
     ],
   });
-  (mapStyle.sources['vector'] as VectorSource).attribution =
-    '<a href="https://digitransit.fi/" target="_blank">&copy; Digitransit</a> ' +
-    '<a href="https://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> ' +
-    '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap</a>';
+  (mapStyle.sources['vector'] as VectorSource).attribution = baseAttribution;
   return mapStyle;
 };
 
@@ -48,6 +54,35 @@ const mapStyleDark = generateMapStyle({
       enabled: true,
     },
   },
+});
+
+const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
+  version: 8,
+  sources: {
+    'raster-tiles': {
+      type: 'raster',
+      tiles: ['https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png'],
+      tileSize: 256,
+      attribution: baseAttribution,
+    },
+  },
+  glyphs:
+    'https://hslstoragestatic.azureedge.net/mapfonts/{fontstack}/{range}.pbf',
+  layers: [
+    {
+      id: 'simple-tiles',
+      type: 'raster',
+      source: 'raster-tiles',
+      paint: isDarkMode
+        ? {
+            'raster-contrast': 0.8,
+            'raster-brightness-max': 0.1,
+          }
+        : {},
+      minzoom: 0,
+      maxzoom: 23,
+    },
+  ],
 });
 
 type VehicleMapContainerProps = {
@@ -70,6 +105,12 @@ const VehicleMapContainer = ({
 }: VehicleMapContainerProps) => {
   const mapRef = useRef<MapRef>(null);
   const theme = useTheme();
+  const [useVectorBaseTiles, setUseVectorBaseTiles] = useLocalStorageState(
+    'useVectorBaseTiles',
+    {
+      defaultValue: false,
+    }
+  );
   const map = mapRef.current;
 
   useEffect(() => {
@@ -97,7 +138,13 @@ const VehicleMapContainer = ({
         latitude: station?.latitude ?? fallbackStation?.latitude,
         zoom: initialZoom,
       }}
-      mapStyle={theme.palette.mode === 'light' ? mapStyle : mapStyleDark}
+      mapStyle={
+        useVectorBaseTiles
+          ? theme.palette.mode === 'light'
+            ? mapStyle
+            : mapStyleDark
+          : getRasterMapStyle(theme.palette.mode !== 'light')
+      }
       transformRequest={(url) => {
         if (
           url.includes('api.digitransit.fi') ||
@@ -120,6 +167,27 @@ const VehicleMapContainer = ({
       <NavigationControl position="top-left" />
       <ScaleControl />
       <FullscreenControl />
+      <CustomOverlay
+        children={
+          <Box
+            component="button"
+            onClick={() => setUseVectorBaseTiles((b) => !b)}
+            sx={{
+              svg: {
+                verticalAlign: 'middle',
+                padding: '4px',
+                color: 'text.primary',
+              },
+            }}
+          >
+            {useVectorBaseTiles ? (
+              <QualityHigh className="maplibregl-ctrl-icon" />
+            ) : (
+              <QualityLow className="maplibregl-ctrl-icon" />
+            )}
+          </Box>
+        }
+      />
       {
         /**
          * Create empty base layers for dynamically changing the layer order
