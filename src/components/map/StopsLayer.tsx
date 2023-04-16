@@ -7,7 +7,7 @@ import {
   formatDistanceToNowStrict,
 } from 'date-fns';
 import { fi } from 'date-fns/locale';
-import { MapLibreZoomEvent } from 'maplibre-gl';
+import { MapLibreZoomEvent, MapStyleImageMissingEvent } from 'maplibre-gl';
 import { useTranslation } from 'react-i18next';
 import { Layer, Source, useMap } from 'react-map-gl';
 
@@ -50,14 +50,28 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
   );
 
   useEffect(() => {
-    const img = new Image(64, 64);
-    img.onload = () => {
-      if (map && !map.hasImage('stop-marker')) {
-        map.addImage('stop-marker', img);
+    const callback = (e: MapStyleImageMissingEvent) => {
+      if (e.id === 'stop-marker') {
+        const img = new Image(64, 64);
+        img.onload = () => {
+          if (map && !map.hasImage('stop-marker')) {
+            map.addImage('stop-marker', img);
+          }
+        };
+        img.onerror = (e) => console.error(e);
+        img.src = stopSignSvgPath;
       }
     };
-    img.onerror = (e) => console.error(e);
-    img.src = stopSignSvgPath;
+
+    if (map) {
+      map.on('styleimagemissing', callback);
+    }
+
+    return () => {
+      if (map) {
+        map.off('styleimagemissing', callback);
+      }
+    };
   }, [map]);
 
   useEffect(() => {
