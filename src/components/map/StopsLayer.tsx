@@ -45,6 +45,8 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           pollInterval: 10000,
           // Fetch only from cache as this data is already polled every 10 seconds in TrainInfoContainer
           fetchPolicy: 'cache-only',
+          // To trigger re-render on every poll interval even when the data has not changed
+          notifyOnNetworkStatusChange: true,
         }
       : { skip: true }
   );
