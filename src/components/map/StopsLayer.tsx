@@ -32,7 +32,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
   const { current: map } = useMap();
   const theme = useTheme();
   const [currentZoom, setCurrentZoom] = useState<number>();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const { data: realTimeData } = useTrainQuery(
     train
@@ -184,17 +184,22 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
                       new Date()
                     );
 
-                    return [
-                      stationName,
-                      stationName +
-                        '\n' +
-                        (diffInMinsToNow <= 5 && diffInMinsToNow > 0
-                          ? formatDistanceToNowStrict(timeTableRowTime, {
-                              locale:
-                                i18n.resolvedLanguage === 'fi' ? fi : undefined,
-                            })
-                          : format(timeTableRowTime, 'HH:mm')),
-                    ];
+                    let stationTime: string;
+                    if (r.cancelled) {
+                      stationTime = t('canceled');
+                    } else if (diffInMinsToNow <= 5 && diffInMinsToNow > 0) {
+                      stationTime = formatDistanceToNowStrict(
+                        timeTableRowTime,
+                        {
+                          locale:
+                            i18n.resolvedLanguage === 'fi' ? fi : undefined,
+                        }
+                      );
+                    } else {
+                      stationTime = format(timeTableRowTime, 'HH:mm');
+                    }
+
+                    return [stationName, stationName + '\n' + stationTime];
                   }),
                   // Otherwise just display the station name
                   ['get', 'name'],
