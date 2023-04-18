@@ -133,6 +133,8 @@ const VehicleMapContainer = ({
       mapLib={maplibregl}
       ref={mapRef}
       reuseMaps
+      // Disable unneeded RTLTextPlugin that is set by react-map-gl by default
+      RTLTextPlugin=""
       initialViewState={{
         longitude: station?.longitude ?? fallbackStation?.longitude,
         latitude: station?.latitude ?? fallbackStation?.latitude,
