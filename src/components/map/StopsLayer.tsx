@@ -17,6 +17,7 @@ import {
   useTrainQuery,
 } from '../../graphql/generated/digitraffic';
 import { isDefined } from '../../utils/common';
+import { StationTimeTableRowGroup } from '../../utils/getTimeTableRowsGroupedByStation';
 import getTimeTableRowsGroupedByStation from '../../utils/getTimeTableRowsGroupedByStation';
 import {
   getTimeTableRowRealTime,
@@ -125,6 +126,43 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     ? getTimeTableRowsGroupedByStation(trainWithRealTimeData)
     : undefined;
 
+  const getTimeTableRowGroupDescription = (group: StationTimeTableRowGroup) => {
+    const r = group.departure ?? group.arrival;
+    if (!r) return '';
+
+    const timeTableRowTime = getTimeTableRowRealTime(r);
+    const diffInMinsToNow = differenceInMinutes(timeTableRowTime, new Date());
+
+    let stationTime: string;
+    if (r.cancelled) {
+      stationTime = t('canceled');
+    } else if (diffInMinsToNow <= 5 && diffInMinsToNow > 0) {
+      stationTime = formatDistanceToNowStrict(timeTableRowTime, {
+        locale: i18n.resolvedLanguage === 'fi' ? fi : undefined,
+      });
+    } else {
+      stationTime = format(timeTableRowTime, 'HH:mm');
+    }
+    return stationTime;
+  };
+
+  const getTimeTableRowGroupColor = (group: StationTimeTableRowGroup) => {
+    const r = group.departure ?? group.arrival;
+    if (!r) return theme.palette.text.primary;
+    const delayInMinutes = r.differenceInMinutes ?? 0;
+    const color =
+      r.cancelled || delayInMinutes > 0
+        ? theme.palette.error.main
+        : theme.palette.text.primary;
+    return color;
+  };
+
+  const getStationNameForTimeTableGroup = (group: StationTimeTableRowGroup) => {
+    const r = group.departure ?? group.arrival;
+    if (!r) return '';
+    return getTrainStationName(r.station);
+  };
+
   return (
     <Source
       type="vector"
@@ -169,40 +207,42 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
             'text-size': 10,
             'text-field': trainTimeTableRows
               ? [
-                  'match',
-                  // Get station name
+                  'format',
+                  // 1st field: Station name
                   ['get', 'name'],
-                  // When station name matches one of time table rows, display extra info about the station time table row
-                  ...trainTimeTableRows.flatMap((g) => {
-                    const r = g.departure ?? g.arrival;
-                    if (!r) return ['', ''];
-
-                    const stationName = getTrainStationName(r.station);
-                    const timeTableRowTime = getTimeTableRowRealTime(r);
-                    const diffInMinsToNow = differenceInMinutes(
-                      timeTableRowTime,
-                      new Date()
-                    );
-
-                    let stationTime: string;
-                    if (r.cancelled) {
-                      stationTime = t('canceled');
-                    } else if (diffInMinsToNow <= 5 && diffInMinsToNow > 0) {
-                      stationTime = formatDistanceToNowStrict(
-                        timeTableRowTime,
-                        {
-                          locale:
-                            i18n.resolvedLanguage === 'fi' ? fi : undefined,
-                        }
-                      );
-                    } else {
-                      stationTime = format(timeTableRowTime, 'HH:mm');
-                    }
-
-                    return [stationName, stationName + '\n' + stationTime];
-                  }),
-                  // Otherwise just display the station name
-                  ['get', 'name'],
+                  {},
+                  // 2nd field: Line break
+                  '\n',
+                  {},
+                  // 3rd field: Station time table row time
+                  [
+                    'match',
+                    // Get station name
+                    ['get', 'name'],
+                    // When station name matches one of time table rows,
+                    // display extra info about the station time table row
+                    ...trainTimeTableRows.flatMap((g) => [
+                      getStationNameForTimeTableGroup(g),
+                      getTimeTableRowGroupDescription(g),
+                    ]),
+                    // Otherwise display nothing (when station is not on trainTimeTableRows)
+                    '',
+                  ],
+                  {
+                    'text-color': [
+                      'match',
+                      // Get station name
+                      ['get', 'name'],
+                      // When station name matches one of time table rows,
+                      // choose text color based on the time table row data
+                      ...trainTimeTableRows.flatMap((g) => [
+                        getStationNameForTimeTableGroup(g),
+                        getTimeTableRowGroupColor(g),
+                      ]),
+                      // Otherwise use fallback text color (when station is not on trainTimeTableRows)
+                      theme.palette.text.secondary,
+                    ],
+                  },
                 ]
               : '{name}',
             'text-font': ['Gotham Rounded Medium'],

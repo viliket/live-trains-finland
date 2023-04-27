@@ -4,9 +4,14 @@ import {
   TrainTimeTableRowFragment,
 } from '../graphql/generated/digitraffic';
 
+export type StationTimeTableRowGroup = {
+  arrival?: TrainTimeTableRowFragment;
+  departure?: TrainTimeTableRowFragment;
+};
+
 export default function getTimeTableRowsGroupedByStation(
   train: TrainByStationFragment
-) {
+): StationTimeTableRowGroup[] | undefined {
   // Group time table rows by station when consecutive rows have same station
   const grouped = train.timeTableRows?.reduce((arr, cur, i, a) => {
     if (!i || cur?.station.shortCode !== a[i - 1]?.station.shortCode) {
