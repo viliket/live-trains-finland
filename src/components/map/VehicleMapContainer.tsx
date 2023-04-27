@@ -66,7 +66,7 @@ const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
           ? 'https://cdn.digitransit.fi/map/v2/hsl-map-greyscale/{z}/{x}/{y}.png'
           : 'https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png',
       ],
-      tileSize: 256,
+      tileSize: 512,
       attribution: baseAttribution,
     },
   },
