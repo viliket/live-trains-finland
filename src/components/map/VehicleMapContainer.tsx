@@ -61,7 +61,11 @@ const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
   sources: {
     'raster-tiles': {
       type: 'raster',
-      tiles: ['https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png'],
+      tiles: [
+        isDarkMode
+          ? 'https://cdn.digitransit.fi/map/v2/hsl-map-greyscale/{z}/{x}/{y}.png'
+          : 'https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png',
+      ],
       tileSize: 256,
       attribution: baseAttribution,
     },
@@ -73,12 +77,6 @@ const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
       id: 'simple-tiles',
       type: 'raster',
       source: 'raster-tiles',
-      paint: isDarkMode
-        ? {
-            'raster-contrast': 0.8,
-            'raster-brightness-max': 0.1,
-          }
-        : {},
       minzoom: 0,
       maxzoom: 23,
     },
