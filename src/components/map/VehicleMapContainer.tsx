@@ -83,6 +83,22 @@ const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
   ],
 });
 
+/**
+ * Temporary fix for https://github.com/visgl/react-map-gl/issues/2166 until it gets fixed.
+ * When react-map-gl Map gets reused (reuseMaps is true) it does not properly tell the
+ * _resizeObserver of the reused instance to observe the new container.
+ */
+const fixMapResizeObserver = (
+  map: mapboxgl.Map & {
+    _resizeObserver?: ResizeObserver;
+  }
+) => {
+  if (map._resizeObserver) {
+    map._resizeObserver.disconnect();
+    map._resizeObserver.observe(map.getContainer());
+  }
+};
+
 type VehicleMapContainerProps = {
   selectedVehicleId: number | null;
   station?: TrainStation;
@@ -125,6 +141,12 @@ const VehicleMapContainer = ({
       map.setZoom(initialZoom);
     }
   }, [map, station]);
+
+  useEffect(() => {
+    if (map) {
+      fixMapResizeObserver(map.getMap());
+    }
+  }, [map]);
 
   return (
     <Map
