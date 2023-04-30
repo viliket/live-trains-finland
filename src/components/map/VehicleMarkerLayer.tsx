@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { CollisionFilterExtension } from '@deck.gl/extensions/typed';
 import { GeoJsonLayer } from '@deck.gl/layers/typed';
-import { MapboxOverlay } from '@deck.gl/mapbox/typed';
 import { Box, Button, useTheme } from '@mui/material';
 import { format } from 'date-fns';
 import { mapValues } from 'lodash';
@@ -18,6 +17,7 @@ import {
   getVehiclesGeoJsonData,
 } from '../../utils/map';
 import CustomOverlay from './CustomOverlay';
+import DeckGLOverlay from './DeckGLOverlay';
 
 type VehicleMarkerLayerProps = {
   onVehicleMarkerClick: (id: number) => void;
@@ -31,8 +31,6 @@ type VehicleInterpolatedPosition = {
 };
 
 const animDurationInMs = 1000;
-
-const deckOverlay = new MapboxOverlay({});
 
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
@@ -59,18 +57,6 @@ export default function VehicleMarkerLayer({
       colorShadow: theme.palette.mode === 'light' ? '#aaa' : '#aaa',
     });
   }, [map, theme.palette.mode, theme.palette.secondary.main]);
-
-  useEffect(() => {
-    if (map) {
-      map.addControl(deckOverlay);
-    }
-
-    return () => {
-      if (map) {
-        map.removeControl(deckOverlay);
-      }
-    };
-  }, [map]);
 
   useEffect(() => {
     const moveStartCallback = (e: ViewStateChangeEvent) => {
@@ -251,12 +237,9 @@ export default function VehicleMarkerLayer({
     },
   });
 
-  deckOverlay.setProps({
-    layers: [vehiclesLayer],
-  });
-
   return (
     <>
+      <DeckGLOverlay layers={[vehiclesLayer]} />
       {selectedVehicleId != null &&
         interpolatedPositions[selectedVehicleId] && (
           <CustomOverlay
