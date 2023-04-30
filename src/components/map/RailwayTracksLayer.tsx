@@ -10,7 +10,7 @@ const RailwayTracksLayer = () => {
       <Layer
         {...{
           id: 'railway_tracks',
-          beforeId: 'z5',
+          beforeId: 'z4',
           type: 'line',
           source: 'railway_tracks',
           'source-layer': 'railway_tracks',

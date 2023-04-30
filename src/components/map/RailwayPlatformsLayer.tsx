@@ -14,7 +14,7 @@ const RailwayPlatformsLayer = () => {
       <Layer
         {...{
           id: 'railway_platforms',
-          beforeId: 'z6',
+          beforeId: 'z5',
           type: 'fill',
           source: 'railway_platforms',
           'source-layer': 'railway_platforms',

@@ -19,7 +19,7 @@ const VehicleRouteLayer = ({ data }: VehicleRouteLayerProps) => {
       <Layer
         {...{
           id: 'vehicle_route',
-          beforeId: 'z7',
+          beforeId: 'z6',
           type: 'line',
           source: 'vehicle_route',
           paint: {

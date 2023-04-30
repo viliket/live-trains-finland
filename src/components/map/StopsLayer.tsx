@@ -196,7 +196,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
       <Layer
         {...{
           id: 'railway_stations_text',
-          beforeId: 'z9',
+          beforeId: 'z8',
           type: 'symbol',
           source: 'stops',
           'source-layer': 'stops',
@@ -271,7 +271,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
       <Layer
         {...{
           id: 'railway_platform_numbers',
-          beforeId: 'z8',
+          beforeId: 'z7',
           type: 'symbol',
           source: 'stops',
           'source-layer': 'stops',
