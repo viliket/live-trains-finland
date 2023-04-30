@@ -276,7 +276,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           source: 'stops',
           'source-layer': 'stops',
           filter: ['all', ['==', 'type', 'RAIL'], ['!=', 'platform', 'null']],
-          minzoom: 15,
+          minzoom: 14,
           layout: {
             'icon-image': 'stop-marker',
             'icon-size': 0.5,
