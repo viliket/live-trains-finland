@@ -79,9 +79,6 @@ const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
       source: 'raster-tiles',
       minzoom: 0,
       maxzoom: 23,
-      paint: {
-        'raster-resampling': 'nearest',
-      },
     },
   ],
 });
