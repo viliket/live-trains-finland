@@ -83,6 +83,9 @@ const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
   ],
 });
 
+const rasterMapStyle = getRasterMapStyle(false);
+const rasterMapStyleDark = getRasterMapStyle(true);
+
 /**
  * Temporary fix for https://github.com/visgl/react-map-gl/issues/2166 until it gets fixed.
  * When react-map-gl Map gets reused (reuseMaps is true) it does not properly tell the
@@ -148,6 +151,16 @@ const VehicleMapContainer = ({
     }
   }, [map]);
 
+  const getMapStyle = () => {
+    if (useVectorBaseTiles) {
+      return theme.palette.mode === 'light' ? mapStyle : mapStyleDark;
+    } else {
+      return theme.palette.mode === 'light'
+        ? rasterMapStyle
+        : rasterMapStyleDark;
+    }
+  };
+
   return (
     <Map
       mapLib={maplibregl}
@@ -160,13 +173,7 @@ const VehicleMapContainer = ({
         latitude: station?.latitude ?? fallbackStation?.latitude,
         zoom: initialZoom,
       }}
-      mapStyle={
-        useVectorBaseTiles
-          ? theme.palette.mode === 'light'
-            ? mapStyle
-            : mapStyleDark
-          : getRasterMapStyle(theme.palette.mode !== 'light')
-      }
+      mapStyle={getMapStyle()}
       transformRequest={(url) => {
         if (
           url.includes('api.digitransit.fi') ||
