@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 import { Box, useTheme } from '@mui/material';
-import { generateStyle, Options } from 'hsl-map-style';
-import { VectorSource } from 'mapbox-gl';
 import mapboxgl from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
@@ -17,6 +15,7 @@ import useLocalStorageState from 'use-local-storage-state';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic';
 import { RouteForRailFragment } from '../../graphql/generated/digitransit';
+import { getMapStyle } from '../../utils/map';
 import { TrainStation, trainStations } from '../../utils/stations';
 import CustomOverlay from './CustomOverlay';
 import RailwayPlatformsLayer from './RailwayPlatformsLayer';
@@ -24,67 +23,6 @@ import RailwayTracksLayer from './RailwayTracksLayer';
 import StopsLayer from './StopsLayer';
 import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
-
-const baseAttribution =
-  '<a href="https://digitransit.fi/" target="_blank">&copy; Digitransit</a> ' +
-  '<a href="https://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> ' +
-  '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap</a>';
-
-const generateMapStyle = (options?: Options) => {
-  const mapStyle = generateStyle({
-    ...options,
-    sourcesUrl: 'https://cdn.digitransit.fi/',
-    queryParams: [
-      {
-        url: 'https://cdn.digitransit.fi/',
-        name: 'digitransit-subscription-key',
-        value: process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
-      },
-    ],
-  });
-  (mapStyle.sources['vector'] as VectorSource).attribution = baseAttribution;
-  return mapStyle;
-};
-
-const mapStyle = generateMapStyle();
-
-const mapStyleDark = generateMapStyle({
-  components: {
-    greyscale: {
-      enabled: true,
-    },
-  },
-});
-
-const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
-  version: 8,
-  sources: {
-    'raster-tiles': {
-      type: 'raster',
-      tiles: [
-        isDarkMode
-          ? 'https://cdn.digitransit.fi/map/v2/hsl-map-greyscale/{z}/{x}/{y}.png'
-          : 'https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png',
-      ],
-      tileSize: 512,
-      attribution: baseAttribution,
-    },
-  },
-  glyphs:
-    'https://hslstoragestatic.azureedge.net/mapfonts/{fontstack}/{range}.pbf',
-  layers: [
-    {
-      id: 'simple-tiles',
-      type: 'raster',
-      source: 'raster-tiles',
-      minzoom: 0,
-      maxzoom: 23,
-    },
-  ],
-});
-
-const rasterMapStyle = getRasterMapStyle(false);
-const rasterMapStyleDark = getRasterMapStyle(true);
 
 /**
  * Temporary fix for https://github.com/visgl/react-map-gl/issues/2166 until it gets fixed.
@@ -151,16 +89,6 @@ const VehicleMapContainer = ({
     }
   }, [map]);
 
-  const getMapStyle = () => {
-    if (useVectorBaseTiles) {
-      return theme.palette.mode === 'light' ? mapStyle : mapStyleDark;
-    } else {
-      return theme.palette.mode === 'light'
-        ? rasterMapStyle
-        : rasterMapStyleDark;
-    }
-  };
-
   return (
     <Map
       mapLib={maplibregl}
@@ -173,7 +101,7 @@ const VehicleMapContainer = ({
         latitude: station?.latitude ?? fallbackStation?.latitude,
         zoom: initialZoom,
       }}
-      mapStyle={getMapStyle()}
+      mapStyle={getMapStyle(useVectorBaseTiles, theme.palette.mode)}
       transformRequest={(url) => {
         if (
           url.includes('api.digitransit.fi') ||

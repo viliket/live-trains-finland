@@ -1,3 +1,7 @@
+import { PaletteMode } from '@mui/material';
+import { generateStyle, Options } from 'hsl-map-style';
+import { VectorSource } from 'mapbox-gl';
+
 import { VehicleDetails } from '../types/vehicles';
 import { toRadians } from './math';
 
@@ -115,4 +119,73 @@ export function getVehiclesGeoJsonData(
       },
     })),
   };
+}
+
+const baseAttribution =
+  '<a href="https://digitransit.fi/" target="_blank">&copy; Digitransit</a> ' +
+  '<a href="https://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> ' +
+  '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap</a>';
+
+const generateMapStyle = (options?: Options) => {
+  const mapStyle = generateStyle({
+    ...options,
+    sourcesUrl: 'https://cdn.digitransit.fi/',
+    queryParams: [
+      {
+        url: 'https://cdn.digitransit.fi/',
+        name: 'digitransit-subscription-key',
+        value: process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
+      },
+    ],
+  });
+  (mapStyle.sources['vector'] as VectorSource).attribution = baseAttribution;
+  return mapStyle;
+};
+
+const mapStyle = generateMapStyle();
+
+const mapStyleDark = generateMapStyle({
+  components: {
+    greyscale: {
+      enabled: true,
+    },
+  },
+});
+
+const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
+  version: 8,
+  sources: {
+    'raster-tiles': {
+      type: 'raster',
+      tiles: [
+        isDarkMode
+          ? 'https://cdn.digitransit.fi/map/v2/hsl-map-greyscale/{z}/{x}/{y}.png'
+          : 'https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png',
+      ],
+      tileSize: 512,
+      attribution: baseAttribution,
+    },
+  },
+  glyphs:
+    'https://hslstoragestatic.azureedge.net/mapfonts/{fontstack}/{range}.pbf',
+  layers: [
+    {
+      id: 'simple-tiles',
+      type: 'raster',
+      source: 'raster-tiles',
+      minzoom: 0,
+      maxzoom: 23,
+    },
+  ],
+});
+
+const rasterMapStyle = getRasterMapStyle(false);
+const rasterMapStyleDark = getRasterMapStyle(true);
+
+export function getMapStyle(useVectorBaseTiles: boolean, mode: PaletteMode) {
+  if (useVectorBaseTiles) {
+    return mode === 'light' ? mapStyle : mapStyleDark;
+  } else {
+    return mode === 'light' ? rasterMapStyle : rasterMapStyleDark;
+  }
 }
