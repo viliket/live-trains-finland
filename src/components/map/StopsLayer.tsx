@@ -176,8 +176,8 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           beforeId: 'z9',
           type: 'circle',
           source: 'stops',
-          'source-layer': 'stops',
-          filter: ['all', ['==', 'type', 'RAIL'], ['==', 'platform', 'null']],
+          'source-layer': 'stations',
+          filter: ['==', 'type', 'RAIL'],
           paint: {
             'circle-color': routeStationNames
               ? getPropertyValueByStationName(
@@ -199,8 +199,8 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           beforeId: 'z8',
           type: 'symbol',
           source: 'stops',
-          'source-layer': 'stops',
-          filter: ['all', ['==', 'type', 'RAIL'], ['==', 'platform', 'null']],
+          'source-layer': 'stations',
+          filter: ['==', 'type', 'RAIL'],
           layout: {
             'text-optional': true,
             'text-allow-overlap': currentZoom != null && currentZoom > 10,
