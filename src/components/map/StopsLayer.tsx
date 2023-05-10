@@ -18,7 +18,7 @@ import {
 } from '../../graphql/generated/digitraffic';
 import { isDefined } from '../../utils/common';
 import { StationTimeTableRowGroup } from '../../utils/getTimeTableRowsGroupedByStation';
-import getTimeTableRowsGroupedByStation from '../../utils/getTimeTableRowsGroupedByStation';
+import getTimeTableRowsGroupedByStationUniqueStations from '../../utils/getTimeTableRowsGroupedByStationUniqueStations';
 import {
   getTimeTableRowRealTime,
   getTrainStationName,
@@ -123,7 +123,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
   const trainWithRealTimeData = realTimeData?.train?.[0] ?? train;
 
   const trainTimeTableRows = trainWithRealTimeData
-    ? getTimeTableRowsGroupedByStation(trainWithRealTimeData)
+    ? getTimeTableRowsGroupedByStationUniqueStations(trainWithRealTimeData)
     : undefined;
 
   const getTimeTableRowGroupDescription = (group: StationTimeTableRowGroup) => {
