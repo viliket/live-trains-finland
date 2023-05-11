@@ -1,5 +1,6 @@
 fragment TrainDetails on Train {
   trainNumber
+  departureDate
   version
   runningCurrently
   operator {

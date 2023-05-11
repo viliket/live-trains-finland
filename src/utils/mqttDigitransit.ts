@@ -80,11 +80,13 @@ export const handleVehiclePositionMessage = (
     });
   }
 
+  const oldVehicles = vehiclesVar();
+
   vehiclesVar({
-    ...vehiclesVar(),
+    ...oldVehicles,
     [vp.veh]: {
-      lat: vp.lat,
-      lng: vp.long,
+      position: [vp.long, vp.lat],
+      prevPosition: oldVehicles[vp.veh]?.position ?? [vp.long, vp.lat],
       drst: vp.drst,
       acc: vp.acc,
       spd: toKmsPerHour(vp.spd),
@@ -97,6 +99,7 @@ export const handleVehiclePositionMessage = (
       heading: vp.hdg,
       routeShortName: vp.desi,
       jrn: vp.jrn ?? null,
+      timestamp: performance.now(),
     },
   });
 };

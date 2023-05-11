@@ -8,6 +8,7 @@ import * as getTrainCurrentJourneySectionModule from '../getTrainCurrentJourneyS
 
 const train: TrainDetailsFragment = {
   trainNumber: 123,
+  departureDate: '2023-03-11',
   operator: {
     name: 'VR-Yhtymä Oyj',
     __typename: 'Operator',

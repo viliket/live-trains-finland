@@ -12,8 +12,8 @@ const digitrafficEndpointUrl = 'wss://rata.digitraffic.fi:443/mqtt';
 function getTrainCurrentHeading(tl: TrainLocationMessage): number | null {
   const prevLoc = vehiclesVar()[tl.trainNumber]
     ? {
-        lat: vehiclesVar()[tl.trainNumber].lat,
-        lng: vehiclesVar()[tl.trainNumber].lng,
+        lat: vehiclesVar()[tl.trainNumber].position[1],
+        lng: vehiclesVar()[tl.trainNumber].position[0],
       }
     : null;
   let heading: number | null = null;
@@ -56,11 +56,14 @@ export const handleTrainLocationMessage = (
     });
   }
 
+  const oldVehicles = vehiclesVar();
+
   vehiclesVar({
-    ...vehiclesVar(),
+    ...oldVehicles,
     [tl.trainNumber]: {
-      lat: tl.location.coordinates[1],
-      lng: tl.location.coordinates[0],
+      position: tl.location.coordinates,
+      prevPosition:
+        oldVehicles[tl.trainNumber]?.position ?? tl.location.coordinates,
       drst: null,
       acc: 0,
       spd: tl.speed,
@@ -75,6 +78,7 @@ export const handleTrainLocationMessage = (
         ? train.commuterLineid || train.trainNumber.toString()
         : null,
       jrn: tl.trainNumber,
+      timestamp: performance.now(),
     },
   });
 };

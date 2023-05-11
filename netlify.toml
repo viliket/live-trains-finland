@@ -1,6 +1,10 @@
 [build]
   command = "npm run build"
   publish = "build"
+  
+[build.environment]
+  # https://github.com/mapbox/mapbox-gl-js/issues/11877
+  NODE_OPTIONS = "--max_old_space_size=4096"
 
 [[redirects]]
   from = "/*"

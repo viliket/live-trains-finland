@@ -4,54 +4,71 @@
   flex-direction: column;
 }
 
-.leaflet-zoom-animated.leaflet-marker-icon,
-.leaflet-zoom-animated.leaflet-popup {
-  transition: transform 0.7s ease-in-out;
+/**
+ * Makes the deck.gl vehicle layer (located in top-left control) appear lowest in z order.
+ * This makes the maplibre popups (.maplibregl-popup) appear over the vehicle layer.
+ */
+.maplibregl-ctrl-top-left {
+  z-index: auto;
 }
 
-.leaflet-map-pane:not(.leaflet-zoom-anim)
-  .leaflet-marker-pane
-  canvas.leaflet-zoom-animated[style*='scale']
-  ~ .leaflet-zoom-animated.leaflet-marker-icon,
-.leaflet-map-pane:not(.leaflet-zoom-anim)
-  .leaflet-marker-pane
-  canvas.leaflet-zoom-animated[style*='scale']
-  ~ .leaflet-zoom-animated.leaflet-popup {
-  transition: transform 0.05s cubic-bezier(0, 0, 0.25, 1);
+/**
+ * Makes the the first "actual" top-left control highest in z-order.
+ * Restores the order changed by the rule above so that the actual top-left control is still
+ * higher than maplibre popups (.maplibregl-popup).
+ */
+.maplibregl-ctrl-top-left div:first-child {
+  z-index: 1;
+  position: absolute;
 }
 
-.leaflet-zoom-anim .leaflet-zoom-animated.leaflet-marker-icon,
-.leaflet-zoom-anim .leaflet-zoom-animated.leaflet-popup {
-  transition: transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+.maplibregl-ctrl-attrib.maplibregl-compact-show {
+  max-width: 58%;
+  background-color: hsla(0, 0%, 100%, 0.7);
 }
 
-.leaflet-marker-icon > div {
-  width: inherit;
-  height: inherit;
+.dark .maplibregl-ctrl-attrib.maplibregl-compact-show {
+  background-color: hsla(0, 0%, 28%, 0.7);
 }
 
-.leaflet-control-attribution,
-.leaflet-control-attribution a {
-  color: #666;
+.dark .maplibregl-ctrl-attrib.mapboxgl-compact-show a {
+  color: #818181;
 }
 
-.dark .leaflet-container {
-  background: #222;
+.dark
+  .maplibregl-ctrl-attrib.maplibregl-compact-show
+  .maplibregl-ctrl-attrib-button {
+  filter: contrast(0.01);
 }
 
-.dark .leaflet-container .leaflet-layer:first-of-type {
-  filter: invert(1) saturate(0.5) hue-rotate(210deg);
+.dark .maplibregl-ctrl-scale {
+  background-color: hsla(0, 0%, 100%, 0.15);
+  border: 2px solid #bbb;
+  border-top: #bbb;
+  color: #bbb;
 }
 
-.dark .leaflet-container .leaflet-layer:nth-of-type(2) {
+.dark .maplibregl-ctrl-group {
+  background: #111;
+}
+
+.dark .maplibregl-ctrl-group:not(:empty) {
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 10%);
+}
+
+.dark .maplibregl-ctrl button:not(:disabled):hover {
+  background-color: rgb(255 255 255/5%);
+}
+
+.dark .maplibregl-ctrl-group button + button {
+  border-top: 1px solid #2b2b2b;
+}
+
+.dark .maplibregl-ctrl button span.maplibregl-ctrl-icon {
   filter: invert(1);
 }
 
-.dark .leaflet-container .leaflet-control-attribution {
-  background: rgba(55, 55, 55, 0.7);
-}
-
-.dark .leaflet-control-attribution,
-.dark .leaflet-control-attribution a {
-  color: #818181;
+.dark .maplibregl-popup-content {
+  background: #111;
+  box-shadow: 0 1px 2px rgb(255 255 255 / 10%);
 }

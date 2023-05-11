@@ -1,12 +1,12 @@
-import { LatLngLiteral } from 'leaflet';
-
-function toRadians(degrees: number) {
+export function toRadians(degrees: number) {
   return (degrees * Math.PI) / 180;
 }
 
 function toDegrees(radians: number) {
   return (radians * 180) / Math.PI;
 }
+
+type LatLngLiteral = { lng: number; lat: number };
 
 /**
  * Gets bearing between two locations in degrees

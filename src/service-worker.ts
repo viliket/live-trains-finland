@@ -68,7 +68,7 @@ registerRoute(
   })
 );
 
-// Leaflet css (from unpkg)
+// MapLibre GL JS css (from unpkg)
 registerRoute(new RegExp('https://unpkg.com/(.*)'), new StaleWhileRevalidate());
 
 // Same-origin image requests

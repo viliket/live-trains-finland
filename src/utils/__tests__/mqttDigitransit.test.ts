@@ -9,6 +9,7 @@ import { getTopic, handleVehiclePositionMessage } from '../mqttDigitransit';
 
 const trainBase: TrainDetailsFragment = {
   trainNumber: 123,
+  departureDate: '2023-03-11',
   operator: {
     name: 'VR-Yhtymä Oyj',
     __typename: 'Operator',
@@ -159,8 +160,8 @@ describe('handleVehiclePositionMessage', () => {
     expect(vehiclesVar()[1234].veh).toEqual(1234);
     expect(vehiclesVar()[1234].jrn).toEqual(null);
     expect(vehiclesVar()[1234].heading).toEqual(12);
-    expect(vehiclesVar()[1234].lat).toEqual(10.5);
-    expect(vehiclesVar()[1234].lng).toEqual(20.6);
+    expect(vehiclesVar()[1234].position[1]).toEqual(10.5);
+    expect(vehiclesVar()[1234].position[0]).toEqual(20.6);
     expect(vehiclesVar()[1234].spd).toEqual(380);
     expect(vehiclesVar()[1234].routeShortName).toEqual('U');
 
@@ -193,8 +194,8 @@ describe('handleVehiclePositionMessage', () => {
     expect(vehiclesVar()[1234].veh).toEqual(1234);
     expect(vehiclesVar()[1234].jrn).toEqual(123);
     expect(vehiclesVar()[1234].heading).toEqual(14);
-    expect(vehiclesVar()[1234].lat).toEqual(10.6);
-    expect(vehiclesVar()[1234].lng).toEqual(20.7);
+    expect(vehiclesVar()[1234].position[1]).toEqual(10.6);
+    expect(vehiclesVar()[1234].position[0]).toEqual(20.7);
     expect(vehiclesVar()[1234].spd).toEqual(380);
     expect(vehiclesVar()[1234].routeShortName).toEqual('U');
   });

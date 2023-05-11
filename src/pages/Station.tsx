@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
+import React from 'react';
 
 import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { orderBy } from 'lodash';
@@ -9,7 +10,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import FavoriteStation from '../components/FavoriteStation';
 import StationTimeTable from '../components/StationTimeTable';
 import SubNavBar from '../components/SubNavBar';
-import VehicleMapContainer from '../components/VehicleMapContainer';
 import { gqlClients, vehiclesVar } from '../graphql/client';
 import {
   TimeTableRowType,
@@ -24,6 +24,10 @@ import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
 import { getTimeTableRowRealTime } from '../utils/train';
 import NotFound from './NotFound';
+
+const VehicleMapContainer = React.lazy(
+  () => import('../components/map/VehicleMapContainer')
+);
 
 const Station = () => {
   const { station: stationName } = useParams<{ station: string }>();
@@ -150,23 +154,15 @@ const Station = () => {
         )}
       </SubNavBar>
       <Box sx={{ height: '30vh' }}>
-        <VehicleMapContainer
-          selectedVehicleId={selectedVehicleId}
-          station={station}
-          route={selectedRoute}
-          routeStationCodes={
-            selectedTrain?.timeTableRows
-              ? Array.from(
-                  new Set(
-                    selectedTrain.timeTableRows
-                      .filter((r) => r?.station && r.station.shortCode)
-                      .map((r) => r?.station.shortCode as string)
-                  )
-                )
-              : undefined
-          }
-          onVehicleSelected={handleVehicleIdSelected}
-        />
+        <Suspense>
+          <VehicleMapContainer
+            selectedVehicleId={selectedVehicleId}
+            station={station}
+            route={selectedRoute}
+            train={selectedTrain}
+            onVehicleSelected={handleVehicleIdSelected}
+          />
+        </Suspense>
       </Box>
       <Box
         sx={{

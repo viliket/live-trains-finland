@@ -2,16 +2,18 @@ import { act, renderHook } from '@testing-library/react';
 
 import { vehiclesVar } from '../../graphql/client';
 import { TrainDetailsFragment } from '../../graphql/generated/digitraffic';
+import { VehicleDetails } from '../../types/vehicles';
 import { useTrainSpeed } from '../useTrainSpeed';
 
-const vehicleBase = {
+const vehicleBase: VehicleDetails = {
   spd: 0,
   acc: 0,
   drst: null,
   heading: null,
   jrn: null,
-  lat: 0,
-  lng: 0,
+  position: [0, 0],
+  prevPosition: [0, 0],
+  timestamp: 0,
   nextStop: null,
   routeShortName: null,
   startTime: '',

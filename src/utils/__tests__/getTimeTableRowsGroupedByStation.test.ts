@@ -6,6 +6,7 @@ import getTimeTableRowsGroupedByStation from '../getTimeTableRowsGroupedByStatio
 
 const trainBase: TrainDetailsFragment = {
   trainNumber: 123,
+  departureDate: '2023-01-25',
   operator: {
     name: 'VR-Yhtymä Oyj',
     __typename: 'Operator',
