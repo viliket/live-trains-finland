@@ -25,6 +25,16 @@ import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
 
 /**
+ * Temporary fix for https://github.com/visgl/react-map-gl/issues/2176 until it gets fixed.
+ * Latest maplibregl no longer has built-in supported() method that react-map-gl assumes.
+ */
+(
+  maplibregl as typeof maplibregl & {
+    supported: () => boolean;
+  }
+).supported = () => true;
+
+/**
  * Temporary fix for https://github.com/visgl/react-map-gl/issues/2166 until it gets fixed.
  * When react-map-gl Map gets reused (reuseMaps is true) it does not properly tell the
  * _resizeObserver of the reused instance to observe the new container.
