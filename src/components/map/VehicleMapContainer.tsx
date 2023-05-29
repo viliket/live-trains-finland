@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 import { Box, useTheme } from '@mui/material';
-import mapboxgl from 'mapbox-gl';
 import maplibregl from 'maplibre-gl';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
 import Map, {
@@ -23,32 +22,6 @@ import RailwayTracksLayer from './RailwayTracksLayer';
 import StopsLayer from './StopsLayer';
 import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
-
-/**
- * Temporary fix for https://github.com/visgl/react-map-gl/issues/2176 until it gets fixed.
- * Latest maplibregl no longer has built-in supported() method that react-map-gl assumes.
- */
-(
-  maplibregl as typeof maplibregl & {
-    supported: () => boolean;
-  }
-).supported = () => true;
-
-/**
- * Temporary fix for https://github.com/visgl/react-map-gl/issues/2166 until it gets fixed.
- * When react-map-gl Map gets reused (reuseMaps is true) it does not properly tell the
- * _resizeObserver of the reused instance to observe the new container.
- */
-const fixMapResizeObserver = (
-  map: mapboxgl.Map & {
-    _resizeObserver?: ResizeObserver;
-  }
-) => {
-  if (map._resizeObserver) {
-    map._resizeObserver.disconnect();
-    map._resizeObserver.observe(map.getContainer());
-  }
-};
 
 type VehicleMapContainerProps = {
   selectedVehicleId: number | null;
@@ -92,12 +65,6 @@ const VehicleMapContainer = ({
       map.setZoom(initialZoom);
     }
   }, [map, station]);
-
-  useEffect(() => {
-    if (map) {
-      fixMapResizeObserver(map.getMap());
-    }
-  }, [map]);
 
   return (
     <Map
