@@ -14,7 +14,7 @@ type TrainWagonSm5Props = {
  */
 export function TrainWagonSm5({ vehicleId }: TrainWagonSm5Props) {
   const vehicleDoorStatus = useReactiveVarWithSelector(vehiclesVar, (v) =>
-    vehicleId ? v[vehicleId].drst : null
+    vehicleId && vehicleId in v ? v[vehicleId].drst : null
   );
 
   const doorsOpen = vehicleDoorStatus === 1;
