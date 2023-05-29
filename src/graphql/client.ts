@@ -47,80 +47,81 @@ const vrLink = new HttpLink({
 });
 
 /**
- * Gets the 2-digit unit's serial number from the given European Vehicle Number (EVN) of a train unit.
+ * Gets the train vehicle ID from the given European Vehicle Number (EVN) and the type of the train unit.
  *
  * @remarks
- * In Finland, the all train units have European Vehicle Number (EVN)
- * with format 941060040xx-5 where the last two digits correspond to the unit's serial number.
+ * In Finland, all train units have European Vehicle Number (EVN) with format
+ * 9410xxxxxxx-c where the last digits before the checksum (c) correspond to
+ * the unit number.
+ *
+ * @see https://en.wikipedia.org/wiki/UIC_identification_marking_for_tractive_stock
  *
  * @example
- * For input EVN 94106004006-5 the function returns 06 as the unit's serial number.
+ * // Returns 6088 as the vehicle ID
+ * getTrainVehicleIdFromTrainEuropeanVehicleNumber('94106000088-7', 'Sm2')
+ *
+ * @example
+ * // Returns 6324 as the vehicle ID
+ * getTrainVehicleIdFromTrainEuropeanVehicleNumber('94106004024-8', 'Sm4')
+ *
+ * @example
+ * // Returns 1038 as the vehicle ID
+ * getTrainVehicleIdFromTrainEuropeanVehicleNumber('94102081038-3', 'Sm5')
  *
  * @param vehicleNumber The European Vehicle Number (EVN) of the train unit.
- * @returns Train unit's serial number as a two digit string.
- */
-const getVehicleSerialNumberFromEuropeanVehicleNumber = (
-  vehicleNumber: string
-): string | null => {
-  const regexpUnitNbr = /\d{8}\d(\d{2})-.*/;
-  const match = vehicleNumber.match(regexpUnitNbr);
-  if (match) {
-    return match[1];
-  } else {
-    return null;
-  }
-};
-
-/**
- * Gets the 2-digit unit's serial number from the given 4-digit train unit vehicle ID.
- *
- * @remarks
- * In Finland, all train units have 4-digit train unit number printed on the
- * side of the unit where the last two digits correspond to the unit's serial number.
- * For instance the train unit type Sm4 (MT) has number 63xx, and Sm4 (M) has 64xx.
- *
- * @example
- * For input 6306 the function returns 06 as the unit's serial number.
- *
- * @param vehicleNumber The 4 digit vehicle number of the train unit.
- * @returns Train unit number as two digit string.
- */
-const getVehicleSerialNumberFromFourDigitVehicleId = (
-  vehicleNumber: string
-): string => {
-  return vehicleNumber.slice(-2);
-};
-
-/**
- * Gets the train vehicle ID from state using the given European Vehicle Number (EVN) of the train unit.
- *
- * @remarks
- * In Finland, the all train units have European Vehicle Number (EVN)
- * with format 941060040xx-5 where the last two digits correspond to the unit number.
- *
- * @example
- * For input EVN 94106004006-5 the function returns 6306 as the vehicle ID.
- *
- * @param vehicleNumber The European Vehicle Number (EVN) of the train unit.
- * @returns The four digit train vehicle ID (if found from state).
+ * @param wagonType The wagon type. E.g. Sm5.
+ * @returns The four digit train vehicle ID.
  */
 const getTrainVehicleIdFromTrainEuropeanVehicleNumber = (
-  vehicleNumber: string
+  vehicleNumber: string,
+  wagonType: string
 ): number | null => {
-  const unitNumber =
-    getVehicleSerialNumberFromEuropeanVehicleNumber(vehicleNumber);
-  if (vehicleNumber) {
-    return (
-      Object.values(vehiclesVar()).find((v) => {
-        const vehicleId = v.veh.toString();
-        const unitNumberB =
-          getVehicleSerialNumberFromFourDigitVehicleId(vehicleId);
-        return unitNumber === unitNumberB;
-      })?.veh ?? null
-    );
-  } else {
-    return null;
+  if (wagonType === 'Sm1' || wagonType === 'Sm2') {
+    // The Sm1 units are numbered from 6001 to 6050 for the motored car.
+    // See https://en.wikipedia.org/wiki/VR_Class_Sm1
+    // Examples:
+    // * 94106000001-0 = 6001
+    // * 94106000025-9 = 6025
+    // * 94106000050-7 = 6050
+    //
+    // The Sm2 units are numbered from 6051 to 6100 for the motored car.
+    // See https://en.wikipedia.org/wiki/VR_Class_Sm2
+    // Examples:
+    // * 94106000088-7 = 6088
+    // * 94106000066-3 = 6066
+    // * 94106000091-1 = 6091
+    const matches = vehicleNumber.match(/9410\d{4}(\d{3})-\d/);
+    if (matches !== null && matches.length === 2) {
+      return Number.parseInt('6' + matches[1], 10);
+    }
   }
+  if (wagonType === 'Sm4') {
+    // The Sm4 units are in the form of 63xx for the motored car.
+    // See https://en.wikipedia.org/wiki/VR_Class_Sm4
+    // Examples:
+    // 94106004024-8 = 6324
+    // 94106004008-1 = 6308
+    // 94106004025-5 = 6325
+    const matches = vehicleNumber.match(/9410\d{5}(\d{2})-\d/);
+    if (matches !== null && matches.length === 2) {
+      return Number.parseInt('63' + matches[1], 10);
+    }
+  }
+  if (wagonType === 'Sm5') {
+    // The Sm5 units have vehicle numbers from 94102081 001 to 94102081 081.
+    // The last 4 digits before the EVN checksum form the unit number.
+    // See https://en.wikipedia.org/wiki/JKOY_Class_Sm5
+    // Examples:
+    // * 94102081038-3 = 1038
+    // * 94102081078-9 = 1078
+    // * 94102081069-8 = 1069
+    const matches = vehicleNumber.match(/9410\d{3}(\d{4})-\d/);
+    if (matches !== null && matches.length === 2) {
+      return Number.parseInt(matches[1], 10);
+    }
+  }
+
+  return null;
 };
 
 export const client = new ApolloClient({
@@ -142,9 +143,12 @@ export const client = new ApolloClient({
             read(_, { readField }) {
               // Note: Vehicle number is only available for unit types Sm1, Sm2, Sm4 and Sm5
               const vehicleNumber = readField<string>('vehicleNumber');
-              if (!vehicleNumber) return null;
-              const vehicleId =
-                getTrainVehicleIdFromTrainEuropeanVehicleNumber(vehicleNumber);
+              const locomotiveType = readField<string>('locomotiveType');
+              if (!vehicleNumber || !locomotiveType) return null;
+              const vehicleId = getTrainVehicleIdFromTrainEuropeanVehicleNumber(
+                vehicleNumber,
+                locomotiveType
+              );
               return vehicleId;
             },
           },
@@ -156,9 +160,12 @@ export const client = new ApolloClient({
             read(_, { readField }) {
               // Note: Vehicle number is only available for unit types Sm1, Sm2, Sm4 and Sm5
               const vehicleNumber = readField<string>('vehicleNumber');
-              if (!vehicleNumber) return null;
-              const vehicleId =
-                getTrainVehicleIdFromTrainEuropeanVehicleNumber(vehicleNumber);
+              const wagonType = readField<string>('wagonType');
+              if (!vehicleNumber || !wagonType) return null;
+              const vehicleId = getTrainVehicleIdFromTrainEuropeanVehicleNumber(
+                vehicleNumber,
+                wagonType
+              );
               return vehicleId;
             },
           },
