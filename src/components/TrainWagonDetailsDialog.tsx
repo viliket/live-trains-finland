@@ -5,6 +5,9 @@ import {
   DialogActions,
   DialogContent,
   FormControlLabel,
+  Paper,
+  Stack,
+  Typography,
 } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -92,6 +95,29 @@ const updateWagonMapPlaceReservations = (
       });
   }
 };
+
+const DetailsItem = ({
+  value,
+  caption,
+}: {
+  value: React.ReactNode;
+  caption: React.ReactNode;
+}) => (
+  <Paper
+    sx={(theme) => ({
+      ...theme.typography.body2,
+      color: theme.palette.text.secondary,
+      flexGrow: 1,
+    })}
+  >
+    <Typography variant="caption" display="block">
+      {value}
+    </Typography>
+    <Typography variant="caption" display="block">
+      {caption}
+    </Typography>
+  </Paper>
+);
 
 const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
   const { onClose, train, selectedWagon, open } = props;
@@ -188,9 +214,31 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
               ? `${t('wagon')} ${selectedWagon?.salesNumber}`
               : `${t('train_unit')} ${selectedWagon?.location}`}
           </Box>
-          <Box>
-            {t('wagon_class')}: {selectedWagon?.wagonType}
-          </Box>
+          <Stack
+            spacing={1}
+            direction="row"
+            useFlexGap
+            flexWrap="wrap"
+            marginY={1}
+            maxWidth={164}
+          >
+            <DetailsItem
+              value={selectedWagon?.wagonType}
+              caption={t('wagon_class')}
+            />
+            {selectedWagon?.vehicleId && (
+              <DetailsItem
+                value={selectedWagon.vehicleId}
+                caption={t('number')}
+              />
+            )}
+            {selectedWagon?.vehicleNumber && (
+              <DetailsItem
+                value={selectedWagon.vehicleNumber}
+                caption={t('unit_number')}
+              />
+            )}
+          </Stack>
           {wagonMap && (
             <TrainWagonMap
               wagonType={
