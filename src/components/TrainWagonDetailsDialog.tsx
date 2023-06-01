@@ -23,6 +23,7 @@ import {
   getTrainDepartureStation,
   getTrainDestinationStation,
   getTrainScheduledDepartureTime,
+  getWagonNumberFromVehicleId,
 } from '../utils/train';
 import FloorSwitch from './FloorSwitch';
 import TrainWagonMap, { wagonMaps } from './TrainWagonMap';
@@ -228,7 +229,10 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
             />
             {selectedWagon?.vehicleId && (
               <DetailsItem
-                value={selectedWagon.vehicleId}
+                value={getWagonNumberFromVehicleId(
+                  selectedWagon.vehicleId,
+                  selectedWagon?.wagonType
+                )}
                 caption={t('number')}
               />
             )}

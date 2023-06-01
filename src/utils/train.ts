@@ -49,3 +49,15 @@ export function getTrainDestinationStationName(train: TrainByStationFragment) {
 export function getTrainStationName(station: { name: string }) {
   return station.name.replace('asema', '').trimEnd();
 }
+
+export function getWagonNumberFromVehicleId(
+  vehicleId: number,
+  wagonType?: string | null
+) {
+  if (wagonType === 'Sm5') {
+    // Sm5 wagons have two digit wagon number formed from the two last digits
+    // of the vehicle ID. E.g., vehicle ID 1015 = wagon number 15.
+    return vehicleId.toString().slice(-2);
+  }
+  return vehicleId.toString();
+}

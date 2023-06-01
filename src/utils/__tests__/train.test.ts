@@ -13,6 +13,7 @@ import {
   getTrainDestinationStation,
   getTrainDepartureStationName,
   getTrainDestinationStationName,
+  getWagonNumberFromVehicleId,
 } from '../train';
 
 const trainBase: TrainDetailsFragment = {
@@ -191,5 +192,26 @@ describe('getTrainDestinationStationName', () => {
     const stationName = getTrainDestinationStationName(train);
 
     expect(stationName).toBe('Tampere');
+  });
+});
+
+describe('getWagonNumberFromVehicleId', () => {
+  it('should be the vehicle ID when the wagon type is not Sm5', () => {
+    const wagonNumber1 = getWagonNumberFromVehicleId(1111, 'Sm1');
+    expect(wagonNumber1).toBe('1111');
+
+    const wagonNumber2 = getWagonNumberFromVehicleId(1234, 'Sm2');
+    expect(wagonNumber2).toBe('1234');
+
+    const wagonNumber3 = getWagonNumberFromVehicleId(4321, 'Sm4');
+    expect(wagonNumber3).toBe('4321');
+  });
+
+  it('should be the last two digits of the vehicle ID when the wagon type is Sm5', () => {
+    const wagonNumber1 = getWagonNumberFromVehicleId(1234, 'Sm5');
+    expect(wagonNumber1).toBe('34');
+
+    const wagonNumber2 = getWagonNumberFromVehicleId(4321, 'Sm5');
+    expect(wagonNumber2).toBe('21');
   });
 });
