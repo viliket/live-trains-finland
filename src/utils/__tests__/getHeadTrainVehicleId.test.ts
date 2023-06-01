@@ -3,6 +3,7 @@ import {
   Maybe,
   TrainDetailsFragment,
 } from '../../graphql/generated/digitraffic';
+import * as canTrainBeTrackedByHslModule from '../canTrainBeTrackedByHsl';
 import getHeadTrainVehicleId from '../getHeadTrainVehicleId';
 import * as getTrainCurrentJourneySectionModule from '../getTrainCurrentJourneySection';
 
@@ -35,105 +36,150 @@ const setTrainCurrentJourneySection = (
     .mockReturnValue(trainJourneySection);
 };
 
+const setCanTrainBeTrackedByHsl = (canBeTracked: boolean) => {
+  jest
+    .spyOn(canTrainBeTrackedByHslModule, 'default')
+    .mockReturnValue(canBeTracked);
+};
+
 describe('getHeadTrainVehicleId', () => {
-  it('should be the null when the train has no current journey section', () => {
-    setTrainCurrentJourneySection(null);
-
-    const vehicleId = getHeadTrainVehicleId(train);
-
-    expect(vehicleId).toBe(null);
-  });
-
-  it('should be the null if the train current journey section has no locomotives', () => {
-    setTrainCurrentJourneySection({
-      maximumSpeed: 0,
-      totalLength: 0,
-      locomotives: null,
+  describe('train cannot be tracked by HSL', () => {
+    beforeEach(() => {
+      setCanTrainBeTrackedByHsl(false);
     });
 
-    const vehicleId = getHeadTrainVehicleId(train);
+    it('should be the train number of the train when the train has no current journey section', () => {
+      setTrainCurrentJourneySection(null);
 
-    expect(vehicleId).toBe(null);
-  });
+      const vehicleId = getHeadTrainVehicleId(train);
 
-  it('should be the null if the train current journey section has null locomotive', () => {
-    setTrainCurrentJourneySection({
-      maximumSpeed: 0,
-      totalLength: 0,
-      locomotives: [null],
+      expect(vehicleId).toBe(123);
     });
 
-    const vehicleId = getHeadTrainVehicleId(train);
+    it('should be the train number of the train even when train has locomotives', () => {
+      setTrainCurrentJourneySection({
+        maximumSpeed: 0,
+        totalLength: 0,
+        locomotives: [
+          {
+            vehicleId: 1234,
+            location: 0,
+            locomotiveType: 'Sm4',
+            powerTypeAbbreviation: 'S',
+          },
+        ],
+      });
 
-    expect(vehicleId).toBe(null);
+      const vehicleId = getHeadTrainVehicleId(train);
+
+      expect(vehicleId).toBe(123);
+    });
   });
 
-  it('should be the vehicleId of the only locomotive the train has when train has single locomotive', () => {
-    setTrainCurrentJourneySection({
-      maximumSpeed: 0,
-      totalLength: 0,
-      locomotives: [
-        {
-          vehicleId: 1234,
-          location: 0,
-          locomotiveType: 'Sm4',
-          powerTypeAbbreviation: 'S',
-        },
-      ],
+  describe('train can be tracked by HSL', () => {
+    beforeEach(() => {
+      setCanTrainBeTrackedByHsl(true);
     });
 
-    const vehicleId = getHeadTrainVehicleId(train);
+    it('should be the null when the train has no current journey section', () => {
+      setTrainCurrentJourneySection(null);
 
-    expect(vehicleId).toBe(1234);
-  });
+      const vehicleId = getHeadTrainVehicleId(train);
 
-  it('should be the train number of the train when the first locomotive has no vehicleId', () => {
-    setTrainCurrentJourneySection({
-      maximumSpeed: 0,
-      totalLength: 0,
-      locomotives: [
-        {
-          vehicleId: null,
-          location: 0,
-          locomotiveType: 'Sm4',
-          powerTypeAbbreviation: 'S',
-        },
-      ],
+      expect(vehicleId).toBe(null);
     });
 
-    const vehicleId = getHeadTrainVehicleId(train);
+    it('should be the null if the train current journey section has no locomotives', () => {
+      setTrainCurrentJourneySection({
+        maximumSpeed: 0,
+        totalLength: 0,
+        locomotives: null,
+      });
 
-    expect(vehicleId).toBe(123);
-  });
+      const vehicleId = getHeadTrainVehicleId(train);
 
-  it('should be the vehicleId of the first locomotive when train has multiple locomotives', () => {
-    setTrainCurrentJourneySection({
-      maximumSpeed: 0,
-      totalLength: 0,
-      locomotives: [
-        {
-          vehicleId: 4321,
-          location: 1,
-          locomotiveType: 'Sm4',
-          powerTypeAbbreviation: 'S',
-        },
-        {
-          vehicleId: 1234,
-          location: 0,
-          locomotiveType: 'Sm4',
-          powerTypeAbbreviation: 'S',
-        },
-        {
-          vehicleId: 7890,
-          location: 2,
-          locomotiveType: 'Sm4',
-          powerTypeAbbreviation: 'S',
-        },
-      ],
+      expect(vehicleId).toBe(null);
     });
 
-    const vehicleId = getHeadTrainVehicleId(train);
+    it('should be the null if the train current journey section has null locomotive', () => {
+      setTrainCurrentJourneySection({
+        maximumSpeed: 0,
+        totalLength: 0,
+        locomotives: [null],
+      });
 
-    expect(vehicleId).toBe(1234);
+      const vehicleId = getHeadTrainVehicleId(train);
+
+      expect(vehicleId).toBe(null);
+    });
+
+    it('should be the vehicleId of the only locomotive the train has when train has single locomotive', () => {
+      setTrainCurrentJourneySection({
+        maximumSpeed: 0,
+        totalLength: 0,
+        locomotives: [
+          {
+            vehicleId: 1234,
+            location: 0,
+            locomotiveType: 'Sm4',
+            powerTypeAbbreviation: 'S',
+          },
+        ],
+      });
+
+      const vehicleId = getHeadTrainVehicleId(train);
+
+      expect(vehicleId).toBe(1234);
+    });
+
+    it('should be the train number of the train when the first locomotive has no vehicleId', () => {
+      setTrainCurrentJourneySection({
+        maximumSpeed: 0,
+        totalLength: 0,
+        locomotives: [
+          {
+            vehicleId: null,
+            location: 0,
+            locomotiveType: 'Sm4',
+            powerTypeAbbreviation: 'S',
+          },
+        ],
+      });
+
+      const vehicleId = getHeadTrainVehicleId(train);
+
+      expect(vehicleId).toBe(123);
+    });
+
+    it('should be the vehicleId of the first locomotive when train has multiple locomotives', () => {
+      setTrainCurrentJourneySection({
+        maximumSpeed: 0,
+        totalLength: 0,
+        locomotives: [
+          {
+            vehicleId: 4321,
+            location: 1,
+            locomotiveType: 'Sm4',
+            powerTypeAbbreviation: 'S',
+          },
+          {
+            vehicleId: 1234,
+            location: 0,
+            locomotiveType: 'Sm4',
+            powerTypeAbbreviation: 'S',
+          },
+          {
+            vehicleId: 7890,
+            location: 2,
+            locomotiveType: 'Sm4',
+            powerTypeAbbreviation: 'S',
+          },
+        ],
+      });
+
+      const vehicleId = getHeadTrainVehicleId(train);
+
+      expect(vehicleId).toBe(1234);
+    });
   });
 });
