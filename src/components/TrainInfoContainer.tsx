@@ -8,12 +8,11 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { gqlClients } from '../graphql/client';
 import {
-  TrainByStationFragment,
+  TrainDetailsFragment,
   useTrainQuery,
   Wagon,
 } from '../graphql/generated/digitraffic';
 import { formatEET } from '../utils/date';
-import getTimeTableRowsGroupedByStation from '../utils/getTimeTableRowsGroupedByStation';
 import getTrainCurrentStation from '../utils/getTrainCurrentStation';
 import getTrainLatestArrivalRow from '../utils/getTrainLatestArrivalRow';
 import getTrainLatestDepartureTimeTableRow from '../utils/getTrainLatestDepartureTimeTableRow';
@@ -28,7 +27,7 @@ import TrainComposition from './TrainComposition';
 import TrainWagonDetailsDialog from './TrainWagonDetailsDialog';
 
 type TrainInfoContainerProps = {
-  train: TrainByStationFragment;
+  train: TrainDetailsFragment;
 };
 
 function TrainInfoContainer({ train }: TrainInfoContainerProps) {
@@ -68,9 +67,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
     const trainLatestArrivalRow = getTrainLatestArrivalRow(train);
     const trainLatestDepartureRow = getTrainLatestDepartureTimeTableRow(train);
 
-    const timeTableRows = getTimeTableRowsGroupedByStation(
-      realTimeTrain ?? train
-    );
+    const timeTableRows = (realTimeTrain ?? train).timeTableGroups;
 
     return timeTableRows?.map((g, i, { length }) => {
       const r = g.departure ?? g.arrival;

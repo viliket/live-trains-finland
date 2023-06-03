@@ -130,7 +130,7 @@ describe('getTimeTableRowsGroupedByStation', () => {
       expect(rows).toBeDefined();
       expect(rows!.length).toBe(3);
 
-      expect(rows![0].arrival).toBeUndefined();
+      expect(rows![0].arrival).toBeNull();
       expect(rows![0].departure).toBeDefined();
       expect(rows![0].departure!.station.name).toBe('Helsinki');
       expect(rows![0].departure!.scheduledTime).toBe('2023-01-25T08:55:00Z');
@@ -155,7 +155,7 @@ describe('getTimeTableRowsGroupedByStation', () => {
       expect(rows).toBeDefined();
       expect(rows!.length).toBe(3);
 
-      expect(rows![0].arrival).toBeUndefined();
+      expect(rows![0].arrival).toBeNull();
       expect(rows![0].departure).toBeDefined();
       expect(rows![0].departure!.station.name).toBe('Helsinki');
       expect(rows![0].departure!.scheduledTime).toBe('2023-01-25T08:55:00Z');
@@ -183,7 +183,7 @@ describe('getTimeTableRowsGroupedByStation', () => {
       expect(rows![0].arrival).toBeDefined();
       expect(rows![0].arrival!.station.name).toBe('Helsinki');
       expect(rows![0].arrival!.scheduledTime).toBe('2023-01-25T11:40:00Z');
-      expect(rows![0].departure).toBeUndefined();
+      expect(rows![0].departure).toBeNull();
 
       expect(rows![1].arrival).toBeDefined();
       expect(rows![1].arrival!.station.name).toBe('Pasila');
@@ -208,7 +208,7 @@ describe('getTimeTableRowsGroupedByStation', () => {
       expect(rows![0].arrival).toBeDefined();
       expect(rows![0].arrival!.station.name).toBe('Helsinki');
       expect(rows![0].arrival!.scheduledTime).toBe('2023-01-25T11:40:00Z');
-      expect(rows![0].departure).toBeUndefined();
+      expect(rows![0].departure).toBeNull();
 
       expect(rows![1].arrival).toBeDefined();
       expect(rows![1].arrival!.station.name).toBe('Pasila');

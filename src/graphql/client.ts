@@ -7,7 +7,9 @@ import {
 import { makeVar } from '@apollo/client';
 
 import { VehicleDetails } from '../types/vehicles';
+import getTimeTableRowsGroupedByStation from '../utils/getTimeTableRowsGroupedByStation';
 import getTrainVehicleIdFromTrainEuropeanVehicleNumber from '../utils/getTrainVehicleIdFromTrainEuropeanVehicleNumber';
+import { TimeTableRow } from './generated/digitraffic';
 
 /**
  * Holds the real-time state information of the vehicles.
@@ -90,6 +92,24 @@ export const client = new ApolloClient({
                 wagonType
               );
               return vehicleId;
+            },
+          },
+        },
+      },
+      Train: {
+        fields: {
+          timeTableGroups: {
+            read(_, { readField }) {
+              const timeTableRows = readField<TimeTableRow[]>({
+                fieldName: 'timeTableRows',
+                args: {
+                  // Same args as in the TrainDetails.fragment.graphql
+                  where: { and: [{ trainStopping: { equals: true } }] },
+                },
+              });
+              return getTimeTableRowsGroupedByStation({
+                timeTableRows,
+              });
             },
           },
         },

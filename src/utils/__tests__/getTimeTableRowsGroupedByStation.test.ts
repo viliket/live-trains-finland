@@ -80,13 +80,13 @@ describe('getTimeTableRowsGroupedByStation', () => {
       ],
     };
 
-    it('should return correclty grouped time table rows by station', () => {
+    it('should return correctly grouped time table rows by station', () => {
       const rows = getTimeTableRowsGroupedByStation(train);
 
       expect(rows).toBeDefined();
       expect(rows!.length).toBe(3);
 
-      expect(rows![0].arrival).toBeUndefined();
+      expect(rows![0].arrival).toBeNull();
       expect(rows![0].departure).toBeDefined();
       expect(rows![0].departure!.station.name).toBe('Helsinki');
 
@@ -97,7 +97,7 @@ describe('getTimeTableRowsGroupedByStation', () => {
 
       expect(rows![2].arrival).toBeDefined();
       expect(rows![2].arrival!.station.name).toBe('Tampere');
-      expect(rows![2].departure).toBeUndefined();
+      expect(rows![2].departure).toBeNull();
     });
   });
 });

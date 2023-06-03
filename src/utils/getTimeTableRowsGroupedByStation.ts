@@ -1,19 +1,20 @@
 import {
   TimeTableRowType,
-  TrainByStationFragment,
   TrainTimeTableRowFragment,
 } from '../graphql/generated/digitraffic';
 
 export type StationTimeTableRowGroup = {
-  arrival?: TrainTimeTableRowFragment;
-  departure?: TrainTimeTableRowFragment;
+  arrival?: TrainTimeTableRowFragment | null;
+  departure?: TrainTimeTableRowFragment | null;
 };
 
-export default function getTimeTableRowsGroupedByStation(
-  train: TrainByStationFragment
-): StationTimeTableRowGroup[] | undefined {
+export default function getTimeTableRowsGroupedByStation({
+  timeTableRows,
+}: {
+  timeTableRows?: readonly (TrainTimeTableRowFragment | null)[] | null;
+}): StationTimeTableRowGroup[] | undefined {
   // Group time table rows by station when consecutive rows have same station
-  const grouped = train.timeTableRows?.reduce((arr, cur, i, a) => {
+  const grouped = timeTableRows?.reduce((arr, cur, i, a) => {
     if (!i || cur?.station.shortCode !== a[i - 1]?.station.shortCode) {
       arr.push([]);
     }
@@ -23,12 +24,13 @@ export default function getTimeTableRowsGroupedByStation(
     return arr;
   }, [] as TrainTimeTableRowFragment[][]);
 
-  const timeTableRows = grouped?.map((rows) => {
+  const timeTableGroups = grouped?.map((rows) => {
     return {
-      arrival: rows.find((r) => r?.type === TimeTableRowType.Arrival),
-      departure: rows.find((r) => r?.type === TimeTableRowType.Departure),
+      arrival: rows.find((r) => r?.type === TimeTableRowType.Arrival) ?? null,
+      departure:
+        rows.find((r) => r?.type === TimeTableRowType.Departure) ?? null,
     };
   });
 
-  return timeTableRows;
+  return timeTableGroups;
 }

@@ -64,6 +64,14 @@ fragment TrainDetails on Train {
   timeTableRows(where: { and: [{ trainStopping: { equals: true } }] }) {
     ...TrainTimeTableRow
   }
+  timeTableGroups @client {
+    arrival {
+      ...TrainTimeTableRow
+    }
+    departure {
+      ...TrainTimeTableRow
+    }
+  }
 }
 
 fragment TrainTimeTableRow on TimeTableRow {
