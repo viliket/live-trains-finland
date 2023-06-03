@@ -5,3 +5,12 @@ type Locomotive {
 type Wagon {
   vehicleId: Int
 }
+
+extend type Train {
+  timeTableGroups: [TimeTableGroup!]
+}
+
+type TimeTableGroup {
+  arrival: TimeTableRow
+  departure: TimeTableRow
+}

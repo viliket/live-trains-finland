@@ -1,15 +1,23 @@
 import { addMinutes } from 'date-fns';
 
-import { TrainByStationFragment } from '../graphql/generated/digitraffic';
+import {
+  TrainByStationFragment,
+  TrainDetailsFragment,
+} from '../graphql/generated/digitraffic';
 import getTimeTableRowsGroupedByStation, {
   StationTimeTableRowGroup,
 } from './getTimeTableRowsGroupedByStation';
 import { getTimeTableRowRealTime } from './train';
 
 export default function getTimeTableRowsGroupedByStationUniqueStations(
-  train: TrainByStationFragment
+  train: TrainDetailsFragment | TrainByStationFragment
 ) {
-  const trainTimeTableRows = getTimeTableRowsGroupedByStation(train);
+  let trainTimeTableRows: StationTimeTableRowGroup[] | undefined | null;
+  if ('timeTableGroups' in train) {
+    trainTimeTableRows = train.timeTableGroups;
+  } else {
+    trainTimeTableRows = getTimeTableRowsGroupedByStation(train);
+  }
   if (!trainTimeTableRows) return null;
 
   // Date used when encountering time table row groups with duplicate station,
