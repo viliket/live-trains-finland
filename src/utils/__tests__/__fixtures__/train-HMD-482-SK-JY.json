@@ -1,0 +1,385 @@
+{
+  "trainNumber": 482,
+  "departureDate": "2023-05-19",
+  "version": "285520927675",
+  "runningCurrently": false,
+  "operator": {
+    "name": "VR-Yhtymä Oyj",
+    "__typename": "Operator",
+    "shortCode": "vr",
+    "uicCode": 10
+  },
+  "commuterLineid": "",
+  "trainType": {
+    "name": "HDM",
+    "trainCategory": {
+      "name": "Long-distance",
+      "__typename": "TrainCategory"
+    },
+    "__typename": "TrainType"
+  },
+  "compositions": null,
+  "timeTableRows": [
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T06:30:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Seinäjoki asema",
+        "shortCode": "SK",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:00:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Alavus",
+        "shortCode": "ALV",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:01:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Alavus",
+        "shortCode": "ALV",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:07:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tuuri",
+        "shortCode": "TUU",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:08:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Tuuri",
+        "shortCode": "TUU",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:22:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Ähtäri",
+        "shortCode": "ÄHT",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:23:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Ähtäri",
+        "shortCode": "ÄHT",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:29:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Eläinpuisto-Zoo",
+        "shortCode": "EPZ",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:30:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Eläinpuisto-Zoo",
+        "shortCode": "EPZ",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:34:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Myllymäki",
+        "shortCode": "MY",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:35:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Myllymäki",
+        "shortCode": "MY",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:50:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Pihlajavesi",
+        "shortCode": "PH",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T07:51:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Pihlajavesi",
+        "shortCode": "PH",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T08:02:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Haapamäki",
+        "shortCode": "HPK",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T08:03:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Haapamäki",
+        "shortCode": "HPK",
+        "__typename": "Station"
+      },
+      "commercialTrack": "4",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T08:17:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Keuruu",
+        "shortCode": "KEU",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T08:18:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Keuruu",
+        "shortCode": "KEU",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T08:39:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Petäjävesi",
+        "shortCode": "PVI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T08:40:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Petäjävesi",
+        "shortCode": "PVI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "1",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-19T09:08:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": null,
+      "differenceInMinutes": null,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Jyväskylä",
+        "shortCode": "JY",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    }
+  ],
+  "__typename": "Train"
+}
