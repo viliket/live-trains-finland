@@ -10,7 +10,13 @@ extend type Train {
   timeTableGroups: [TimeTableGroup!]
 }
 
+enum TrainDirection {
+  INCREASING
+  DECREASING
+}
+
 type TimeTableGroup {
   arrival: TimeTableRow
   departure: TimeTableRow
+  trainDirection: TrainDirection
 }

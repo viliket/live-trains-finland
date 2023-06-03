@@ -4,6 +4,8 @@ import {
   BagChecked,
   BunkBed,
   CarSide,
+  ChevronLeft,
+  ChevronRight,
   CloseOctagon,
   Paw,
   PlusCircle,
@@ -13,7 +15,12 @@ import {
 } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 
-import { TrainDetailsFragment, Wagon } from '../graphql/generated/digitraffic';
+import {
+  TrainDetailsFragment,
+  TrainDirection,
+  TrainTimeTableGroupFragment,
+  Wagon,
+} from '../graphql/generated/digitraffic';
 import getTrainCompositionDetailsForStation from '../utils/getTrainCompositionDetailsForStation';
 import getTrainCurrentJourneySection from '../utils/getTrainCurrentJourneySection';
 import getTrainJourneySectionForStation from '../utils/getTrainJourneySectionForStation';
@@ -23,16 +30,19 @@ import TrainWagonSm5 from './TrainWagonSm5';
 
 type TrainCompositionProps = {
   train: TrainDetailsFragment;
-  stationName?: string;
+  stationTimeTableRowGroup?: TrainTimeTableGroupFragment;
   onWagonClick: (w: Wagon | null | undefined) => void;
 };
 
 function TrainComposition({
   train,
-  stationName,
+  stationTimeTableRowGroup,
   onWagonClick,
 }: TrainCompositionProps) {
   const { t } = useTranslation();
+  const stationName = (
+    stationTimeTableRowGroup?.departure ?? stationTimeTableRowGroup?.arrival
+  )?.station.name;
 
   const journeySection = stationName
     ? getTrainJourneySectionForStation(train, stationName)
@@ -70,6 +80,8 @@ function TrainComposition({
       wagons = orderBy(journeySection?.wagons, (w) => w?.location, 'desc');
     }
   }
+
+  const trainDirection = stationTimeTableRowGroup?.trainDirection;
 
   const getWagonElementWidth = (wagonType?: string | null) => {
     // Total length of train stopping area (A=200, B=160, C=160, D=200) = 720
@@ -148,8 +160,14 @@ function TrainComposition({
         className="composition"
         style={{
           display: 'flex',
+          flexDirection:
+            trainDirection === TrainDirection.Decreasing
+              ? 'row-reverse'
+              : 'row',
           alignItems: 'end',
           justifyContent: 'center',
+          // Adjust left padding to counter the train direction icon width when no specific station is given
+          paddingLeft: !stationTimeTableRowGroup ? '1rem' : undefined,
         }}
       >
         {wagons &&
@@ -217,6 +235,26 @@ function TrainComposition({
               </Box>
             </span>
           ))}
+        <Box
+          sx={{
+            display: 'flex',
+            marginRight:
+              trainDirection === TrainDirection.Increasing
+                ? '-1rem'
+                : undefined,
+            marginLeft:
+              trainDirection === TrainDirection.Decreasing
+                ? '-1rem'
+                : undefined,
+            color: 'primary.main',
+          }}
+        >
+          {trainDirection === TrainDirection.Decreasing ? (
+            <ChevronLeft />
+          ) : (
+            <ChevronRight />
+          )}
+        </Box>
       </div>
       {stationName && (
         <Box

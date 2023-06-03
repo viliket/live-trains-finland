@@ -127,7 +127,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
                   <div style={{ textAlign: 'center' }}>
                     <TrainComposition
                       train={realTimeTrain}
-                      stationName={station.name}
+                      stationTimeTableRowGroup={g}
                       onWagonClick={handleWagonClick}
                     />
                   </div>
