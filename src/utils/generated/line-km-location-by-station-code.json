@@ -1,0 +1,4440 @@
+{
+  "AHV": {
+    "trackNumber": "002",
+    "linekm": 270,
+    "distance": 960,
+    "otherLinekmLocations": []
+  },
+  "ARL": {
+    "trackNumber": "005",
+    "linekm": 436,
+    "distance": 985,
+    "otherLinekmLocations": []
+  },
+  "AJO": {
+    "trackNumber": "517",
+    "linekm": 867,
+    "distance": 98,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "518",
+        "linekm": 865,
+        "distance": 2100
+      },
+      {
+        "trackNumber": "AJO 028",
+        "linekm": 865,
+        "distance": 2100
+      }
+    ]
+  },
+  "APT": {
+    "trackNumber": "005",
+    "linekm": 505,
+    "distance": 840,
+    "otherLinekmLocations": []
+  },
+  "ALV": {
+    "trackNumber": "066",
+    "linekm": 373,
+    "distance": 445,
+    "otherLinekmLocations": []
+  },
+  "ALH": {
+    "trackNumber": "ALH 040",
+    "linekm": 532,
+    "distance": 570,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "416",
+        "linekm": 532,
+        "distance": 570
+      },
+      {
+        "trackNumber": "ALH 021",
+        "linekm": 532,
+        "distance": 570
+      }
+    ]
+  },
+  "ARO": {
+    "trackNumber": "554",
+    "linekm": 707,
+    "distance": 668,
+    "otherLinekmLocations": []
+  },
+  "DRA": {
+    "trackNumber": "142",
+    "linekm": 171,
+    "distance": 180,
+    "otherLinekmLocations": []
+  },
+  "DMV": {
+    "trackNumber": "142",
+    "linekm": 199,
+    "distance": 185,
+    "otherLinekmLocations": []
+  },
+  "EPZ": {
+    "trackNumber": "066",
+    "linekm": 338,
+    "distance": 683,
+    "otherLinekmLocations": []
+  },
+  "ENO": {
+    "trackNumber": "006",
+    "linekm": 660,
+    "distance": 170,
+    "otherLinekmLocations": []
+  },
+  "ERV": {
+    "trackNumber": "001",
+    "linekm": 119,
+    "distance": 816,
+    "otherLinekmLocations": []
+  },
+  "ELA": {
+    "trackNumber": "008",
+    "linekm": 603,
+    "distance": 762,
+    "otherLinekmLocations": []
+  },
+  "EPO": {
+    "trackNumber": "001",
+    "linekm": 20,
+    "distance": 600,
+    "otherLinekmLocations": []
+  },
+  "HPJ": {
+    "trackNumber": "087",
+    "linekm": 649,
+    "distance": 205,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "004",
+        "linekm": 588,
+        "distance": 460
+      }
+    ]
+  },
+  "HPS": {
+    "trackNumber": "005",
+    "linekm": 393,
+    "distance": 454,
+    "otherLinekmLocations": []
+  },
+  "HPK": {
+    "trackNumber": "066",
+    "linekm": 300,
+    "distance": 235,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "023",
+        "linekm": 300,
+        "distance": 235
+      }
+    ]
+  },
+  "HAA": {
+    "trackNumber": "007",
+    "linekm": 39,
+    "distance": 567,
+    "otherLinekmLocations": []
+  },
+  "HLT": {
+    "trackNumber": "006",
+    "linekm": 119,
+    "distance": 540,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "007",
+        "linekm": 93,
+        "distance": 735
+      }
+    ]
+  },
+  "HSI": {
+    "trackNumber": "132",
+    "linekm": 56,
+    "distance": 737,
+    "otherLinekmLocations": []
+  },
+  "HMA": {
+    "trackNumber": "222",
+    "linekm": 243,
+    "distance": 646,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "HMA 038",
+        "linekm": 243,
+        "distance": 646
+      },
+      {
+        "trackNumber": "HMA 055",
+        "linekm": 243,
+        "distance": 646
+      },
+      {
+        "trackNumber": "HMA 071",
+        "linekm": 243,
+        "distance": 646
+      }
+    ]
+  },
+  "HSL": {
+    "trackNumber": "006",
+    "linekm": 602,
+    "distance": 199,
+    "otherLinekmLocations": []
+  },
+  "HNA": {
+    "trackNumber": "003",
+    "linekm": 21,
+    "distance": 394,
+    "otherLinekmLocations": []
+  },
+  "HGS": {
+    "trackNumber": "336",
+    "linekm": 268,
+    "distance": 680,
+    "otherLinekmLocations": []
+  },
+  "HNH": {
+    "trackNumber": "008",
+    "linekm": 1047,
+    "distance": 83,
+    "otherLinekmLocations": []
+  },
+  "HKS": {
+    "trackNumber": "023",
+    "linekm": 418,
+    "distance": 89,
+    "otherLinekmLocations": []
+  },
+  "HVA": {
+    "trackNumber": "002",
+    "linekm": 295,
+    "distance": 542,
+    "otherLinekmLocations": []
+  },
+  "HJ": {
+    "trackNumber": "005",
+    "linekm": 201,
+    "distance": 643,
+    "otherLinekmLocations": []
+  },
+  "HRV": {
+    "trackNumber": "003",
+    "linekm": 99,
+    "distance": 456,
+    "otherLinekmLocations": []
+  },
+  "HD": {
+    "trackNumber": "008",
+    "linekm": 775,
+    "distance": 159,
+    "otherLinekmLocations": []
+  },
+  "HAU": {
+    "trackNumber": "005",
+    "linekm": 344,
+    "distance": 442,
+    "otherLinekmLocations": []
+  },
+  "HVS": {
+    "trackNumber": "009",
+    "linekm": 208,
+    "distance": 135,
+    "otherLinekmLocations": []
+  },
+  "HEK": {
+    "trackNumber": "001",
+    "linekm": 34,
+    "distance": 856,
+    "otherLinekmLocations": []
+  },
+  "HA": {
+    "trackNumber": "251",
+    "linekm": 167,
+    "distance": 607,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "HA 041",
+        "linekm": 167,
+        "distance": 607
+      }
+    ]
+  },
+  "HNO": {
+    "trackNumber": "002",
+    "linekm": 237,
+    "distance": 965,
+    "otherLinekmLocations": []
+  },
+  "HÄV": {
+    "trackNumber": "722",
+    "linekm": 648,
+    "distance": 408,
+    "otherLinekmLocations": []
+  },
+  "HNV": {
+    "trackNumber": "024",
+    "linekm": 468,
+    "distance": 135,
+    "otherLinekmLocations": []
+  },
+  "HR": {
+    "trackNumber": "006",
+    "linekm": 115,
+    "distance": 790,
+    "otherLinekmLocations": []
+  },
+  "HIR": {
+    "trackNumber": "005",
+    "linekm": 318,
+    "distance": 957,
+    "otherLinekmLocations": []
+  },
+  "HK": {
+    "trackNumber": "006",
+    "linekm": 79,
+    "distance": 743,
+    "otherLinekmLocations": []
+  },
+  "HLS": {
+    "trackNumber": "005",
+    "linekm": 233,
+    "distance": 344,
+    "otherLinekmLocations": []
+  },
+  "HH": {
+    "trackNumber": "132",
+    "linekm": 52,
+    "distance": 150,
+    "otherLinekmLocations": []
+  },
+  "HVN": {
+    "trackNumber": "008",
+    "linekm": 715,
+    "distance": 500,
+    "otherLinekmLocations": []
+  },
+  "HP": {
+    "trackNumber": "321",
+    "linekm": 188,
+    "distance": 778,
+    "otherLinekmLocations": []
+  },
+  "HPL": {
+    "trackNumber": "001",
+    "linekm": 6,
+    "distance": 375,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "123",
+        "linekm": 6,
+        "distance": 620
+      }
+    ]
+  },
+  "HKO": {
+    "trackNumber": "024",
+    "linekm": 406,
+    "distance": 988,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "014",
+        "linekm": 406,
+        "distance": 988
+      }
+    ]
+  },
+  "HYS": {
+    "trackNumber": "552",
+    "linekm": 704,
+    "distance": 601,
+    "otherLinekmLocations": []
+  },
+  "HY": {
+    "trackNumber": "003",
+    "linekm": 58,
+    "distance": 792,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "141",
+        "linekm": 59,
+        "distance": 540
+      }
+    ]
+  },
+  "HL": {
+    "trackNumber": "003",
+    "linekm": 107,
+    "distance": 559,
+    "otherLinekmLocations": []
+  },
+  "HM": {
+    "trackNumber": "008",
+    "linekm": 472,
+    "distance": 940,
+    "otherLinekmLocations": []
+  },
+  "HÖL": {
+    "trackNumber": "006",
+    "linekm": 765,
+    "distance": 261,
+    "otherLinekmLocations": []
+  },
+  "II": {
+    "trackNumber": "008",
+    "linekm": 789,
+    "distance": 165,
+    "otherLinekmLocations": []
+  },
+  "ITR": {
+    "trackNumber": "005",
+    "linekm": 548,
+    "distance": 611,
+    "otherLinekmLocations": []
+  },
+  "ILM": {
+    "trackNumber": "005",
+    "linekm": 550,
+    "distance": 360,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "087",
+        "linekm": 550,
+        "distance": 360
+      }
+    ]
+  },
+  "ITA": {
+    "trackNumber": "003",
+    "linekm": 129,
+    "distance": 286,
+    "otherLinekmLocations": []
+  },
+  "ILO": {
+    "trackNumber": "722",
+    "linekm": 695,
+    "distance": 203,
+    "otherLinekmLocations": []
+  },
+  "IMKR": {
+    "trackNumber": "243",
+    "linekm": 337,
+    "distance": 95,
+    "otherLinekmLocations": []
+  },
+  "IN": {
+    "trackNumber": "066",
+    "linekm": 341,
+    "distance": 367,
+    "otherLinekmLocations": []
+  },
+  "IKR": {
+    "trackNumber": "221",
+    "linekm": 212,
+    "distance": 781,
+    "otherLinekmLocations": []
+  },
+  "IKO": {
+    "trackNumber": "001",
+    "linekm": 70,
+    "distance": 620,
+    "otherLinekmLocations": []
+  },
+  "IKY": {
+    "trackNumber": "431",
+    "linekm": 447,
+    "distance": 488,
+    "otherLinekmLocations": []
+  },
+  "JAL": {
+    "trackNumber": "003",
+    "linekm": 309,
+    "distance": 871,
+    "otherLinekmLocations": []
+  },
+  "JPA": {
+    "trackNumber": "008",
+    "linekm": 495,
+    "distance": 784,
+    "otherLinekmLocations": []
+  },
+  "JK": {
+    "trackNumber": "003",
+    "linekm": 47,
+    "distance": 937,
+    "otherLinekmLocations": []
+  },
+  "JOR": {
+    "trackNumber": "014",
+    "linekm": 414,
+    "distance": 617,
+    "otherLinekmLocations": []
+  },
+  "JRS": {
+    "trackNumber": "001",
+    "linekm": 32,
+    "distance": 322,
+    "otherLinekmLocations": []
+  },
+  "JTS": {
+    "trackNumber": "006",
+    "linekm": 305,
+    "distance": 826,
+    "otherLinekmLocations": []
+  },
+  "JKI": {
+    "trackNumber": "017",
+    "linekm": 532,
+    "distance": 5,
+    "otherLinekmLocations": []
+  },
+  "JUT": {
+    "trackNumber": "006",
+    "linekm": 94,
+    "distance": 620,
+    "otherLinekmLocations": []
+  },
+  "JJ": {
+    "trackNumber": "066",
+    "linekm": 246,
+    "distance": 580,
+    "otherLinekmLocations": []
+  },
+  "JRI": {
+    "trackNumber": "221",
+    "linekm": 224,
+    "distance": 898,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "222",
+        "linekm": 224,
+        "distance": 898
+      }
+    ]
+  },
+  "JY": {
+    "trackNumber": "009",
+    "linekm": 340,
+    "distance": 970,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "004",
+        "linekm": 377,
+        "distance": 435
+      },
+      {
+        "trackNumber": "023",
+        "linekm": 377,
+        "distance": 435
+      },
+      {
+        "trackNumber": "365",
+        "linekm": 332,
+        "distance": 453
+      },
+      {
+        "trackNumber": "JY S",
+        "linekm": 377,
+        "distance": 435
+      }
+    ]
+  },
+  "JÄS": {
+    "trackNumber": "009",
+    "linekm": 284,
+    "distance": 84,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "363",
+        "linekm": 284,
+        "distance": 84
+      }
+    ]
+  },
+  "JSK": {
+    "trackNumber": "009",
+    "linekm": 287,
+    "distance": 917,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "JSK Yht Y",
+        "linekm": 287,
+        "distance": 917
+      }
+    ]
+  },
+  "JR": {
+    "trackNumber": "006",
+    "linekm": 103,
+    "distance": 596,
+    "otherLinekmLocations": []
+  },
+  "KPA": {
+    "trackNumber": "006",
+    "linekm": 214,
+    "distance": 451,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "KPA 041",
+        "linekm": 214,
+        "distance": 243
+      }
+    ]
+  },
+  "KLA": {
+    "trackNumber": "363",
+    "linekm": 290,
+    "distance": 303,
+    "otherLinekmLocations": []
+  },
+  "KJR": {
+    "trackNumber": "006",
+    "linekm": 226,
+    "distance": 912,
+    "otherLinekmLocations": []
+  },
+  "KAJ": {
+    "trackNumber": "005",
+    "linekm": 633,
+    "distance": 491,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "557",
+        "linekm": 634,
+        "distance": 212
+      }
+    ]
+  },
+  "KTN": {
+    "trackNumber": "023",
+    "linekm": 320,
+    "distance": 875,
+    "otherLinekmLocations": []
+  },
+  "KAU": {
+    "trackNumber": "002",
+    "linekm": 199,
+    "distance": 471,
+    "otherLinekmLocations": []
+  },
+  "KAO": {
+    "trackNumber": "005",
+    "linekm": 644,
+    "distance": 770,
+    "otherLinekmLocations": []
+  },
+  "KSA": {
+    "trackNumber": "005",
+    "linekm": 330,
+    "distance": 634,
+    "otherLinekmLocations": []
+  },
+  "KGS": {
+    "trackNumber": "008",
+    "linekm": 642,
+    "distance": 466,
+    "otherLinekmLocations": []
+  },
+  "KAN": {
+    "trackNumber": "123",
+    "linekm": 9,
+    "distance": 300,
+    "otherLinekmLocations": []
+  },
+  "KSI": {
+    "trackNumber": "004",
+    "linekm": 488,
+    "distance": 694,
+    "otherLinekmLocations": []
+  },
+  "KNS": {
+    "trackNumber": "008",
+    "linekm": 591,
+    "distance": 582,
+    "otherLinekmLocations": []
+  },
+  "KRR": {
+    "trackNumber": "003",
+    "linekm": 224,
+    "distance": 902,
+    "otherLinekmLocations": []
+  },
+  "KHG": {
+    "trackNumber": "008",
+    "linekm": 622,
+    "distance": 897,
+    "otherLinekmLocations": []
+  },
+  "KR": {
+    "trackNumber": "001",
+    "linekm": 87,
+    "distance": 56,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "141",
+        "linekm": 157,
+        "distance": 817
+      },
+      {
+        "trackNumber": "142",
+        "linekm": 157,
+        "distance": 817
+      }
+    ]
+  },
+  "KRU": {
+    "trackNumber": "002",
+    "linekm": 230,
+    "distance": 733,
+    "otherLinekmLocations": []
+  },
+  "KAR": {
+    "trackNumber": "321",
+    "linekm": 247,
+    "distance": 320,
+    "otherLinekmLocations": []
+  },
+  "KSK": {
+    "trackNumber": "441",
+    "linekm": 530,
+    "distance": 522,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "KSK 105",
+        "linekm": 530,
+        "distance": 522
+      }
+    ]
+  },
+  "KTH": {
+    "trackNumber": "006",
+    "linekm": 205,
+    "distance": 556,
+    "otherLinekmLocations": []
+  },
+  "KJI": {
+    "trackNumber": "441",
+    "linekm": 472,
+    "distance": 720,
+    "otherLinekmLocations": []
+  },
+  "KHA": {
+    "trackNumber": "008",
+    "linekm": 455,
+    "distance": 728,
+    "otherLinekmLocations": []
+  },
+  "KLR": {
+    "trackNumber": "521",
+    "linekm": 963,
+    "distance": 350,
+    "otherLinekmLocations": []
+  },
+  "KNI": {
+    "trackNumber": "001",
+    "linekm": 16,
+    "distance": 54,
+    "otherLinekmLocations": []
+  },
+  "KPL": {
+    "trackNumber": "005",
+    "linekm": 568,
+    "distance": 751,
+    "otherLinekmLocations": []
+  },
+  "KA": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "006",
+        "linekm": 169,
+        "distance": 436
+      }
+    ]
+  },
+  "KTP": {
+    "trackNumber": "004",
+    "linekm": 519,
+    "distance": 256,
+    "otherLinekmLocations": []
+  },
+  "KEK": {
+    "trackNumber": "006",
+    "linekm": 79,
+    "distance": 288,
+    "otherLinekmLocations": []
+  },
+  "KMI": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "KJÄ": {
+    "trackNumber": "008",
+    "linekm": 1056,
+    "distance": 399,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "525",
+        "linekm": 1056,
+        "distance": 399
+      },
+      {
+        "trackNumber": "527",
+        "linekm": 1056,
+        "distance": 399
+      }
+    ]
+  },
+  "KML": {
+    "trackNumber": "008",
+    "linekm": 741,
+    "distance": 75,
+    "otherLinekmLocations": []
+  },
+  "KIÄ": {
+    "trackNumber": "014",
+    "linekm": 495,
+    "distance": 531,
+    "otherLinekmLocations": []
+  },
+  "KEA": {
+    "trackNumber": "001",
+    "linekm": 14,
+    "distance": 536,
+    "otherLinekmLocations": []
+  },
+  "KTI": {
+    "trackNumber": "006",
+    "linekm": 428,
+    "distance": 3,
+    "otherLinekmLocations": []
+  },
+  "KEU": {
+    "trackNumber": "023",
+    "linekm": 316,
+    "distance": 41,
+    "otherLinekmLocations": []
+  },
+  "KIA": {
+    "trackNumber": "132",
+    "linekm": 60,
+    "distance": 13,
+    "otherLinekmLocations": []
+  },
+  "KIL": {
+    "trackNumber": "001",
+    "linekm": 13,
+    "distance": 35,
+    "otherLinekmLocations": []
+  },
+  "KUA": {
+    "trackNumber": "008",
+    "linekm": 668,
+    "distance": 910,
+    "otherLinekmLocations": []
+  },
+  "KNH": {
+    "trackNumber": "017",
+    "linekm": 508,
+    "distance": 922,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "617",
+        "linekm": 508,
+        "distance": 922
+      }
+    ]
+  },
+  "KII": {
+    "trackNumber": "005",
+    "linekm": 247,
+    "distance": 982,
+    "otherLinekmLocations": []
+  },
+  "KIJ": {
+    "trackNumber": "006",
+    "linekm": 384,
+    "distance": 475,
+    "otherLinekmLocations": []
+  },
+  "KKN": {
+    "trackNumber": "001",
+    "linekm": 37,
+    "distance": 503,
+    "otherLinekmLocations": []
+  },
+  "KRN": {
+    "trackNumber": "141",
+    "linekm": 136,
+    "distance": 261,
+    "otherLinekmLocations": []
+  },
+  "KIT": {
+    "trackNumber": "006",
+    "linekm": 460,
+    "distance": 16,
+    "otherLinekmLocations": []
+  },
+  "KN": {
+    "trackNumber": "342",
+    "linekm": 297,
+    "distance": 395,
+    "otherLinekmLocations": []
+  },
+  "KRV": {
+    "trackNumber": "087",
+    "linekm": 583,
+    "distance": 985,
+    "otherLinekmLocations": []
+  },
+  "KVJ": {
+    "trackNumber": "531",
+    "linekm": 878,
+    "distance": 146,
+    "otherLinekmLocations": []
+  },
+  "KOH": {
+    "trackNumber": "006",
+    "linekm": 775,
+    "distance": 774,
+    "otherLinekmLocations": []
+  },
+  "KVU": {
+    "trackNumber": "008",
+    "linekm": 923,
+    "distance": 373,
+    "otherLinekmLocations": []
+  },
+  "KVH": {
+    "trackNumber": "001",
+    "linekm": 17,
+    "distance": 861,
+    "otherLinekmLocations": []
+  },
+  "KVY": {
+    "trackNumber": "003",
+    "linekm": 19,
+    "distance": 440,
+    "otherLinekmLocations": []
+  },
+  "KKI": {
+    "trackNumber": "002",
+    "linekm": 284,
+    "distance": 442,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "342",
+        "linekm": 284,
+        "distance": 442
+      }
+    ]
+  },
+  "KOK": {
+    "trackNumber": "008",
+    "linekm": 551,
+    "distance": 441,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "417",
+        "linekm": 551,
+        "distance": 99
+      }
+    ]
+  },
+  "KLI": {
+    "trackNumber": "521",
+    "linekm": 1067,
+    "distance": 206,
+    "otherLinekmLocations": []
+  },
+  "KLO": {
+    "trackNumber": "066",
+    "linekm": 286,
+    "distance": 265,
+    "otherLinekmLocations": []
+  },
+  "KPI": {
+    "trackNumber": "008",
+    "linekm": 525,
+    "distance": 100,
+    "otherLinekmLocations": []
+  },
+  "KMM": {
+    "trackNumber": "611",
+    "linekm": 429,
+    "distance": 700,
+    "otherLinekmLocations": []
+  },
+  "KOM": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "087",
+        "linekm": 607,
+        "distance": 174
+      }
+    ]
+  },
+  "KHI": {
+    "trackNumber": "006",
+    "linekm": 640,
+    "distance": 295,
+    "otherLinekmLocations": []
+  },
+  "KON": {
+    "trackNumber": "005",
+    "linekm": 658,
+    "distance": 786,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "006",
+        "linekm": 893,
+        "distance": 88
+      },
+      {
+        "trackNumber": "531",
+        "linekm": 918,
+        "distance": 911
+      },
+      {
+        "trackNumber": "552",
+        "linekm": 658,
+        "distance": 786
+      },
+      {
+        "trackNumber": "554",
+        "linekm": 658,
+        "distance": 786
+      }
+    ]
+  },
+  "KRA": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "006",
+        "linekm": 185,
+        "distance": 440
+      }
+    ]
+  },
+  "KAS": {
+    "trackNumber": "066",
+    "linekm": 247,
+    "distance": 910,
+    "otherLinekmLocations": []
+  },
+  "KRS": {
+    "trackNumber": "003",
+    "linekm": 22,
+    "distance": 740,
+    "otherLinekmLocations": []
+  },
+  "KSU": {
+    "trackNumber": "007",
+    "linekm": 50,
+    "distance": 500,
+    "otherLinekmLocations": []
+  },
+  "KOS": {
+    "trackNumber": "441",
+    "linekm": 442,
+    "distance": 447,
+    "otherLinekmLocations": []
+  },
+  "KOI": {
+    "trackNumber": "008",
+    "linekm": 508,
+    "distance": 925,
+    "otherLinekmLocations": []
+  },
+  "KPY": {
+    "trackNumber": "008",
+    "linekm": 537,
+    "distance": 585,
+    "otherLinekmLocations": []
+  },
+  "KIS": {
+    "trackNumber": "003",
+    "linekm": 276,
+    "distance": 327,
+    "otherLinekmLocations": []
+  },
+  "KRM": {
+    "trackNumber": "005",
+    "linekm": 444,
+    "distance": 74,
+    "otherLinekmLocations": []
+  },
+  "KU": {
+    "trackNumber": "003",
+    "linekm": 138,
+    "distance": 769,
+    "otherLinekmLocations": []
+  },
+  "KUK": {
+    "trackNumber": "232",
+    "linekm": 199,
+    "distance": 290,
+    "otherLinekmLocations": []
+  },
+  "KYN": {
+    "trackNumber": "006",
+    "linekm": 742,
+    "distance": 912,
+    "otherLinekmLocations": []
+  },
+  "KY": {
+    "trackNumber": "221",
+    "linekm": 233,
+    "distance": 450,
+    "otherLinekmLocations": []
+  },
+  "KLN": {
+    "trackNumber": "221",
+    "linekm": 237,
+    "distance": 255,
+    "otherLinekmLocations": []
+  },
+  "KÖ": {
+    "trackNumber": "321",
+    "linekm": 232,
+    "distance": 875,
+    "otherLinekmLocations": []
+  },
+  "AIN": {
+    "trackNumber": "003",
+    "linekm": 34,
+    "distance": 784,
+    "otherLinekmLocations": []
+  },
+  "KLV": {
+    "trackNumber": "008",
+    "linekm": 570,
+    "distance": 273,
+    "otherLinekmLocations": []
+  },
+  "KÖK": {
+    "trackNumber": "008",
+    "linekm": 486,
+    "distance": 491,
+    "otherLinekmLocations": []
+  },
+  "LPR": {
+    "trackNumber": "009",
+    "linekm": 267,
+    "distance": 80,
+    "otherLinekmLocations": []
+  },
+  "LHN": {
+    "trackNumber": "533",
+    "linekm": 880,
+    "distance": 297,
+    "otherLinekmLocations": []
+  },
+  "LH": {
+    "trackNumber": "006",
+    "linekm": 130,
+    "distance": 170,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "006748 LH",
+        "linekm": 130,
+        "distance": 170
+      },
+      {
+        "trackNumber": "251",
+        "linekm": 130,
+        "distance": 170
+      },
+      {
+        "trackNumber": "252",
+        "linekm": 130,
+        "distance": 170
+      },
+      {
+        "trackNumber": "253",
+        "linekm": 133,
+        "distance": 460
+      },
+      {
+        "trackNumber": "254",
+        "linekm": 129,
+        "distance": 400
+      }
+    ]
+  },
+  "LAI": {
+    "trackNumber": "431",
+    "linekm": 468,
+    "distance": 916,
+    "otherLinekmLocations": []
+  },
+  "LAK": {
+    "trackNumber": "003",
+    "linekm": 209,
+    "distance": 214,
+    "otherLinekmLocations": []
+  },
+  "LMK": {
+    "trackNumber": "003",
+    "linekm": 268,
+    "distance": 785,
+    "otherLinekmLocations": []
+  },
+  "LAM": {
+    "trackNumber": "557",
+    "linekm": 636,
+    "distance": 664,
+    "otherLinekmLocations": []
+  },
+  "LPJ": {
+    "trackNumber": "252",
+    "linekm": 185,
+    "distance": 432,
+    "otherLinekmLocations": []
+  },
+  "LNA": {
+    "trackNumber": "005",
+    "linekm": 525,
+    "distance": 604,
+    "otherLinekmLocations": []
+  },
+  "LR": {
+    "trackNumber": "006",
+    "linekm": 287,
+    "distance": 726,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "244",
+        "linekm": 282,
+        "distance": 265
+      },
+      {
+        "trackNumber": "246",
+        "linekm": 287,
+        "distance": 726
+      }
+    ]
+  },
+  "LAA": {
+    "trackNumber": "006",
+    "linekm": 97,
+    "distance": 693,
+    "otherLinekmLocations": []
+  },
+  "LPO": {
+    "trackNumber": "142",
+    "linekm": 189,
+    "distance": 639,
+    "otherLinekmLocations": []
+  },
+  "LPA": {
+    "trackNumber": "008",
+    "linekm": 441,
+    "distance": 94,
+    "otherLinekmLocations": []
+  },
+  "LYÖ": {
+    "trackNumber": "003",
+    "linekm": 333,
+    "distance": 57,
+    "otherLinekmLocations": []
+  },
+  "LAU": {
+    "trackNumber": "004",
+    "linekm": 401,
+    "distance": 193,
+    "otherLinekmLocations": []
+  },
+  "LLA": {
+    "trackNumber": "008",
+    "linekm": 865,
+    "distance": 776,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "521",
+        "linekm": 865,
+        "distance": 776
+      }
+    ]
+  },
+  "LRS": {
+    "trackNumber": "006",
+    "linekm": 291,
+    "distance": 936,
+    "otherLinekmLocations": []
+  },
+  "LKL": {
+    "trackNumber": "005",
+    "linekm": 276,
+    "distance": 11,
+    "otherLinekmLocations": []
+  },
+  "LPÄ": {
+    "trackNumber": "003",
+    "linekm": 165,
+    "distance": 928,
+    "otherLinekmLocations": []
+  },
+  "LK": {
+    "trackNumber": "003",
+    "linekm": 87,
+    "distance": 830,
+    "otherLinekmLocations": []
+  },
+  "LPV": {
+    "trackNumber": "001",
+    "linekm": 11,
+    "distance": 249,
+    "otherLinekmLocations": []
+  },
+  "LTS": {
+    "trackNumber": "003",
+    "linekm": 123,
+    "distance": 554,
+    "otherLinekmLocations": []
+  },
+  "LIS": {
+    "trackNumber": "006",
+    "linekm": 728,
+    "distance": 121,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "713",
+        "linekm": 726,
+        "distance": 960
+      }
+    ]
+  },
+  "LTK": {
+    "trackNumber": "713",
+    "linekm": 728,
+    "distance": 847,
+    "otherLinekmLocations": []
+  },
+  "LLH": {
+    "trackNumber": "003",
+    "linekm": 193,
+    "distance": 393,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "002",
+        "linekm": 193,
+        "distance": 393
+      }
+    ]
+  },
+  "LVT": {
+    "trackNumber": "023",
+    "linekm": 402,
+    "distance": 191,
+    "otherLinekmLocations": []
+  },
+  "LKA": {
+    "trackNumber": "008",
+    "linekm": 728,
+    "distance": 483,
+    "otherLinekmLocations": []
+  },
+  "LUO": {
+    "trackNumber": "441",
+    "linekm": 463,
+    "distance": 619,
+    "otherLinekmLocations": []
+  },
+  "LO": {
+    "trackNumber": "141",
+    "linekm": 122,
+    "distance": 965,
+    "otherLinekmLocations": []
+  },
+  "LM": {
+    "trackNumber": "321",
+    "linekm": 208,
+    "distance": 870,
+    "otherLinekmLocations": []
+  },
+  "LOH": {
+    "trackNumber": "123",
+    "linekm": 13,
+    "distance": 190,
+    "otherLinekmLocations": []
+  },
+  "LOL": {
+    "trackNumber": "005",
+    "linekm": 360,
+    "distance": 13,
+    "otherLinekmLocations": []
+  },
+  "LVS": {
+    "trackNumber": "252",
+    "linekm": 207,
+    "distance": 209,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "LVS 009",
+        "linekm": 207,
+        "distance": 209
+      }
+    ]
+  },
+  "LUI": {
+    "trackNumber": "017",
+    "linekm": 557,
+    "distance": 61,
+    "otherLinekmLocations": []
+  },
+  "LUS": {
+    "trackNumber": "014",
+    "linekm": 509,
+    "distance": 170,
+    "otherLinekmLocations": []
+  },
+  "LÄ": {
+    "trackNumber": "006",
+    "linekm": 250,
+    "distance": 540,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "213",
+        "linekm": 250,
+        "distance": 540
+      }
+    ]
+  },
+  "HNN": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "007",
+        "linekm": 79,
+        "distance": 373
+      }
+    ]
+  },
+  "LÄP": {
+    "trackNumber": "009",
+    "linekm": 256,
+    "distance": 24,
+    "otherLinekmLocations": []
+  },
+  "MLK": {
+    "trackNumber": "006",
+    "linekm": 836,
+    "distance": 49,
+    "otherLinekmLocations": []
+  },
+  "MRI": {
+    "trackNumber": "321",
+    "linekm": 262,
+    "distance": 70,
+    "otherLinekmLocations": []
+  },
+  "MD": {
+    "trackNumber": "003",
+    "linekm": 291,
+    "distance": 821,
+    "otherLinekmLocations": []
+  },
+  "MJJ": {
+    "trackNumber": "003",
+    "linekm": 216,
+    "distance": 317,
+    "otherLinekmLocations": []
+  },
+  "ML": {
+    "trackNumber": "003",
+    "linekm": 10,
+    "distance": 900,
+    "otherLinekmLocations": []
+  },
+  "MLO": {
+    "trackNumber": "123",
+    "linekm": 10,
+    "distance": 730,
+    "otherLinekmLocations": []
+  },
+  "MRK": {
+    "trackNumber": "005",
+    "linekm": 403,
+    "distance": 737,
+    "otherLinekmLocations": []
+  },
+  "MRL": {
+    "trackNumber": "123",
+    "linekm": 14,
+    "distance": 10,
+    "otherLinekmLocations": []
+  },
+  "MAS": {
+    "trackNumber": "001",
+    "linekm": 29,
+    "distance": 561,
+    "otherLinekmLocations": []
+  },
+  "MTV": {
+    "trackNumber": "008",
+    "linekm": 562,
+    "distance": 607,
+    "otherLinekmLocations": []
+  },
+  "MAT": {
+    "trackNumber": "003",
+    "linekm": 159,
+    "distance": 906,
+    "otherLinekmLocations": []
+  },
+  "MSÄ": {
+    "trackNumber": "314",
+    "linekm": 155,
+    "distance": 811,
+    "otherLinekmLocations": []
+  },
+  "MI": {
+    "trackNumber": "005",
+    "linekm": 305,
+    "distance": 165,
+    "otherLinekmLocations": []
+  },
+  "MIS": {
+    "trackNumber": "008",
+    "linekm": 1021,
+    "distance": 255,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "008071 MIS",
+        "linekm": 1021,
+        "distance": 255
+      }
+    ]
+  },
+  "MLA": {
+    "trackNumber": "006",
+    "linekm": 91,
+    "distance": 430,
+    "otherLinekmLocations": []
+  },
+  "MH": {
+    "trackNumber": "531",
+    "linekm": 788,
+    "distance": 424,
+    "otherLinekmLocations": []
+  },
+  "MUK": {
+    "trackNumber": "253",
+    "linekm": 140,
+    "distance": 12,
+    "otherLinekmLocations": []
+  },
+  "MUR": {
+    "trackNumber": "005",
+    "linekm": 613,
+    "distance": 165,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "553",
+        "linekm": 613,
+        "distance": 165
+      },
+      {
+        "trackNumber": "558",
+        "linekm": 613,
+        "distance": 165
+      },
+      {
+        "trackNumber": "MUR 593",
+        "linekm": 613,
+        "distance": 165
+      }
+    ]
+  },
+  "MSO": {
+    "trackNumber": "141",
+    "linekm": 143,
+    "distance": 0,
+    "otherLinekmLocations": []
+  },
+  "MST": {
+    "trackNumber": "244",
+    "linekm": 295,
+    "distance": 515,
+    "otherLinekmLocations": []
+  },
+  "MKO": {
+    "trackNumber": "006",
+    "linekm": 297,
+    "distance": 112,
+    "otherLinekmLocations": []
+  },
+  "MUU": {
+    "trackNumber": "009",
+    "linekm": 324,
+    "distance": 768,
+    "otherLinekmLocations": []
+  },
+  "MUL": {
+    "trackNumber": "008",
+    "linekm": 948,
+    "distance": 494,
+    "otherLinekmLocations": []
+  },
+  "MYS": {
+    "trackNumber": "008",
+    "linekm": 815,
+    "distance": 693,
+    "otherLinekmLocations": []
+  },
+  "MKI": {
+    "trackNumber": "221",
+    "linekm": 203,
+    "distance": 630,
+    "otherLinekmLocations": []
+  },
+  "MYL": {
+    "trackNumber": "251",
+    "linekm": 161,
+    "distance": 727,
+    "otherLinekmLocations": []
+  },
+  "MY": {
+    "trackNumber": "066",
+    "linekm": 333,
+    "distance": 721,
+    "otherLinekmLocations": []
+  },
+  "MYT": {
+    "trackNumber": "005",
+    "linekm": 270,
+    "distance": 889,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "610",
+        "linekm": 270,
+        "distance": 889
+      }
+    ]
+  },
+  "MYN": {
+    "trackNumber": "332",
+    "linekm": 229,
+    "distance": 607,
+    "otherLinekmLocations": []
+  },
+  "MYR": {
+    "trackNumber": "123",
+    "linekm": 12,
+    "distance": 130,
+    "otherLinekmLocations": []
+  },
+  "MÄK": {
+    "trackNumber": "001",
+    "linekm": 9,
+    "distance": 511,
+    "otherLinekmLocations": []
+  },
+  "MLÄ": {
+    "trackNumber": "007",
+    "linekm": 59,
+    "distance": 210,
+    "otherLinekmLocations": []
+  },
+  "MÄN": {
+    "trackNumber": "373",
+    "linekm": 282,
+    "distance": 740,
+    "otherLinekmLocations": []
+  },
+  "MR": {
+    "trackNumber": "005",
+    "linekm": 262,
+    "distance": 680,
+    "otherLinekmLocations": []
+  },
+  "MN": {
+    "trackNumber": "002",
+    "linekm": 342,
+    "distance": 20,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "349",
+        "linekm": 342,
+        "distance": 20
+      }
+    ]
+  },
+  "NNL": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "333",
+        "linekm": 213,
+        "distance": 193
+      },
+      {
+        "trackNumber": "334",
+        "linekm": 213,
+        "distance": 193
+      }
+    ]
+  },
+  "NRI": {
+    "trackNumber": "023",
+    "linekm": 449,
+    "distance": 862,
+    "otherLinekmLocations": []
+  },
+  "NAL": {
+    "trackNumber": "002",
+    "linekm": 308,
+    "distance": 91,
+    "otherLinekmLocations": []
+  },
+  "NSL": {
+    "trackNumber": "006",
+    "linekm": 146,
+    "distance": 169,
+    "otherLinekmLocations": []
+  },
+  "NMP": {
+    "trackNumber": "521",
+    "linekm": 923,
+    "distance": 605,
+    "otherLinekmLocations": []
+  },
+  "NMÄ": {
+    "trackNumber": "006",
+    "linekm": 172,
+    "distance": 534,
+    "otherLinekmLocations": []
+  },
+  "NII": {
+    "trackNumber": "066",
+    "linekm": 383,
+    "distance": 155,
+    "otherLinekmLocations": []
+  },
+  "NNS": {
+    "trackNumber": "351",
+    "linekm": 386,
+    "distance": 215,
+    "otherLinekmLocations": []
+  },
+  "NRL": {
+    "trackNumber": "751",
+    "linekm": 555,
+    "distance": 846,
+    "otherLinekmLocations": []
+  },
+  "NRLR": {
+    "trackNumber": "751",
+    "linekm": 554,
+    "distance": 80,
+    "otherLinekmLocations": []
+  },
+  "NLÄ": {
+    "trackNumber": "131",
+    "linekm": 39,
+    "distance": 176,
+    "otherLinekmLocations": []
+  },
+  "NTH": {
+    "trackNumber": "006",
+    "linekm": 613,
+    "distance": 475,
+    "otherLinekmLocations": []
+  },
+  "NVL": {
+    "trackNumber": "087",
+    "linekm": 676,
+    "distance": 878,
+    "otherLinekmLocations": []
+  },
+  "NOA": {
+    "trackNumber": "002",
+    "linekm": 204,
+    "distance": 4,
+    "otherLinekmLocations": []
+  },
+  "NM": {
+    "trackNumber": "141",
+    "linekm": 109,
+    "distance": 368,
+    "otherLinekmLocations": []
+  },
+  "NRM": {
+    "trackNumber": "006",
+    "linekm": 784,
+    "distance": 420,
+    "otherLinekmLocations": []
+  },
+  "NÄR": {
+    "trackNumber": "441",
+    "linekm": 518,
+    "distance": 255,
+    "otherLinekmLocations": []
+  },
+  "OHM": {
+    "trackNumber": "005",
+    "linekm": 542,
+    "distance": 264,
+    "otherLinekmLocations": []
+  },
+  "OLLI": {
+    "trackNumber": "131",
+    "linekm": 45,
+    "distance": 734,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "132",
+        "linekm": 45,
+        "distance": 734
+      }
+    ]
+  },
+  "ONT": {
+    "trackNumber": "731",
+    "linekm": 631,
+    "distance": 177,
+    "otherLinekmLocations": []
+  },
+  "OM": {
+    "trackNumber": "252",
+    "linekm": 150,
+    "distance": 407,
+    "otherLinekmLocations": []
+  },
+  "OV": {
+    "trackNumber": "009",
+    "linekm": 228,
+    "distance": 276,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "066",
+        "linekm": 228,
+        "distance": 276
+      }
+    ]
+  },
+  "OVK": {
+    "trackNumber": "066",
+    "linekm": 231,
+    "distance": 512,
+    "otherLinekmLocations": []
+  },
+  "OTM": {
+    "trackNumber": "553",
+    "linekm": 638,
+    "distance": 822,
+    "otherLinekmLocations": []
+  },
+  "OT": {
+    "trackNumber": "005",
+    "linekm": 290,
+    "distance": 521,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "609",
+        "linekm": 290,
+        "distance": 782
+      }
+    ]
+  },
+  "OU": {
+    "trackNumber": "008",
+    "linekm": 657,
+    "distance": 850,
+    "otherLinekmLocations": []
+  },
+  "PO": {
+    "trackNumber": "001",
+    "linekm": 171,
+    "distance": 885,
+    "otherLinekmLocations": []
+  },
+  "PLP": {
+    "trackNumber": "003",
+    "linekm": 54,
+    "distance": 535,
+    "otherLinekmLocations": []
+  },
+  "PTO": {
+    "trackNumber": "531",
+    "linekm": 901,
+    "distance": 579,
+    "otherLinekmLocations": []
+  },
+  "PAS": {
+    "trackNumber": "713",
+    "linekm": 731,
+    "distance": 865,
+    "otherLinekmLocations": []
+  },
+  "PAR": {
+    "trackNumber": "006",
+    "linekm": 387,
+    "distance": 302,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "014",
+        "linekm": 540,
+        "distance": 977
+      }
+    ]
+  },
+  "PKO": {
+    "trackNumber": "003",
+    "linekm": 262,
+    "distance": 483,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "351",
+        "linekm": 428,
+        "distance": 2
+      },
+      {
+        "trackNumber": "352",
+        "linekm": 428,
+        "distance": 2
+      }
+    ]
+  },
+  "PRL": {
+    "trackNumber": "003",
+    "linekm": 115,
+    "distance": 764,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "003410 PRL",
+        "linekm": 115,
+        "distance": 764
+      }
+    ]
+  },
+  "PEL": {
+    "trackNumber": "521",
+    "linekm": 1002,
+    "distance": 632,
+    "otherLinekmLocations": []
+  },
+  "PMI": {
+    "trackNumber": "005",
+    "linekm": 545,
+    "distance": 355,
+    "otherLinekmLocations": []
+  },
+  "PSJ": {
+    "trackNumber": "003",
+    "linekm": 318,
+    "distance": 481,
+    "otherLinekmLocations": []
+  },
+  "PSK": {
+    "trackNumber": "552",
+    "linekm": 732,
+    "distance": 752,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "555",
+        "linekm": 732,
+        "distance": 752
+      }
+    ]
+  },
+  "PVI": {
+    "trackNumber": "023",
+    "linekm": 343,
+    "distance": 357,
+    "otherLinekmLocations": []
+  },
+  "PTS": {
+    "trackNumber": "415",
+    "linekm": 528,
+    "distance": 780,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "416",
+        "linekm": 528,
+        "distance": 780
+      }
+    ]
+  },
+  "PH": {
+    "trackNumber": "066",
+    "linekm": 312,
+    "distance": 500,
+    "otherLinekmLocations": []
+  },
+  "PP": {
+    "trackNumber": "004",
+    "linekm": 540,
+    "distance": 605,
+    "otherLinekmLocations": []
+  },
+  "PIK": {
+    "trackNumber": "001",
+    "linekm": 182,
+    "distance": 785,
+    "otherLinekmLocations": []
+  },
+  "PKL": {
+    "trackNumber": "531",
+    "linekm": 771,
+    "distance": 765,
+    "otherLinekmLocations": []
+  },
+  "PJM": {
+    "trackNumber": "001",
+    "linekm": 8,
+    "distance": 474,
+    "otherLinekmLocations": []
+  },
+  "PKU": {
+    "trackNumber": "001",
+    "linekm": 94,
+    "distance": 907,
+    "otherLinekmLocations": []
+  },
+  "POH": {
+    "trackNumber": "123",
+    "linekm": 8,
+    "distance": 50,
+    "otherLinekmLocations": []
+  },
+  "PLU": {
+    "trackNumber": "003",
+    "linekm": 329,
+    "distance": 329,
+    "otherLinekmLocations": []
+  },
+  "PKK": {
+    "trackNumber": "003",
+    "linekm": 254,
+    "distance": 744,
+    "otherLinekmLocations": []
+  },
+  "POI": {
+    "trackNumber": "006",
+    "linekm": 416,
+    "distance": 728,
+    "otherLinekmLocations": []
+  },
+  "PRI": {
+    "trackNumber": "002",
+    "linekm": 322,
+    "distance": 278,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "350",
+        "linekm": 322,
+        "distance": 278
+      }
+    ]
+  },
+  "PRV": {
+    "trackNumber": "132",
+    "linekm": 62,
+    "distance": 287,
+    "otherLinekmLocations": []
+  },
+  "PUS": {
+    "trackNumber": "006",
+    "linekm": 452,
+    "distance": 808,
+    "otherLinekmLocations": []
+  },
+  "PLA": {
+    "trackNumber": "003",
+    "linekm": 14,
+    "distance": 50,
+    "otherLinekmLocations": []
+  },
+  "PMK": {
+    "trackNumber": "003",
+    "linekm": 9,
+    "distance": 442,
+    "otherLinekmLocations": []
+  },
+  "PL": {
+    "trackNumber": "213",
+    "linekm": 262,
+    "distance": 491,
+    "otherLinekmLocations": []
+  },
+  "PUN": {
+    "trackNumber": "014",
+    "linekm": 515,
+    "distance": 111,
+    "otherLinekmLocations": []
+  },
+  "PYK": {
+    "trackNumber": "620",
+    "linekm": 615,
+    "distance": 415,
+    "otherLinekmLocations": []
+  },
+  "PYE": {
+    "trackNumber": "087",
+    "linekm": 613,
+    "distance": 511,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "620",
+        "linekm": 613,
+        "distance": 511
+      }
+    ]
+  },
+  "PHÄ": {
+    "trackNumber": "087",
+    "linekm": 615,
+    "distance": 934,
+    "otherLinekmLocations": []
+  },
+  "PNÄ": {
+    "trackNumber": "008",
+    "linekm": 518,
+    "distance": 604,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "415",
+        "linekm": 518,
+        "distance": 172
+      }
+    ]
+  },
+  "RHE": {
+    "trackNumber": "514",
+    "linekm": 726,
+    "distance": 726,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "515",
+        "linekm": 726,
+        "distance": 726
+      }
+    ]
+  },
+  "RPO": {
+    "trackNumber": "213",
+    "linekm": 270,
+    "distance": 52,
+    "otherLinekmLocations": []
+  },
+  "RAI": {
+    "trackNumber": "332",
+    "linekm": 207,
+    "distance": 829,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "333",
+        "linekm": 207,
+        "distance": 408
+      }
+    ]
+  },
+  "RM": {
+    "trackNumber": "141",
+    "linekm": 72,
+    "distance": 267,
+    "otherLinekmLocations": []
+  },
+  "RJP": {
+    "trackNumber": "008",
+    "linekm": 448,
+    "distance": 396,
+    "otherLinekmLocations": []
+  },
+  "RMI": {
+    "trackNumber": "014",
+    "linekm": 445,
+    "distance": 165,
+    "otherLinekmLocations": []
+  },
+  "RAS": {
+    "trackNumber": "006",
+    "linekm": 258,
+    "distance": 510,
+    "otherLinekmLocations": []
+  },
+  "RLÄ": {
+    "trackNumber": "003",
+    "linekm": 284,
+    "distance": 344,
+    "otherLinekmLocations": []
+  },
+  "RAH": {
+    "trackNumber": "006",
+    "linekm": 318,
+    "distance": 490,
+    "otherLinekmLocations": []
+  },
+  "RHL": {
+    "trackNumber": "023",
+    "linekm": 380,
+    "distance": 510,
+    "otherLinekmLocations": []
+  },
+  "RMA": {
+    "trackNumber": "342",
+    "linekm": 331,
+    "distance": 659,
+    "otherLinekmLocations": []
+  },
+  "RIO": {
+    "trackNumber": "008",
+    "linekm": 464,
+    "distance": 845,
+    "otherLinekmLocations": []
+  },
+  "RAT": {
+    "trackNumber": "515",
+    "linekm": 730,
+    "distance": 50,
+    "otherLinekmLocations": []
+  },
+  "RJÄ": {
+    "trackNumber": "006",
+    "linekm": 345,
+    "distance": 788,
+    "otherLinekmLocations": []
+  },
+  "RPH": {
+    "trackNumber": "023",
+    "linekm": 372,
+    "distance": 829,
+    "otherLinekmLocations": []
+  },
+  "RKL": {
+    "trackNumber": "003",
+    "linekm": 20,
+    "distance": 615,
+    "otherLinekmLocations": []
+  },
+  "REE": {
+    "trackNumber": "014",
+    "linekm": 507,
+    "distance": 500,
+    "otherLinekmLocations": []
+  },
+  "RJR": {
+    "trackNumber": "008",
+    "linekm": 502,
+    "distance": 567,
+    "otherLinekmLocations": []
+  },
+  "RPA": {
+    "trackNumber": "008",
+    "linekm": 577,
+    "distance": 477,
+    "otherLinekmLocations": []
+  },
+  "RST": {
+    "trackNumber": "610",
+    "linekm": 291,
+    "distance": 162,
+    "otherLinekmLocations": []
+  },
+  "RJV": {
+    "trackNumber": "552",
+    "linekm": 676,
+    "distance": 804,
+    "otherLinekmLocations": []
+  },
+  "ROI": {
+    "trackNumber": "008",
+    "linekm": 971,
+    "distance": 775,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "008670 ROI",
+        "linekm": 971,
+        "distance": 775
+      }
+    ]
+  },
+  "RHA": {
+    "trackNumber": "008",
+    "linekm": 431,
+    "distance": 132,
+    "otherLinekmLocations": []
+  },
+  "RNN": {
+    "trackNumber": "087",
+    "linekm": 568,
+    "distance": 518,
+    "otherLinekmLocations": []
+  },
+  "RKI": {
+    "trackNumber": "008",
+    "linekm": 705,
+    "distance": 228,
+    "otherLinekmLocations": []
+  },
+  "RY": {
+    "trackNumber": "003",
+    "linekm": 80,
+    "distance": 770,
+    "otherLinekmLocations": []
+  },
+  "RÖY": {
+    "trackNumber": "520",
+    "linekm": 893,
+    "distance": 917,
+    "otherLinekmLocations": []
+  },
+  "SAA": {
+    "trackNumber": "009",
+    "linekm": 305,
+    "distance": 373,
+    "otherLinekmLocations": []
+  },
+  "SR": {
+    "trackNumber": "006",
+    "linekm": 405,
+    "distance": 246,
+    "otherLinekmLocations": []
+  },
+  "SRJ": {
+    "trackNumber": "004",
+    "linekm": 452,
+    "distance": 723,
+    "otherLinekmLocations": []
+  },
+  "SLN": {
+    "trackNumber": "005",
+    "linekm": 426,
+    "distance": 718,
+    "otherLinekmLocations": []
+  },
+  "SLO": {
+    "trackNumber": "001",
+    "linekm": 143,
+    "distance": 981,
+    "otherLinekmLocations": []
+  },
+  "SAM": {
+    "trackNumber": "003",
+    "linekm": 74,
+    "distance": 487,
+    "otherLinekmLocations": []
+  },
+  "STA": {
+    "trackNumber": "142",
+    "linekm": 196,
+    "distance": 908,
+    "otherLinekmLocations": []
+  },
+  "SMÄ": {
+    "trackNumber": "006",
+    "linekm": 180,
+    "distance": 534,
+    "otherLinekmLocations": []
+  },
+  "SAV": {
+    "trackNumber": "003",
+    "linekm": 26,
+    "distance": 265,
+    "otherLinekmLocations": []
+  },
+  "SPÄ": {
+    "trackNumber": "005",
+    "linekm": 209,
+    "distance": 869,
+    "otherLinekmLocations": []
+  },
+  "SPJ": {
+    "trackNumber": "521",
+    "linekm": 1045,
+    "distance": 904,
+    "otherLinekmLocations": []
+  },
+  "SVI": {
+    "trackNumber": "008",
+    "linekm": 613,
+    "distance": 371,
+    "otherLinekmLocations": []
+  },
+  "SKÄ": {
+    "trackNumber": "024",
+    "linekm": 389,
+    "distance": 747,
+    "otherLinekmLocations": []
+  },
+  "SIM": {
+    "trackNumber": "008",
+    "linekm": 833,
+    "distance": 715,
+    "otherLinekmLocations": []
+  },
+  "SPL": {
+    "trackNumber": "006",
+    "linekm": 368,
+    "distance": 317,
+    "otherLinekmLocations": []
+  },
+  "SIP": {
+    "trackNumber": "007",
+    "linekm": 68,
+    "distance": 697,
+    "otherLinekmLocations": []
+  },
+  "STÖ": {
+    "trackNumber": "003",
+    "linekm": 235,
+    "distance": 602,
+    "otherLinekmLocations": []
+  },
+  "STI": {
+    "trackNumber": "001",
+    "linekm": 51,
+    "distance": 285,
+    "otherLinekmLocations": []
+  },
+  "SIU": {
+    "trackNumber": "002",
+    "linekm": 213,
+    "distance": 355,
+    "otherLinekmLocations": []
+  },
+  "SGY": {
+    "trackNumber": "142",
+    "linekm": 184,
+    "distance": 680,
+    "otherLinekmLocations": []
+  },
+  "SLD": {
+    "trackNumber": "131",
+    "linekm": 56,
+    "distance": 360,
+    "otherLinekmLocations": []
+  },
+  "SOA": {
+    "trackNumber": "005",
+    "linekm": 559,
+    "distance": 651,
+    "otherLinekmLocations": []
+  },
+  "SOR": {
+    "trackNumber": "005",
+    "linekm": 473,
+    "distance": 754,
+    "otherLinekmLocations": []
+  },
+  "SKV": {
+    "trackNumber": "005",
+    "linekm": 589,
+    "distance": 222,
+    "otherLinekmLocations": []
+  },
+  "SUO": {
+    "trackNumber": "004",
+    "linekm": 417,
+    "distance": 796,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "SUO 381",
+        "linekm": 412,
+        "distance": 557
+      }
+    ]
+  },
+  "SNJ": {
+    "trackNumber": "005",
+    "linekm": 413,
+    "distance": 842,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "615",
+        "linekm": 413,
+        "distance": 842
+      }
+    ]
+  },
+  "SNM": {
+    "trackNumber": "002",
+    "linekm": 220,
+    "distance": 655,
+    "otherLinekmLocations": []
+  },
+  "SYR": {
+    "trackNumber": "024",
+    "linekm": 452,
+    "distance": 865,
+    "otherLinekmLocations": []
+  },
+  "SKI": {
+    "trackNumber": "003",
+    "linekm": 341,
+    "distance": 621,
+    "otherLinekmLocations": []
+  },
+  "SMJ": {
+    "trackNumber": "731",
+    "linekm": 669,
+    "distance": 601,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "017",
+        "linekm": 587,
+        "distance": 1355
+      },
+      {
+        "trackNumber": "714",
+        "linekm": 582,
+        "distance": 723
+      }
+    ]
+  },
+  "SÄ": {
+    "trackNumber": "006",
+    "linekm": 480,
+    "distance": 242,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "751",
+        "linekm": 586,
+        "distance": 873
+      }
+    ]
+  },
+  "SKM": {
+    "trackNumber": "017",
+    "linekm": 504,
+    "distance": 931,
+    "otherLinekmLocations": []
+  },
+  "SJ": {
+    "trackNumber": "003",
+    "linekm": 177,
+    "distance": 734,
+    "otherLinekmLocations": []
+  },
+  "TA": {
+    "trackNumber": "006",
+    "linekm": 238,
+    "distance": 589,
+    "otherLinekmLocations": []
+  },
+  "TKO": {
+    "trackNumber": "349",
+    "linekm": 350,
+    "distance": 235,
+    "otherLinekmLocations": []
+  },
+  "TE": {
+    "trackNumber": "005",
+    "linekm": 537,
+    "distance": 605,
+    "otherLinekmLocations": []
+  },
+  "TV": {
+    "trackNumber": "009",
+    "linekm": 247,
+    "distance": 245,
+    "otherLinekmLocations": []
+  },
+  "TLV": {
+    "trackNumber": "558",
+    "linekm": 636,
+    "distance": 831,
+    "otherLinekmLocations": []
+  },
+  "TMS": {
+    "trackNumber": "142",
+    "linekm": 174,
+    "distance": 56,
+    "otherLinekmLocations": []
+  },
+  "TNA": {
+    "trackNumber": "003",
+    "linekm": 12,
+    "distance": 610,
+    "otherLinekmLocations": []
+  },
+  "TAP": {
+    "trackNumber": "006",
+    "linekm": 270,
+    "distance": 405,
+    "otherLinekmLocations": []
+  },
+  "TSL": {
+    "trackNumber": "221",
+    "linekm": 228,
+    "distance": 854,
+    "otherLinekmLocations": []
+  },
+  "TK": {
+    "trackNumber": "431",
+    "linekm": 460,
+    "distance": 156,
+    "otherLinekmLocations": []
+  },
+  "TRV": {
+    "trackNumber": "008",
+    "linekm": 900,
+    "distance": 521,
+    "otherLinekmLocations": []
+  },
+  "TUV": {
+    "trackNumber": "441",
+    "linekm": 497,
+    "distance": 474,
+    "otherLinekmLocations": []
+  },
+  "TKK": {
+    "trackNumber": "006",
+    "linekm": 592,
+    "distance": 461,
+    "otherLinekmLocations": []
+  },
+  "TOH": {
+    "trackNumber": "751",
+    "linekm": 571,
+    "distance": 752,
+    "otherLinekmLocations": []
+  },
+  "TL": {
+    "trackNumber": "003",
+    "linekm": 147,
+    "distance": 339,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "314",
+        "linekm": 147,
+        "distance": 339
+      },
+      {
+        "trackNumber": "321",
+        "linekm": 147,
+        "distance": 389
+      }
+    ]
+  },
+  "TOI": {
+    "trackNumber": "005",
+    "linekm": 479,
+    "distance": 162,
+    "otherLinekmLocations": []
+  },
+  "TOL": {
+    "trackNumber": "001",
+    "linekm": 35,
+    "distance": 454,
+    "otherLinekmLocations": []
+  },
+  "TOM": {
+    "trackNumber": "006",
+    "linekm": 117,
+    "distance": 197,
+    "otherLinekmLocations": []
+  },
+  "TRK": {
+    "trackNumber": "009",
+    "linekm": 240,
+    "distance": 154,
+    "otherLinekmLocations": []
+  },
+  "TRI": {
+    "trackNumber": "521",
+    "linekm": 883,
+    "distance": 307,
+    "otherLinekmLocations": []
+  },
+  "TRL": {
+    "trackNumber": "001",
+    "linekm": 19,
+    "distance": 22,
+    "otherLinekmLocations": []
+  },
+  "TJA": {
+    "trackNumber": "008",
+    "linekm": 698,
+    "distance": 504,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "514",
+        "linekm": 698,
+        "distance": 504
+      }
+    ]
+  },
+  "TU": {
+    "trackNumber": "003",
+    "linekm": 93,
+    "distance": 771,
+    "otherLinekmLocations": []
+  },
+  "TPV": {
+    "trackNumber": "722",
+    "linekm": 668,
+    "distance": 672,
+    "otherLinekmLocations": []
+  },
+  "TUU": {
+    "trackNumber": "066",
+    "linekm": 366,
+    "distance": 962,
+    "otherLinekmLocations": []
+  },
+  "TÖR": {
+    "trackNumber": "008",
+    "linekm": 878,
+    "distance": 75,
+    "otherLinekmLocations": []
+  },
+  "TRÄ": {
+    "trackNumber": "006",
+    "linekm": 264,
+    "distance": 972,
+    "otherLinekmLocations": []
+  },
+  "UIM": {
+    "trackNumber": "006",
+    "linekm": 674,
+    "distance": 451,
+    "otherLinekmLocations": []
+  },
+  "UR": {
+    "trackNumber": "321",
+    "linekm": 165,
+    "distance": 588,
+    "otherLinekmLocations": []
+  },
+  "UTJ": {
+    "trackNumber": "531",
+    "linekm": 810,
+    "distance": 502,
+    "otherLinekmLocations": []
+  },
+  "UTI": {
+    "trackNumber": "006",
+    "linekm": 204,
+    "distance": 85,
+    "otherLinekmLocations": []
+  },
+  "UKP": {
+    "trackNumber": "332",
+    "linekm": 264,
+    "distance": 795,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "336",
+        "linekm": 264,
+        "distance": 795
+      }
+    ]
+  },
+  "UKÄ": {
+    "trackNumber": "006",
+    "linekm": 149,
+    "distance": 485,
+    "otherLinekmLocations": []
+  },
+  "VKO": {
+    "trackNumber": "023",
+    "linekm": 384,
+    "distance": 866,
+    "otherLinekmLocations": []
+  },
+  "VAA": {
+    "trackNumber": "531",
+    "linekm": 844,
+    "distance": 671,
+    "otherLinekmLocations": []
+  },
+  "VRA": {
+    "trackNumber": "008",
+    "linekm": 981,
+    "distance": 481,
+    "otherLinekmLocations": []
+  },
+  "VS": {
+    "trackNumber": "431",
+    "linekm": 492,
+    "distance": 588,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "432",
+        "linekm": 492,
+        "distance": 588
+      }
+    ]
+  },
+  "VJR": {
+    "trackNumber": "003",
+    "linekm": 244,
+    "distance": 926,
+    "otherLinekmLocations": []
+  },
+  "VNAR": {
+    "trackNumber": "213",
+    "linekm": 284,
+    "distance": 842,
+    "otherLinekmLocations": []
+  },
+  "VI": {
+    "trackNumber": "314",
+    "linekm": 164,
+    "distance": 952,
+    "otherLinekmLocations": []
+  },
+  "VMO": {
+    "trackNumber": "001",
+    "linekm": 7,
+    "distance": 480,
+    "otherLinekmLocations": []
+  },
+  "VSO": {
+    "trackNumber": "751",
+    "linekm": 583,
+    "distance": 976,
+    "otherLinekmLocations": []
+  },
+  "VLM": {
+    "trackNumber": "006",
+    "linekm": 808,
+    "distance": 636,
+    "otherLinekmLocations": []
+  },
+  "VMA": {
+    "trackNumber": "002",
+    "linekm": 245,
+    "distance": 885,
+    "otherLinekmLocations": []
+  },
+  "VTR": {
+    "trackNumber": "003",
+    "linekm": 172,
+    "distance": 340,
+    "otherLinekmLocations": []
+  },
+  "VKS": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "123",
+        "linekm": 14,
+        "distance": 907
+      }
+    ]
+  },
+  "VAR": {
+    "trackNumber": "024",
+    "linekm": 424,
+    "distance": 685,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "VAR 034",
+        "linekm": 424,
+        "distance": 300
+      }
+    ]
+  },
+  "VUS": {
+    "trackNumber": "554",
+    "linekm": 753,
+    "distance": 755,
+    "otherLinekmLocations": []
+  },
+  "VUR": {
+    "trackNumber": "554",
+    "linekm": 755,
+    "distance": 856,
+    "otherLinekmLocations": []
+  },
+  "VKH": {
+    "trackNumber": "001",
+    "linekm": 31,
+    "distance": 175,
+    "otherLinekmLocations": []
+  },
+  "VSK": {
+    "trackNumber": "432",
+    "linekm": 496,
+    "distance": 463,
+    "otherLinekmLocations": []
+  },
+  "VKI": {
+    "trackNumber": "023",
+    "linekm": 433,
+    "distance": 164,
+    "otherLinekmLocations": []
+  },
+  "VN": {
+    "trackNumber": "023",
+    "linekm": 364,
+    "distance": 469,
+    "otherLinekmLocations": []
+  },
+  "VK": {
+    "trackNumber": "006",
+    "linekm": 753,
+    "distance": 979,
+    "otherLinekmLocations": []
+  },
+  "VRM": {
+    "trackNumber": "251",
+    "linekm": 153,
+    "distance": 801,
+    "otherLinekmLocations": []
+  },
+  "VTI": {
+    "trackNumber": "008",
+    "linekm": 684,
+    "distance": 573,
+    "otherLinekmLocations": []
+  },
+  "VIH": {
+    "trackNumber": "024",
+    "linekm": 489,
+    "distance": 889,
+    "otherLinekmLocations": []
+  },
+  "VIA": {
+    "trackNumber": "003",
+    "linekm": 154,
+    "distance": 288,
+    "otherLinekmLocations": []
+  },
+  "VNJ": {
+    "trackNumber": "731",
+    "linekm": 656,
+    "distance": 569,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "024",
+        "linekm": 525,
+        "distance": 591
+      }
+    ]
+  },
+  "VLH": {
+    "trackNumber": "006",
+    "linekm": 140,
+    "distance": 442,
+    "otherLinekmLocations": []
+  },
+  "VLP": {
+    "trackNumber": "066",
+    "linekm": 274,
+    "distance": 760,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "373",
+        "linekm": 274,
+        "distance": 760
+      }
+    ]
+  },
+  "VIN": {
+    "trackNumber": "003",
+    "linekm": 131,
+    "distance": 243,
+    "otherLinekmLocations": []
+  },
+  "VT": {
+    "trackNumber": "008",
+    "linekm": 479,
+    "distance": 402,
+    "otherLinekmLocations": []
+  },
+  "VHJ": {
+    "trackNumber": "005",
+    "linekm": 221,
+    "distance": 308,
+    "otherLinekmLocations": []
+  },
+  "VJO": {
+    "trackNumber": "342",
+    "linekm": 318,
+    "distance": 501,
+    "otherLinekmLocations": []
+  },
+  "VKT": {
+    "trackNumber": "006",
+    "linekm": 868,
+    "distance": 838,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "533",
+        "linekm": 869,
+        "distance": 109
+      }
+    ]
+  },
+  "VSL": {
+    "trackNumber": "006",
+    "linekm": 705,
+    "distance": 240,
+    "otherLinekmLocations": []
+  },
+  "VNS": {
+    "trackNumber": "714",
+    "linekm": 588,
+    "distance": 116,
+    "otherLinekmLocations": []
+  },
+  "VSA": {
+    "trackNumber": "125",
+    "linekm": 50,
+    "distance": 184,
+    "otherLinekmLocations": []
+  },
+  "YST": {
+    "trackNumber": "431",
+    "linekm": 439,
+    "distance": 558,
+    "otherLinekmLocations": []
+  },
+  "YTR": {
+    "trackNumber": "521",
+    "linekm": 946,
+    "distance": 41,
+    "otherLinekmLocations": []
+  },
+  "YLV": {
+    "trackNumber": "003",
+    "linekm": 302,
+    "distance": 16,
+    "otherLinekmLocations": []
+  },
+  "YV": {
+    "trackNumber": "008",
+    "linekm": 630,
+    "distance": 343,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "087",
+        "linekm": 704,
+        "distance": 485
+      }
+    ]
+  },
+  "YLK": {
+    "trackNumber": "615",
+    "linekm": 416,
+    "distance": 849,
+    "otherLinekmLocations": []
+  },
+  "YLY": {
+    "trackNumber": "731",
+    "linekm": 639,
+    "distance": 19,
+    "otherLinekmLocations": []
+  },
+  "YLÖ": {
+    "trackNumber": "003",
+    "linekm": 200,
+    "distance": 753,
+    "otherLinekmLocations": []
+  },
+  "YPY": {
+    "trackNumber": "554",
+    "linekm": 729,
+    "distance": 780,
+    "otherLinekmLocations": []
+  },
+  "ÄS": {
+    "trackNumber": "002",
+    "linekm": 258,
+    "distance": 280,
+    "otherLinekmLocations": []
+  },
+  "ÄHT": {
+    "trackNumber": "066",
+    "linekm": 346,
+    "distance": 67,
+    "otherLinekmLocations": []
+  },
+  "ÄM": {
+    "trackNumber": "555",
+    "linekm": 750,
+    "distance": 448,
+    "otherLinekmLocations": []
+  },
+  "ÄKI": {
+    "trackNumber": "004",
+    "linekm": 424,
+    "distance": 515,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "004437 ÄKI",
+        "linekm": 423,
+        "distance": 620
+      }
+    ]
+  },
+  "HAN": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "HJR": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "HEL": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "IMA": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "JOE": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "JVP": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "KLH": {
+    "trackNumber": "001",
+    "linekm": 24,
+    "distance": 277,
+    "otherLinekmLocations": []
+  },
+  "KEV": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "KOT": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "KVL": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "KPO": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "TUR": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "OUL": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "PIE": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "SVL": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "014",
+        "linekm": 482,
+        "distance": 748
+      }
+    ]
+  },
+  "RII": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "SEI": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "TRE": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "TRN": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "VAI": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "YKS": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "MKA": {
+    "trackNumber": "006",
+    "linekm": 160,
+    "distance": 50,
+    "otherLinekmLocations": []
+  },
+  "TKP": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "008",
+        "linekm": 720,
+        "distance": 741
+      }
+    ]
+  },
+  "SII": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "LAV": {
+    "trackNumber": "123",
+    "linekm": 14,
+    "distance": 527,
+    "otherLinekmLocations": []
+  },
+  "VEH": {
+    "trackNumber": "123",
+    "linekm": 15,
+    "distance": 997,
+    "otherLinekmLocations": []
+  },
+  "KTÖ": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "123",
+        "linekm": 18,
+        "distance": 281
+      }
+    ]
+  },
+  "RSM": {
+    "trackNumber": "123",
+    "linekm": 20,
+    "distance": 285,
+    "otherLinekmLocations": []
+  },
+  "AVP": {
+    "trackNumber": "123",
+    "linekm": 25,
+    "distance": 135,
+    "otherLinekmLocations": []
+  },
+  "VMS": {
+    "trackNumber": "123",
+    "linekm": 25,
+    "distance": 931,
+    "otherLinekmLocations": []
+  },
+  "LEN": {
+    "trackNumber": "123",
+    "linekm": 26,
+    "distance": 575,
+    "otherLinekmLocations": []
+  },
+  "LNÄ": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "123",
+        "linekm": 31,
+        "distance": 146
+      }
+    ]
+  },
+  "ASO": {
+    "trackNumber": "123",
+    "linekm": 31,
+    "distance": 596,
+    "otherLinekmLocations": []
+  },
+  "PTR": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "213",
+        "linekm": 288,
+        "distance": 200
+      },
+      {
+        "trackNumber": "RUS",
+        "linekm": 2,
+        "distance": 0
+      }
+    ]
+  },
+  "MVA": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "213",
+        "linekm": 288,
+        "distance": 500
+      },
+      {
+        "trackNumber": "RUS",
+        "linekm": 2,
+        "distance": 2
+      }
+    ]
+  },
+  "ATL": {
+    "trackNumber": "350",
+    "linekm": 328,
+    "distance": 220,
+    "otherLinekmLocations": []
+  },
+  "AHO": {
+    "trackNumber": "008",
+    "linekm": 690,
+    "distance": 468,
+    "otherLinekmLocations": []
+  },
+  "VRI": {
+    "trackNumber": "004",
+    "linekm": 395,
+    "distance": 230,
+    "otherLinekmLocations": []
+  },
+  "PTG": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "527",
+        "linekm": 1064,
+        "distance": 591
+      }
+    ]
+  },
+  "HPA": {
+    "trackNumber": "513",
+    "linekm": 888,
+    "distance": 100,
+    "otherLinekmLocations": []
+  },
+  "TIK": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": []
+  },
+  "PTK": {
+    "trackNumber": "006",
+    "linekm": 789,
+    "distance": 619,
+    "otherLinekmLocations": []
+  },
+  "PTL": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "213",
+        "linekm": 288,
+        "distance": 200
+      },
+      {
+        "trackNumber": "RUS",
+        "linekm": 2,
+        "distance": 1
+      }
+    ]
+  },
+  "HYR": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "531",
+        "linekm": 800,
+        "distance": 442
+      }
+    ]
+  },
+  "NSK": {
+    "trackNumber": "531",
+    "linekm": 825,
+    "distance": 300,
+    "otherLinekmLocations": []
+  },
+  "LMP": {
+    "trackNumber": "531",
+    "linekm": 864,
+    "distance": 792,
+    "otherLinekmLocations": []
+  },
+  "MLL": {
+    "trackNumber": "531",
+    "linekm": 893,
+    "distance": 280,
+    "otherLinekmLocations": []
+  },
+  "IOA": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "314",
+        "linekm": 155,
+        "distance": 102
+      }
+    ]
+  },
+  "BSL": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "213",
+        "linekm": 288,
+        "distance": 0
+      }
+    ]
+  },
+  "VYB": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "213",
+        "linekm": 288,
+        "distance": 100
+      },
+      {
+        "trackNumber": "RUS",
+        "linekm": 2,
+        "distance": 500
+      }
+    ]
+  },
+  "PIO": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "221",
+        "linekm": 204,
+        "distance": 324
+      }
+    ]
+  },
+  "KIV": {
+    "trackNumber": "554",
+    "linekm": 755,
+    "distance": 4800,
+    "otherLinekmLocations": []
+  },
+  "STG": {
+    "trackNumber": "243",
+    "linekm": 337,
+    "distance": 1200,
+    "otherLinekmLocations": []
+  },
+  "VRS": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "751",
+        "linekm": 553,
+        "distance": 0
+      }
+    ]
+  },
+  "TSO": {
+    "trackNumber": "002",
+    "linekm": 196,
+    "distance": 230,
+    "otherLinekmLocations": []
+  },
+  "LHS": {
+    "trackNumber": "008",
+    "linekm": 798,
+    "distance": 473,
+    "otherLinekmLocations": []
+  },
+  "MKN": {
+    "trackNumber": "008",
+    "linekm": 845,
+    "distance": 521,
+    "otherLinekmLocations": []
+  },
+  "KSN": {
+    "trackNumber": "531",
+    "linekm": 906,
+    "distance": 763,
+    "otherLinekmLocations": []
+  },
+  "HKH": {
+    "trackNumber": "003",
+    "linekm": 17,
+    "distance": 109,
+    "otherLinekmLocations": []
+  },
+  "SIJ": {
+    "trackNumber": "005",
+    "linekm": 489,
+    "distance": 718,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "017",
+        "linekm": 489,
+        "distance": 718
+      }
+    ]
+  },
+  "TKL": {
+    "trackNumber": "003",
+    "linekm": 15,
+    "distance": 861,
+    "otherLinekmLocations": []
+  },
+  "HNK": {
+    "trackNumber": "142",
+    "linekm": 207,
+    "distance": 119,
+    "otherLinekmLocations": []
+  },
+  "HNKT": {
+    "trackNumber": "142",
+    "linekm": 206,
+    "distance": 350,
+    "otherLinekmLocations": []
+  },
+  "HKP": {
+    "trackNumber": "142",
+    "linekm": 205,
+    "distance": 935,
+    "otherLinekmLocations": []
+  },
+  "HAS": {
+    "trackNumber": "006",
+    "linekm": 86,
+    "distance": 210,
+    "otherLinekmLocations": []
+  },
+  "OI": {
+    "trackNumber": "006",
+    "linekm": 86,
+    "distance": 809,
+    "otherLinekmLocations": []
+  },
+  "HKI": {
+    "trackNumber": "003",
+    "linekm": 0,
+    "distance": 159,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "001",
+        "linekm": 0,
+        "distance": 159
+      }
+    ]
+  },
+  "KHK": {
+    "trackNumber": "001",
+    "linekm": 4,
+    "distance": 701,
+    "otherLinekmLocations": []
+  },
+  "ILA": {
+    "trackNumber": "001",
+    "linekm": 4,
+    "distance": 434,
+    "otherLinekmLocations": []
+  },
+  "ILR": {
+    "trackNumber": "003",
+    "linekm": 4,
+    "distance": 950,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "001",
+        "linekm": 4,
+        "distance": 950
+      },
+      {
+        "trackNumber": "ILR 602",
+        "linekm": 4,
+        "distance": 950
+      },
+      {
+        "trackNumber": "ILR 708",
+        "linekm": 4,
+        "distance": 950
+      },
+      {
+        "trackNumber": "ILR 711",
+        "linekm": 4,
+        "distance": 950
+      },
+      {
+        "trackNumber": "ILR 720",
+        "linekm": 4,
+        "distance": 950
+      },
+      {
+        "trackNumber": "ILR 762",
+        "linekm": 4,
+        "distance": 950
+      },
+      {
+        "trackNumber": "ILR 776",
+        "linekm": 4,
+        "distance": 950
+      },
+      {
+        "trackNumber": "ILR 783",
+        "linekm": 4,
+        "distance": 950
+      },
+      {
+        "trackNumber": "ILR 804",
+        "linekm": 4,
+        "distance": 950
+      }
+    ]
+  },
+  "IMR": {
+    "trackNumber": "006",
+    "linekm": 323,
+    "distance": 977,
+    "otherLinekmLocations": []
+  },
+  "IMT": {
+    "trackNumber": "006",
+    "linekm": 326,
+    "distance": 542,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "243",
+        "linekm": 326,
+        "distance": 175
+      },
+      {
+        "trackNumber": "245",
+        "linekm": 326,
+        "distance": 542
+      }
+    ]
+  },
+  "IMK": {
+    "trackNumber": "243",
+    "linekm": 331,
+    "distance": 267,
+    "otherLinekmLocations": []
+  },
+  "JNS": {
+    "trackNumber": "006",
+    "linekm": 624,
+    "distance": 313,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "722",
+        "linekm": 624,
+        "distance": 313
+      },
+      {
+        "trackNumber": "731",
+        "linekm": 624,
+        "distance": 313
+      }
+    ]
+  },
+  "PLT": {
+    "trackNumber": "006",
+    "linekm": 623,
+    "distance": 540,
+    "otherLinekmLocations": []
+  },
+  "SUL": {
+    "trackNumber": "006",
+    "linekm": 622,
+    "distance": 650,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "722",
+        "linekm": 625,
+        "distance": 942
+      }
+    ]
+  },
+  "JP": {
+    "trackNumber": "003",
+    "linekm": 36,
+    "distance": 786,
+    "otherLinekmLocations": []
+  },
+  "KE": {
+    "trackNumber": "003",
+    "linekm": 28,
+    "distance": 869,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "007",
+        "linekm": 28,
+        "distance": 869
+      },
+      {
+        "trackNumber": "125",
+        "linekm": 28,
+        "distance": 869
+      },
+      {
+        "trackNumber": "KE 666",
+        "linekm": 28,
+        "distance": 869
+      }
+    ]
+  },
+  "KTA": {
+    "trackNumber": "221",
+    "linekm": 242,
+    "distance": 775,
+    "otherLinekmLocations": []
+  },
+  "HOS": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "221",
+        "linekm": 240,
+        "distance": 400
+      }
+    ]
+  },
+  "MSS": {
+    "trackNumber": "223",
+    "linekm": 247,
+    "distance": 57,
+    "otherLinekmLocations": []
+  },
+  "KTT": {
+    "trackNumber": "221",
+    "linekm": 240,
+    "distance": 870,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "223",
+        "linekm": 240,
+        "distance": 870
+      }
+    ]
+  },
+  "KTS": {
+    "trackNumber": "221",
+    "linekm": 243,
+    "distance": 579,
+    "otherLinekmLocations": []
+  },
+  "KOO": {
+    "trackNumber": "223",
+    "linekm": 245,
+    "distance": 203,
+    "otherLinekmLocations": []
+  },
+  "KV": {
+    "trackNumber": "006",
+    "linekm": 191,
+    "distance": 540,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "005",
+        "linekm": 191,
+        "distance": 540
+      },
+      {
+        "trackNumber": "232",
+        "linekm": 191,
+        "distance": 540
+      },
+      {
+        "trackNumber": "KV 225",
+        "linekm": 191,
+        "distance": 540
+      }
+    ]
+  },
+  "KVLA": {
+    "trackNumber": "006",
+    "linekm": 192,
+    "distance": 570,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "006181 KVL",
+        "linekm": 192,
+        "distance": 570
+      },
+      {
+        "trackNumber": "KV 225",
+        "linekm": 192,
+        "distance": 570
+      }
+    ]
+  },
+  "OIK": {
+    "trackNumber": "221",
+    "linekm": 194,
+    "distance": 460,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "KV 455",
+        "linekm": 194,
+        "distance": 460
+      }
+    ]
+  },
+  "KVT": {
+    "trackNumber": "221",
+    "linekm": 194,
+    "distance": 50,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "006",
+        "linekm": 194,
+        "distance": 50
+      },
+      {
+        "trackNumber": "KV 225",
+        "linekm": 194,
+        "distance": 50
+      },
+      {
+        "trackNumber": "KV 830",
+        "linekm": 194,
+        "distance": 50
+      },
+      {
+        "trackNumber": "KV 888",
+        "linekm": 192,
+        "distance": 897
+      }
+    ]
+  },
+  "KUV": {
+    "trackNumber": "006",
+    "linekm": 197,
+    "distance": 200,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "KV 455",
+        "linekm": 192,
+        "distance": 300
+      }
+    ]
+  },
+  "KUO": {
+    "trackNumber": "005",
+    "linekm": 464,
+    "distance": 590,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "KUO 253",
+        "linekm": 460,
+        "distance": 155
+      }
+    ]
+  },
+  "KUOT": {
+    "trackNumber": "005",
+    "linekm": 465,
+    "distance": 500,
+    "otherLinekmLocations": []
+  },
+  "KUT": {
+    "trackNumber": "001",
+    "linekm": 196,
+    "distance": 372,
+    "otherLinekmLocations": []
+  },
+  "KYT": {
+    "trackNumber": "003",
+    "linekm": 31,
+    "distance": 274,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "007",
+        "linekm": 31,
+        "distance": 274
+      },
+      {
+        "trackNumber": "131",
+        "linekm": 27,
+        "distance": 791
+      }
+    ]
+  },
+  "KÄP": {
+    "trackNumber": "003",
+    "linekm": 5,
+    "distance": 840,
+    "otherLinekmLocations": []
+  },
+  "OL": {
+    "trackNumber": "008",
+    "linekm": 752,
+    "distance": 778,
+    "otherLinekmLocations": []
+  },
+  "NOK": {
+    "trackNumber": "008",
+    "linekm": 750,
+    "distance": 30,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "531",
+        "linekm": 755,
+        "distance": 530
+      },
+      {
+        "trackNumber": "OL 201",
+        "linekm": 750,
+        "distance": 30
+      },
+      {
+        "trackNumber": "OL 202",
+        "linekm": 750,
+        "distance": 30
+      },
+      {
+        "trackNumber": "OL 222",
+        "linekm": 750,
+        "distance": 30
+      }
+    ]
+  },
+  "ORI": {
+    "trackNumber": "OL 603",
+    "linekm": 751,
+    "distance": 180,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "OL 201",
+        "linekm": 751,
+        "distance": 180
+      }
+    ]
+  },
+  "OLT": {
+    "trackNumber": "008",
+    "linekm": 751,
+    "distance": 360,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "OL 202",
+        "linekm": 751,
+        "distance": 360
+      }
+    ]
+  },
+  "TUA": {
+    "trackNumber": "008",
+    "linekm": 755,
+    "distance": 510,
+    "otherLinekmLocations": []
+  },
+  "OLK": {
+    "trackNumber": "003",
+    "linekm": 7,
+    "distance": 399,
+    "otherLinekmLocations": []
+  },
+  "PTI": {
+    "trackNumber": "221",
+    "linekm": 241,
+    "distance": 190,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "223",
+        "linekm": 241,
+        "distance": 190
+      }
+    ]
+  },
+  "PSL": {
+    "trackNumber": "001",
+    "linekm": 3,
+    "distance": 230,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "003",
+        "linekm": 3,
+        "distance": 230
+      }
+    ]
+  },
+  "PAU": {
+    "trackNumber": "003",
+    "linekm": 4,
+    "distance": 319,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "PAU 102",
+        "linekm": 4,
+        "distance": 319
+      }
+    ]
+  },
+  "PSLT": {
+    "trackNumber": "003",
+    "linekm": 4,
+    "distance": 748,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "PAU 102",
+        "linekm": 4,
+        "distance": 748
+      }
+    ]
+  },
+  "PA": {
+    "trackNumber": "243",
+    "linekm": 335,
+    "distance": 672,
+    "otherLinekmLocations": []
+  },
+  "PM": {
+    "trackNumber": "005",
+    "linekm": 376,
+    "distance": 0,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "023",
+        "linekm": 457,
+        "distance": 200
+      },
+      {
+        "trackNumber": "024",
+        "linekm": 376,
+        "distance": 0
+      }
+    ]
+  },
+  "PMLA": {
+    "trackNumber": "005",
+    "linekm": 378,
+    "distance": 640,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "PM 805",
+        "linekm": 378,
+        "distance": 640
+      }
+    ]
+  },
+  "PMT": {
+    "trackNumber": "005",
+    "linekm": 379,
+    "distance": 960,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "PM 802",
+        "linekm": 379,
+        "distance": 960
+      }
+    ]
+  },
+  "TMU": {
+    "trackNumber": "005",
+    "linekm": 377,
+    "distance": 340,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "PM 158",
+        "linekm": 377,
+        "distance": 340
+      },
+      {
+        "trackNumber": "PM 805",
+        "linekm": 377,
+        "distance": 340
+      }
+    ]
+  },
+  "PUR": {
+    "trackNumber": "003",
+    "linekm": 40,
+    "distance": 533,
+    "otherLinekmLocations": []
+  },
+  "PKY": {
+    "trackNumber": "014",
+    "linekm": 484,
+    "distance": 913,
+    "otherLinekmLocations": []
+  },
+  "ARP": {
+    "trackNumber": "003",
+    "linekm": 66,
+    "distance": 600,
+    "otherLinekmLocations": []
+  },
+  "RI": {
+    "trackNumber": "003",
+    "linekm": 71,
+    "distance": 410,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "006",
+        "linekm": 71,
+        "distance": 410
+      }
+    ]
+  },
+  "RILA": {
+    "trackNumber": "003",
+    "linekm": 70,
+    "distance": 68,
+    "otherLinekmLocations": []
+  },
+  "RIT": {
+    "trackNumber": "003",
+    "linekm": 68,
+    "distance": 773,
+    "otherLinekmLocations": []
+  },
+  "SAU": {
+    "trackNumber": "003",
+    "linekm": 38,
+    "distance": 846,
+    "otherLinekmLocations": []
+  },
+  "SL": {
+    "trackNumber": "014",
+    "linekm": 482,
+    "distance": 797,
+    "otherLinekmLocations": []
+  },
+  "SK": {
+    "trackNumber": "008",
+    "linekm": 418,
+    "distance": 1,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "003",
+        "linekm": 347,
+        "distance": 85
+      },
+      {
+        "trackNumber": "066",
+        "linekm": 418,
+        "distance": 1
+      },
+      {
+        "trackNumber": "431",
+        "linekm": 418,
+        "distance": 1
+      },
+      {
+        "trackNumber": "441",
+        "linekm": 418,
+        "distance": 1
+      },
+      {
+        "trackNumber": "SK 804",
+        "linekm": 418,
+        "distance": 1
+      }
+    ]
+  },
+  "SKT": {
+    "trackNumber": "003",
+    "linekm": 345,
+    "distance": 664,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "066",
+        "linekm": 416,
+        "distance": 580
+      },
+      {
+        "trackNumber": "SK 804",
+        "linekm": 416,
+        "distance": 580
+      }
+    ]
+  },
+  "TPE": {
+    "trackNumber": "003",
+    "linekm": 187,
+    "distance": 389,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "009",
+        "linekm": 186,
+        "distance": 611
+      }
+    ]
+  },
+  "JVS": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "003",
+        "linekm": 187,
+        "distance": 364
+      },
+      {
+        "trackNumber": "009",
+        "linekm": 187,
+        "distance": 814
+      },
+      {
+        "trackNumber": "TPE 808",
+        "linekm": 187,
+        "distance": 3
+      }
+    ]
+  },
+  "TPET": {
+    "trackNumber": "003",
+    "linekm": 184,
+    "distance": 100,
+    "otherLinekmLocations": []
+  },
+  "VKA": {
+    "trackNumber": "003",
+    "linekm": 185,
+    "distance": 400,
+    "otherLinekmLocations": []
+  },
+  "TOR": {
+    "trackNumber": "513",
+    "linekm": 884,
+    "distance": 656,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "520",
+        "linekm": 884,
+        "distance": 656
+      },
+      {
+        "trackNumber": "TOR 741",
+        "linekm": 884,
+        "distance": 656
+      }
+    ]
+  },
+  "TRR": {
+    "trackNumber": "513",
+    "linekm": 887,
+    "distance": 190,
+    "otherLinekmLocations": []
+  },
+  "TKU": {
+    "trackNumber": "001",
+    "linekm": 199,
+    "distance": 674,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "321",
+        "linekm": 274,
+        "distance": 860
+      },
+      {
+        "trackNumber": "332",
+        "linekm": 199,
+        "distance": 674
+      }
+    ]
+  },
+  "TUS": {
+    "trackNumber": "001",
+    "linekm": 202,
+    "distance": 510,
+    "otherLinekmLocations": []
+  },
+  "TKUT": {
+    "trackNumber": "332",
+    "linekm": 200,
+    "distance": 460,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "335",
+        "linekm": 200,
+        "distance": 460
+      }
+    ]
+  },
+  "VNA": {
+    "trackNumber": "213",
+    "linekm": 282,
+    "distance": 784,
+    "otherLinekmLocations": []
+  },
+  "VNAT": {
+    "trackNumber": "213",
+    "linekm": 281,
+    "distance": 700,
+    "otherLinekmLocations": []
+  },
+  "YKST": {
+    "trackNumber": "417",
+    "linekm": 553,
+    "distance": 900,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "YKS 081",
+        "linekm": 553,
+        "distance": 900
+      }
+    ]
+  },
+  "YKSV": {
+    "trackNumber": "YKS 081",
+    "linekm": 555,
+    "distance": 511,
+    "otherLinekmLocations": []
+  },
+  "HVK": {
+    "trackNumber": "003",
+    "linekm": 17,
+    "distance": 725,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "123",
+        "linekm": 33,
+        "distance": 250
+      }
+    ]
+  },
+  "RSU": {
+    "trackNumber": null,
+    "linekm": null,
+    "distance": null,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "017664 SII",
+        "linekm": 495,
+        "distance": 10
+      },
+      {
+        "trackNumber": "618",
+        "linekm": 495,
+        "distance": 10
+      }
+    ]
+  },
+  "IM": {
+    "trackNumber": "006",
+    "linekm": 332,
+    "distance": 699,
+    "otherLinekmLocations": []
+  },
+  "OLL": {
+    "trackNumber": "008",
+    "linekm": 746,
+    "distance": 876,
+    "otherLinekmLocations": []
+  },
+  "ILH": {
+    "trackNumber": "005",
+    "linekm": 462,
+    "distance": 550,
+    "otherLinekmLocations": []
+  },
+  "SHS": {
+    "trackNumber": "008555 KEM",
+    "linekm": 861,
+    "distance": 275,
+    "otherLinekmLocations": []
+  },
+  "KEM": {
+    "trackNumber": "008",
+    "linekm": 858,
+    "distance": 300,
+    "otherLinekmLocations": [
+      {
+        "trackNumber": "517",
+        "linekm": 858,
+        "distance": 300
+      },
+      {
+        "trackNumber": "KEM 944",
+        "linekm": 858,
+        "distance": 300
+      }
+    ]
+  },
+  "LI": {
+    "trackNumber": "008",
+    "linekm": 863,
+    "distance": 64,
+    "otherLinekmLocations": []
+  }
+}

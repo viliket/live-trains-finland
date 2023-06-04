@@ -71,7 +71,18 @@ fragment TrainDetails on Train {
     departure {
       ...TrainTimeTableRow
     }
+    trainDirection
   }
+}
+
+fragment TrainTimeTableGroup on TimeTableGroup {
+  arrival {
+    ...TrainTimeTableRow
+  }
+  departure {
+    ...TrainTimeTableRow
+  }
+  trainDirection
 }
 
 fragment TrainTimeTableRow on TimeTableRow {

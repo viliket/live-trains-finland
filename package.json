@@ -60,6 +60,7 @@
     "digitransit-codegen": "graphql-codegen --require dotenv/config --config digitransit-codegen.yml dotenv_config_path=.env.local",
     "digitraffic-codegen": "graphql-codegen --config digitraffic-codegen.yml",
     "gql-codegen": "npm run digitransit-codegen && npm run digitraffic-codegen",
+    "generate-station-line-km-location-data": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/generateStationLineKmLocationData.ts",
     "prestart": "npm run gql-codegen",
     "prepare": "is-ci || husky install"
   },
