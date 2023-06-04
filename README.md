@@ -126,6 +126,18 @@ to `public/tiles` using `npm run extract-tiles-public`.
    tippecanoe -o ./data/railway_platforms.mbtiles --drop-densest-as-needed ./data/railway_platforms.json --no-tile-compression --minimum-zoom=14 --maximum-zoom=18
    ```
 
+### Regenerate train station line km location data
+
+```bash
+npm run generate-station-line-km-location-data
+```
+
+Fetches the line kilometer (ratakilometri) location data for all train stations in
+Finland from [Digitraffic Infra API](https://rata.digitraffic.fi/infra-api/)
+and outputs it to [`src/utils/generated/line-km-location-by-station-code.json`](./src/utils/generated/line-km-location-by-station-code.json).
+This data is used to determine [train direction](./src/utils/getTrainDirection.ts)
+at each station based on the increasing or decreasing line kilometers.
+
 ## License
 
 Copyright (C) 2023 [Vili Ketonen](https://github.com/viliket)
