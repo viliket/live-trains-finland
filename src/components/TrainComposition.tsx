@@ -51,8 +51,7 @@ function TrainComposition({
     ? getTrainCompositionDetailsForStation(stationName, train)?.reverse()
     : null;
 
-  let wagons: (Wagon | undefined | null)[] | undefined | null =
-    compositionChangeDetailsForStation?.map((w) => w.wagon);
+  let wagons = compositionChangeDetailsForStation?.map((w) => w.wagon);
 
   const wagonStatuses = compositionChangeDetailsForStation?.map(
     (w) => w.status
@@ -75,9 +74,9 @@ function TrainComposition({
       } else {
         return <></>;
       }
-    } else {
+    } else if (journeySection) {
       // No station given, use wagons from current journey section
-      wagons = orderBy(journeySection?.wagons, (w) => w?.location, 'desc');
+      wagons = orderBy(journeySection.wagons, (w) => w?.location, 'desc');
     }
   }
 
@@ -235,26 +234,28 @@ function TrainComposition({
               </Box>
             </span>
           ))}
-        <Box
-          sx={{
-            display: 'flex',
-            marginRight:
-              trainDirection === TrainDirection.Increasing
-                ? '-1rem'
-                : undefined,
-            marginLeft:
-              trainDirection === TrainDirection.Decreasing
-                ? '-1rem'
-                : undefined,
-            color: 'primary.main',
-          }}
-        >
-          {trainDirection === TrainDirection.Decreasing ? (
-            <ChevronLeft />
-          ) : (
-            <ChevronRight />
-          )}
-        </Box>
+        {wagons && (
+          <Box
+            sx={{
+              display: 'flex',
+              marginRight:
+                trainDirection === TrainDirection.Increasing
+                  ? '-1rem'
+                  : undefined,
+              marginLeft:
+                trainDirection === TrainDirection.Decreasing
+                  ? '-1rem'
+                  : undefined,
+              color: 'primary.main',
+            }}
+          >
+            {trainDirection === TrainDirection.Decreasing ? (
+              <ChevronLeft />
+            ) : (
+              <ChevronRight />
+            )}
+          </Box>
+        )}
       </div>
       {stationName && (
         <Box
