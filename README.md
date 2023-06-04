@@ -138,6 +138,18 @@ and outputs it to [`src/utils/generated/line-km-location-by-station-code.json`](
 This data is used to determine [train direction](./src/utils/getTrainDirection.ts)
 at each station based on the increasing or decreasing line kilometers.
 
+### Regenerate train station platform data
+
+```bash
+npm run generate-station-platform-data
+```
+
+Fetches the station platform (laituri) data for all train stations in Finland
+from [Finnish Transport Infrastructure Agency's Open API](https://vayla.fi/en/transport-network/data/open-data/api) and outputs it to [`src/utils/generated/station-platform-by-station-platform-id.json`](./src/utils/generated/station-platform-by-station-platform-id.json).
+This data is used to determine which side the station platform is (left or
+right) according to the train direction.
+See [getStationPlatformSide.ts](./src/utils/getStationPlatformSide.ts) for the logic.
+
 ## License
 
 Copyright (C) 2023 [Vili Ketonen](https://github.com/viliket)
