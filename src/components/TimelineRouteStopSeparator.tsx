@@ -1,11 +1,14 @@
 import { TimelineConnector, TimelineDot, TimelineSeparator } from '@mui/lab';
-import { Train } from 'mdi-material-ui';
+import { ArrowLeft, ArrowRight, Train } from 'mdi-material-ui';
+
+import { StationPlatformSide } from '../graphql/generated/digitraffic';
 
 type TimelineRouteStopSeparatorProps = {
   passed: boolean;
   isVehicleAtStation: boolean;
   wasVehicleAtStation: boolean;
   isFinalStop: boolean;
+  platformSide?: StationPlatformSide | null;
 };
 
 const TimelineRouteStopSeparator = ({
@@ -13,7 +16,20 @@ const TimelineRouteStopSeparator = ({
   isVehicleAtStation,
   wasVehicleAtStation,
   isFinalStop,
+  platformSide,
 }: TimelineRouteStopSeparatorProps) => {
+  const sxArrow = {
+    color: !passed ? 'secondary.main' : 'text.secondary',
+    fontSize: '0.65rem',
+    position: 'absolute',
+    top: '0.8rem',
+    ...(isVehicleAtStation && {
+      bgcolor: 'secondary.main',
+      borderRadius: '100%',
+      color: '#fff',
+    }),
+  };
+
   return (
     <TimelineSeparator>
       {(isVehicleAtStation || wasVehicleAtStation) && (
@@ -39,7 +55,24 @@ const TimelineRouteStopSeparator = ({
             : undefined
         }
         variant="outlined"
-      />
+      >
+        {platformSide === StationPlatformSide.Right && (
+          <ArrowLeft
+            sx={{
+              ...sxArrow,
+              left: '-0.8rem',
+            }}
+          />
+        )}
+        {platformSide === StationPlatformSide.Left && (
+          <ArrowRight
+            sx={{
+              ...sxArrow,
+              left: '0.8rem',
+            }}
+          />
+        )}
+      </TimelineDot>
       {!isFinalStop && (
         <TimelineConnector
           sx={{

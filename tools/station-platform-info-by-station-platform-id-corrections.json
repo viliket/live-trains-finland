@@ -1,0 +1,102 @@
+{
+  "LAITURI PM L1": {
+    "platform_side": "Vasen",
+    "oid": "",
+    "platformType": "Reunalaituri"
+  },
+  "LAITURI PM L3": {
+    "platform_side": "Vasen",
+    "oid": "",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PM L4": {
+    "platform_side": "Oikea",
+    "oid": "",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI TL L1": {
+    "platform_side": "Vasen",
+    "oid": "",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI TL L2": {
+    "platform_side": "Oikea",
+    "oid": "",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI TL L3": {
+    "platform_side": "Vasen",
+    "oid": "",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI TL L4": {
+    "platform_side": "Oikea",
+    "oid": "",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI KVH L1": {
+    "platform_side": "Oikea",
+    "oid": "",
+    "platformType": "Reunalaituri"
+  },
+  "LAITURI KVH L2": {
+    "platform_side": "Vasen",
+    "oid": "",
+    "platformType": "Reunalaituri"
+  },
+  "LAITURI KNI L1": {
+    "platform_side": "Vasen",
+    "oid": "",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PSL L1": {
+    "platform_side": "Oikea",
+    "oid": "1.2.246.578.3.162.441292",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PSL L2": {
+    "platform_side": "Vasen",
+    "oid": "1.2.246.578.3.162.441293",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PSL L3": {
+    "platform_side": "Oikea",
+    "oid": "",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PSL L6": {
+    "platform_side": "Vasen",
+    "oid": "",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PSL L8": {
+    "platform_side": "Vasen",
+    "oid": "1.2.246.578.3.162.351414",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PSL L9": {
+    "platform_side": "Oikea",
+    "oid": "1.2.246.578.3.162.441285",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PSL L10": {
+    "platform_side": "Vasen",
+    "oid": "1.2.246.578.3.162.441286",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PSL L11": {
+    "platform_side": "Vasen",
+    "oid": "1.2.246.578.3.162.441280",
+    "platformType": "Välilaituri"
+  },
+  "LAITURI PRL L3": {
+    "platform_side": "Vasen",
+    "oid": "1.2.246.578.3.162.351530",
+    "platformType": "Reunalaituri"
+  },
+  "LAITURI HKS L2": {
+    "platform_side": "Oikea",
+    "oid": "",
+    "platformType": "Reunalaituri"
+  }
+}

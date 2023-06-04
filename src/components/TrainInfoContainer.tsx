@@ -99,6 +99,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
                 g.departure?.scheduledTime
             }
             isFinalStop={i === length - 1}
+            platformSide={g.stationPlatformSide}
           />
           <TimelineContent>
             <Grid container spacing={2}>
