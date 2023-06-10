@@ -1,5 +1,5 @@
 import { TimelineConnector, TimelineDot, TimelineSeparator } from '@mui/lab';
-import { ArrowLeft, ArrowRight, Train } from 'mdi-material-ui';
+import { ArrowDown, ChevronLeft, ChevronRight, Train } from 'mdi-material-ui';
 
 import { StationPlatformSide } from '../graphql/generated/digitraffic';
 
@@ -19,10 +19,10 @@ const TimelineRouteStopSeparator = ({
   platformSide,
 }: TimelineRouteStopSeparatorProps) => {
   const sxArrow = {
-    color: !passed ? 'secondary.main' : 'text.secondary',
+    color: !passed ? 'secondary.dark' : 'text.secondary',
     fontSize: '0.65rem',
     position: 'absolute',
-    top: '0.8rem',
+    zIndex: 2,
     ...(isVehicleAtStation && {
       bgcolor: 'secondary.main',
       borderRadius: '100%',
@@ -38,8 +38,10 @@ const TimelineRouteStopSeparator = ({
           sx={{
             position: 'absolute',
             top: wasVehicleAtStation ? '50%' : 'auto',
-            marginTop: '0.2rem',
-            marginLeft: '-0.5rem',
+            padding: '3px',
+            marginTop: '7.5px',
+            marginLeft: '-4px',
+            zIndex: 1,
           }}
         >
           <Train sx={{ fontSize: '1rem' }} />
@@ -47,31 +49,37 @@ const TimelineRouteStopSeparator = ({
       )}
       <TimelineDot
         color={!passed ? 'secondary' : 'grey'}
-        sx={
-          passed
-            ? {
-                borderColor: 'divider',
-              }
-            : undefined
-        }
+        sx={{
+          position: 'relative',
+          padding: '2px',
+          ...(passed && {
+            borderColor: 'divider',
+          }),
+        }}
         variant="outlined"
       >
         {platformSide === StationPlatformSide.Right && (
-          <ArrowLeft
+          <ChevronLeft
             sx={{
               ...sxArrow,
-              left: '-0.8rem',
+              left: '-0.7rem',
             }}
           />
         )}
         {platformSide === StationPlatformSide.Left && (
-          <ArrowRight
+          <ChevronRight
             sx={{
               ...sxArrow,
-              left: '0.8rem',
+              right: '-0.7rem',
             }}
           />
         )}
+        <ArrowDown
+          sx={{
+            fontSize: '0.65rem',
+            color: !passed ? 'secondary.dark' : 'text.secondary',
+          }}
+        />
       </TimelineDot>
       {!isFinalStop && (
         <TimelineConnector
