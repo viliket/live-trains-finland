@@ -28,10 +28,40 @@ import { getTrainDepartureStation, getTrainStationName } from '../utils/train';
 import TrainWagonSm2And4 from './TrainWagonSm2And4';
 import TrainWagonSm5 from './TrainWagonSm5';
 
+type WagonElementProps = {
+  wagon: Wagon;
+  isCommuterTrain: boolean;
+};
+
+const WagonElement = ({ wagon, isCommuterTrain }: WagonElementProps) => {
+  const wagonType = wagon.wagonType;
+  return (
+    <>
+      {(wagonType === 'Sm2' || wagonType === 'Sm4') && (
+        <TrainWagonSm2And4 vehicleId={wagon.vehicleId} />
+      )}
+      {wagonType === 'Sm5' && <TrainWagonSm5 vehicleId={wagon.vehicleId} />}
+      {!isCommuterTrain && (
+        <Box
+          sx={{
+            background: '#e5e5e5',
+            width: 'calc(100% - 2px)',
+            borderRadius: '4px',
+            color: 'black',
+            fontSize: 'x-small',
+          }}
+        >
+          {wagon.salesNumber}
+        </Box>
+      )}
+    </>
+  );
+};
+
 type TrainCompositionProps = {
   train: TrainDetailsFragment;
   stationTimeTableRowGroup?: TrainTimeTableGroupFragment;
-  onWagonClick: (w: Wagon | null | undefined) => void;
+  onWagonClick: (w: Wagon) => void;
 };
 
 function TrainComposition({
@@ -72,12 +102,20 @@ function TrainComposition({
         // Display composition for first station on journey if there are more than 1 section
         wagons = orderBy(journeySection?.wagons, (w) => w?.location, 'desc');
       } else {
-        return <></>;
+        return null;
       }
     } else if (journeySection) {
       // No station given, use wagons from current journey section
       wagons = orderBy(journeySection.wagons, (w) => w?.location, 'desc');
     }
+  }
+
+  if (!wagons) {
+    return !stationName ? (
+      <Typography variant="body2" color="text.secondary">
+        {t('train_current_composition')} (?)
+      </Typography>
+    ) : null;
   }
 
   const trainDirection = stationTimeTableRowGroup?.trainDirection;
@@ -86,62 +124,15 @@ function TrainComposition({
     // Total length of train stopping area (A=200, B=160, C=160, D=200) = 720
     const stoppingAreaLength = 720;
     const standardWagonLength = 40; // Length of long distance train wagons
-    const sm2And4WagonLength = 158;
-    const sm5WagonLength = 236;
-    let wagonLength: number;
-    if (wagonType === 'Sm2' || wagonType === 'Sm4') {
-      wagonLength = sm2And4WagonLength;
-    } else if (wagonType === 'Sm5') {
-      wagonLength = sm5WagonLength;
-    } else {
-      wagonLength = standardWagonLength;
-    }
+
+    const wagonLengths: Record<string, number> = {
+      Sm2: 158,
+      Sm4: 158,
+      Sm5: 236,
+    };
+    const wagonLength =
+      (wagonType && wagonLengths[wagonType]) || standardWagonLength;
     return `${(wagonLength / stoppingAreaLength) * 100}%`;
-  };
-
-  const getWagonType = (wagonType?: string | null) => {
-    if (wagonType != null) {
-      return wagonType;
-    }
-
-    if (!train.commuterLineid) {
-      return null;
-    }
-
-    const sm4WagonCommuterLines = ['R', 'Z'];
-
-    if (sm4WagonCommuterLines.includes(train.commuterLineid)) {
-      return 'Sm4';
-    }
-
-    if (!sm4WagonCommuterLines.includes(train.commuterLineid)) {
-      return 'Sm5';
-    }
-  };
-
-  const getWagonElement = (w?: Wagon | null) => {
-    const wagonType = getWagonType(w?.wagonType);
-    return (
-      <>
-        {(wagonType === 'Sm2' || wagonType === 'Sm4') && (
-          <TrainWagonSm2And4 vehicleId={w?.vehicleId} />
-        )}
-        {wagonType === 'Sm5' && <TrainWagonSm5 vehicleId={w?.vehicleId} />}
-        {!train.commuterLineid && (
-          <Box
-            sx={{
-              background: '#e5e5e5',
-              width: 'calc(100% - 2px)',
-              borderRadius: '4px',
-              color: 'black',
-              fontSize: 'x-small',
-            }}
-          >
-            {w?.salesNumber}
-          </Box>
-        )}
-      </>
-    );
   };
 
   return (
@@ -169,10 +160,13 @@ function TrainComposition({
           paddingLeft: !stationTimeTableRowGroup ? '1rem' : undefined,
         }}
       >
-        {wagons &&
-          wagons.map((w, i) => (
+        {wagons.map((w, i) =>
+          w == null ? (
+            // Note: Should never be null
+            <span key={i}>?</span>
+          ) : (
             <span
-              key={`${w?.location}-${wagonStatuses?.[i]}`}
+              key={`${w.location}-${wagonStatuses?.[i]}`}
               onClick={() => onWagonClick(w)}
               style={{
                 display: 'inline-flex',
@@ -183,7 +177,7 @@ function TrainComposition({
                   ? train.commuterLineid
                     ? 'auto'
                     : '2rem'
-                  : getWagonElementWidth(getWagonType(w?.wagonType)),
+                  : getWagonElementWidth(w.wagonType),
                 borderBottom: '2px solid transparent',
                 cursor: 'pointer',
               }}
@@ -196,18 +190,18 @@ function TrainComposition({
                   <PlusCircle color="success" />
                 )}
               </span>
-              {w?.catering && <SilverwareForkKnife />}
-              {w?.pet && <Paw />}
-              {w?.disabled && <WheelchairAccessibility />}
-              {w?.playground && <Seesaw />}
-              {w?.luggage && <BagChecked />}
-              {w?.wagonType === 'Gfot' && (
+              {w.catering && <SilverwareForkKnife />}
+              {w.pet && <Paw />}
+              {w.disabled && <WheelchairAccessibility />}
+              {w.playground && <Seesaw />}
+              {w.luggage && <BagChecked />}
+              {w.wagonType === 'Gfot' && (
                 <CarSide titleAccess="Kattamaton autovaunu" />
               )}
-              {w?.wagonType === 'Gd' && (
+              {w.wagonType === 'Gd' && (
                 <CarSide titleAccess="Katettu autovaunu" />
               )}
-              {w?.wagonType === 'Edm' && <BunkBed titleAccess="Makuuvaunu" />}
+              {w.wagonType === 'Edm' && <BunkBed titleAccess="Makuuvaunu" />}
               <Box
                 sx={(theme) => ({
                   display: 'flex',
@@ -230,32 +224,34 @@ function TrainComposition({
                   },
                 })}
               >
-                {getWagonElement(w)}
+                <WagonElement
+                  wagon={w}
+                  isCommuterTrain={!!train.commuterLineid}
+                />
               </Box>
             </span>
-          ))}
-        {wagons && (
-          <Box
-            sx={{
-              display: 'flex',
-              marginRight:
-                trainDirection === TrainDirection.Increasing
-                  ? '-1rem'
-                  : undefined,
-              marginLeft:
-                trainDirection === TrainDirection.Decreasing
-                  ? '-1rem'
-                  : undefined,
-              color: 'primary.main',
-            }}
-          >
-            {trainDirection === TrainDirection.Decreasing ? (
-              <ChevronLeft />
-            ) : (
-              <ChevronRight />
-            )}
-          </Box>
+          )
         )}
+        <Box
+          sx={{
+            display: 'flex',
+            marginRight:
+              trainDirection === TrainDirection.Increasing
+                ? '-1rem'
+                : undefined,
+            marginLeft:
+              trainDirection === TrainDirection.Decreasing
+                ? '-1rem'
+                : undefined,
+            color: 'primary.main',
+          }}
+        >
+          {trainDirection === TrainDirection.Decreasing ? (
+            <ChevronLeft />
+          ) : (
+            <ChevronRight />
+          )}
+        </Box>
       </div>
       {stationName && (
         <Box
