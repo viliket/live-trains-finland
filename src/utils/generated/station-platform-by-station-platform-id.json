@@ -1,0 +1,1596 @@
+{
+  "TKU L17": {
+    "platformSide": "right"
+  },
+  "HKH L3": {
+    "platformSide": "right"
+  },
+  "HKH L5": {
+    "platformSide": "right"
+  },
+  "HKH L4 ETELÄINEN OSA": {
+    "platformSide": "left"
+  },
+  "HKH L4 POHJOINEN OSA": {
+    "platformSide": "left"
+  },
+  "MÄK L3": {
+    "platformSide": "left"
+  },
+  "MÄK L4": {
+    "platformSide": "right"
+  },
+  "PJM L4": {
+    "platformSide": "right"
+  },
+  "PJM L3": {
+    "platformSide": "left"
+  },
+  "VMO L4": {
+    "platformSide": "right"
+  },
+  "VMO L3": {
+    "platformSide": "left"
+  },
+  "HPL L3": {
+    "platformSide": "left"
+  },
+  "HPL L4": {
+    "platformSide": "right"
+  },
+  "ILA L4": {
+    "platformSide": "right"
+  },
+  "ILA L3": {
+    "platformSide": "left"
+  },
+  "PLA L4": {
+    "platformSide": "left"
+  },
+  "PLA L3": {
+    "platformSide": "right"
+  },
+  "HKI L10": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HKI L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HKI L4": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HKI L5": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HKI L6": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HKI L7": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HKI L8": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HKI L11": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HKI L12": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HKI L13": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HKI L14": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HKI L15": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HKI L16": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HKI L17": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HKI L18": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HKI L19": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HKI L1": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HKI L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "PAU L21": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "PAU L22": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "PSL L3 - L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "PSL L4": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "PSL L5": {
+    "platformSide": "right"
+  },
+  "PSL L7": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "PSL L8": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KÄP L4": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "HPL L1": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HPL L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "OLK L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "POH L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "POH L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KAN L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KAN L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "PMK L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "MLO L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MLO L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "ML L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "LPV L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "LPV L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "LPV L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "LPV L4": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MYR L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MYR L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "TNA L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KIL L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KIL L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "LOH L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "LOH L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "MRL L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "MRL L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KEA L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KEA L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TKL L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "TKL L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TKL L4": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "TKL L5": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TKL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TKL L6": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VEH L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "VEH L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KNI L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KTÖ L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KTÖ L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TRL L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "TRL L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KVY L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "EPO L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "EPO L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "EPO L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "RKL L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KRS L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KLH L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KLH L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KLH L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "AVP L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "AVP L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "SAV L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "LEN L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "LEN L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KE L4": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KE L5": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KE L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KE L6": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "MAS L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "MAS L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "LNÄ L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "LNÄ L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "JRS L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "JRS L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "AIN L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "AIN L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "TOL L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "TOL L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "JP L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "JP L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KKN L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KKN L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KKN L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "SAU L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "SAU L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "SAU L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HAA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HAA L4": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "JK L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "JK L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "JK L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "STI L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "STI L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HY L4": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "JR L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HY L5": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HY L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MLÄ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MLÄ L4": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "RI L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "RI L4": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "RI L5": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "RI L7": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "RI L8": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HNN L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HNN L4": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "HK L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HK L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "RY L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "RY L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KR L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KR L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KR L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "MLA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MLA L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "TU L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "LAA L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "LAA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "JR L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "JR L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HL L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HL L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HR L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "HR L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PRL L3": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PRL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "ITA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "ITA L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VLH L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "VLH L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "SLO L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "SLO L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "SLO L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "NSL L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "NSL L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "UKÄ L3": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "UKÄ L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VIA L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VIA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KA L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "DRA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TMS L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "SGY L1": {
+    "platformSide": "left"
+  },
+  "KRA L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KRA L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TPE L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TPE L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "TPE L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TPE L4": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "TPE L5": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HP L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "HP L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HP L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "LPO L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KVL L6": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KVL L10": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KVL L9": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KUT L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KUT L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "STA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TKU L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "TKU L5": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TKU L6": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "TKU L7": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "NOA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HKP L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HNK L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "LM L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "LM L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "IKR L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "IKR L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "IKR L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "OV L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "OV L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "OV L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TSL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KRU L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KY L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KLN L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KTA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "JJ L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "PKO L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PKO L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "PKO L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "MR L1": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "MR L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "VLP L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "JÄS L1": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "JÄS L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KKI L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KKI L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KKI L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KLO 1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "LR L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "LR L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "LR L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HVA L1": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HVA L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HPK L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HPK L5": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HPK L3": {
+    "platformSide": "unknown",
+    "platformType": "side"
+  },
+  "MI L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MI L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "MI L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "JTS L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "JTS L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "PH L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "PH L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KEU L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "IMR L1": {
+    "platformSide": "right"
+  },
+  "MY L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "EPZ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "JY L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PVI L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "ÄHT L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "ÄHT L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TUU L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "SPL L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "SPL L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "SPL L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "ALV L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "ALV L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "PAR L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PAR L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "PAR L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "SNJ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "SNJ L3": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "HKS L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "HKS L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VAR L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VAR L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KTI L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "YST L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "LPA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KHA L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KIT L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TK L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KUO L1": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "HNV L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HNV L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "LAI L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "SL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PKY L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "SIJ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "SIJ L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "SIJ L1A": {
+    "platformSide": "left"
+  },
+  "VIH L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VIH L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "VS L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KIÄ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "REE L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "LUS L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "PUN L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PNÄ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PNÄ L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "LNA L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "LNA L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "ILM L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "ILM L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "ILM L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KOK L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KOK L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KOK L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "RNN L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KRV L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "SKV L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KNS L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PHÄ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "JNS L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "JNS L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "YV L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "YV L2": {
+    "platformSide": "left"
+  },
+  "KAJ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KAJ L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "HPJ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "OU L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "OU L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "OU L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KON L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KON L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KON L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "ENO L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "UIM L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VTI L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "VTI L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "RKI L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "VSL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "LIS L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KML L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KYN L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "OL L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "OL L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "OL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "HÖL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KOH L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "NRM L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "NRM L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MH L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "UTJ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "UTJ L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VAA L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "VAA L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KEM L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KEM L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "OI L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "OI L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "TRI L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TRV L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "TRV L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PTO L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "YTR L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MUL L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "MUL L2": {
+    "platformSide": "unknown",
+    "platformType": "side"
+  },
+  "ROI L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "ROI L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "PEL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "MIS L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KJÄ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KNI L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "LH L1": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "LH L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "LH L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "LH L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KVL L7": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TKU L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TKU L4": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "PRI L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "PRI L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KUO L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "HKI L9": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KLI L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "ROI L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KVL L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "VKS L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "VKS L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "EPO L4": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "JP L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KR L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "TU L3": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KVL L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "KVL L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "MKI L2": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VMA L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "JNS L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "VNJ L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "VNJ L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "IOA L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "PSL L11": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "PSL L9": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "PSL L10": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "PSL L1": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "PSL L2": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "TL L1 - L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TL L3 - L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TSO L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "LPÄ L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "LPÄ L3": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "OVK L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PM L1": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "PM L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "PM L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TL L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "TL L2": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "TL L3": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "TL L4": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "KVH L1": {
+    "platformSide": "right",
+    "platformType": "side"
+  },
+  "KVH L2": {
+    "platformSide": "left",
+    "platformType": "side"
+  },
+  "KNI L1": {
+    "platformSide": "left",
+    "platformType": "island"
+  },
+  "PSL L3": {
+    "platformSide": "right",
+    "platformType": "island"
+  },
+  "PSL L6": {
+    "platformSide": "left",
+    "platformType": "island"
+  }
+}

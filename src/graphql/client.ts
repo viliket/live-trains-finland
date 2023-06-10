@@ -7,6 +7,7 @@ import {
 import { makeVar } from '@apollo/client';
 
 import { VehicleDetails } from '../types/vehicles';
+import getStationPlatformSide from '../utils/getStationPlatformSide';
 import getTimeTableRowsGroupedByStation from '../utils/getTimeTableRowsGroupedByStation';
 import getTrainDirection from '../utils/getTrainDirection';
 import getTrainVehicleIdFromTrainEuropeanVehicleNumber from '../utils/getTrainVehicleIdFromTrainEuropeanVehicleNumber';
@@ -116,14 +117,21 @@ export const client = new ApolloClient({
                   g
                 ): NonNullable<
                   TrainDetailsFragment['timeTableGroups']
-                >[number] => ({
-                  arrival: g.arrival,
-                  departure: g.departure,
-                  trainDirection: getTrainDirection(
-                    { timeTableGroups } as TrainDetailsFragment,
-                    g
-                  ),
-                })
+                >[number] => {
+                  const timeTableGroup: NonNullable<
+                    TrainDetailsFragment['timeTableGroups']
+                  >[number] = {
+                    arrival: g.arrival,
+                    departure: g.departure,
+                    trainDirection: getTrainDirection(
+                      { timeTableGroups } as TrainDetailsFragment,
+                      g
+                    ),
+                  };
+                  timeTableGroup.stationPlatformSide =
+                    getStationPlatformSide(timeTableGroup);
+                  return timeTableGroup;
+                }
               );
             },
           },

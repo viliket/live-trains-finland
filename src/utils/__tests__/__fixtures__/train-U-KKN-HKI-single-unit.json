@@ -1,0 +1,586 @@
+{
+  "trainNumber": 8492,
+  "departureDate": "2023-05-08",
+  "version": "285519662782",
+  "runningCurrently": true,
+  "operator": {
+    "name": "VR-Yhtymä Oyj",
+    "__typename": "Operator",
+    "shortCode": "vr",
+    "uicCode": 10
+  },
+  "commuterLineid": "U",
+  "trainType": {
+    "name": "HL",
+    "trainCategory": {
+      "name": "Commuter",
+      "__typename": "TrainCategory"
+    },
+    "__typename": "TrainType"
+  },
+  "compositions": [
+    {
+      "journeySections": [
+        {
+          "startTimeTableRow": {
+            "scheduledTime": "2023-05-08T17:07:00.000Z",
+            "liveEstimateTime": null,
+            "actualTime": "2023-05-08T17:07:44.000Z",
+            "station": {
+              "name": "Kirkkonummi",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "endTimeTableRow": {
+            "scheduledTime": "2023-05-08T17:48:00.000Z",
+            "liveEstimateTime": "2023-05-08T17:48:00.000Z",
+            "actualTime": null,
+            "station": {
+              "name": "Helsinki asema",
+              "__typename": "Station"
+            },
+            "__typename": "TimeTableRow"
+          },
+          "maximumSpeed": 160,
+          "totalLength": 75,
+          "locomotives": [
+            {
+              "vehicleNumber": "94102081011-0",
+              "powerTypeAbbreviation": "S",
+              "locomotiveType": "Sm5",
+              "location": 1,
+              "__typename": "Locomotive"
+            }
+          ],
+          "wagons": [
+            {
+              "vehicleNumber": "94102081011-0",
+              "salesNumber": 0,
+              "wagonType": "Sm5",
+              "location": 1,
+              "length": 7520,
+              "playground": null,
+              "pet": null,
+              "catering": null,
+              "video": null,
+              "luggage": null,
+              "smoking": null,
+              "disabled": null,
+              "__typename": "Wagon"
+            }
+          ],
+          "__typename": "JourneySection"
+        }
+      ],
+      "__typename": "Composition"
+    }
+  ],
+  "timeTableRows": [
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:07:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:07:44.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kirkkonummi",
+        "shortCode": "KKN",
+        "__typename": "Station"
+      },
+      "commercialTrack": "3",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:08:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:09:51.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tolsa",
+        "shortCode": "TOL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:09:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:10:19.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Tolsa",
+        "shortCode": "TOL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:11:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:12:41.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Jorvas",
+        "shortCode": "JRS",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:12:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:13:16.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Jorvas",
+        "shortCode": "JRS",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:14:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:15:29.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Masala",
+        "shortCode": "MAS",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:14:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:15:54.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Masala",
+        "shortCode": "MAS",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:18:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:19:57.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Kauklahti asema",
+        "shortCode": "KLH",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:19:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:20:18.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kauklahti asema",
+        "shortCode": "KLH",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:22:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:23:00.000Z",
+      "differenceInMinutes": 1,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Espoo",
+        "shortCode": "EPO",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:23:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:23:15.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Espoo",
+        "shortCode": "EPO",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:24:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:24:46.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Tuomarila",
+        "shortCode": "TRL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:25:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:25:22.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Tuomarila",
+        "shortCode": "TRL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:26:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:26:42.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Koivuhovi",
+        "shortCode": "KVH",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:27:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:27:11.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Koivuhovi",
+        "shortCode": "KVH",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:28:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:28:53.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Kauniainen",
+        "shortCode": "KNI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:29:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:29:13.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kauniainen",
+        "shortCode": "KNI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:30:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:30:40.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Kera",
+        "shortCode": "KEA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:31:00.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:31:10.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kera",
+        "shortCode": "KEA",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:32:30.000Z",
+      "liveEstimateTime": null,
+      "actualTime": "2023-05-08T17:32:41.000Z",
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Kilo",
+        "shortCode": "KIL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:33:00.000Z",
+      "liveEstimateTime": "2023-05-08T17:33:03.000Z",
+      "actualTime": null,
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Kilo",
+        "shortCode": "KIL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:35:00.000Z",
+      "liveEstimateTime": "2023-05-08T17:35:00.000Z",
+      "actualTime": null,
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Leppävaara",
+        "shortCode": "LPV",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:36:00.000Z",
+      "liveEstimateTime": "2023-05-08T17:36:00.000Z",
+      "actualTime": null,
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Leppävaara",
+        "shortCode": "LPV",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:39:00.000Z",
+      "liveEstimateTime": "2023-05-08T17:39:06.000Z",
+      "actualTime": null,
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Huopalahti",
+        "shortCode": "HPL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:39:30.000Z",
+      "liveEstimateTime": "2023-05-08T17:39:36.000Z",
+      "actualTime": null,
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Huopalahti",
+        "shortCode": "HPL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "2",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:42:30.000Z",
+      "liveEstimateTime": "2023-05-08T17:42:42.000Z",
+      "actualTime": null,
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Pasila asema",
+        "shortCode": "PSL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "9",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:43:00.000Z",
+      "liveEstimateTime": "2023-05-08T17:43:12.000Z",
+      "actualTime": null,
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "DEPARTURE",
+      "station": {
+        "name": "Pasila asema",
+        "shortCode": "PSL",
+        "__typename": "Station"
+      },
+      "commercialTrack": "9",
+      "__typename": "TimeTableRow"
+    },
+    {
+      "trainStopping": true,
+      "scheduledTime": "2023-05-08T17:48:00.000Z",
+      "liveEstimateTime": "2023-05-08T17:48:00.000Z",
+      "actualTime": null,
+      "differenceInMinutes": 0,
+      "unknownDelay": null,
+      "cancelled": false,
+      "causes": null,
+      "type": "ARRIVAL",
+      "station": {
+        "name": "Helsinki asema",
+        "shortCode": "HKI",
+        "__typename": "Station"
+      },
+      "commercialTrack": "14",
+      "__typename": "TimeTableRow"
+    }
+  ],
+  "__typename": "Train"
+}

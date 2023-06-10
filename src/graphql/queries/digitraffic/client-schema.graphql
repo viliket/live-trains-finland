@@ -15,8 +15,14 @@ enum TrainDirection {
   DECREASING
 }
 
+enum StationPlatformSide {
+  LEFT
+  RIGHT
+}
+
 type TimeTableGroup {
   arrival: TimeTableRow
   departure: TimeTableRow
   trainDirection: TrainDirection
+  stationPlatformSide: StationPlatformSide
 }
