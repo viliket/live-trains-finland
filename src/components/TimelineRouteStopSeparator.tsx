@@ -1,5 +1,5 @@
 import { TimelineConnector, TimelineDot, TimelineSeparator } from '@mui/lab';
-import { ArrowDown, ChevronLeft, ChevronRight, Train } from 'mdi-material-ui';
+import { ArrowDown, ChevronLeft, ChevronRight } from 'mdi-material-ui';
 
 import { StationPlatformSide } from '../graphql/generated/digitraffic';
 
@@ -19,7 +19,7 @@ const TimelineRouteStopSeparator = ({
   platformSide,
 }: TimelineRouteStopSeparatorProps) => {
   const sxArrow = {
-    color: !passed ? 'secondary.dark' : 'text.secondary',
+    color: !passed ? 'secondary.main' : 'text.secondary',
     fontSize: '0.65rem',
     position: 'absolute',
     zIndex: 2,
@@ -44,17 +44,14 @@ const TimelineRouteStopSeparator = ({
             zIndex: 1,
           }}
         >
-          <Train sx={{ fontSize: '1rem' }} />
+          <ArrowDown sx={{ fontSize: '1rem' }} />
         </TimelineDot>
       )}
       <TimelineDot
-        color={!passed ? 'secondary' : 'grey'}
         sx={{
           position: 'relative',
           padding: '2px',
-          ...(passed && {
-            borderColor: 'divider',
-          }),
+          borderColor: !passed ? 'secondary.main' : 'divider',
         }}
         variant="outlined"
       >
@@ -77,7 +74,7 @@ const TimelineRouteStopSeparator = ({
         <ArrowDown
           sx={{
             fontSize: '0.65rem',
-            color: !passed ? 'secondary.dark' : 'text.secondary',
+            color: !passed ? 'secondary.main' : 'text.secondary',
           }}
         />
       </TimelineDot>
