@@ -6,6 +6,7 @@
   "search_station_by_name_placeholder": "E.g. Pasila or Turenki",
   "favorite_stations": "Favorites",
   "no_favorite_stations": "You have not chosen any favorite stations. You can save a station to your favorites by pressing the ☆-icon in the title bar of a station you opened.",
+  "no_results": "No results.",
   "train": "Train",
   "train_details": "Train details",
   "destination": "Destination",

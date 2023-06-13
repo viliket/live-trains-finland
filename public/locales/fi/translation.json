@@ -6,6 +6,7 @@
   "search_station_by_name_placeholder": "Esim. Pasila tai Turenki",
   "favorite_stations": "Suosikit",
   "no_favorite_stations": "Et ole vielä tallentanut suosikkiasemiasi. Voit tallentaa aseman suosikkeihisi painamalla hakemasi aseman otsikkopalkin ☆-painiketta.",
+  "no_results": "Ei tuloksia.",
   "train": "Juna",
   "train_details": "Junan tiedot",
   "destination": "Määränpää",

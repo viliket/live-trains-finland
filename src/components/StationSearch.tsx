@@ -1,6 +1,12 @@
 import { forwardRef, ReactElement, Ref, useState } from 'react';
 
-import { Box, InputBase, ListItemButton } from '@mui/material';
+import {
+  Box,
+  DialogContent,
+  DialogContentText,
+  InputBase,
+  ListItemButton,
+} from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
@@ -53,6 +59,11 @@ export default function StationSearch() {
     navigate(`/${station.stationName}`);
   };
 
+  const filteredOptions = filterOptions(
+    trainStationsWithPassengerTraffic,
+    inputValue
+  );
+
   return (
     <div>
       <Box
@@ -101,18 +112,23 @@ export default function StationSearch() {
             />
           </Toolbar>
         </AppBar>
-        <List>
-          {filterOptions(trainStationsWithPassengerTraffic, inputValue).map(
-            (s) => (
+        {filteredOptions.length > 0 && (
+          <List>
+            {filteredOptions.map((s) => (
               <ListItemButton
                 key={s.stationShortCode}
                 onClick={() => handleClickStation(s)}
               >
                 <ListItemText primary={s.stationName} />
               </ListItemButton>
-            )
-          )}
-        </List>
+            ))}
+          </List>
+        )}
+        {filteredOptions.length === 0 && (
+          <DialogContent>
+            <DialogContentText>{t('no_results')}</DialogContentText>
+          </DialogContent>
+        )}
       </Dialog>
     </div>
   );
