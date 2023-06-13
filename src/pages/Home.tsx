@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import FavoriteStationList from '../components/FavoriteStationList';
 import Hero from '../components/Hero';
-import StationAutocomplete from '../components/StationAutocomplete';
+import StationSearch from '../components/StationSearch';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -41,7 +41,7 @@ const Home = () => {
           <p>{t('home.welcome_text')}</p>
         </Box>
         <Box>
-          <StationAutocomplete />
+          <StationSearch />
           <FavoriteStationList />
         </Box>
       </Container>
