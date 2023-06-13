@@ -56,8 +56,8 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
     setWagonDialogOpen(false);
   };
 
-  const handleWagonClick = (w: Wagon | null | undefined) => {
-    setSelectedWagon(w ?? null);
+  const handleWagonClick = (w: Wagon) => {
+    setSelectedWagon(w);
     setWagonDialogOpen(true);
   };
 

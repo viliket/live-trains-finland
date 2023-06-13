@@ -96,9 +96,48 @@ export const client = new ApolloClient({
               return vehicleId;
             },
           },
+          wagonType: {
+            read(wagonType, { readField, variables, toReference }) {
+              if (wagonType) {
+                // Use actual wagon type if available
+                return wagonType;
+              }
+
+              if (
+                !variables ||
+                !variables.departureDate ||
+                !variables.trainNumber
+              ) {
+                return null;
+              }
+
+              const trainRef = toReference({
+                __typename: 'Train',
+                departureDate: variables.departureDate,
+                trainNumber: variables.trainNumber,
+              });
+
+              const commuterLineid = readField<string>(
+                'commuterLineid',
+                trainRef
+              );
+
+              if (!commuterLineid) {
+                return null;
+              }
+
+              // Fallback: Determine wagon type based on the commuter line ID
+              const sm4WagonCommuterLines = ['R', 'Z'];
+              if (sm4WagonCommuterLines.includes(commuterLineid)) {
+                return 'Sm4';
+              }
+              return 'Sm5';
+            },
+          },
         },
       },
       Train: {
+        keyFields: ['departureDate', 'trainNumber'],
         fields: {
           timeTableGroups: {
             read(_, { readField }) {
