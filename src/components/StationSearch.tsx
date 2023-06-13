@@ -75,6 +75,7 @@ export default function StationSearch() {
           inputProps={{
             'aria-label': t('search_station_by_name') ?? undefined,
           }}
+          readOnly
           onClick={handleClickOpen}
         />
       </Box>
