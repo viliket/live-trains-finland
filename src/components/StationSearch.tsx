@@ -50,7 +50,11 @@ export default function StationSearch() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    setOpen(hash === searchDialogUrlHash);
+    const isSearchDialogOpen = hash === searchDialogUrlHash;
+    if (!isSearchDialogOpen) {
+      setInputValue('');
+    }
+    setOpen(isSearchDialogOpen);
   }, [hash]);
 
   const handleClickOpen = () => {
@@ -59,7 +63,6 @@ export default function StationSearch() {
 
   const handleClose = () => {
     navigate(-1);
-    setInputValue('');
   };
 
   const handleClickStation = (station: TrainStation) => {
