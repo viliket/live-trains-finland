@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement, Ref, useState } from 'react';
+import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react';
 
 import {
   Box,
@@ -17,7 +17,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { TransitionProps } from '@mui/material/transitions';
 import { ChevronLeft, Magnify } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TrainStation, trainStations } from '../utils/stations';
 
@@ -40,23 +40,30 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const searchDialogUrlHash = '#search';
+
 export default function StationSearch() {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
+  const { hash } = useLocation();
   const { t } = useTranslation();
 
+  useEffect(() => {
+    setOpen(hash === searchDialogUrlHash);
+  }, [hash]);
+
   const handleClickOpen = () => {
-    setOpen(true);
+    window.location.hash = searchDialogUrlHash;
   };
 
   const handleClose = () => {
-    setOpen(false);
+    navigate(-1);
     setInputValue('');
   };
 
   const handleClickStation = (station: TrainStation) => {
-    navigate(`/${station.stationName}`);
+    navigate(`/${station.stationName}`, { replace: true });
   };
 
   const filteredOptions = filterOptions(
