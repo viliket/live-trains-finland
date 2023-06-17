@@ -49,7 +49,6 @@ function TrainSubNavBar({ train }: TrainSubNavBarProps) {
               style={{
                 verticalAlign: 'middle',
                 marginLeft: '1ch',
-                fontWeight: 500,
               }}
             >
               {train &&

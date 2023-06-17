@@ -28,6 +28,7 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
         color: theme.palette.common.secondaryBackground.text,
         h4: {
           margin: 0,
+          fontWeight: 500,
         },
       })}
     >
