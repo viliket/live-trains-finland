@@ -2,6 +2,7 @@ import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react';
 
 import {
   Box,
+  alpha,
   DialogContent,
   DialogContentText,
   InputBase,
@@ -77,28 +78,35 @@ export default function StationSearch() {
   return (
     <div>
       <Box
-        component="form"
-        sx={{
-          bgcolor: 'divider',
+        component="button"
+        onClick={handleClickOpen}
+        sx={(theme) => ({
+          bgcolor: theme.palette.action.selected,
+          color: theme.palette.text.secondary,
+          border: 'none',
+          '&:hover': {
+            bgcolor: alpha(
+              theme.palette.action.selected,
+              theme.palette.action.selectedOpacity +
+                theme.palette.action.hoverOpacity
+            ),
+          },
+          fontSize: theme.typography.pxToRem(14),
           borderRadius: 10,
+          cursor: 'pointer',
           p: '6px',
           display: 'flex',
           alignItems: 'center',
           width: '100%',
-        }}
+        })}
       >
-        <IconButton sx={{ p: '10px' }} aria-label="menu">
-          <Magnify />
-        </IconButton>
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder={t('search_station_by_name') ?? undefined}
-          inputProps={{
-            'aria-label': t('search_station_by_name') ?? undefined,
-          }}
-          readOnly
-          onClick={handleClickOpen}
-        />
+        <Magnify sx={{ m: '6px' }} />
+        <Box
+          component="span"
+          sx={{ ml: 1, flex: 1, textAlign: 'left', opacity: 0.7 }}
+        >
+          {t('search_station_by_name')}
+        </Box>
       </Box>
       <Dialog
         fullScreen
@@ -106,7 +114,7 @@ export default function StationSearch() {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar position="sticky" elevation={0}>
+        <AppBar position="fixed" elevation={0}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose}>
               <ChevronLeft />
@@ -122,6 +130,7 @@ export default function StationSearch() {
             />
           </Toolbar>
         </AppBar>
+        <Box sx={(theme) => ({ ...theme.mixins.toolbar })} />
         {filteredOptions.length > 0 && (
           <List>
             {filteredOptions.map((s) => (
