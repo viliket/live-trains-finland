@@ -1,4 +1,4 @@
-import { Box, Container } from '@mui/material';
+import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import FavoriteStationList from '../components/FavoriteStationList';
@@ -20,7 +20,7 @@ const Home = () => {
         <Box
           sx={{
             width: '100%',
-            marginTop: '1rem',
+            marginTop: '2rem',
           }}
         >
           <Hero />
@@ -29,6 +29,7 @@ const Home = () => {
       <Container
         maxWidth="md"
         sx={{
+          mt: 4,
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
@@ -36,13 +37,35 @@ const Home = () => {
           textAlign: 'center',
         }}
       >
-        <Box>
-          <h2>{t('home.title')}</h2>
-          <p>{t('home.welcome_text')}</p>
-        </Box>
-        <Box>
-          <StationSearch />
-          <FavoriteStationList />
+        <Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Box>
+            <StationSearch />
+            <FavoriteStationList />
+          </Box>
+          <Card
+            sx={{
+              mt: 4,
+              borderRadius: 4,
+              bgcolor: 'common.secondaryBackground.default',
+            }}
+            elevation={0}
+          >
+            <CardContent>
+              <Typography gutterBottom variant="h6" component="div">
+                {t('home.title')}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {t('home.welcome_text')}
+              </Typography>
+            </CardContent>
+          </Card>
         </Box>
       </Container>
     </>
