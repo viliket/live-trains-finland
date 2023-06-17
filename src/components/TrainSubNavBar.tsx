@@ -1,4 +1,4 @@
-import { Avatar, Chip } from '@mui/material';
+import { Avatar, Box, Typography } from '@mui/material';
 
 import { TrainDetailsFragment } from '../graphql/generated/digitraffic';
 import { useTrainSpeed } from '../hooks/useTrainSpeed';
@@ -21,41 +21,32 @@ function TrainSubNavBar({ train }: TrainSubNavBarProps) {
     >
       <h4 style={{ display: 'flex', alignItems: 'center' }}>
         {!train ? (
-          <>{'...'}</>
+          <>
+            <Avatar sx={{ mr: 1 }}> </Avatar>
+            {'...'}
+          </>
         ) : (
           <>
-            <Chip
-              label={
-                train?.trainType?.trainCategory?.name === 'Commuter'
+            <Avatar sx={{ mr: 1, color: 'white', bgcolor: 'secondary.main' }}>
+              {train.commuterLineid || train.trainType?.name}
+            </Avatar>
+            <Box>
+              <Typography
+                variant="caption"
+                display="block"
+                sx={{ fontSize: '1rem', fontWeight: 500 }}
+              >
+                {train &&
+                  `${getTrainDepartureStationName(
+                    train
+                  )} - ${getTrainDestinationStationName(train)}`}
+              </Typography>
+              <Typography variant="caption" display="block">
+                {train?.trainType?.trainCategory?.name === 'Commuter'
                   ? `${train.trainNumber}`
-                  : `${train.trainType?.name} ${train.trainNumber}`
-              }
-              variant="filled"
-              avatar={
-                train.commuterLineid ? (
-                  <Avatar>{train.commuterLineid}</Avatar>
-                ) : undefined
-              }
-              sx={{
-                bgcolor: 'divider',
-                borderColor: 'divider',
-                '& .MuiChip-avatar': {
-                  color: 'white',
-                  bgcolor: 'secondary.main',
-                },
-              }}
-            />
-            <span
-              style={{
-                verticalAlign: 'middle',
-                marginLeft: '1ch',
-              }}
-            >
-              {train &&
-                `${getTrainDepartureStationName(
-                  train
-                )} - ${getTrainDestinationStationName(train)}`}
-            </span>
+                  : `${train.trainType?.name} ${train.trainNumber}`}
+              </Typography>
+            </Box>
           </>
         )}
       </h4>
