@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import { Divider, List, ListItem, ListItemText } from '@mui/material';
+import { Chip, Stack } from '@mui/material';
 import { Star } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -25,16 +25,24 @@ const FavoriteStationList = () => {
         <Star color="primary" sx={{ verticalAlign: 'middle' }} />
       </h2>
       {favStations.length !== 0 && (
-        <List>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          spacing={1}
+          useFlexGap
+          flexWrap="wrap"
+        >
           {favStations.map((station, i) => (
             <Fragment key={station.stationShortCode}>
-              <ListItem button component={Link} to={`/${station.stationName}`}>
-                <ListItemText primary={station.stationName} />
-              </ListItem>
-              {i !== favStations.length - 1 && <Divider />}
+              <Chip
+                component={Link}
+                to={`/${station.stationName}`}
+                label={station.stationName}
+                clickable
+              />
             </Fragment>
           ))}
-        </List>
+        </Stack>
       )}
       {favStations.length === 0 && t('no_favorite_stations')}
     </div>
