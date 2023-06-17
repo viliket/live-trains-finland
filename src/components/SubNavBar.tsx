@@ -23,6 +23,7 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
         top: '-1px',
         zIndex: 1001,
         padding: '0.6rem 0',
+        marginTop: '-0.6rem',
         backgroundColor: theme.palette.common.secondaryBackground.default,
         color: theme.palette.common.secondaryBackground.text,
         h4: {

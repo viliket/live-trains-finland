@@ -42,7 +42,7 @@ function StationTimeTable({
         stickyHeader
         sx={(theme) => ({
           'thead tr th': {
-            top: '3.5rem',
+            top: '3rem',
             zIndex: 1002,
             backgroundColor: theme.palette.common.secondaryBackground.default,
           },
