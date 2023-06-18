@@ -56,7 +56,7 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
         <span style={{ fontWeight: 500 }}>
           {format(currentTime, 'HH:mm:ss')}
         </span>
-        <span>{rightElement}</span>
+        <span style={{ fontSize: '0.95rem' }}>{rightElement}</span>
       </span>
     </Box>
   );

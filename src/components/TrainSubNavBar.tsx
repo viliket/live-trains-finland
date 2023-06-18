@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography } from '@mui/material';
+import { Avatar, Box } from '@mui/material';
 
 import { TrainDetailsFragment } from '../graphql/generated/digitraffic';
 import { useTrainSpeed } from '../hooks/useTrainSpeed';
@@ -22,31 +22,72 @@ function TrainSubNavBar({ train }: TrainSubNavBarProps) {
       <h4 style={{ display: 'flex', alignItems: 'center' }}>
         {!train ? (
           <>
-            <Avatar sx={{ mr: 1 }}> </Avatar>
+            <Avatar sx={{ mr: 1, bgcolor: 'divider' }}> </Avatar>
             {'...'}
           </>
         ) : (
           <>
-            <Avatar sx={{ mr: 1, color: 'white', bgcolor: 'secondary.main' }}>
-              {train.commuterLineid || train.trainType?.name}
-            </Avatar>
-            <Box>
-              <Typography
-                variant="caption"
-                display="block"
-                sx={{ fontSize: '1rem', fontWeight: 500 }}
+            {train.commuterLineid && (
+              <Box
+                sx={{
+                  mr: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  position: 'relative',
+                }}
               >
+                <Avatar
+                  sx={{
+                    color: 'white',
+                    bgcolor: 'secondary.main',
+                    width: '32px',
+                    height: '32px',
+                    mt: '-8px',
+                  }}
+                >
+                  {train.commuterLineid || train.trainType?.name}
+                </Avatar>
+                <Box
+                  sx={{
+                    fontSize: '0.6rem',
+                    color: 'text.secondary',
+                    position: 'absolute',
+                    bottom: '-14px',
+                  }}
+                >
+                  {train.trainNumber}
+                </Box>
+              </Box>
+            )}
+            {!train.commuterLineid && (
+              <Avatar
+                sx={{
+                  mr: 1,
+                  color: 'text.primary',
+                  bgcolor: 'divider',
+                  fontSize: '0.7rem',
+                  textAlign: 'center',
+                }}
+              >
+                {train.trainType?.name}
+                <br />
+                {train.trainNumber}
+              </Avatar>
+            )}
+            <span
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <Box sx={{ fontWeight: 500 }}>
                 {train &&
                   `${getTrainDepartureStationName(
                     train
                   )} - ${getTrainDestinationStationName(train)}`}
-              </Typography>
-              <Typography variant="caption" display="block">
-                {train?.trainType?.trainCategory?.name === 'Commuter'
-                  ? `${train.trainNumber}`
-                  : `${train.trainType?.name} ${train.trainNumber}`}
-              </Typography>
-            </Box>
+              </Box>
+            </span>
           </>
         )}
       </h4>
