@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { alpha, Box, Link, TableCell, TableRow } from '@mui/material';
+import {
+  alpha,
+  Box,
+  IconButton,
+  Link,
+  TableCell,
+  TableRow,
+} from '@mui/material';
 import { ChevronRight } from 'mdi-material-ui';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -118,7 +125,11 @@ function StationTimeTableRow({
           }}
         >
           {stationRow?.commercialTrack ?? '?'}
-          <ChevronRight sx={{ color: 'grey.400', marginRight: '-8px' }} />
+          <IconButton
+            sx={{ color: 'grey.400', marginRight: '-8px', padding: 0 }}
+          >
+            <ChevronRight />
+          </IconButton>
         </span>
       </TableCell>
     </TableRow>

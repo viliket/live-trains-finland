@@ -165,7 +165,7 @@ function TrainComposition({
             // Note: Should never be null
             <span key={i}>?</span>
           ) : (
-            <span
+            <button
               key={`${w.location}-${wagonStatuses?.[i]}`}
               onClick={() => onWagonClick(w)}
               style={{
@@ -178,7 +178,11 @@ function TrainComposition({
                     ? 'auto'
                     : '2rem'
                   : getWagonElementWidth(w.wagonType),
+                border: 'none',
                 borderBottom: '2px solid transparent',
+                margin: 0,
+                padding: 0,
+                backgroundColor: 'transparent',
                 cursor: 'pointer',
               }}
             >
@@ -229,7 +233,7 @@ function TrainComposition({
                   isCommuterTrain={!!train.commuterLineid}
                 />
               </Box>
-            </span>
+            </button>
           )
         )}
         <Box
