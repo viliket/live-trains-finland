@@ -23,6 +23,8 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
         top: '-1px',
         zIndex: 1001,
         padding: '0.6rem 0',
+        paddingLeft: '4px',
+        paddingRight: '1rem',
         marginTop: '-0.6rem',
         backgroundColor: theme.palette.common.secondaryBackground.default,
         color: theme.palette.common.secondaryBackground.text,
@@ -48,7 +50,7 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
       <span
         style={{
           marginLeft: 'auto',
-          padding: '0 1em',
+          paddingLeft: '0.5rem',
           display: 'flex',
           flexDirection: 'column',
         }}

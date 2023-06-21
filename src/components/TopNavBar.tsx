@@ -1,20 +1,14 @@
 import { Box } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Brightness7, Brightness3 } from 'mdi-material-ui';
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { ReactComponent as Icon } from '../assets/icon.svg';
 import { ReactComponent as Logo } from '../assets/logo.svg';
-
-const lngs: Record<string, { shortCode: string }> = {
-  en: { shortCode: 'EN' },
-  fi: { shortCode: 'FI' },
-};
+import { LanguageSelector } from './LanguageSelector';
 
 type TopNavBarProps = {
   toggleDarkMode: () => void;
@@ -22,8 +16,6 @@ type TopNavBarProps = {
 };
 
 export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
-  const { i18n } = useTranslation();
-
   const icon = !isDarkMode ? <Brightness7 /> : <Brightness3 />;
 
   return (
@@ -46,42 +38,37 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
               sx={(theme) => ({
                 height: '1.6rem',
                 display: 'flex',
+                alignItems: 'center',
                 color:
                   theme.palette.mode === 'light'
                     ? 'primary.main'
                     : theme.palette.grey[300],
               })}
             >
-              <Icon style={{ marginRight: '4px' }} />
+              <Box
+                sx={(theme) => ({
+                  height: '2rem',
+                  marginRight: '4px',
+                  bgcolor:
+                    theme.palette.mode === 'light'
+                      ? 'primary.main'
+                      : 'primary.dark',
+                  color:
+                    theme.palette.mode === 'light'
+                      ? 'primary.main'
+                      : 'primary.dark',
+                  borderRadius: '50%',
+                  padding: '3px',
+                  paddingLeft: '2px',
+                  paddingRight: '4px',
+                })}
+              >
+                <Icon style={{ verticalAlign: 'super' }} />
+              </Box>
               <Logo />
             </Box>
           </Typography>
-          {Object.keys(lngs).map((lng) => (
-            <Button
-              key={lng}
-              size="small"
-              color={i18n.resolvedLanguage === lng ? 'primary' : 'inherit'}
-              variant="contained"
-              disableElevation
-              aria-label={lngs[lng].shortCode}
-              sx={(theme) => ({
-                mr: 1,
-                minWidth: 'auto',
-                fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal',
-                borderColor: 'divider',
-                color:
-                  i18n.resolvedLanguage === lng
-                    ? 'white'
-                    : theme.palette.primary.main,
-                backgroundColor:
-                  i18n.resolvedLanguage === lng ? 'primary' : 'divider',
-              })}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].shortCode}
-            </Button>
-          ))}
+          <LanguageSelector />
           <IconButton
             edge="end"
             color="inherit"
