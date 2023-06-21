@@ -59,6 +59,8 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
                       : 'primary.dark',
                   borderRadius: '50%',
                   padding: '3px',
+                  paddingLeft: '2px',
+                  paddingRight: '4px',
                 })}
               >
                 <Icon style={{ verticalAlign: 'super' }} />
