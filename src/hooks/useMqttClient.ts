@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import mqtt from 'mqtt';
+import * as mqtt from 'mqtt';
 
 const useMqttClient = (brokerUrl: string, opts?: mqtt.IClientOptions) => {
   const [client, setClient] = useState<mqtt.MqttClient>();

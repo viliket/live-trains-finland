@@ -89,7 +89,7 @@ const VehicleMapContainer = ({
             url: url.replace('api.digitransit.fi', 'cdn.digitransit.fi'),
             headers: {
               'digitransit-subscription-key':
-                process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY,
+                process.env.NEXT_PUBLIC_DIGITRANSIT_SUBSCRIPTION_KEY,
             },
           };
         }
@@ -101,27 +101,25 @@ const VehicleMapContainer = ({
       <NavigationControl position="top-left" />
       <ScaleControl />
       <FullscreenControl />
-      <CustomOverlay
-        children={
-          <Box
-            component="button"
-            onClick={() => setUseVectorBaseTiles((b) => !b)}
-            sx={{
-              svg: {
-                verticalAlign: 'middle',
-                padding: '4px',
-                color: 'text.primary',
-              },
-            }}
-          >
-            {useVectorBaseTiles ? (
-              <QualityHigh className="maplibregl-ctrl-icon" />
-            ) : (
-              <QualityLow className="maplibregl-ctrl-icon" />
-            )}
-          </Box>
-        }
-      />
+      <CustomOverlay>
+        <Box
+          component="button"
+          onClick={() => setUseVectorBaseTiles((b) => !b)}
+          sx={{
+            svg: {
+              verticalAlign: 'middle',
+              padding: '4px',
+              color: 'text.primary',
+            },
+          }}
+        >
+          {useVectorBaseTiles ? (
+            <QualityHigh className="maplibregl-ctrl-icon" />
+          ) : (
+            <QualityLow className="maplibregl-ctrl-icon" />
+          )}
+        </Box>
+      </CustomOverlay>
       {
         /**
          * Create empty base layers for dynamically changing the layer order

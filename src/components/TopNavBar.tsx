@@ -1,21 +1,22 @@
+'use client';
+
 import { Box } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Brightness7, Brightness3 } from 'mdi-material-ui';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
-import { ReactComponent as Icon } from '../assets/icon.svg';
-import { ReactComponent as Logo } from '../assets/logo.svg';
+import Icon from '../assets/icon.svg';
+import Logo from '../assets/logo.svg';
+import { useTheme } from '../providers/ThemeProvider';
 import { LanguageSelector } from './LanguageSelector';
 
-type TopNavBarProps = {
-  toggleDarkMode: () => void;
-  isDarkMode: boolean;
-};
+export function TopNavBar() {
+  const { theme, toggleTheme } = useTheme();
+  const isDarkMode = theme === 'dark';
 
-export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
   const icon = !isDarkMode ? <Brightness7 /> : <Brightness3 />;
 
   return (
@@ -32,7 +33,7 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
             component={Link}
             color="inherit"
             style={{ textDecoration: 'none' }}
-            to="/"
+            href="/"
           >
             <Box
               sx={(theme) => ({
@@ -73,7 +74,7 @@ export function TopNavBar({ toggleDarkMode, isDarkMode }: TopNavBarProps) {
             edge="end"
             color="inherit"
             aria-label="mode"
-            onClick={() => toggleDarkMode()}
+            onClick={() => toggleTheme()}
           >
             {icon}
           </IconButton>

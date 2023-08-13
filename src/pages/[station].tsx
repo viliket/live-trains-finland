@@ -1,11 +1,14 @@
+'use client';
+
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
 import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { orderBy } from 'lodash';
 import { ClockStart, ClockEnd } from 'mdi-material-ui';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
 
 import FavoriteStation from '../components/FavoriteStation';
 import StationTimeTable from '../components/StationTimeTable';
@@ -23,19 +26,20 @@ import getRouteForTrain from '../utils/getRouteForTrain';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
 import { getTimeTableRowRealTime } from '../utils/train';
-import NotFound from './NotFound';
+import NotFound from './404';
 
-const VehicleMapContainer = React.lazy(
-  () => import('../components/map/VehicleMapContainer')
+const VehicleMapContainer = dynamic(
+  () => import('../components/map/VehicleMapContainer'),
+  { ssr: false }
 );
 
 const Station = () => {
-  const { station: stationName } = useParams<{ station: string }>();
+  const router = useRouter();
+  const stationName = router.query.station as string | undefined;
   const [timeTableType, setTimeTableType] = useState(
     TimeTableRowType.Departure
   );
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
@@ -72,14 +76,14 @@ const Station = () => {
 
   const handleTimeTableRowClick = useCallback(
     (trainNumber: number, scheduledTime: Date) => {
-      navigate(
+      router.push(
         `/train/${trainNumber}/${formatEET(
           scheduledTime,
           'yyyy-MM-dd'
         )}?station=${stationCode}`
       );
     },
-    [navigate, stationCode]
+    [router, stationCode]
   );
 
   const selectedTrain = selectedTrainNo

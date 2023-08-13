@@ -1,5 +1,5 @@
 module.exports = {
-  extends: 'react-app',
+  extends: 'next/core-web-vitals',
   plugins: ['import'],
   rules: {
     'import/order': [

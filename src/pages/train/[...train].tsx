@@ -1,31 +1,35 @@
+'use client';
+
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
 import { Box, Skeleton } from '@mui/material';
-import { useParams, useSearchParams } from 'react-router-dom';
+import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 
-import TrainInfoContainer from '../components/TrainInfoContainer';
-import TrainSubNavBar from '../components/TrainSubNavBar';
-import { gqlClients, vehiclesVar } from '../graphql/client';
-import { useTrainLazyQuery } from '../graphql/generated/digitraffic';
-import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
-import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
-import { isDefined } from '../utils/common';
-import getHeadTrainVehicleId from '../utils/getHeadTrainVehicleId';
-import getRouteForTrain from '../utils/getRouteForTrain';
-import { trainStations } from '../utils/stations';
-import NotFound from './NotFound';
+import TrainInfoContainer from '../../components/TrainInfoContainer';
+import TrainSubNavBar from '../../components/TrainSubNavBar';
+import { gqlClients, vehiclesVar } from '../../graphql/client';
+import { useTrainLazyQuery } from '../../graphql/generated/digitraffic';
+import { useRoutesForRailLazyQuery } from '../../graphql/generated/digitransit';
+import useTrainLiveTracking from '../../hooks/useTrainLiveTracking';
+import { isDefined } from '../../utils/common';
+import getHeadTrainVehicleId from '../../utils/getHeadTrainVehicleId';
+import getRouteForTrain from '../../utils/getRouteForTrain';
+import { trainStations } from '../../utils/stations';
+import NotFound from '../404';
 
-const VehicleMapContainer = React.lazy(
-  () => import('../components/map/VehicleMapContainer')
+const VehicleMapContainer = dynamic(
+  () => import('../../components/map/VehicleMapContainer'),
+  { ssr: false }
 );
 
 const Train = () => {
-  const { trainNumber, departureDate } = useParams<{
-    trainNumber: string;
-    departureDate: string;
-  }>();
-  const [searchParams] = useSearchParams();
+  const router = useRouter();
+  const trainParams = router.query.train as string[] | undefined;
+  const [trainNumber, departureDate] = trainParams ?? [null, null];
+  const searchParams = useSearchParams();
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );

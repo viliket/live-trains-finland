@@ -8,8 +8,6 @@
     "@emotion/styled": "^11.11.0",
     "@mui/lab": "^5.0.0-alpha.132",
     "@mui/material": "^5.13.3",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/autosuggest-highlight": "^3.2.0",
     "@types/jest": "^29.4.0",
@@ -31,14 +29,13 @@
     "lodash": "^4.17.21",
     "maplibre-gl": "^3.0.0",
     "mdi-material-ui": "^7.7.0",
-    "mqtt": "^4.3.7",
+    "mqtt": "^5.0.2",
+    "next": "^13.4.12",
     "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.2.0",
     "react-map-gl": "^7.0.25",
-    "react-router-dom": "^6.8.1",
-    "react-scripts": "^5.0.1",
     "react-svg": "^16.1.4",
     "typescript": "^4.9.5",
     "url": "^0.11.0",
@@ -47,12 +44,12 @@
     "web-vitals": "^3.1.1"
   },
   "scripts": {
-    "start": "react-scripts --max_old_space_size=6144 start",
-    "build": "npm run extract-tiles && react-scripts --max_old_space_size=6144 build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint --max-warnings=0 ./src",
-    "lint:fix": "eslint --fix ./src",
+    "dev": "next dev",
+    "build": "npm run extract-tiles && next build",
+    "start": "next start",
+    "test": "jest",
+    "lint": "next lint --max-warnings=0",
+    "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "extract-tiles-railway-tracks": "make-dir public/tiles && mbtiles-extractor --input=./data/railway_tracks.mbtiles --outputType=local --localOutDir=./public/tiles --tileDir=railway_tracks",
     "extract-tiles-railway-platforms": "make-dir public/tiles && mbtiles-extractor --input=./data/railway_platforms.mbtiles --outputType=local --localOutDir=./public/tiles --tileDir=railway_platforms",
@@ -65,12 +62,6 @@
     "prestart": "npm run gql-codegen",
     "prepare": "is-ci || husky install"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": [
     "defaults",
     "not ie 11"
@@ -82,18 +73,20 @@
     "@graphql-codegen/typescript": "^3.0.1",
     "@graphql-codegen/typescript-operations": "^3.0.1",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
+    "@svgr/webpack": "^8.0.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.0.0",
+    "eslint-config-next": "^13.4.12",
     "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
     "lint-staged": "^13.1.2",
     "make-dir-cli": "^3.0.0",
-    "mbtiles-extractor": "^0.1.1"
-  },
-  "jest": {
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/graphql/generated/*"
-    ]
+    "mbtiles-extractor": "^0.1.1",
+    "workbox-webpack-plugin": "^7.0.0"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --max-warnings=0 ./src"

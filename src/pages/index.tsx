@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -5,7 +7,7 @@ import FavoriteStationList from '../components/FavoriteStationList';
 import Hero from '../components/Hero';
 import StationSearch from '../components/StationSearch';
 
-const Home = () => {
+export default function Home() {
   const { t } = useTranslation();
 
   return (
@@ -70,6 +72,4 @@ const Home = () => {
       </Container>
     </>
   );
-};
-
-export default Home;
+}

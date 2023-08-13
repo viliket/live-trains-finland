@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
 import { Box, Link, Grid } from '@mui/material';
 import { parseISO } from 'date-fns';
+import RouterLink from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 
 import { gqlClients } from '../graphql/client';
 import {
@@ -106,7 +106,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
               <Grid item xs={6}>
                 <Link
                   component={RouterLink}
-                  to={`/${getTrainStationName(station)}`}
+                  href={`/${getTrainStationName(station)}`}
                   color="inherit"
                   underline="none"
                   sx={{ fontWeight: 500 }}

@@ -6,9 +6,9 @@ import { Box, Button, useTheme } from '@mui/material';
 import { format } from 'date-fns';
 import { mapValues } from 'lodash';
 import { Crosshairs, CrosshairsGps } from 'mdi-material-ui';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl';
-import { useNavigate } from 'react-router-dom';
 
 import { vehiclesVar } from '../../graphql/client';
 import useAnimationFrame from '../../hooks/useAnimationFrame';
@@ -46,7 +46,7 @@ export default function VehicleMarkerLayer({
   >({});
   const { t } = useTranslation();
   const theme = useTheme();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const iconUrl = useMemo(() => {
     return getVehicleMarkerIconImage({
@@ -242,27 +242,25 @@ export default function VehicleMarkerLayer({
       <DeckGLOverlay layers={[vehiclesLayer]} />
       {selectedVehicleId != null &&
         interpolatedPositions[selectedVehicleId] && (
-          <CustomOverlay
-            children={
-              <Box
-                component="button"
-                onClick={() => setIsTracking(!isTracking)}
-                sx={{
-                  svg: {
-                    verticalAlign: 'middle',
-                    padding: '4px',
-                    color: isTracking ? 'primary.main' : 'text.primary',
-                  },
-                }}
-              >
-                {isTracking ? (
-                  <CrosshairsGps className="maplibregl-ctrl-icon" />
-                ) : (
-                  <Crosshairs className="maplibregl-ctrl-icon" />
-                )}
-              </Box>
-            }
-          />
+          <CustomOverlay>
+            <Box
+              component="button"
+              onClick={() => setIsTracking(!isTracking)}
+              sx={{
+                svg: {
+                  verticalAlign: 'middle',
+                  padding: '4px',
+                  color: isTracking ? 'primary.main' : 'text.primary',
+                },
+              }}
+            >
+              {isTracking ? (
+                <CrosshairsGps className="maplibregl-ctrl-icon" />
+              ) : (
+                <Crosshairs className="maplibregl-ctrl-icon" />
+              )}
+            </Box>
+          </CustomOverlay>
         )}
       {selectedVehicleForPopup && map && (
         <Popup
@@ -287,7 +285,7 @@ export default function VehicleMarkerLayer({
           <Button
             variant="outlined"
             onClick={(e) => {
-              navigate(
+              router.push(
                 `/train/${selectedVehicleForPopup.jrn}/${format(
                   new Date(),
                   'yyyy-MM-dd'

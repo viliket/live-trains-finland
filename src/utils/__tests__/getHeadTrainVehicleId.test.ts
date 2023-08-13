@@ -7,6 +7,16 @@ import * as canTrainBeTrackedByHslModule from '../canTrainBeTrackedByHsl';
 import getHeadTrainVehicleId from '../getHeadTrainVehicleId';
 import * as getTrainCurrentJourneySectionModule from '../getTrainCurrentJourneySection';
 
+// Workaround for https://github.com/aelbore/esbuild-jest/issues/26
+jest.mock('../canTrainBeTrackedByHsl', () => ({
+  __esModule: true,
+  ...jest.requireActual('../canTrainBeTrackedByHsl'),
+}));
+jest.mock('../getTrainCurrentJourneySection', () => ({
+  __esModule: true,
+  ...jest.requireActual('../getTrainCurrentJourneySection'),
+}));
+
 const train: TrainDetailsFragment = {
   trainNumber: 123,
   departureDate: '2023-03-11',

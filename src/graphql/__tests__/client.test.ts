@@ -107,7 +107,7 @@ describe('Wagon field policies', () => {
         const wagon = client.readFragment<Pick<Wagon, 'vehicleId'>>({
           id: 'Wagon:3',
           fragment: gql`
-            fragment Wagon on Wagon {
+            fragment WagonWithVehicleId on Wagon {
               vehicleId
             }
           `,
@@ -189,7 +189,7 @@ describe('Wagon field policies', () => {
         const wagon = client.readFragment<Pick<Wagon, 'wagonType'>>({
           id: 'Wagon:3',
           fragment: gql`
-            fragment Wagon on Wagon {
+            fragment WagonWithWagonType on Wagon {
               wagonType
             }
           `,

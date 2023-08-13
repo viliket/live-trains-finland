@@ -1,7 +1,7 @@
 import { Box, IconButton } from '@mui/material';
 import { format } from 'date-fns';
 import { ArrowLeft } from 'mdi-material-ui';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 import { useTime } from '../hooks/useTime';
 
@@ -11,7 +11,7 @@ type SubNavBarProps = {
 };
 
 function SubNavBar({ children, rightElement }: SubNavBarProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const currentTime = useTime();
 
   return (
@@ -42,7 +42,7 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
               ? 'primary.main'
               : 'primary.contrast',
         })}
-        onClick={() => navigate(-1)}
+        onClick={() => router.back()}
       >
         <ArrowLeft />
       </IconButton>
@@ -55,7 +55,7 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
           flexDirection: 'column',
         }}
       >
-        <span style={{ fontWeight: 500 }}>
+        <span style={{ fontWeight: 500 }} suppressHydrationWarning>
           {format(currentTime, 'HH:mm:ss')}
         </span>
         <span style={{ fontSize: '0.95rem' }}>{rightElement}</span>

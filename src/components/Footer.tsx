@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Link, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 

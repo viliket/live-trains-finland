@@ -23,7 +23,7 @@ import {
   getTimeTableRowRealTime,
   getTrainStationName,
 } from '../../utils/train';
-import stopSignSvgPath from './stop-sign.svg';
+import stopSignSvgPath from './stop-sign.svg?url';
 
 type StopsLayerProps = {
   train?: TrainByStationFragment | null;
@@ -62,7 +62,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           }
         };
         img.onerror = (e) => console.error(e);
-        img.src = stopSignSvgPath;
+        img.src = stopSignSvgPath.src;
       }
     };
 
