@@ -1,2 +1,2 @@
-/train/* /train/[...train].html 200
-/:id /[station].html 200
+/train/* /train/[...train] 200
+/:id /[station] 200
