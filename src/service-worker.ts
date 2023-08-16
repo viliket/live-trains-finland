@@ -54,8 +54,20 @@ const dynamicPageHandlers = precacheEntries.reduce((acc, e) => {
   return acc;
 }, [] as [RegExp, RouteHandlerCallback][]);
 
+const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$');
 dynamicPageHandlers.forEach(([exp, handler]) => {
-  registerRoute(({ url }: { request: Request; url: URL }) => {
+  registerRoute(({ request, url }: { request: Request; url: URL }) => {
+    // If this isn't a navigation, skip.
+    if (request.mode !== 'navigate') {
+      return false;
+    }
+
+    // If this looks like a URL for a resource, because it contains
+    // a file extension, skip.
+    if (url.pathname.match(fileExtensionRegexp)) {
+      return false;
+    }
+
     return exp.test(url.pathname);
   }, handler);
 });
