@@ -23,11 +23,13 @@ export default function App({ Component, pageProps }: AppProps) {
             name="theme-color"
             media="(prefers-color-scheme: light)"
             content="#f9f9fb"
+            key="theme-color-light"
           />
           <meta
             name="theme-color"
             media="(prefers-color-scheme: dark)"
             content="#1e1e1e"
+            key="theme-color-dark"
           />
           <title>Junien aikataulut ja sijainnit | Junaan.fi</title>
           <meta

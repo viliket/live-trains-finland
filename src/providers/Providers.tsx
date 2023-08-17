@@ -1,10 +1,11 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { ApolloProvider } from '@apollo/client';
 import {
   createTheme as createMuiTheme,
+  Theme,
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,13 +19,38 @@ import '../i18n';
 
 const DEFAULT_THEME = 'light';
 
+const getPreferredScheme = () =>
+  window.matchMedia?.('(prefers-color-scheme:dark)')?.matches
+    ? 'dark'
+    : 'light';
+
+const updateMetaThemeColor = (theme: Theme): void => {
+  const themeColorElements = document.querySelectorAll(
+    'meta[name="theme-color"]'
+  );
+  const systemColorScheme = getPreferredScheme();
+
+  themeColorElements.forEach((meta) => {
+    const mediaAttr = meta.getAttribute('media');
+
+    if (mediaAttr?.includes(systemColorScheme)) {
+      meta.setAttribute(
+        'content',
+        theme.palette.common.secondaryBackground.default
+      );
+    }
+  });
+};
+
 const MuiProvider = ({ children }: { children: React.ReactNode }) => {
   const { i18n } = useTranslation();
   const { theme: themeState } = useTheme();
+
   const themeName =
     themeState === 'dark' || themeState === 'light'
       ? themeState
       : DEFAULT_THEME;
+
   const theme = useMemo(
     () =>
       createMuiTheme(
@@ -35,6 +61,10 @@ const MuiProvider = ({ children }: { children: React.ReactNode }) => {
       ),
     [i18n.resolvedLanguage, themeName]
   );
+
+  useEffect(() => {
+    updateMetaThemeColor(theme);
+  }, [theme]);
 
   return (
     <MuiThemeProvider theme={theme}>
