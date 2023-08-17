@@ -46,8 +46,9 @@ const nextConfig = {
           modifyURLPrefix: {
             '/_next/../public/': '/',
           },
+          dontCacheBustURLsMatching: /^\/_next\/\/?static\/.*/i,
           manifestTransforms: [
-            async (manifestEntries, compilation) => {
+            async (manifestEntries) => {
               const manifest = manifestEntries.map((m) => {
                 m.url = m.url.replace(
                   '/_next//static/image',
@@ -57,16 +58,6 @@ const nextConfig = {
                   '/_next//static/media',
                   '/_next/static/media'
                 );
-                if (m.revision === null) {
-                  let key = m.url;
-                  if (key.startsWith(config.output.publicPath)) {
-                    key = m.url.substring(config.output.publicPath.length);
-                  }
-                  const asset = compilation.assetsInfo.get(key);
-                  m.revision = asset
-                    ? asset.contenthash || context.buildId
-                    : context.buildId;
-                }
                 m.url = m.url.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
                 return m;
               });
