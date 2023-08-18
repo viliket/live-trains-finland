@@ -17,10 +17,8 @@ import { lightTheme, darkTheme } from '../theme';
 import { ThemeProvider, useTheme } from './ThemeProvider';
 import '../i18n';
 
-const DEFAULT_THEME = 'light';
-
 const getPreferredScheme = () =>
-  window.matchMedia?.('(prefers-color-scheme:dark)')?.matches
+  window.matchMedia?.('(prefers-color-scheme: dark)')?.matches
     ? 'dark'
     : 'light';
 
@@ -44,12 +42,7 @@ const updateMetaThemeColor = (theme: Theme): void => {
 
 const MuiProvider = ({ children }: { children: React.ReactNode }) => {
   const { i18n } = useTranslation();
-  const { theme: themeState } = useTheme();
-
-  const themeName =
-    themeState === 'dark' || themeState === 'light'
-      ? themeState
-      : DEFAULT_THEME;
+  const { theme: themeName } = useTheme();
 
   const theme = useMemo(
     () =>
