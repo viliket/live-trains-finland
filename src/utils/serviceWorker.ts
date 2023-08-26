@@ -6,12 +6,18 @@ export const serviceWorkerRegistrationVar = makeVar<{
 }>({ registration: null });
 
 export const onRegister = (registration: ServiceWorkerRegistration) => {
+  const hasController = !!navigator.serviceWorker.controller;
   let refreshing = false;
   // Detect controller change and refresh the page
   navigator.serviceWorker.addEventListener('controllerchange', () => {
+    // Is it the first install?
+    if (!hasController) {
+      return;
+    }
+
     if (!refreshing) {
-      window.location.reload();
       refreshing = true;
+      window.location.reload();
     }
   });
 
