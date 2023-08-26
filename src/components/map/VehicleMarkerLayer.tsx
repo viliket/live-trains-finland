@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { CollisionFilterExtension } from '@deck.gl/extensions/typed';
 import { GeoJsonLayer } from '@deck.gl/layers/typed';
@@ -37,6 +37,7 @@ export default function VehicleMarkerLayer({
   selectedVehicleId,
 }: VehicleMarkerLayerProps) {
   const { current: map } = useMap();
+  const glRef = useRef<WebGLRenderingContext>();
   const [vehicleIdForPopup, setVehicleIdForPopup] = useState<number | null>(
     null
   );
@@ -57,6 +58,16 @@ export default function VehicleMarkerLayer({
       colorShadow: theme.palette.mode === 'light' ? '#aaa' : '#aaa',
     });
   }, [map, theme.palette.mode, theme.palette.secondary.main]);
+
+  useEffect(() => {
+    return () => {
+      if (glRef.current) {
+        // Workaround for https://github.com/visgl/deck.gl/issues/1312
+        const extension = glRef.current.getExtension('WEBGL_lose_context');
+        if (extension) extension.loseContext();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const moveStartCallback = (e: ViewStateChangeEvent) => {
@@ -239,7 +250,10 @@ export default function VehicleMarkerLayer({
 
   return (
     <>
-      <DeckGLOverlay layers={[vehiclesLayer]} />
+      <DeckGLOverlay
+        layers={[vehiclesLayer]}
+        onWebGLInitialized={(gl) => (glRef.current = gl)}
+      />
       {selectedVehicleId != null &&
         interpolatedPositions[selectedVehicleId] && (
           <CustomOverlay>
