@@ -41,7 +41,9 @@ export default function VehicleMarkerLayer({
   const [vehicleIdForPopup, setVehicleIdForPopup] = useState<number | null>(
     null
   );
-  const [isTracking, setIsTracking] = useState<boolean>(false);
+  const [isTracking, setIsTracking] = useState<boolean>(
+    selectedVehicleId != null
+  );
   const [interpolatedPositions, setInterpolatedPositions] = useState<
     Record<number, VehicleInterpolatedPosition>
   >({});
@@ -71,7 +73,9 @@ export default function VehicleMarkerLayer({
 
   useEffect(() => {
     const moveStartCallback = (e: ViewStateChangeEvent) => {
-      if (!('triggerSource' in e)) {
+      // Check if user-initiated movestart
+      // User-initiated movestart has originalEvent set (e.g. TouchEvent or MouseEvent).
+      if (!('triggerSource' in e) && e.originalEvent) {
         setIsTracking(false);
       }
     };
