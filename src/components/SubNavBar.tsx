@@ -55,8 +55,8 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
           flexDirection: 'column',
         }}
       >
-        <span style={{ fontWeight: 500 }} suppressHydrationWarning>
-          {format(currentTime, 'HH:mm:ss')}
+        <span style={{ fontWeight: 500 }}>
+          {currentTime ? format(currentTime, 'HH:mm:ss') : '--:--:--'}
         </span>
         <span style={{ fontSize: '0.95rem' }}>{rightElement}</span>
       </span>
