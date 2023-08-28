@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
 import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
@@ -116,29 +116,24 @@ const Station = () => {
     );
     return (
       <Box sx={{ padding: '1rem' }}>
-        {row}
-        {row}
-        {row}
+        {Array.from(Array(7).keys()).map(() => row)}
       </Box>
     );
   };
 
-  if (!stationCode) {
-    return <NotFound />;
-  }
-
-  const trains = data?.trainsByStationAndQuantity
-    ? orderBy(
-        data.trainsByStationAndQuantity.filter(isDefined),
-        (t) =>
-          getTimeTableRowForStation(stationCode, t, timeTableType)
-            ?.scheduledTime
-      ).filter((t) => {
-        const row = getTimeTableRowForStation(stationCode, t, timeTableType);
-        if (!row) return false;
-        return getTimeTableRowRealTime(row) >= new Date();
-      })
-    : [];
+  const trains =
+    stationCode && data?.trainsByStationAndQuantity
+      ? orderBy(
+          data.trainsByStationAndQuantity.filter(isDefined),
+          (t) =>
+            getTimeTableRowForStation(stationCode, t, timeTableType)
+              ?.scheduledTime
+        ).filter((t) => {
+          const row = getTimeTableRowForStation(stationCode, t, timeTableType);
+          if (!row) return false;
+          return getTimeTableRowRealTime(row) >= new Date();
+        })
+      : [];
 
   const handleTimeTableTypeChange = (
     _event: unknown,
@@ -193,7 +188,7 @@ const Station = () => {
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
-      {!loading && data?.trainsByStationAndQuantity && (
+      {stationCode && !loading && data?.trainsByStationAndQuantity && (
         <StationTimeTable
           stationCode={stationCode}
           timeTableType={timeTableType}
@@ -201,7 +196,7 @@ const Station = () => {
           tableRowOnClick={handleTimeTableRowClick}
         />
       )}
-      {loading && getLoadingSkeleton()}
+      {(!stationCode || loading) && getLoadingSkeleton()}
       {error && (
         <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
       )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
 import { Box, Skeleton } from '@mui/material';
@@ -99,24 +99,6 @@ const Train = () => {
     }
   }, [train]);
 
-  const getLoadingSkeleton = () => {
-    const row = (
-      <Skeleton
-        variant="rectangular"
-        width="100%"
-        height={50}
-        sx={{ marginTop: '1rem' }}
-      />
-    );
-    return (
-      <Box sx={{ padding: '1rem' }}>
-        {row}
-        {row}
-        {row}
-      </Box>
-    );
-  };
-
   if (getTrainCalled && !loading && !train) {
     return <NotFound />;
   }
@@ -133,8 +115,7 @@ const Train = () => {
           onVehicleSelected={handleVehicleIdSelected}
         />
       </Box>
-      {train && <TrainInfoContainer train={train} />}
-      {loading && getLoadingSkeleton()}
+      <TrainInfoContainer train={train} />
       {error && (
         <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
       )}
