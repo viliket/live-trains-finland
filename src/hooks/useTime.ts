@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 
 export const useTime = (refreshCycle = 1000) => {
-  const [currentTime, setCurrentTime] = useState<Date>();
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
-    setCurrentTime(new Date());
     const intervalId = setInterval(
       () => setCurrentTime(new Date()),
       refreshCycle
