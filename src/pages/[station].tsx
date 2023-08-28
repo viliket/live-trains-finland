@@ -158,15 +158,13 @@ const Station = () => {
         )}
       </SubNavBar>
       <Box sx={{ height: '30vh' }}>
-        <Suspense>
-          <VehicleMapContainer
-            selectedVehicleId={selectedVehicleId}
-            station={station}
-            route={selectedRoute}
-            train={selectedTrain}
-            onVehicleSelected={handleVehicleIdSelected}
-          />
-        </Suspense>
+        <VehicleMapContainer
+          selectedVehicleId={selectedVehicleId}
+          station={station}
+          route={selectedRoute}
+          train={selectedTrain}
+          onVehicleSelected={handleVehicleIdSelected}
+        />
       </Box>
       <Box
         sx={{

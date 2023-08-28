@@ -125,15 +125,13 @@ const Train = () => {
     <div style={{ width: '100%' }}>
       <TrainSubNavBar train={train} />
       <Box sx={{ height: '30vh' }}>
-        <Suspense>
-          <VehicleMapContainer
-            selectedVehicleId={selectedVehicleId}
-            station={station}
-            route={selectedRoute}
-            train={train}
-            onVehicleSelected={handleVehicleIdSelected}
-          />
-        </Suspense>
+        <VehicleMapContainer
+          selectedVehicleId={selectedVehicleId}
+          station={station}
+          route={selectedRoute}
+          train={train}
+          onVehicleSelected={handleVehicleIdSelected}
+        />
       </Box>
       {train && <TrainInfoContainer train={train} />}
       {loading && getLoadingSkeleton()}
