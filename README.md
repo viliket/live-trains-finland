@@ -37,7 +37,7 @@ Copy the example configuration values from the `.env` file to a new file named
 ### Run the app
 
 ```bash
-npm start
+npm run dev
 ```
 
 Runs the app in the development mode.\
