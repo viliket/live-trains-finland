@@ -13,6 +13,7 @@ import {
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
+
 import StationTimeTableRow from './StationTimeTableRow';
 
 type StationTimeTableProps = {

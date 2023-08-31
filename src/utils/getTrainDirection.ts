@@ -3,6 +3,7 @@ import {
   TrainDirection,
   TrainTimeTableRowFragment,
 } from '../graphql/generated/digitraffic';
+
 import { isIn } from './common';
 import lineKmLocationByStationCode from './generated/line-km-location-by-station-code.json';
 import { StationTimeTableRowGroup } from './getTimeTableRowsGroupedByStation';

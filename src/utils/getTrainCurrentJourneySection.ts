@@ -1,6 +1,7 @@
 import { orderBy } from 'lodash';
 
 import { TrainDetailsFragment } from '../graphql/generated/digitraffic';
+
 import { getTimeTableRowRealTime } from './train';
 
 export default function getTrainCurrentJourneySection(

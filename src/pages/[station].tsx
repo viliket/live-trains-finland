@@ -26,7 +26,6 @@ import getRouteForTrain from '../utils/getRouteForTrain';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
 import { getTimeTableRowRealTime } from '../utils/train';
-import NotFound from './404';
 
 const VehicleMapContainer = dynamic(
   () => import('../components/map/VehicleMapContainer'),

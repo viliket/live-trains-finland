@@ -3,6 +3,7 @@ import { generateStyle, Options } from 'hsl-map-style';
 import { VectorSource } from 'mapbox-gl';
 
 import { VehicleDetails } from '../types/vehicles';
+
 import { toRadians } from './math';
 
 let canvas: HTMLCanvasElement;

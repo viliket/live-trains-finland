@@ -25,6 +25,7 @@ import {
   getTrainScheduledDepartureTime,
   getWagonNumberFromVehicleId,
 } from '../utils/train';
+
 import FloorSwitch from './FloorSwitch';
 import TrainWagonMap, { wagonMaps } from './TrainWagonMap';
 

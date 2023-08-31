@@ -16,6 +16,7 @@ import {
   getVehicleMarkerIconImage,
   getVehiclesGeoJsonData,
 } from '../../utils/map';
+
 import CustomOverlay from './CustomOverlay';
 import DeckGLOverlay from './DeckGLOverlay';
 

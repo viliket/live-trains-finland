@@ -5,7 +5,7 @@ module.exports = {
     'import/order': [
       'error',
       {
-        groups: ['builtin', 'external', 'internal'],
+        groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
         pathGroups: [
           {
             pattern: 'react',

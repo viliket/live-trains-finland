@@ -5,6 +5,7 @@ import {
 } from '../../graphql/generated/digitraffic';
 import getTimeTableRowsGroupedByStation from '../getTimeTableRowsGroupedByStation';
 import getTrainDirection from '../getTrainDirection';
+
 import trainHmd482SkJy from './__fixtures__/train-HMD-482-SK-JY.json';
 import trainIc143DirectionReversesAfterTpe from './__fixtures__/train-IC-143-HKI-PM-composition-direction-reverse-after-TPE.json';
 import trainIc266RoiHki from './__fixtures__/train-IC-266-ROI-HKI-composition-changes.json';

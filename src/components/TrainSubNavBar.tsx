@@ -6,6 +6,7 @@ import {
   getTrainDepartureStationName,
   getTrainDestinationStationName,
 } from '../utils/train';
+
 import SubNavBar from './SubNavBar';
 
 type TrainSubNavBarProps = {

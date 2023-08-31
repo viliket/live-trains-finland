@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 import { client } from '../graphql/client';
 import { lightTheme, darkTheme } from '../theme';
+
 import { ThemeProvider, useTheme } from './ThemeProvider';
 import '../i18n';
 

@@ -3,6 +3,7 @@ import { parseISO } from 'date-fns';
 import { vehiclesVar, trainsVar } from '../graphql/client';
 import { TrainByStationFragment } from '../graphql/generated/digitraffic';
 import { TrainLocationMessage } from '../types/vehicles';
+
 import { formatEET } from './date';
 import { getBearing } from './math';
 import { getDepartureTimeTableRow } from './train';

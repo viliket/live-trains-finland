@@ -1,6 +1,7 @@
 import { orderBy } from 'lodash';
 
 import { TrainDetailsFragment, Wagon } from '../graphql/generated/digitraffic';
+
 import getTrainJourneySectionForStation from './getTrainJourneySectionForStation';
 
 type DiffStatus = 'unchanged' | 'removed' | 'added';

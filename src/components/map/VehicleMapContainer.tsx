@@ -16,6 +16,7 @@ import { TrainByStationFragment } from '../../graphql/generated/digitraffic';
 import { RouteForRailFragment } from '../../graphql/generated/digitransit';
 import { getMapStyle } from '../../utils/map';
 import { TrainStation, trainStations } from '../../utils/stations';
+
 import CustomOverlay from './CustomOverlay';
 import RailwayPlatformsLayer from './RailwayPlatformsLayer';
 import RailwayTracksLayer from './RailwayTracksLayer';

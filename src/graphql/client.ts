@@ -11,6 +11,7 @@ import getStationPlatformSide from '../utils/getStationPlatformSide';
 import getTimeTableRowsGroupedByStation from '../utils/getTimeTableRowsGroupedByStation';
 import getTrainDirection from '../utils/getTrainDirection';
 import getTrainVehicleIdFromTrainEuropeanVehicleNumber from '../utils/getTrainVehicleIdFromTrainEuropeanVehicleNumber';
+
 import { TimeTableRow, TrainDetailsFragment } from './generated/digitraffic';
 
 /**

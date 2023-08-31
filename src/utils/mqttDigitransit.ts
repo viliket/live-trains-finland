@@ -7,6 +7,7 @@ import {
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
 import { VehiclePositionMessage } from '../types/vehicles';
+
 import { formatEET } from './date';
 import { toKmsPerHour } from './math';
 import {

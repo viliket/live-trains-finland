@@ -1,6 +1,7 @@
 import { minBy } from 'lodash';
 
 import { TrainDetailsFragment } from '../graphql/generated/digitraffic';
+
 import canTrainBeTrackedByHsl from './canTrainBeTrackedByHsl';
 import getTrainCurrentJourneySection from './getTrainCurrentJourneySection';
 

@@ -23,6 +23,7 @@ import {
   getTimeTableRowRealTime,
   getTrainStationName,
 } from '../../utils/train';
+
 import stopSignSvgPath from './stop-sign.svg?url';
 
 type StopsLayerProps = {

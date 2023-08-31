@@ -21,6 +21,7 @@ import {
   getTrainDestinationStationName,
   getTrainScheduledDepartureTime,
 } from '../utils/train';
+
 import TimeTableRowTime from './TimeTableRowTime';
 import VehicleTrackingIcon from './VehicleTrackingIcon';
 

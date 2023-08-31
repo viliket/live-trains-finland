@@ -11,6 +11,7 @@ import Link from 'next/link';
 import Icon from '../assets/icon.svg';
 import Logo from '../assets/logo.svg';
 import { useTheme } from '../providers/ThemeProvider';
+
 import { LanguageSelector } from './LanguageSelector';
 
 export function TopNavBar() {

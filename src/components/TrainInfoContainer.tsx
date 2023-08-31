@@ -21,6 +21,7 @@ import {
   getTrainScheduledDepartureTime,
   getTrainStationName,
 } from '../utils/train';
+
 import TimelineRouteStopSeparator from './TimelineRouteStopSeparator';
 import TimeTableRowTime from './TimeTableRowTime';
 import TrainComposition from './TrainComposition';

@@ -25,6 +25,7 @@ import getTrainCompositionDetailsForStation from '../utils/getTrainCompositionDe
 import getTrainCurrentJourneySection from '../utils/getTrainCurrentJourneySection';
 import getTrainJourneySectionForStation from '../utils/getTrainJourneySectionForStation';
 import { getTrainDepartureStation, getTrainStationName } from '../utils/train';
+
 import TrainWagonSm2And4 from './TrainWagonSm2And4';
 import TrainWagonSm5 from './TrainWagonSm5';
 

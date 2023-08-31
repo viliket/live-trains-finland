@@ -4,6 +4,7 @@ import {
   TrainByStationFragment,
   TrainDetailsFragment,
 } from '../graphql/generated/digitraffic';
+
 import getTimeTableRowsGroupedByStation, {
   StationTimeTableRowGroup,
 } from './getTimeTableRowsGroupedByStation';
