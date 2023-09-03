@@ -3,11 +3,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
-import { Box, Skeleton } from '@mui/material';
-import dynamic from 'next/dynamic';
+import { Box } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 
+import MapLayout, {
+  VehicleMapContainerPortal,
+} from '../../components/MapLayout';
 import TrainInfoContainer from '../../components/TrainInfoContainer';
 import TrainSubNavBar from '../../components/TrainSubNavBar';
 import { gqlClients, vehiclesVar } from '../../graphql/client';
@@ -19,13 +21,9 @@ import getHeadTrainVehicleId from '../../utils/getHeadTrainVehicleId';
 import getRouteForTrain from '../../utils/getRouteForTrain';
 import { trainStations } from '../../utils/stations';
 import NotFound from '../404';
+import { NextPageWithLayout } from '../_app';
 
-const VehicleMapContainer = dynamic(
-  () => import('../../components/map/VehicleMapContainer'),
-  { ssr: false }
-);
-
-const Train = () => {
+const Train: NextPageWithLayout = () => {
   const router = useRouter();
   const trainParams = router.query.train as string[] | undefined;
   const [trainNumber, departureDate] = trainParams ?? [null, null];
@@ -107,7 +105,7 @@ const Train = () => {
     <div style={{ width: '100%' }}>
       <TrainSubNavBar train={train} />
       <Box sx={{ height: '30vh' }}>
-        <VehicleMapContainer
+        <VehicleMapContainerPortal
           selectedVehicleId={selectedVehicleId}
           station={station}
           route={selectedRoute}
@@ -121,6 +119,10 @@ const Train = () => {
       )}
     </div>
   );
+};
+
+Train.getLayout = function getLayout(page) {
+  return <MapLayout>{page}</MapLayout>;
 };
 
 export default Train;

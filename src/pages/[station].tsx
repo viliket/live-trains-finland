@@ -6,11 +6,11 @@ import React from 'react';
 import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { orderBy } from 'lodash';
 import { ClockStart, ClockEnd } from 'mdi-material-ui';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
 import FavoriteStation from '../components/FavoriteStation';
+import MapLayout, { VehicleMapContainerPortal } from '../components/MapLayout';
 import StationTimeTable from '../components/StationTimeTable';
 import SubNavBar from '../components/SubNavBar';
 import { gqlClients, vehiclesVar } from '../graphql/client';
@@ -27,12 +27,9 @@ import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
 import { getTimeTableRowRealTime } from '../utils/train';
 
-const VehicleMapContainer = dynamic(
-  () => import('../components/map/VehicleMapContainer'),
-  { ssr: false }
-);
+import { NextPageWithLayout } from './_app';
 
-const Station = () => {
+const Station: NextPageWithLayout = () => {
   const router = useRouter();
   const stationName = router.query.station as string | undefined;
   const [timeTableType, setTimeTableType] = useState(
@@ -152,7 +149,7 @@ const Station = () => {
         )}
       </SubNavBar>
       <Box sx={{ height: '30vh' }}>
-        <VehicleMapContainer
+        <VehicleMapContainerPortal
           selectedVehicleId={selectedVehicleId}
           station={station}
           route={selectedRoute}
@@ -201,6 +198,10 @@ const Station = () => {
       )}
     </div>
   );
+};
+
+Station.getLayout = function getLayout(page) {
+  return <MapLayout>{page}</MapLayout>;
 };
 
 export default Station;

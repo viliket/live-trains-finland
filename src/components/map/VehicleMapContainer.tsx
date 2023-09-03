@@ -24,7 +24,7 @@ import StopsLayer from './StopsLayer';
 import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
 
-type VehicleMapContainerProps = {
+export type VehicleMapContainerProps = {
   selectedVehicleId: number | null;
   station?: TrainStation;
   route?: RouteForRailFragment | null;
@@ -57,7 +57,7 @@ const VehicleMapContainer = ({
     // Note: We need to do this when "reuseMaps" flag is set
     if (map) {
       const stationToCenter = station ?? fallbackStation;
-      if (stationToCenter) {
+      if (stationToCenter && selectedVehicleId == null) {
         map.setCenter({
           lng: stationToCenter.longitude,
           lat: stationToCenter.latitude,
@@ -65,7 +65,7 @@ const VehicleMapContainer = ({
       }
       map.setZoom(initialZoom);
     }
-  }, [map, station]);
+  }, [map, station, selectedVehicleId]);
 
   return (
     <Map
