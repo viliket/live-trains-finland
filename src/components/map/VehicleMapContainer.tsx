@@ -72,6 +72,7 @@ const VehicleMapContainer = ({
       mapLib={maplibregl}
       ref={mapRef}
       reuseMaps
+      onLoad={(e) => e.target.resize()}
       // Disable unneeded RTLTextPlugin that is set by react-map-gl by default
       RTLTextPlugin=""
       initialViewState={{
