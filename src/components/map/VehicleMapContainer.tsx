@@ -67,12 +67,24 @@ const VehicleMapContainer = ({
     }
   }, [map, station, selectedVehicleId]);
 
+  useEffect(() => {
+    // As we are creating VehicleMapContainer initially on a detached DOM node,
+    // the maplibre-gl Map can have wrong initial canvas size as the Map determines
+    // its dimensions from the container element's clientWidth/clientHeight which
+    // would be 0 when the container is detached from DOM.
+    if (
+      map &&
+      map.getContainer().clientHeight !== map.getCanvas().clientHeight
+    ) {
+      map.resize();
+    }
+  }, [map]);
+
   return (
     <Map
       mapLib={maplibregl}
       ref={mapRef}
       reuseMaps
-      onLoad={(e) => e.target.resize()}
       // Disable unneeded RTLTextPlugin that is set by react-map-gl by default
       RTLTextPlugin=""
       initialViewState={{
