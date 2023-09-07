@@ -15,7 +15,10 @@ const SwitchLanguage = () => {
     if (Array.isArray(detectedLanguages)) {
       detectedLanguages = detectedLanguages[0];
     }
-    i18n.changeLanguage(detectedLanguages);
+    if (detectedLanguages) {
+      i18n.changeLanguage(detectedLanguages);
+      document.documentElement.lang = detectedLanguages;
+    }
     i18n.services.languageDetector = languageDetector;
   }, [i18n]);
 
