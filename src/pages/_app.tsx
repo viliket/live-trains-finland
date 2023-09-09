@@ -33,6 +33,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             name="description"
             content="Junien aikataulut, sijainnit, ja kokoonpanot reaaliajassa"
           />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <ServiceWorkerUpdatePrompt />
         <SwitchLanguage />
