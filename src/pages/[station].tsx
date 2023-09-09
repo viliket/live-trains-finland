@@ -102,17 +102,17 @@ const Station: NextPageWithLayout = () => {
   }, [selectedTrain, executeRouteSearch]);
 
   const getLoadingSkeleton = () => {
-    const row = (
-      <Skeleton
-        variant="rectangular"
-        width="100%"
-        height={50}
-        sx={{ marginTop: '1rem' }}
-      />
-    );
     return (
       <Box sx={{ padding: '1rem' }}>
-        {Array.from(Array(7).keys()).map(() => row)}
+        {Array.from(Array(7).keys()).map((i) => (
+          <Skeleton
+            key={i}
+            variant="rectangular"
+            width="100%"
+            height={50}
+            sx={{ marginTop: '1rem' }}
+          />
+        ))}
       </Box>
     );
   };
