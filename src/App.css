@@ -31,7 +31,7 @@
   background-color: hsla(0, 0%, 28%, 0.7);
 }
 
-[data-theme='dark'] .maplibregl-ctrl-attrib.mapboxgl-compact-show a {
+[data-theme='dark'] .maplibregl-ctrl-attrib.maplibregl-compact-show a {
   color: #818181;
 }
 
