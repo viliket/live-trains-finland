@@ -9,6 +9,12 @@ import {
 import getTrainCurrentStation from '../getTrainCurrentStation';
 import * as getTrainLatestArrivalRowModule from '../getTrainLatestArrivalRow';
 
+// Workaround for https://github.com/aelbore/esbuild-jest/issues/26
+jest.mock('../getTrainLatestArrivalRow', () => ({
+  __esModule: true,
+  ...jest.requireActual('../getTrainLatestArrivalRow'),
+}));
+
 const trainBase: TrainDetailsFragment = {
   trainNumber: 123,
   departureDate: '2023-01-25',

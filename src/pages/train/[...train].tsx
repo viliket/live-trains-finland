@@ -1,31 +1,33 @@
-import { Suspense, useCallback, useEffect, useState } from 'react';
+'use client';
+
+import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
-import { Box, Skeleton } from '@mui/material';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 
-import TrainInfoContainer from '../components/TrainInfoContainer';
-import TrainSubNavBar from '../components/TrainSubNavBar';
-import { gqlClients, vehiclesVar } from '../graphql/client';
-import { useTrainLazyQuery } from '../graphql/generated/digitraffic';
-import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
-import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
-import { isDefined } from '../utils/common';
-import getHeadTrainVehicleId from '../utils/getHeadTrainVehicleId';
-import getRouteForTrain from '../utils/getRouteForTrain';
-import { trainStations } from '../utils/stations';
-import NotFound from './NotFound';
+import MapLayout, {
+  VehicleMapContainerPortal,
+} from '../../components/MapLayout';
+import TrainInfoContainer from '../../components/TrainInfoContainer';
+import TrainSubNavBar from '../../components/TrainSubNavBar';
+import { gqlClients, vehiclesVar } from '../../graphql/client';
+import { useTrainLazyQuery } from '../../graphql/generated/digitraffic';
+import { useRoutesForRailLazyQuery } from '../../graphql/generated/digitransit';
+import useTrainLiveTracking from '../../hooks/useTrainLiveTracking';
+import { isDefined } from '../../utils/common';
+import getHeadTrainVehicleId from '../../utils/getHeadTrainVehicleId';
+import getRouteForTrain from '../../utils/getRouteForTrain';
+import { trainStations } from '../../utils/stations';
+import NotFound from '../404';
+import { NextPageWithLayout } from '../_app';
 
-const VehicleMapContainer = React.lazy(
-  () => import('../components/map/VehicleMapContainer')
-);
-
-const Train = () => {
-  const { trainNumber, departureDate } = useParams<{
-    trainNumber: string;
-    departureDate: string;
-  }>();
-  const [searchParams] = useSearchParams();
+const Train: NextPageWithLayout = () => {
+  const router = useRouter();
+  const trainParams = router.query.train as string[] | undefined;
+  const [trainNumber, departureDate] = trainParams ?? [null, null];
+  const searchParams = useSearchParams();
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
@@ -95,24 +97,6 @@ const Train = () => {
     }
   }, [train]);
 
-  const getLoadingSkeleton = () => {
-    const row = (
-      <Skeleton
-        variant="rectangular"
-        width="100%"
-        height={50}
-        sx={{ marginTop: '1rem' }}
-      />
-    );
-    return (
-      <Box sx={{ padding: '1rem' }}>
-        {row}
-        {row}
-        {row}
-      </Box>
-    );
-  };
-
   if (getTrainCalled && !loading && !train) {
     return <NotFound />;
   }
@@ -121,23 +105,24 @@ const Train = () => {
     <div style={{ width: '100%' }}>
       <TrainSubNavBar train={train} />
       <Box sx={{ height: '30vh' }}>
-        <Suspense>
-          <VehicleMapContainer
-            selectedVehicleId={selectedVehicleId}
-            station={station}
-            route={selectedRoute}
-            train={train}
-            onVehicleSelected={handleVehicleIdSelected}
-          />
-        </Suspense>
+        <VehicleMapContainerPortal
+          selectedVehicleId={selectedVehicleId}
+          station={station}
+          route={selectedRoute}
+          train={train}
+          onVehicleSelected={handleVehicleIdSelected}
+        />
       </Box>
-      {train && <TrainInfoContainer train={train} />}
-      {loading && getLoadingSkeleton()}
+      <TrainInfoContainer train={train} />
       {error && (
         <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
       )}
     </div>
   );
+};
+
+Train.getLayout = function getLayout(page) {
+  return <MapLayout>{page}</MapLayout>;
 };
 
 export default Train;

@@ -1,4 +1,5 @@
 import { TrainByStationFragment } from '../graphql/generated/digitraffic';
+
 import { getTrainDepartureStation, getTrainDestinationStation } from './train';
 
 export default function canTrainBeTrackedByHsl(

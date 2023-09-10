@@ -1,7 +1,7 @@
 import { Box, keyframes } from '@mui/material';
 import { range } from 'lodash';
 
-import { ReactComponent as HeroBackground } from '../assets/hero.svg';
+import HeroBackground from '../assets/hero.svg';
 
 const trainAnimKeyFrames = keyframes`
   0% {

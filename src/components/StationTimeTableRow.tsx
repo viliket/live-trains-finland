@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@mui/material';
 import { ChevronRight } from 'mdi-material-ui';
-import { Link as RouterLink } from 'react-router-dom';
+import RouterLink from 'next/link';
 
 import {
   TimeTableRowType,
@@ -21,6 +21,7 @@ import {
   getTrainDestinationStationName,
   getTrainScheduledDepartureTime,
 } from '../utils/train';
+
 import TimeTableRowTime from './TimeTableRowTime';
 import VehicleTrackingIcon from './VehicleTrackingIcon';
 
@@ -105,7 +106,7 @@ function StationTimeTableRow({
       <TableCell>
         <Link
           component={RouterLink}
-          to={`/${destinationStationName}`}
+          href={`/${destinationStationName}`}
           color="inherit"
           underline="none"
           onClick={handleStationClick}

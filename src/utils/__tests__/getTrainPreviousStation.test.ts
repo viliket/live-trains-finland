@@ -5,6 +5,12 @@ import {
 import * as getTrainLatestDepartureTimeTableRowModule from '../getTrainLatestDepartureTimeTableRow';
 import getTrainPreviousStation from '../getTrainPreviousStation';
 
+// Workaround for https://github.com/aelbore/esbuild-jest/issues/26
+jest.mock('../getTrainLatestDepartureTimeTableRow', () => ({
+  __esModule: true,
+  ...jest.requireActual('../getTrainLatestDepartureTimeTableRow'),
+}));
+
 describe('getTrainPreviousStation', () => {
   it('should be null when the train latest departure time table row is null', () => {
     jest

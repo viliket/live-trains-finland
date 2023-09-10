@@ -11,6 +11,7 @@ import getStationPlatformSide from '../utils/getStationPlatformSide';
 import getTimeTableRowsGroupedByStation from '../utils/getTimeTableRowsGroupedByStation';
 import getTrainDirection from '../utils/getTrainDirection';
 import getTrainVehicleIdFromTrainEuropeanVehicleNumber from '../utils/getTrainVehicleIdFromTrainEuropeanVehicleNumber';
+
 import { TimeTableRow, TrainDetailsFragment } from './generated/digitraffic';
 
 /**
@@ -34,7 +35,7 @@ const digitransitLink = new HttpLink({
   uri: 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql',
   headers: {
     'digitransit-subscription-key':
-      process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
+      process.env.NEXT_PUBLIC_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
   },
 });
 

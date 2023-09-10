@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
-import { Box, Link, Grid } from '@mui/material';
+import { Box, Link, Grid, Skeleton } from '@mui/material';
 import { parseISO } from 'date-fns';
+import RouterLink from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 
 import { gqlClients } from '../graphql/client';
 import {
@@ -21,22 +21,27 @@ import {
   getTrainScheduledDepartureTime,
   getTrainStationName,
 } from '../utils/train';
+
 import TimelineRouteStopSeparator from './TimelineRouteStopSeparator';
 import TimeTableRowTime from './TimeTableRowTime';
 import TrainComposition from './TrainComposition';
 import TrainWagonDetailsDialog from './TrainWagonDetailsDialog';
 
 type TrainInfoContainerProps = {
-  train: TrainDetailsFragment;
+  train?: TrainDetailsFragment | null;
 };
 
 function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const { t } = useTranslation();
   const [wagonDialogOpen, setWagonDialogOpen] = useState(false);
   const [selectedWagon, setSelectedWagon] = useState<Wagon | null>(null);
-  const departureDate = getTrainScheduledDepartureTime(train);
-  const { error, data: realTimeData } = useTrainQuery(
-    departureDate
+  const departureDate = train ? getTrainScheduledDepartureTime(train) : null;
+  const {
+    error,
+    data: realTimeData,
+    loading,
+  } = useTrainQuery(
+    train && departureDate
       ? {
           variables: {
             trainNumber: train.trainNumber,
@@ -62,6 +67,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   };
 
   const getStops = () => {
+    if (!train) return null;
     const trainCurrentStation = getTrainCurrentStation(train);
     const trainPreviousStation = getTrainPreviousStation(train);
     const trainLatestArrivalRow = getTrainLatestArrivalRow(train);
@@ -106,7 +112,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
               <Grid item xs={6}>
                 <Link
                   component={RouterLink}
-                  to={`/${getTrainStationName(station)}`}
+                  href={`/${getTrainStationName(station)}`}
                   color="inherit"
                   underline="none"
                   sx={{ fontWeight: 500 }}
@@ -146,6 +152,22 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
     });
   };
 
+  const getLoadingSkeleton = () => {
+    return (
+      <Box sx={{ padding: '1rem' }}>
+        {Array.from(Array(7).keys()).map((i) => (
+          <Skeleton
+            key={i}
+            variant="rectangular"
+            width="100%"
+            height={50}
+            sx={{ marginTop: '1rem' }}
+          />
+        ))}
+      </Box>
+    );
+  };
+
   return (
     <>
       <Box
@@ -165,6 +187,19 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
             train={realTimeTrain}
             onWagonClick={handleWagonClick}
           />
+        )}
+        {!realTimeTrain && !error && (
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Skeleton
+              variant="rectangular"
+              sx={{
+                aspectRatio: 5.5,
+                width: '100%',
+                height: 'auto',
+                maxWidth: 260,
+              }}
+            />
+          </Box>
         )}
       </Box>
       <Timeline
@@ -216,13 +251,16 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
           </TimelineContent>
         </TimelineItem>
         {getStops()}
+        {!train && getLoadingSkeleton()}
       </Timeline>
-      <TrainWagonDetailsDialog
-        train={train}
-        selectedWagon={selectedWagon}
-        open={wagonDialogOpen}
-        onClose={handleWagonDialogClose}
-      />
+      {train && (
+        <TrainWagonDetailsDialog
+          train={train}
+          selectedWagon={selectedWagon}
+          open={wagonDialogOpen}
+          onClose={handleWagonDialogClose}
+        />
+      )}
     </>
   );
 }

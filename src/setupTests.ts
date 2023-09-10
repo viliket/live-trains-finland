@@ -16,3 +16,6 @@ jest.mock('react-i18next', () => ({
   },
   Trans: ({ children }: { children?: React.ReactNode }) => children,
 }));
+
+// Note: Temporary workaround to avoid @apollo/client HttpLink throwing error for missing global fetch
+global.fetch = jest.fn();

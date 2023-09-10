@@ -17,8 +17,8 @@ import Slide from '@mui/material/Slide';
 import Toolbar from '@mui/material/Toolbar';
 import { TransitionProps } from '@mui/material/transitions';
 import { ChevronLeft, Magnify } from 'mdi-material-ui';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TrainStation, trainStations } from '../utils/stations';
 
@@ -46,28 +46,32 @@ const searchDialogUrlHash = '#search';
 export default function StationSearch() {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const navigate = useNavigate();
-  const { hash } = useLocation();
+  const router = useRouter();
   const { t } = useTranslation();
 
   useEffect(() => {
-    const isSearchDialogOpen = hash === searchDialogUrlHash;
-    if (!isSearchDialogOpen) {
-      setInputValue('');
-    }
-    setOpen(isSearchDialogOpen);
-  }, [hash]);
+    const onHashChange = () => {
+      const isSearchDialogOpen = window.location.hash === searchDialogUrlHash;
+      if (!isSearchDialogOpen) {
+        setInputValue('');
+      }
+      setOpen(isSearchDialogOpen);
+    };
+    window.addEventListener('hashchange', onHashChange);
+    setOpen(window.location.hash === searchDialogUrlHash);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
 
   const handleClickOpen = () => {
     window.location.hash = searchDialogUrlHash;
   };
 
   const handleClose = () => {
-    navigate(-1);
+    router.back();
   };
 
   const handleClickStation = (station: TrainStation) => {
-    navigate(`/${station.stationName}`, { replace: true });
+    router.replace(`/${station.stationName}`);
   };
 
   const filteredOptions = filterOptions(

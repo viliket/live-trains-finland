@@ -5,6 +5,7 @@ import {
 import getStationPlatformSide from '../getStationPlatformSide';
 import getTimeTableRowsGroupedByStation from '../getTimeTableRowsGroupedByStation';
 import getTrainDirection from '../getTrainDirection';
+
 import trainIc143DirectionReversesAfterTpe from './__fixtures__/train-IC-143-HKI-PM-composition-direction-reverse-after-TPE.json';
 import trainIc266RoiHki from './__fixtures__/train-IC-266-ROI-HKI-composition-changes.json';
 import trainPyo276KliHki from './__fixtures__/train-PYO-276-KLI-HKI-composition-changes.json';

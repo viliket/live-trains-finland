@@ -3,6 +3,7 @@ import {
   RouteForRailFragment,
   RoutesForRailQuery,
 } from '../graphql/generated/digitransit';
+
 import {
   getTrainDepartureStationName,
   getTrainDestinationStationName,

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { CollisionFilterExtension } from '@deck.gl/extensions/typed';
 import { GeoJsonLayer } from '@deck.gl/layers/typed';
@@ -6,9 +6,9 @@ import { Box, Button, useTheme } from '@mui/material';
 import { format } from 'date-fns';
 import { mapValues } from 'lodash';
 import { Crosshairs, CrosshairsGps } from 'mdi-material-ui';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl';
-import { useNavigate } from 'react-router-dom';
 
 import { vehiclesVar } from '../../graphql/client';
 import useAnimationFrame from '../../hooks/useAnimationFrame';
@@ -16,6 +16,7 @@ import {
   getVehicleMarkerIconImage,
   getVehiclesGeoJsonData,
 } from '../../utils/map';
+
 import CustomOverlay from './CustomOverlay';
 import DeckGLOverlay from './DeckGLOverlay';
 
@@ -37,16 +38,19 @@ export default function VehicleMarkerLayer({
   selectedVehicleId,
 }: VehicleMarkerLayerProps) {
   const { current: map } = useMap();
+  const glRef = useRef<WebGLRenderingContext>();
   const [vehicleIdForPopup, setVehicleIdForPopup] = useState<number | null>(
     null
   );
-  const [isTracking, setIsTracking] = useState<boolean>(false);
+  const [isTracking, setIsTracking] = useState<boolean>(
+    selectedVehicleId != null
+  );
   const [interpolatedPositions, setInterpolatedPositions] = useState<
     Record<number, VehicleInterpolatedPosition>
   >({});
   const { t } = useTranslation();
   const theme = useTheme();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const iconUrl = useMemo(() => {
     return getVehicleMarkerIconImage({
@@ -59,8 +63,20 @@ export default function VehicleMarkerLayer({
   }, [map, theme.palette.mode, theme.palette.secondary.main]);
 
   useEffect(() => {
+    return () => {
+      if (glRef.current) {
+        // Workaround for https://github.com/visgl/deck.gl/issues/1312
+        const extension = glRef.current.getExtension('WEBGL_lose_context');
+        if (extension) extension.loseContext();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const moveStartCallback = (e: ViewStateChangeEvent) => {
-      if (!('triggerSource' in e)) {
+      // Check if user-initiated movestart
+      // User-initiated movestart has originalEvent set (e.g. TouchEvent or MouseEvent).
+      if (!('triggerSource' in e) && e.originalEvent) {
         setIsTracking(false);
       }
     };
@@ -239,30 +255,31 @@ export default function VehicleMarkerLayer({
 
   return (
     <>
-      <DeckGLOverlay layers={[vehiclesLayer]} />
+      <DeckGLOverlay
+        layers={[vehiclesLayer]}
+        onWebGLInitialized={(gl) => (glRef.current = gl)}
+      />
       {selectedVehicleId != null &&
         interpolatedPositions[selectedVehicleId] && (
-          <CustomOverlay
-            children={
-              <Box
-                component="button"
-                onClick={() => setIsTracking(!isTracking)}
-                sx={{
-                  svg: {
-                    verticalAlign: 'middle',
-                    padding: '4px',
-                    color: isTracking ? 'primary.main' : 'text.primary',
-                  },
-                }}
-              >
-                {isTracking ? (
-                  <CrosshairsGps className="maplibregl-ctrl-icon" />
-                ) : (
-                  <Crosshairs className="maplibregl-ctrl-icon" />
-                )}
-              </Box>
-            }
-          />
+          <CustomOverlay>
+            <Box
+              component="button"
+              onClick={() => setIsTracking(!isTracking)}
+              sx={{
+                svg: {
+                  verticalAlign: 'middle',
+                  padding: '4px',
+                  color: isTracking ? 'primary.main' : 'text.primary',
+                },
+              }}
+            >
+              {isTracking ? (
+                <CrosshairsGps className="maplibregl-ctrl-icon" />
+              ) : (
+                <Crosshairs className="maplibregl-ctrl-icon" />
+              )}
+            </Box>
+          </CustomOverlay>
         )}
       {selectedVehicleForPopup && map && (
         <Popup
@@ -287,7 +304,7 @@ export default function VehicleMarkerLayer({
           <Button
             variant="outlined"
             onClick={(e) => {
-              navigate(
+              router.push(
                 `/train/${selectedVehicleForPopup.jrn}/${format(
                   new Date(),
                   'yyyy-MM-dd'

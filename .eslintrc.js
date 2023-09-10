@@ -1,11 +1,11 @@
 module.exports = {
-  extends: 'react-app',
+  extends: 'next/core-web-vitals',
   plugins: ['import'],
   rules: {
     'import/order': [
       'error',
       {
-        groups: ['builtin', 'external', 'internal'],
+        groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
         pathGroups: [
           {
             pattern: 'react',

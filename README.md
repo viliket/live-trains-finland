@@ -37,7 +37,7 @@ Copy the example configuration values from the `.env` file to a new file named
 ### Run the app
 
 ```bash
-npm start
+npm run dev
 ```
 
 Runs the app in the development mode.\
@@ -72,7 +72,7 @@ Launches the test runner in the interactive watch mode.
 npm run build
 ```
 
-Builds the app for production to the `build` folder.
+Builds the app for production to the `out` folder.
 
 ### Regenerate the map tiles
 

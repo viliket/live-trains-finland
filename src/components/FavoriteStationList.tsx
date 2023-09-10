@@ -2,8 +2,8 @@ import { Fragment } from 'react';
 
 import { Chip, Stack } from '@mui/material';
 import { Star } from 'mdi-material-ui';
+import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
 
 import { trainStations } from '../utils/stations';
@@ -36,7 +36,7 @@ const FavoriteStationList = () => {
             <Fragment key={station.stationShortCode}>
               <Chip
                 component={Link}
-                to={`/${station.stationName}`}
+                href={`/${station.stationName}`}
                 label={station.stationName}
                 clickable
               />

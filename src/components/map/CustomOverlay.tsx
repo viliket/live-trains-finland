@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { cloneElement } from 'react';
 
 import { createPortal } from 'react-dom';
@@ -39,10 +39,15 @@ class OverlayControl implements IControl {
  * Adapted from https://github.com/visgl/react-map-gl/blob/master/examples/custom-overlay/src/custom-overlay.tsx
  */
 function CustomOverlay(props: { children: React.ReactElement }) {
-  const ctrl = useControl<OverlayControl>(() => new OverlayControl());
+  const [, setIsAdded] = useState(false);
+
+  const ctrl = useControl<OverlayControl>(
+    () => new OverlayControl(),
+    () => setIsAdded(true),
+    () => {}
+  );
 
   const map = ctrl.getMap();
-
   const element = ctrl.getElement();
 
   return (

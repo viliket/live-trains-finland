@@ -4,6 +4,7 @@ import {
   TrainTimeTableGroupFragment,
   TrainTimeTableRowFragment,
 } from '../graphql/generated/digitraffic';
+
 import { isIn } from './common';
 import _stationPlatformInfoByStationPlatformId from './generated/station-platform-by-station-platform-id.json';
 

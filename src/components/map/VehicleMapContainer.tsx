@@ -16,6 +16,7 @@ import { TrainByStationFragment } from '../../graphql/generated/digitraffic';
 import { RouteForRailFragment } from '../../graphql/generated/digitransit';
 import { getMapStyle } from '../../utils/map';
 import { TrainStation, trainStations } from '../../utils/stations';
+
 import CustomOverlay from './CustomOverlay';
 import RailwayPlatformsLayer from './RailwayPlatformsLayer';
 import RailwayTracksLayer from './RailwayTracksLayer';
@@ -23,7 +24,7 @@ import StopsLayer from './StopsLayer';
 import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
 
-type VehicleMapContainerProps = {
+export type VehicleMapContainerProps = {
   selectedVehicleId: number | null;
   station?: TrainStation;
   route?: RouteForRailFragment | null;
@@ -56,7 +57,7 @@ const VehicleMapContainer = ({
     // Note: We need to do this when "reuseMaps" flag is set
     if (map) {
       const stationToCenter = station ?? fallbackStation;
-      if (stationToCenter) {
+      if (stationToCenter && selectedVehicleId == null) {
         map.setCenter({
           lng: stationToCenter.longitude,
           lat: stationToCenter.latitude,
@@ -64,7 +65,20 @@ const VehicleMapContainer = ({
       }
       map.setZoom(initialZoom);
     }
-  }, [map, station]);
+  }, [map, station, selectedVehicleId]);
+
+  useEffect(() => {
+    // As we are creating VehicleMapContainer initially on a detached DOM node,
+    // the maplibre-gl Map can have wrong initial canvas size as the Map determines
+    // its dimensions from the container element's clientWidth/clientHeight which
+    // would be 0 when the container is detached from DOM.
+    if (
+      map &&
+      map.getContainer().clientHeight !== map.getCanvas().clientHeight
+    ) {
+      map.resize();
+    }
+  }, [map]);
 
   return (
     <Map
@@ -89,7 +103,7 @@ const VehicleMapContainer = ({
             url: url.replace('api.digitransit.fi', 'cdn.digitransit.fi'),
             headers: {
               'digitransit-subscription-key':
-                process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY,
+                process.env.NEXT_PUBLIC_DIGITRANSIT_SUBSCRIPTION_KEY,
             },
           };
         }
@@ -101,27 +115,25 @@ const VehicleMapContainer = ({
       <NavigationControl position="top-left" />
       <ScaleControl />
       <FullscreenControl />
-      <CustomOverlay
-        children={
-          <Box
-            component="button"
-            onClick={() => setUseVectorBaseTiles((b) => !b)}
-            sx={{
-              svg: {
-                verticalAlign: 'middle',
-                padding: '4px',
-                color: 'text.primary',
-              },
-            }}
-          >
-            {useVectorBaseTiles ? (
-              <QualityHigh className="maplibregl-ctrl-icon" />
-            ) : (
-              <QualityLow className="maplibregl-ctrl-icon" />
-            )}
-          </Box>
-        }
-      />
+      <CustomOverlay>
+        <Box
+          component="button"
+          onClick={() => setUseVectorBaseTiles((b) => !b)}
+          sx={{
+            svg: {
+              verticalAlign: 'middle',
+              padding: '4px',
+              color: 'text.primary',
+            },
+          }}
+        >
+          {useVectorBaseTiles ? (
+            <QualityHigh className="maplibregl-ctrl-icon" />
+          ) : (
+            <QualityLow className="maplibregl-ctrl-icon" />
+          )}
+        </Box>
+      </CustomOverlay>
       {
         /**
          * Create empty base layers for dynamically changing the layer order

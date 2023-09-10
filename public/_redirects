@@ -1,0 +1,15 @@
+# Workaround for Cloudflare Pages where rule /:id /[station] 200 shadows existing files in root
+
+/favicon.ico /favicon.ico 200
+/index.html /index.html 200
+/logo192.png /logo192.png 200
+/logo512.png /logo512.png 200
+/logo512_maskable.png /logo512_maskable.png 200
+/manifest.json /manifest.json 200
+/robots.txt /robots.txt 200
+/service-worker.js /service-worker.js 200
+/service-worker.js.map /service-worker.js.map 200
+
+# Actual dynamic rewrites for next.js static export pages
+/train/* /train/[...train] 200
+/:id /[station] 200

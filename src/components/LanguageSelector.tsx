@@ -19,6 +19,7 @@ export function LanguageSelector() {
 
   const handleSelectLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    document.documentElement.lang = lng;
     handleClose();
   };
 

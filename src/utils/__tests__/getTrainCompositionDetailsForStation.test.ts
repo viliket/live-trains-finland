@@ -1,5 +1,6 @@
 import { TrainDetailsFragment } from '../../graphql/generated/digitraffic';
 import getTrainCompositionDetailsForStation from '../getTrainCompositionDetailsForStation';
+
 import trainIc143DirectionReversesAfterTpe from './__fixtures__/train-IC-143-HKI-PM-composition-direction-reverse-after-TPE.json';
 import trainIc266RoiHkiV2 from './__fixtures__/train-IC-266-ROI-HKI-2023-05-20-composition-changes.json';
 import trainIc266RoiHki from './__fixtures__/train-IC-266-ROI-HKI-composition-changes.json';

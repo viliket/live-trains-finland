@@ -1,13 +1,16 @@
-import { Suspense, useCallback, useEffect, useState } from 'react';
+'use client';
+
+import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
 import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { orderBy } from 'lodash';
 import { ClockStart, ClockEnd } from 'mdi-material-ui';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
 
 import FavoriteStation from '../components/FavoriteStation';
+import MapLayout, { VehicleMapContainerPortal } from '../components/MapLayout';
 import StationTimeTable from '../components/StationTimeTable';
 import SubNavBar from '../components/SubNavBar';
 import { gqlClients, vehiclesVar } from '../graphql/client';
@@ -23,19 +26,16 @@ import getRouteForTrain from '../utils/getRouteForTrain';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
 import { getTimeTableRowRealTime } from '../utils/train';
-import NotFound from './NotFound';
 
-const VehicleMapContainer = React.lazy(
-  () => import('../components/map/VehicleMapContainer')
-);
+import { NextPageWithLayout } from './_app';
 
-const Station = () => {
-  const { station: stationName } = useParams<{ station: string }>();
+const Station: NextPageWithLayout = () => {
+  const router = useRouter();
+  const stationName = router.query.station as string | undefined;
   const [timeTableType, setTimeTableType] = useState(
     TimeTableRowType.Departure
   );
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
@@ -72,14 +72,14 @@ const Station = () => {
 
   const handleTimeTableRowClick = useCallback(
     (trainNumber: number, scheduledTime: Date) => {
-      navigate(
+      router.push(
         `/train/${trainNumber}/${formatEET(
           scheduledTime,
           'yyyy-MM-dd'
         )}?station=${stationCode}`
       );
     },
-    [navigate, stationCode]
+    [router, stationCode]
   );
 
   const selectedTrain = selectedTrainNo
@@ -102,39 +102,34 @@ const Station = () => {
   }, [selectedTrain, executeRouteSearch]);
 
   const getLoadingSkeleton = () => {
-    const row = (
-      <Skeleton
-        variant="rectangular"
-        width="100%"
-        height={50}
-        sx={{ marginTop: '1rem' }}
-      />
-    );
     return (
       <Box sx={{ padding: '1rem' }}>
-        {row}
-        {row}
-        {row}
+        {Array.from(Array(7).keys()).map((i) => (
+          <Skeleton
+            key={i}
+            variant="rectangular"
+            width="100%"
+            height={50}
+            sx={{ marginTop: '1rem' }}
+          />
+        ))}
       </Box>
     );
   };
 
-  if (!stationCode) {
-    return <NotFound />;
-  }
-
-  const trains = data?.trainsByStationAndQuantity
-    ? orderBy(
-        data.trainsByStationAndQuantity.filter(isDefined),
-        (t) =>
-          getTimeTableRowForStation(stationCode, t, timeTableType)
-            ?.scheduledTime
-      ).filter((t) => {
-        const row = getTimeTableRowForStation(stationCode, t, timeTableType);
-        if (!row) return false;
-        return getTimeTableRowRealTime(row) >= new Date();
-      })
-    : [];
+  const trains =
+    stationCode && data?.trainsByStationAndQuantity
+      ? orderBy(
+          data.trainsByStationAndQuantity.filter(isDefined),
+          (t) =>
+            getTimeTableRowForStation(stationCode, t, timeTableType)
+              ?.scheduledTime
+        ).filter((t) => {
+          const row = getTimeTableRowForStation(stationCode, t, timeTableType);
+          if (!row) return false;
+          return getTimeTableRowRealTime(row) >= new Date();
+        })
+      : [];
 
   const handleTimeTableTypeChange = (
     _event: unknown,
@@ -154,15 +149,13 @@ const Station = () => {
         )}
       </SubNavBar>
       <Box sx={{ height: '30vh' }}>
-        <Suspense>
-          <VehicleMapContainer
-            selectedVehicleId={selectedVehicleId}
-            station={station}
-            route={selectedRoute}
-            train={selectedTrain}
-            onVehicleSelected={handleVehicleIdSelected}
-          />
-        </Suspense>
+        <VehicleMapContainerPortal
+          selectedVehicleId={selectedVehicleId}
+          station={station}
+          route={selectedRoute}
+          train={selectedTrain}
+          onVehicleSelected={handleVehicleIdSelected}
+        />
       </Box>
       <Box
         sx={{
@@ -191,7 +184,7 @@ const Station = () => {
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
-      {!loading && data?.trainsByStationAndQuantity && (
+      {stationCode && !loading && data?.trainsByStationAndQuantity && (
         <StationTimeTable
           stationCode={stationCode}
           timeTableType={timeTableType}
@@ -199,12 +192,16 @@ const Station = () => {
           tableRowOnClick={handleTimeTableRowClick}
         />
       )}
-      {loading && getLoadingSkeleton()}
+      {(!stationCode || loading) && getLoadingSkeleton()}
       {error && (
         <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
       )}
     </div>
   );
+};
+
+Station.getLayout = function getLayout(page) {
+  return <MapLayout>{page}</MapLayout>;
 };
 
 export default Station;

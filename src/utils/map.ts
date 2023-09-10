@@ -3,9 +3,10 @@ import { generateStyle, Options } from 'hsl-map-style';
 import { VectorSource } from 'mapbox-gl';
 
 import { VehicleDetails } from '../types/vehicles';
+
 import { toRadians } from './math';
 
-const canvas = document.createElement('canvas');
+let canvas: HTMLCanvasElement;
 
 type VehicleMarkerIconImageProps = {
   id: string;
@@ -30,6 +31,10 @@ export const getVehicleMarkerIconImage = ({
 }: VehicleMarkerIconImageProps) => {
   // Check whether we can generate an image from this icon ID
   if (id.indexOf('vehiclemarker') !== 0) return;
+
+  if (!canvas) {
+    canvas = document.createElement('canvas');
+  }
 
   canvas.width = width;
   canvas.height = height;
@@ -134,7 +139,7 @@ const generateMapStyle = (options?: Options) => {
       {
         url: 'https://cdn.digitransit.fi/',
         name: 'digitransit-subscription-key',
-        value: process.env.REACT_APP_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
+        value: process.env.NEXT_PUBLIC_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
       },
     ],
   });

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import { TrainByStationFragment } from '../graphql/generated/digitraffic';
 import { isDefined } from '../utils/common';
+
 import useMqttClient from './useMqttClient';
 
 type MqttConfig = {
