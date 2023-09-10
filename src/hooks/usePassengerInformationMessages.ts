@@ -82,6 +82,14 @@ export default function usePassengerInformationMessages({
                 'ON_EVENT'
             );
           });
+          relevantMessages.forEach((m) => {
+            if (m.audio?.text) {
+              m.audio.text = getImprovedTextContent(m.audio.text);
+            }
+            if (m.video?.text) {
+              m.video.text = getImprovedTextContent(m.video.text);
+            }
+          });
           setMessages(relevantMessages);
         } catch (error) {
           setError(error);
@@ -99,6 +107,33 @@ export default function usePassengerInformationMessages({
   }, [params, refetchIntervalMs, skip]);
 
   return { messages, error };
+}
+
+function getImprovedTextContent(
+  textContent: PassengerInformationTextContent
+): PassengerInformationTextContent {
+  const modifiedContent: PassengerInformationTextContent = {};
+
+  for (const lng of Object.keys(textContent) as Array<
+    keyof PassengerInformationTextContent
+  >) {
+    const currentText = textContent[lng];
+
+    if (currentText) {
+      const idx = currentText.indexOf('junalahdot.fi');
+
+      if (idx !== -1) {
+        modifiedContent[lng] =
+          currentText.slice(0, idx) + 'junaan.fi / ' + currentText.slice(idx);
+      } else {
+        modifiedContent[lng] = currentText;
+      }
+    } else {
+      modifiedContent[lng] = currentText;
+    }
+  }
+
+  return modifiedContent;
 }
 
 export function getPassengerInformationMessagesByStation(
