@@ -17,6 +17,7 @@
   "track": "Track",
   "station": "Station",
   "canceled": "Canceled",
+  "alerts": "Alerts",
   "page_not_found": "Page could not be found.",
   "train_current_composition": "Current composition",
   "train_composition_change_from_to_station_text": "These train units continue from {{from}} to {{to}}",
