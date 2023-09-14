@@ -47,7 +47,7 @@ function StationTimeTableRow({
     : train.trainType.name + train.trainNumber;
   const deptOrDestStation =
     timeTableType === TimeTableRowType.Departure
-      ? getTrainDestinationStation(train, stationCode)
+      ? getTrainDestinationStation(train)
       : getTrainDepartureStation(train);
   const deptOrDestStationName = deptOrDestStation
     ? getTrainStationName(deptOrDestStation)
