@@ -8,7 +8,7 @@ import {
   TableCell,
   TableRow,
 } from '@mui/material';
-import { ChevronRight } from 'mdi-material-ui';
+import { Airplane, ChevronRight } from 'mdi-material-ui';
 import RouterLink from 'next/link';
 
 import {
@@ -47,7 +47,7 @@ function StationTimeTableRow({
     : train.trainType.name + train.trainNumber;
   const deptOrDestStation =
     timeTableType === TimeTableRowType.Departure
-      ? getTrainDestinationStation(train)
+      ? getTrainDestinationStation(train, stationCode)
       : getTrainDepartureStation(train);
   const deptOrDestStationName = deptOrDestStation
     ? getTrainStationName(deptOrDestStation)
@@ -111,6 +111,9 @@ function StationTimeTableRow({
           onClick={handleStationClick}
         >
           {deptOrDestStationName}
+          {deptOrDestStation?.shortCode === 'LEN' && (
+            <Airplane sx={{ position: 'absolute', fontSize: '1.3rem' }} />
+          )}
         </Link>
       </TableCell>
       <TableCell align="center">
