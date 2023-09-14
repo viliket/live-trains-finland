@@ -8,10 +8,9 @@ import {
   useTrainQuery,
   Wagon,
 } from '../graphql/generated/digitraffic';
-import usePassengerInformationMessages, {
-  getPassengerInformationMessagesByStation,
-} from '../hooks/usePassengerInformationMessages';
+import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
 import { formatEET } from '../utils/date';
+import { getPassengerInformationMessagesByStation } from '../utils/passengerInformationMessages';
 import { getTrainScheduledDepartureTime } from '../utils/train';
 
 import PassengerInformationMessagesDialog from './PassengerInformationMessagesDialog';

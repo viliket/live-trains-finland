@@ -1,38 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 
-export type PassengerInformationMessage = {
-  id: string;
-  version: number;
-  creationDateTime: string;
-  startValidity: string;
-  endValidity: string;
-  stations: string[];
-  trainNumber?: number;
-  trainDepartureDate?: string;
-  audio?: {
-    text?: PassengerInformationTextContent;
-    deliveryRules?: DeliveryRules;
-  };
-  video?: {
-    text?: PassengerInformationTextContent;
-    deliveryRules?: DeliveryRules;
-  };
-};
-
-type PassengerInformationTextContent = {
-  fi?: string;
-  sv?: string;
-  en?: string;
-};
-
-type DeliveryRules = {
-  deliveryType?:
-    | 'NOW'
-    | 'DELIVERY_AT'
-    | 'REPEAT_EVERY'
-    | 'ON_SCHEDULE'
-    | 'ON_EVENT';
-};
+import {
+  getPassengerInformationMessagesCurrentlyRelevant,
+  PassengerInformationMessage,
+} from '../utils/passengerInformationMessages';
 
 type PassengerInformationMessageQuery = {
   skip?: boolean;
@@ -74,22 +45,8 @@ export default function usePassengerInformationMessages({
           );
           const allMessages =
             (await res.json()) as PassengerInformationMessage[];
-          const relevantMessages = allMessages.filter((m) => {
-            const passengerInformationContent = m.video ?? m.audio;
-            return (
-              passengerInformationContent?.deliveryRules == null ||
-              passengerInformationContent?.deliveryRules?.deliveryType !==
-                'ON_EVENT'
-            );
-          });
-          relevantMessages.forEach((m) => {
-            if (m.audio?.text) {
-              m.audio.text = getImprovedTextContent(m.audio.text);
-            }
-            if (m.video?.text) {
-              m.video.text = getImprovedTextContent(m.video.text);
-            }
-          });
+          const relevantMessages =
+            getPassengerInformationMessagesCurrentlyRelevant(allMessages);
           setMessages(relevantMessages);
         } catch (error) {
           setError(error);
@@ -107,51 +64,4 @@ export default function usePassengerInformationMessages({
   }, [params, refetchIntervalMs, skip]);
 
   return { messages, error };
-}
-
-function getImprovedTextContent(
-  textContent: PassengerInformationTextContent
-): PassengerInformationTextContent {
-  const modifiedContent: PassengerInformationTextContent = {};
-
-  for (const lng of Object.keys(textContent) as Array<
-    keyof PassengerInformationTextContent
-  >) {
-    const currentText = textContent[lng];
-
-    if (currentText) {
-      const idx = currentText.indexOf('junalahdot.fi');
-
-      if (idx !== -1) {
-        modifiedContent[lng] =
-          currentText.slice(0, idx) + 'junaan.fi / ' + currentText.slice(idx);
-      } else {
-        modifiedContent[lng] = currentText;
-      }
-    } else {
-      modifiedContent[lng] = currentText;
-    }
-  }
-
-  return modifiedContent;
-}
-
-export function getPassengerInformationMessagesByStation(
-  passengerInformationMessages: PassengerInformationMessage[] | undefined
-) {
-  return passengerInformationMessages?.reduce((acc, message) => {
-    // When there are more than one stations, only add this message to the first
-    // and last station in the array (which are ordered according to the train
-    // schedule).
-    const stationsToAdd =
-      message.stations.length > 1
-        ? [message.stations[0], message.stations[message.stations.length - 1]]
-        : message.stations;
-
-    stationsToAdd.forEach((station) => {
-      acc[station] = acc[station] || [];
-      acc[station].push(message);
-    });
-    return acc;
-  }, {} as Record<string, PassengerInformationMessage[]>);
 }
