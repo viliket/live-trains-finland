@@ -15,12 +15,8 @@ import {
   TimeTableRowType,
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
-import { formatEET } from '../utils/date';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
-import {
-  getTrainDestinationStationName,
-  getTrainScheduledDepartureTime,
-} from '../utils/train';
+import { getTrainDestinationStationName } from '../utils/train';
 
 import TimeTableRowTime from './TimeTableRowTime';
 import VehicleTrackingIcon from './VehicleTrackingIcon';
@@ -29,7 +25,7 @@ type StationTimeTableRowProps = {
   train: TrainByStationFragment;
   stationCode: string;
   timeTableType: TimeTableRowType;
-  tableRowOnClick: (trainNumber: number, scheduledTime: Date) => void;
+  tableRowOnClick: (trainNumber: number, departureDate: string) => void;
 };
 
 function StationTimeTableRow({
@@ -41,11 +37,11 @@ function StationTimeTableRow({
   const handleStationClick = (e: React.MouseEvent) => e.stopPropagation();
 
   const trainNumber = train.trainNumber;
+  const departureDate = train.departureDate;
   const trainName = train.commuterLineid
     ? train.commuterLineid
     : train.trainType.name + train.trainNumber;
   const destinationStationName = getTrainDestinationStationName(train);
-  const departureTime = getTrainScheduledDepartureTime(train);
   const stationRow = getTimeTableRowForStation(
     stationCode,
     train,
@@ -59,11 +55,7 @@ function StationTimeTableRow({
       sx={{
         cursor: 'pointer',
       }}
-      onClick={() => {
-        if (departureTime) {
-          tableRowOnClick(trainNumber, departureTime);
-        }
-      }}
+      onClick={() => tableRowOnClick(trainNumber, departureDate)}
     >
       <TableCell scope="row">
         <span
@@ -94,11 +86,7 @@ function StationTimeTableRow({
             {trainName}
             <VehicleTrackingIcon
               trainNumber={trainNumber}
-              departureDate={
-                departureTime
-                  ? formatEET(departureTime, 'yyyy-MM-dd')
-                  : undefined
-              }
+              departureDate={departureDate}
             />
           </Box>
         </span>

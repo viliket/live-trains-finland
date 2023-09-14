@@ -20,7 +20,7 @@ type StationTimeTableProps = {
   stationCode: string;
   timeTableType: TimeTableRowType;
   trains: TrainByStationFragment[];
-  tableRowOnClick: (trainNumber: number, scheduledTime: Date) => void;
+  tableRowOnClick: (trainNumber: number, departureDate: string) => void;
 };
 
 function StationTimeTable({
