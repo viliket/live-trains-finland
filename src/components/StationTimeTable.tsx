@@ -55,7 +55,11 @@ function StationTimeTable({
         <TableHead>
           <TableRow>
             <TableCell>{t('train')}</TableCell>
-            <TableCell>{t('destination')}</TableCell>
+            <TableCell>
+              {timeTableType === TimeTableRowType.Departure
+                ? t('destination')
+                : t('from')}
+            </TableCell>
             <TableCell align="center">
               {timeTableType === TimeTableRowType.Departure
                 ? t('departure')

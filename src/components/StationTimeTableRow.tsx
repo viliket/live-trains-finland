@@ -16,7 +16,11 @@ import {
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
-import { getTrainDestinationStationName } from '../utils/train';
+import {
+  getTrainDepartureStation,
+  getTrainDestinationStation,
+  getTrainStationName,
+} from '../utils/train';
 
 import TimeTableRowTime from './TimeTableRowTime';
 import VehicleTrackingIcon from './VehicleTrackingIcon';
@@ -41,7 +45,14 @@ function StationTimeTableRow({
   const trainName = train.commuterLineid
     ? train.commuterLineid
     : train.trainType.name + train.trainNumber;
-  const destinationStationName = getTrainDestinationStationName(train);
+  const deptOrDestStation =
+    timeTableType === TimeTableRowType.Departure
+      ? getTrainDestinationStation(train)
+      : getTrainDepartureStation(train);
+  const deptOrDestStationName = deptOrDestStation
+    ? getTrainStationName(deptOrDestStation)
+    : null;
+
   const stationRow = getTimeTableRowForStation(
     stationCode,
     train,
@@ -94,12 +105,12 @@ function StationTimeTableRow({
       <TableCell>
         <Link
           component={RouterLink}
-          href={`/${destinationStationName}`}
+          href={`/${deptOrDestStationName}`}
           color="inherit"
           underline="none"
           onClick={handleStationClick}
         >
-          {destinationStationName}
+          {deptOrDestStationName}
         </Link>
       </TableCell>
       <TableCell align="center">
