@@ -51,7 +51,7 @@ export function getTrainDestinationStation(
     const stationRow = getTimeTableRowForStation(
       stationCode,
       train,
-      TimeTableRowType.Arrival
+      TimeTableRowType.Departure
     );
     const airportArrivalRow = getTimeTableRowForStation(
       'LEN',
