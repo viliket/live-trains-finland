@@ -83,12 +83,9 @@ const Station: NextPageWithLayout = () => {
   }, []);
 
   const handleTimeTableRowClick = useCallback(
-    (trainNumber: number, scheduledTime: Date) => {
+    (trainNumber: number, departureDate: string) => {
       router.push(
-        `/train/${trainNumber}/${formatEET(
-          scheduledTime,
-          'yyyy-MM-dd'
-        )}?station=${stationCode}`
+        `/train/${trainNumber}/${departureDate}?station=${stationCode}`
       );
     },
     [router, stationCode]

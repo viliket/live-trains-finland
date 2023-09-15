@@ -1,7 +1,12 @@
 import { parseISO } from 'date-fns';
 import { orderBy } from 'lodash';
 
-import { TrainByStationFragment } from '../graphql/generated/digitraffic';
+import {
+  TimeTableRowType,
+  TrainByStationFragment,
+} from '../graphql/generated/digitraffic';
+
+import getTimeTableRowForStation from './getTimeTableRowForStation';
 
 export function getTimeTableRowRealTime(row: {
   scheduledTime: string;
@@ -30,7 +35,37 @@ export function getTrainDepartureStation(train: TrainByStationFragment) {
   return getDepartureTimeTableRow(train)?.station;
 }
 
-export function getTrainDestinationStation(train: TrainByStationFragment) {
+export function getTrainDestinationStation(
+  train: TrainByStationFragment,
+  stationCode?: string
+) {
+  // Special handling for ring route (kehärata) trains:
+  // Return LEN (airport) as the destination station if
+  // the given station code is earlier on the train
+  // time table rows than the airport.
+  if (
+    stationCode &&
+    train.commuterLineid &&
+    ['I', 'P'].includes(train.commuterLineid)
+  ) {
+    const stationRow = getTimeTableRowForStation(
+      stationCode,
+      train,
+      TimeTableRowType.Departure
+    );
+    const airportArrivalRow = getTimeTableRowForStation(
+      'LEN',
+      train,
+      TimeTableRowType.Arrival
+    );
+    if (
+      airportArrivalRow &&
+      stationRow &&
+      stationRow.scheduledTime < airportArrivalRow.scheduledTime
+    ) {
+      return airportArrivalRow.station;
+    }
+  }
   return getDestinationTimeTableRow(train)?.station;
 }
 
@@ -39,15 +74,18 @@ export function getTrainDepartureStationName(train: TrainByStationFragment) {
   return departureStation ? getTrainStationName(departureStation) : undefined;
 }
 
-export function getTrainDestinationStationName(train: TrainByStationFragment) {
-  const destinationStation = getTrainDestinationStation(train);
+export function getTrainDestinationStationName(
+  train: TrainByStationFragment,
+  stationCode?: string
+) {
+  const destinationStation = getTrainDestinationStation(train, stationCode);
   return destinationStation
     ? getTrainStationName(destinationStation)
     : undefined;
 }
 
 export function getTrainStationName(station: { name: string }) {
-  return station.name.replace('asema', '').trimEnd();
+  return station.name.replace(' asema', '').trimEnd();
 }
 
 export function getWagonNumberFromVehicleId(
