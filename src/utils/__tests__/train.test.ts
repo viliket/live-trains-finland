@@ -106,6 +106,80 @@ const train: TrainDetailsFragment = {
   ],
 };
 
+/**
+ * Ring rail (Kehärata) train HKI to HKI via LEN (airport)
+ */
+const ringRailTrainBase: TrainDetailsFragment = {
+  ...trainBase,
+  commuterLineid: 'I',
+  timeTableRows: [
+    {
+      ...departureTimeTableRowBase,
+      scheduledTime: '2023-01-25T08:55:00Z',
+      station: {
+        name: 'Helsinki',
+        shortCode: 'HKI',
+      },
+    },
+    {
+      ...arrivalTimeTableRowBase,
+      scheduledTime: '2023-01-25T09:00:00Z',
+      station: {
+        name: 'Pasila',
+        shortCode: 'PSL',
+      },
+    },
+    {
+      ...departureTimeTableRowBase,
+      scheduledTime: '2023-01-25T09:05:00Z',
+      station: {
+        name: 'Pasila',
+        shortCode: 'PSL',
+      },
+    },
+    {
+      ...arrivalTimeTableRowBase,
+      scheduledTime: '2023-01-25T11:00:00Z',
+      station: {
+        name: 'Lentoasema',
+        shortCode: 'LEN',
+      },
+    },
+    {
+      ...departureTimeTableRowBase,
+      scheduledTime: '2023-01-25T11:05:00Z',
+      station: {
+        name: 'Lentoasema',
+        shortCode: 'LEN',
+      },
+    },
+    {
+      ...arrivalTimeTableRowBase,
+      scheduledTime: '2023-01-25T11:30:00Z',
+      station: {
+        name: 'Pasila',
+        shortCode: 'PSL',
+      },
+    },
+    {
+      ...departureTimeTableRowBase,
+      scheduledTime: '2023-01-25T11:35:00Z',
+      station: {
+        name: 'Pasila',
+        shortCode: 'PSL',
+      },
+    },
+    {
+      ...arrivalTimeTableRowBase,
+      scheduledTime: '2023-01-25T11:40:00Z',
+      station: {
+        name: 'Helsinki',
+        shortCode: 'HKI',
+      },
+    },
+  ],
+};
+
 describe('getTimeTableRowRealTime', () => {
   it('should be the scheduled time of the row when neither actual time or live estimate time is defined', () => {
     expect(
@@ -176,6 +250,50 @@ describe('getTrainDestinationStation', () => {
 
     expect(station).toBeDefined();
     expect(station!.name).toBe('Tampere');
+  });
+  describe.each(['I', 'P'])('ring rail %s train', (commuterLineid: string) => {
+    const ringRailTrain = {
+      ...ringRailTrainBase,
+      commuterLineid: commuterLineid,
+    };
+
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it('should be the LEN (airport) station when the given station is earlier than LEN', () => {
+      jest.setSystemTime(parseISO('2023-01-25T08:55:00Z'));
+
+      const destStationAtHki = getTrainDestinationStation(ringRailTrain, 'HKI');
+      expect(destStationAtHki).toBeDefined();
+      expect(destStationAtHki!.name).toBe('Lentoasema');
+
+      const destStationAtPsl = getTrainDestinationStation(ringRailTrain, 'PSL');
+      expect(destStationAtPsl).toBeDefined();
+      expect(destStationAtPsl!.name).toBe('Lentoasema');
+    });
+
+    it('should be the station of the destination time table row when the given station is later than LEN', () => {
+      // Train is between section PSL - LEN based on current time and train schedule
+      // So train has already passed PSL (first time)
+      jest.setSystemTime(parseISO('2023-01-25T10:30:00Z'));
+
+      const destStationAtLen = getTrainDestinationStation(ringRailTrain, 'LEN');
+      expect(destStationAtLen).toBeDefined();
+      expect(destStationAtLen!.name).toBe('Helsinki');
+
+      const destStationAtPsl = getTrainDestinationStation(ringRailTrain, 'PSL');
+      expect(destStationAtPsl).toBeDefined();
+      expect(destStationAtPsl!.name).toBe('Helsinki');
+
+      const destStationAtHki = getTrainDestinationStation(ringRailTrain, 'HKI');
+      expect(destStationAtHki).toBeDefined();
+      expect(destStationAtHki!.name).toBe('Helsinki');
+    });
   });
 });
 
