@@ -5,11 +5,11 @@ import RouterLink from 'next/link';
 import { useTranslation } from 'react-i18next';
 
 import { TrainDetailsFragment, Wagon } from '../graphql/generated/digitraffic';
-import { PassengerInformationMessage } from '../hooks/usePassengerInformationMessages';
 import getTrainCurrentStation from '../utils/getTrainCurrentStation';
 import getTrainLatestArrivalRow from '../utils/getTrainLatestArrivalRow';
 import getTrainLatestDepartureTimeTableRow from '../utils/getTrainLatestDepartureTimeTableRow';
 import getTrainPreviousStation from '../utils/getTrainPreviousStation';
+import { PassengerInformationMessage } from '../utils/passengerInformationMessages';
 import { getTrainStationName } from '../utils/train';
 
 import PassengerInformationMessageAlert from './PassengerInformationMessageAlert';

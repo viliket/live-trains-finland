@@ -1,7 +1,7 @@
 import { Alert, ButtonBase } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { PassengerInformationMessage } from '../hooks/usePassengerInformationMessages';
+import { PassengerInformationMessage } from '../utils/passengerInformationMessages';
 
 type PassengerInformationMessageAlertProps = {
   onClick: () => void;

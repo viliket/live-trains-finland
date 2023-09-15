@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTranslation } from 'react-i18next';
 
-import { PassengerInformationMessage } from '../hooks/usePassengerInformationMessages';
+import { PassengerInformationMessage } from '../utils/passengerInformationMessages';
 
 type PassengerInformationMessagesDialogProps = {
   onClose: () => void;
