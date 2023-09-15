@@ -144,11 +144,11 @@ function isMessageRelevant(
   now: Date,
   train?: TrainByStationFragment
 ): boolean {
-  if (message.audio) {
-    return isAudioMessageRelevant(message, now, train);
+  if (message.video && isVideoMessageRelevant(message, now)) {
+    return true;
   }
-  if (message.video) {
-    return isVideoMessageRelevant(message, now);
+  if (message.audio && isAudioMessageRelevant(message, now, train)) {
+    return true;
   }
   return false;
 }

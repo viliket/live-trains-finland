@@ -159,29 +159,6 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
                 repeatEvery: 20,
               },
             },
-            video: {
-              text: {
-                fi: 'Rataverkolla tehdään kunnossapitotöitä. 2.-3.9.2023 osa junista Kouvolan ja Pieksämäen, sekä Kouvolan ja Joensuun välillä, on korvattu busseilla. Lisäksi joulukuuhun asti, myös Kouvolan ja Kotkan sataman välillä osa junista on korvattu busseilla. Kouvolassa korvaavat bussit lähtevät asemarakennuksen ja raiteen 1 välistä. Korvatut junavuorot, bussien aikataulut sekä asemakohtaiset lähtöpaikat löydät osoitteesta vr.fi.',
-                sv: 'Underhållsarbeten pågår på järnvägsnätet. Mellan 2 till 3 september 2023 har en del av tågen mellan Kouvola och Pieksämäki samt Kouvola och Joensuu ersatts av bussar.  Dessutom fram till december ersätts några tåg med buss mellan Kouvola och Kotka. I Kouvola avgår ersättningsbussar mellan stationshuset och spår 1.  Ersatta tågtider, busstidtabeller och stationsspecifika avgångsplatser finns på vr.fi.',
-                en: 'There are changes in train traffic due to maintenance works. Between 2.9.2023 and 3.9.2023, some of the trains between Kouvola and Pieksämäki, and Kouvola and Joensuu, have been replaced by buses. There are also some train replaced by buses until December between Kouvola, and Kotka. In Kouvola, replacement buses leave from between the station building and track 1.  Replaced train times, bus schedules and station-specific departure points can be found at vr.fi.',
-              },
-              deliveryRules: {
-                startDateTime: '2023-09-01T21:00:00Z',
-                endDateTime: '2023-09-03T20:59:00Z',
-                startTime: '5:00',
-                endTime: '15:00',
-                weekDays: [
-                  'MONDAY',
-                  'TUESDAY',
-                  'WEDNESDAY',
-                  'THURSDAY',
-                  'FRIDAY',
-                  'SATURDAY',
-                  'SUNDAY',
-                ],
-                deliveryType: 'CONTINUOS_VISUALIZATION',
-              },
-            },
           },
         ];
 
@@ -237,13 +214,6 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
                 deliveryType: 'ON_SCHEDULE',
                 repetitions: 1,
                 repeatEvery: 0,
-              },
-            },
-            video: {
-              text: {
-                fi: 'Juna H750 on korvattu linja-autolla Savonlinnan ja Parikkalan välillä. Korvaava linja-auto lähtee aseman edustalta. Bussin matka-aika asemien välillä on pidempi kuin junan matka-aika. Restiden för bussen mellan stationerna är längre än tågets restid. Info:vr.fi',
-                sv: 'Tåg H750 har ersatts av ett buss mellan Nyslott och Parikkala. Bussen avgår från järnvägsstationen. Restiden för bussen mellan stationerna är längre än tågets restid. Info:vr.fi',
-                en: 'Train H750 has been replaced by bus between Savonlinna and Parikkala. The bus leaves from the railwaystation. The bus travel time between stations is longer than the train travel time. Info:vr.fi.',
               },
             },
           },
