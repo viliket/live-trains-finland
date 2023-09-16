@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import React from 'react';
 
 import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { orderBy } from 'lodash';
@@ -21,7 +20,6 @@ import {
 import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
 import { isDefined } from '../utils/common';
-import { formatEET } from '../utils/date';
 import getRouteForTrain from '../utils/getRouteForTrain';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';

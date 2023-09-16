@@ -65,10 +65,8 @@ const updateWagonMapPlaceReservations = (
               if (seatNoElWithServiceIcon) {
                 seatNoElWithServiceIcon.style.fill = 'white';
               }
-            } else {
-              if (seatNoEl) {
-                seatNoEl.style.fill = 'white';
-              }
+            } else if (seatNoEl) {
+              seatNoEl.style.fill = 'white';
             }
             const seatLineEl =
               seatEl.querySelector<HTMLElement>(`path[id^="Line"]`);
@@ -120,6 +118,17 @@ const DetailsItem = ({
     </Typography>
   </Paper>
 );
+
+function getWagonMap(wagon: Wagon | null) {
+  if (wagon?.wagonType) {
+    if (wagon.wagonType !== 'Sm3') {
+      return wagonMaps[wagon.wagonType];
+    } else {
+      return wagonMaps['Sm3_' + wagon.salesNumber];
+    }
+  }
+  return null;
+}
 
 const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
   const { onClose, train, selectedWagon, open } = props;
@@ -183,13 +192,7 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
     }
   };
 
-  const wagonMap = selectedWagon?.wagonType
-    ? wagonMaps[
-        selectedWagon.wagonType !== 'Sm3'
-          ? selectedWagon.wagonType
-          : 'Sm3_' + selectedWagon.salesNumber
-      ]
-    : null;
+  const wagonMap = getWagonMap(selectedWagon);
 
   return (
     <Dialog onClose={handleClose} open={open}>

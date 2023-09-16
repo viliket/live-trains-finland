@@ -105,10 +105,8 @@ async function fetchAndSaveData() {
   Object.entries(lineKmByStationPartCode).forEach(([stationCode, value]) => {
     if (!(stationCode in lineKmByStationCode)) {
       lineKmByStationCode[stationCode] = value;
-    } else {
-      if (lineKmByStationCode[stationCode].linekm == null) {
-        lineKmByStationCode[stationCode] = value;
-      }
+    } else if (lineKmByStationCode[stationCode].linekm == null) {
+      lineKmByStationCode[stationCode] = value;
     }
   });
 

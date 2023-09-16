@@ -58,7 +58,7 @@ export default function VehicleMarkerLayer({
       mapBearing: map?.getBearing() ?? 0,
       colorPrimary: theme.palette.secondary.main,
       colorSecondary: theme.palette.mode === 'light' ? '#eee' : '#ccc',
-      colorShadow: theme.palette.mode === 'light' ? '#aaa' : '#aaa',
+      colorShadow: '#aaa',
     });
   }, [map, theme.palette.mode, theme.palette.secondary.main]);
 

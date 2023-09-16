@@ -64,7 +64,7 @@ export const handleVehiclePositionMessage = (
   const vp: VehiclePositionMessage | undefined = JSON.parse(
     message.toString()
   ).VP;
-  if (!vp || !vp.lat || !vp.long) return;
+  if (!vp?.lat || !vp.long) return;
 
   const train = topicToTrain.get(getMqttTopic(routeId, startTime));
 

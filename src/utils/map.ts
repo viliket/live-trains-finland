@@ -30,7 +30,7 @@ export const getVehicleMarkerIconImage = ({
   drawText = false,
 }: VehicleMarkerIconImageProps) => {
   // Check whether we can generate an image from this icon ID
-  if (id.indexOf('vehiclemarker') !== 0) return;
+  if (!id.startsWith('vehiclemarker')) return;
 
   if (!canvas) {
     canvas = document.createElement('canvas');
