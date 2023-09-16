@@ -5,9 +5,37 @@ import {
   TrainByStationFragment,
 } from '../../graphql/generated/digitraffic';
 import {
+  getPassengerInformationMessagesByStation,
   getPassengerInformationMessagesCurrentlyRelevant,
   PassengerInformationMessage,
 } from '../passengerInformationMessages';
+
+describe('getPassengerInformationMessagesByStation', () => {
+  it('should only add the message to first and last station in the stations array when there are multiple stations', () => {
+    const passengerInformationMessages: PassengerInformationMessage[] = [
+      {
+        id: 'SHM20220818174358380',
+        version: 94,
+        creationDateTime: '2023-09-10T14:37:00Z',
+        startValidity: '2023-09-09T21:00:00Z',
+        endValidity: '2023-09-10T20:59:00Z',
+        stations: ['HKI', 'PSL', 'TKL', 'KE', 'RI'],
+      },
+    ];
+
+    const messagesByStation = getPassengerInformationMessagesByStation(
+      passengerInformationMessages
+    );
+    expect(messagesByStation).toBeDefined();
+    expect(messagesByStation!['HKI']).toBeDefined();
+    expect(messagesByStation!['HKI'].length).toBe(1);
+    expect(messagesByStation!['PSL']).toBeUndefined();
+    expect(messagesByStation!['TKL']).toBeUndefined();
+    expect(messagesByStation!['KE']).toBeUndefined();
+    expect(messagesByStation!['RI']).toBeDefined();
+    expect(messagesByStation!['RI'].length).toBe(1);
+  });
+});
 
 describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
   beforeAll(() => {
