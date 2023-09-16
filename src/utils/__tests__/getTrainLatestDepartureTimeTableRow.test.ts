@@ -88,8 +88,8 @@ describe('getTrainLatestDepartureTimeTableRow', () => {
 
       const latestDepartureRow = getTrainLatestDepartureTimeTableRow(train);
 
-      expect(latestDepartureRow).toBeDefined();
-      expect(latestDepartureRow!.station.name).toBe('Helsinki');
+      expectToBeDefined(latestDepartureRow);
+      expect(latestDepartureRow.station.name).toBe('Helsinki');
     });
   });
 });

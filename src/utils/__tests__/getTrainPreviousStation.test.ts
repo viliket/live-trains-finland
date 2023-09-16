@@ -38,7 +38,7 @@ describe('getTrainPreviousStation', () => {
 
     const station = getTrainPreviousStation({} as TrainByStationFragment);
 
-    expect(station).toBeDefined();
-    expect(station!.name).toBe('Helsinki');
+    expectToBeDefined(station);
+    expect(station.name).toBe('Helsinki');
   });
 });
