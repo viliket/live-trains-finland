@@ -2,7 +2,7 @@ import { gql, QueryHookOptions, useQuery } from '@apollo/client';
 
 const defaultOptions = {} as const;
 
-type PlaceInfo = {
+export type PlaceInfo = {
   floor: number;
   logicalSection: number;
   number: number;

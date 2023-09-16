@@ -30,18 +30,11 @@ const nextConfig = {
           // Similar config as in
           // https://github.com/shadowwalker/next-pwa/blob/master/index.js
           exclude: [
-            ({ asset }) => {
-              if (
-                asset.name.startsWith('server/') ||
-                asset.name.match(
-                  /^((app-|^)build-manifest\.json|react-loadable-manifest\.json)$/
-                )
-              ) {
-                return true;
-              }
-
-              return false;
-            },
+            ({ asset }) =>
+              asset.name.startsWith('server/') ||
+              asset.name.match(
+                /^((app-|^)build-manifest\.json|react-loadable-manifest\.json)$/
+              ),
           ],
           modifyURLPrefix: {
             '/_next/../public/': '/',

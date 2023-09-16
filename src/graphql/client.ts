@@ -3,8 +3,8 @@ import {
   InMemoryCache,
   HttpLink,
   ApolloLink,
+  makeVar,
 } from '@apollo/client';
-import { makeVar } from '@apollo/client';
 
 import { VehicleDetails } from '../types/vehicles';
 import getStationPlatformSide from '../utils/getStationPlatformSide';
@@ -104,11 +104,7 @@ export const client = new ApolloClient({
                 return wagonType;
               }
 
-              if (
-                !variables ||
-                !variables.departureDate ||
-                !variables.trainNumber
-              ) {
+              if (!variables?.departureDate || !variables?.trainNumber) {
                 return null;
               }
 

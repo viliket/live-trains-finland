@@ -96,8 +96,8 @@ describe('getTrainCurrentStation', () => {
 
       const station = getTrainCurrentStation(train);
 
-      expect(station).toBeDefined();
-      expect(station!.name).toBe('Helsinki');
+      expectToBeDefined(station);
+      expect(station.name).toBe('Helsinki');
     });
 
     it('should be the undefined when the train has no latest arrival row and the first departure row has actual time that has passed', () => {
@@ -129,8 +129,8 @@ describe('getTrainCurrentStation', () => {
 
       const station = getTrainCurrentStation(train);
 
-      expect(station).toBeDefined();
-      expect(station!.name).toBe('Pasila');
+      expectToBeDefined(station);
+      expect(station.name).toBe('Pasila');
     });
 
     it('should be the station of the latest arrival row when the current time is later than the scheduled time of the latest arrival row and next departure row but next departure row has no actual time', () => {
@@ -146,8 +146,8 @@ describe('getTrainCurrentStation', () => {
 
       const station = getTrainCurrentStation(train);
 
-      expect(station).toBeDefined();
-      expect(station!.name).toBe('Pasila');
+      expectToBeDefined(station);
+      expect(station.name).toBe('Pasila');
     });
 
     it('should be undefined when the current time is between the scheduled time of the latest arrival row and next departure row but next departure row has actual time', () => {
@@ -185,8 +185,8 @@ describe('getTrainCurrentStation', () => {
 
       const station = getTrainCurrentStation(train);
 
-      expect(station).toBeDefined();
-      expect(station!.name).toBe('Tampere');
+      expectToBeDefined(station);
+      expect(station.name).toBe('Tampere');
     });
   });
 });

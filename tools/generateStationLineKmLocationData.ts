@@ -103,12 +103,11 @@ async function fetchAndSaveData() {
 
   // Merge lineKmByStationPartCode entries with lineKmByStationCode entries
   Object.entries(lineKmByStationPartCode).forEach(([stationCode, value]) => {
-    if (!(stationCode in lineKmByStationCode)) {
+    if (
+      !(stationCode in lineKmByStationCode) ||
+      lineKmByStationCode[stationCode].linekm == null
+    ) {
       lineKmByStationCode[stationCode] = value;
-    } else {
-      if (lineKmByStationCode[stationCode].linekm == null) {
-        lineKmByStationCode[stationCode] = value;
-      }
     }
   });
 

@@ -45,10 +45,10 @@ function testTrainDirections(
   expectedDirections: string[]
 ) {
   const timeTableGroups = getTimeTableRowsGroupedByStation(train);
-  expect(timeTableGroups).toBeDefined();
+  expectToBeDefined(timeTableGroups);
   train.timeTableGroups = timeTableGroups;
 
-  timeTableGroups!.forEach((g, i) => {
+  timeTableGroups.forEach((g, i) => {
     const row = g.departure ?? g.arrival;
     it(`should be ${expectedDirections[i]} for station ${row?.station.name} ${row?.station.shortCode} track ${row?.commercialTrack}`, () => {
       expect(getTrainDirection(train, g)).toBe(expectedDirections[i]);
@@ -101,10 +101,10 @@ describe('getTrainDirection', () => {
     };
 
     const timeTableGroups = getTimeTableRowsGroupedByStation(train);
-    expect(timeTableGroups).toBeDefined();
+    expectToBeDefined(timeTableGroups);
     train.timeTableGroups = timeTableGroups;
 
-    timeTableGroups!.forEach((g) => {
+    timeTableGroups.forEach((g) => {
       expect(getTrainDirection(train, g)).toBe(TrainDirection.Increasing);
     });
   });
@@ -163,10 +163,10 @@ describe('getTrainDirection', () => {
     };
 
     const timeTableGroups = getTimeTableRowsGroupedByStation(train);
-    expect(timeTableGroups).toBeDefined();
+    expectToBeDefined(timeTableGroups);
     train.timeTableGroups = timeTableGroups;
 
-    timeTableGroups!.forEach((g) => {
+    timeTableGroups.forEach((g) => {
       expect(getTrainDirection(train, g)).toBe(null);
     });
   });
@@ -174,10 +174,10 @@ describe('getTrainDirection', () => {
   it('should be INCREASING on all stations for a 4-unit R train from HKI->RI with only two last units continuing from RI->TPE', () => {
     const train = trainR4Units2LastUnitsContinueFromRi as TrainDetailsFragment;
     const timeTableGroups = getTimeTableRowsGroupedByStation(train);
-    expect(timeTableGroups).toBeDefined();
+    expectToBeDefined(timeTableGroups);
     train.timeTableGroups = timeTableGroups;
 
-    timeTableGroups!.forEach((g) => {
+    timeTableGroups.forEach((g) => {
       expect(getTrainDirection(train, g)).toBe(TrainDirection.Increasing);
     });
   });
@@ -185,10 +185,10 @@ describe('getTrainDirection', () => {
   it('should be INCREASING on all stations for a 4-unit R train from HKI->RI with only two first units continuing from RI->TPE', () => {
     const train = trainR4Units2FirstUnitsContinueFromRi as TrainDetailsFragment;
     const timeTableGroups = getTimeTableRowsGroupedByStation(train);
-    expect(timeTableGroups).toBeDefined();
+    expectToBeDefined(timeTableGroups);
     train.timeTableGroups = timeTableGroups;
 
-    timeTableGroups!.forEach((g) => {
+    timeTableGroups.forEach((g) => {
       expect(getTrainDirection(train, g)).toBe(TrainDirection.Increasing);
     });
   });
@@ -196,10 +196,10 @@ describe('getTrainDirection', () => {
   it('should be DECREASING on all stations for a 2-unit R train from TPE->RI with two additional units from RI->HKI', () => {
     const train = trainR2Units2AdditionalUnitsFromRi as TrainDetailsFragment;
     const timeTableGroups = getTimeTableRowsGroupedByStation(train);
-    expect(timeTableGroups).toBeDefined();
+    expectToBeDefined(timeTableGroups);
     train.timeTableGroups = timeTableGroups;
 
-    timeTableGroups!.forEach((g) => {
+    timeTableGroups.forEach((g) => {
       expect(getTrainDirection(train, g)).toBe(TrainDirection.Decreasing);
     });
   });

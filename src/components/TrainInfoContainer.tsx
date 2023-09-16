@@ -28,11 +28,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const [selectedStation, setSelectedStation] = useState<string | null>(null);
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const departureDate = train ? getTrainScheduledDepartureTime(train) : null;
-  const {
-    error,
-    data: realTimeData,
-    loading,
-  } = useTrainQuery(
+  const { error, data: realTimeData } = useTrainQuery(
     train && departureDate
       ? {
           variables: {

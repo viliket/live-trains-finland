@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { cloneElement } from 'react';
+import React, { useState, cloneElement } from 'react';
 
 import { createPortal } from 'react-dom';
 import { MapboxMap, IControl, useControl } from 'react-map-gl';

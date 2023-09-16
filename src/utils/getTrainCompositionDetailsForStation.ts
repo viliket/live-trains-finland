@@ -11,6 +11,8 @@ type DiffElement<T> = {
   status: DiffStatus;
 };
 
+type KeyOrStringOrNull<K> = K | string | null;
+
 /**
  * Returns the difference between two sequences in terms of the status of each
  * element between the sequences being "added", "removed" or "unchanged" when
@@ -52,7 +54,7 @@ type DiffElement<T> = {
 function diff<T, K extends keyof T>(
   seq1: T[],
   seq2: T[],
-  selector: (x: T) => K | string | null
+  selector: (x: T) => KeyOrStringOrNull<K>
 ): DiffElement<T>[] {
   const indices = lcs(seq1, seq2, selector);
   return computeDelta(indices, seq1, seq2, selector);
@@ -71,7 +73,7 @@ function computeDelta<T, K extends keyof T>(
   indices: number[],
   X: T[],
   Y: T[],
-  selector: (x: T) => K | string | null
+  selector: (x: T) => KeyOrStringOrNull<K>
 ): DiffElement<T>[] {
   let i = 0; // Current index in X
   let j = 0; // Current index in Y
@@ -134,7 +136,7 @@ function computeDelta<T, K extends keyof T>(
 function lcs<T, K extends keyof T>(
   a: T[],
   b: T[],
-  selector: (x: T) => K | string | null
+  selector: (x: T) => KeyOrStringOrNull<K>
 ): number[] {
   let m = a.length,
     n = b.length,

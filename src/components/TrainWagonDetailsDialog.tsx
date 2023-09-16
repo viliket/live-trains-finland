@@ -18,7 +18,11 @@ import {
   TrainByStationFragment,
   Wagon,
 } from '../graphql/generated/digitraffic';
-import { useWagonMapDataQuery, WagonInfo } from '../graphql/queries/vr';
+import {
+  useWagonMapDataQuery,
+  WagonInfo,
+  PlaceInfo,
+} from '../graphql/queries/vr';
 import {
   getTrainDepartureStation,
   getTrainDestinationStation,
@@ -36,66 +40,78 @@ type TrainWagonDetailsDialogProps = {
   open: boolean;
 };
 
+const updateSeatPlaceReservation = (placeInfo: PlaceInfo) => {
+  const seatEl = document.getElementById('seat_' + placeInfo.number);
+  if (!seatEl) return;
+
+  const highlightEl = seatEl.firstElementChild as HTMLElement | null;
+  if (highlightEl) {
+    highlightEl.style.fill = placeInfo.bookable ? 'green' : 'red';
+    highlightEl.style.stroke = 'white';
+  }
+
+  const seatNoEl = document.getElementById('seatnumber_' + placeInfo.number);
+  if (placeInfo.services.includes('PETS')) {
+    if (seatNoEl) {
+      seatNoEl.style.fill = 'none';
+    }
+    const seatNoElWithServiceIcon = document.getElementById(
+      `seatnumber_${placeInfo.number}-with-service-icon`
+    );
+    if (seatNoElWithServiceIcon) {
+      seatNoElWithServiceIcon.style.fill = 'white';
+    }
+  } else if (seatNoEl) {
+    seatNoEl.style.fill = 'white';
+  }
+
+  const seatLineEl = seatEl.querySelector<HTMLElement>(`path[id^="Line"]`);
+  if (seatLineEl) {
+    seatLineEl.style.stroke = 'white';
+  }
+};
+
+const updateBedPlaceReservation = (placeInfo: PlaceInfo) => {
+  const bedEl = document.getElementById('bed_' + placeInfo.number);
+  if (!bedEl) return;
+
+  const highlightEl = bedEl.firstElementChild as HTMLElement | null;
+  if (highlightEl) {
+    highlightEl.style.fill = placeInfo.bookable ? 'green' : 'red';
+  }
+
+  let bedNoEl = document.getElementById('bednumber_' + placeInfo.number);
+  if (!bedNoEl) {
+    bedNoEl = document.querySelector<HTMLElement>(
+      `path[id^="bednumber_${placeInfo.number}-"]`
+    );
+  }
+
+  if (bedNoEl) {
+    bedNoEl.style.fill = 'white';
+  }
+};
+
 const updateWagonMapPlaceReservations = (
   wagonSalesNumber: number,
   showUpstairs: boolean,
   wagons: Record<string, WagonInfo>
 ) => {
   const wagon = wagons[wagonSalesNumber];
-  if (wagon) {
-    wagon.placeList
-      .filter((p) => p.floor === (showUpstairs && wagon.floorCount > 1 ? 2 : 1))
-      .forEach((p) => {
-        if (p.type === 'SEAT') {
-          const seatEl = document.getElementById('seat_' + p.number);
-          if (seatEl) {
-            const highlightEl = seatEl.firstElementChild as HTMLElement | null;
-            if (highlightEl) {
-              highlightEl.style.fill = p.bookable ? 'green' : 'red';
-              highlightEl.style.stroke = 'white';
-            }
-            const seatNoEl = document.getElementById('seatnumber_' + p.number);
-            const seatNoElWithServiceIcon = document.getElementById(
-              `seatnumber_${p.number}-with-service-icon`
-            );
-            if (p.services.includes('PETS')) {
-              if (seatNoEl) {
-                seatNoEl.style.fill = 'none';
-              }
-              if (seatNoElWithServiceIcon) {
-                seatNoElWithServiceIcon.style.fill = 'white';
-              }
-            } else {
-              if (seatNoEl) {
-                seatNoEl.style.fill = 'white';
-              }
-            }
-            const seatLineEl =
-              seatEl.querySelector<HTMLElement>(`path[id^="Line"]`);
-            if (seatLineEl) {
-              seatLineEl.style.stroke = 'white';
-            }
-          }
-        } else if (p.type === 'BED') {
-          const bedEl = document.getElementById('bed_' + p.number);
-          if (bedEl) {
-            const highlightEl = bedEl.firstElementChild as HTMLElement | null;
-            if (highlightEl) {
-              highlightEl.style.fill = p.bookable ? 'green' : 'red';
-            }
-            let bedNoEl = document.getElementById('bednumber_' + p.number);
-            if (!bedNoEl) {
-              bedNoEl = document.querySelector<HTMLElement>(
-                `path[id^="bednumber_${p.number}-"]`
-              );
-            }
-            if (bedNoEl) {
-              bedNoEl.style.fill = 'white';
-            }
-          }
-        }
-      });
-  }
+
+  if (!wagon) return;
+
+  const selectedFloor = showUpstairs && wagon.floorCount > 1 ? 2 : 1;
+
+  wagon.placeList
+    .filter((p) => p.floor === selectedFloor)
+    .forEach((p) => {
+      if (p.type === 'SEAT') {
+        updateSeatPlaceReservation(p);
+      } else if (p.type === 'BED') {
+        updateBedPlaceReservation(p);
+      }
+    });
 };
 
 const DetailsItem = ({
@@ -120,6 +136,17 @@ const DetailsItem = ({
     </Typography>
   </Paper>
 );
+
+function getWagonMap(wagon: Wagon | null) {
+  if (wagon?.wagonType) {
+    if (wagon.wagonType !== 'Sm3') {
+      return wagonMaps[wagon.wagonType];
+    } else {
+      return wagonMaps['Sm3_' + wagon.salesNumber];
+    }
+  }
+  return null;
+}
 
 const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
   const { onClose, train, selectedWagon, open } = props;
@@ -183,13 +210,7 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
     }
   };
 
-  const wagonMap = selectedWagon?.wagonType
-    ? wagonMaps[
-        selectedWagon.wagonType !== 'Sm3'
-          ? selectedWagon.wagonType
-          : 'Sm3_' + selectedWagon.salesNumber
-      ]
-    : null;
+  const wagonMap = getWagonMap(selectedWagon);
 
   return (
     <Dialog onClose={handleClose} open={open}>

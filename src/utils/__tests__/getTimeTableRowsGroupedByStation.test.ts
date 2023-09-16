@@ -83,21 +83,21 @@ describe('getTimeTableRowsGroupedByStation', () => {
     it('should return correctly grouped time table rows by station', () => {
       const rows = getTimeTableRowsGroupedByStation(train);
 
-      expect(rows).toBeDefined();
-      expect(rows!.length).toBe(3);
+      expectToBeDefined(rows);
+      expect(rows.length).toBe(3);
 
-      expect(rows![0].arrival).toBeNull();
-      expect(rows![0].departure).toBeDefined();
-      expect(rows![0].departure!.station.name).toBe('Helsinki');
+      expect(rows[0].arrival).toBeNull();
+      expectToBeDefined(rows[0].departure);
+      expect(rows[0].departure.station.name).toBe('Helsinki');
 
-      expect(rows![1].arrival).toBeDefined();
-      expect(rows![1].arrival!.station.name).toBe('Pasila');
-      expect(rows![1].departure).toBeDefined();
-      expect(rows![1].departure!.station.name).toBe('Pasila');
+      expectToBeDefined(rows[1].arrival);
+      expect(rows[1].arrival.station.name).toBe('Pasila');
+      expectToBeDefined(rows[1].departure);
+      expect(rows[1].departure.station.name).toBe('Pasila');
 
-      expect(rows![2].arrival).toBeDefined();
-      expect(rows![2].arrival!.station.name).toBe('Tampere');
-      expect(rows![2].departure).toBeNull();
+      expectToBeDefined(rows[2].arrival);
+      expect(rows[2].arrival.station.name).toBe('Tampere');
+      expect(rows[2].departure).toBeNull();
     });
   });
 });

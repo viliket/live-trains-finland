@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import React from 'react';
 
 import { Box } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
