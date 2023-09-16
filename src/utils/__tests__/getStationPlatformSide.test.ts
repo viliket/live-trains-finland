@@ -19,10 +19,10 @@ function testStationPlatformSides(
   expectedPlatformSides: (string | null)[]
 ) {
   const timeTableGroups = getTimeTableRowsGroupedByStation(train);
-  expect(timeTableGroups).toBeDefined();
+  expectToBeDefined(timeTableGroups);
   train.timeTableGroups = timeTableGroups;
 
-  timeTableGroups!
+  timeTableGroups
     .map((g) => ({
       ...g,
       trainDirection: getTrainDirection(train, g),

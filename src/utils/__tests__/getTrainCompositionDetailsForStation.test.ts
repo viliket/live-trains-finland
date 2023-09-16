@@ -26,24 +26,24 @@ describe('getTrainCompositionDetailsForStation', () => {
       'Riihimäki',
       trainR2Units2AdditionalUnitsFromRi as TrainDetailsFragment
     );
-    expect(wagons).toBeDefined();
-    expect(wagons!.length).toBe(4);
+    expectToBeDefined(wagons);
+    expect(wagons.length).toBe(4);
 
-    expect(wagons![0].wagon!.vehicleNumber).toBe('94106004023-0');
-    expect(wagons![0].wagon!.location).toBe(1);
-    expect(wagons![0].status).toBe('added');
+    expect(wagons[0].wagon?.vehicleNumber).toBe('94106004023-0');
+    expect(wagons[0].wagon?.location).toBe(1);
+    expect(wagons[0].status).toBe('added');
 
-    expect(wagons![1].wagon!.vehicleNumber).toBe('94106004008-1');
-    expect(wagons![1].wagon!.location).toBe(2);
-    expect(wagons![1].status).toBe('added');
+    expect(wagons[1].wagon?.vehicleNumber).toBe('94106004008-1');
+    expect(wagons[1].wagon?.location).toBe(2);
+    expect(wagons[1].status).toBe('added');
 
-    expect(wagons![2].wagon!.vehicleNumber).toBe('94106004021-4');
-    expect(wagons![2].wagon!.location).toBe(3);
-    expect(wagons![2].status).toBe('unchanged');
+    expect(wagons[2].wagon?.vehicleNumber).toBe('94106004021-4');
+    expect(wagons[2].wagon?.location).toBe(3);
+    expect(wagons[2].status).toBe('unchanged');
 
-    expect(wagons![3].wagon!.vehicleNumber).toBe('94106004011-5');
-    expect(wagons![3].wagon!.location).toBe(4);
-    expect(wagons![3].status).toBe('unchanged');
+    expect(wagons[3].wagon?.vehicleNumber).toBe('94106004011-5');
+    expect(wagons[3].wagon?.location).toBe(4);
+    expect(wagons[3].status).toBe('unchanged');
   });
 
   it('should return correct details for a 4-unit train from HKI->RI with only two last units continuing from RI->TPE', () => {
@@ -62,24 +62,24 @@ describe('getTrainCompositionDetailsForStation', () => {
       'Riihimäki',
       trainR4Units2LastUnitsContinueFromRi as TrainDetailsFragment
     );
-    expect(wagons).toBeDefined();
-    expect(wagons!.length).toBe(4);
+    expectToBeDefined(wagons);
+    expect(wagons.length).toBe(4);
 
-    expect(wagons![0].wagon!.vehicleNumber).toBe('94106004011-5');
-    expect(wagons![0].wagon!.location).toBe(1);
-    expect(wagons![0].status).toBe('removed');
+    expect(wagons[0].wagon?.vehicleNumber).toBe('94106004011-5');
+    expect(wagons[0].wagon?.location).toBe(1);
+    expect(wagons[0].status).toBe('removed');
 
-    expect(wagons![1].wagon!.vehicleNumber).toBe('94106004019-8');
-    expect(wagons![1].wagon!.location).toBe(2);
-    expect(wagons![1].status).toBe('removed');
+    expect(wagons[1].wagon?.vehicleNumber).toBe('94106004019-8');
+    expect(wagons[1].wagon?.location).toBe(2);
+    expect(wagons[1].status).toBe('removed');
 
-    expect(wagons![2].wagon!.vehicleNumber).toBe('94106004028-9');
-    expect(wagons![2].wagon!.location).toBe(1);
-    expect(wagons![2].status).toBe('unchanged');
+    expect(wagons[2].wagon?.vehicleNumber).toBe('94106004028-9');
+    expect(wagons[2].wagon?.location).toBe(1);
+    expect(wagons[2].status).toBe('unchanged');
 
-    expect(wagons![3].wagon!.vehicleNumber).toBe('94106004001-6');
-    expect(wagons![3].wagon!.location).toBe(2);
-    expect(wagons![3].status).toBe('unchanged');
+    expect(wagons[3].wagon?.vehicleNumber).toBe('94106004001-6');
+    expect(wagons[3].wagon?.location).toBe(2);
+    expect(wagons[3].status).toBe('unchanged');
   });
 
   it('should return correct details for a 4-unit train from HKI->RI with only two first units continuing from RI->TPE', () => {
@@ -99,24 +99,24 @@ describe('getTrainCompositionDetailsForStation', () => {
       trainR4Units2FirstUnitsContinueFromRi as TrainDetailsFragment
     );
 
-    expect(wagons).toBeDefined();
-    expect(wagons!.length).toBe(4);
+    expectToBeDefined(wagons);
+    expect(wagons.length).toBe(4);
 
-    expect(wagons![0].wagon!.vehicleNumber).toBe('94106004010-7');
-    expect(wagons![0].wagon!.location).toBe(1);
-    expect(wagons![0].status).toBe('unchanged');
+    expect(wagons[0].wagon?.vehicleNumber).toBe('94106004010-7');
+    expect(wagons[0].wagon?.location).toBe(1);
+    expect(wagons[0].status).toBe('unchanged');
 
-    expect(wagons![1].wagon!.vehicleNumber).toBe('94106004028-9');
-    expect(wagons![1].wagon!.location).toBe(2);
-    expect(wagons![1].status).toBe('unchanged');
+    expect(wagons[1].wagon?.vehicleNumber).toBe('94106004028-9');
+    expect(wagons[1].wagon?.location).toBe(2);
+    expect(wagons[1].status).toBe('unchanged');
 
-    expect(wagons![2].wagon!.vehicleNumber).toBe('94106004021-4');
-    expect(wagons![2].wagon!.location).toBe(3);
-    expect(wagons![2].status).toBe('removed');
+    expect(wagons[2].wagon?.vehicleNumber).toBe('94106004021-4');
+    expect(wagons[2].wagon?.location).toBe(3);
+    expect(wagons[2].status).toBe('removed');
 
-    expect(wagons![3].wagon!.vehicleNumber).toBe('94106004017-2');
-    expect(wagons![3].wagon!.location).toBe(4);
-    expect(wagons![3].status).toBe('removed');
+    expect(wagons[3].wagon?.vehicleNumber).toBe('94106004017-2');
+    expect(wagons[3].wagon?.location).toBe(4);
+    expect(wagons[3].status).toBe('removed');
   });
 
   it('should return correct details for a train IC 266 from ROI->HKI', () => {
@@ -136,68 +136,68 @@ describe('getTrainCompositionDetailsForStation', () => {
       trainIc266RoiHki as TrainDetailsFragment
     );
 
-    expect(wagons).toBeDefined();
-    expect(wagons!.length).toBe(15);
+    expectToBeDefined(wagons);
+    expect(wagons.length).toBe(15);
 
-    expect(wagons![0].wagon!.salesNumber).toBe(50);
-    expect(wagons![0].wagon!.location).toBe(2);
-    expect(wagons![0].status).toBe('unchanged');
+    expect(wagons[0].wagon?.salesNumber).toBe(50);
+    expect(wagons[0].wagon?.location).toBe(2);
+    expect(wagons[0].status).toBe('unchanged');
 
-    expect(wagons![1].wagon!.salesNumber).toBe(51);
-    expect(wagons![1].wagon!.location).toBe(3);
-    expect(wagons![1].status).toBe('unchanged');
+    expect(wagons[1].wagon?.salesNumber).toBe(51);
+    expect(wagons[1].wagon?.location).toBe(3);
+    expect(wagons[1].status).toBe('unchanged');
 
-    expect(wagons![2].wagon!.salesNumber).toBe(52);
-    expect(wagons![2].wagon!.location).toBe(4);
-    expect(wagons![2].status).toBe('unchanged');
+    expect(wagons[2].wagon?.salesNumber).toBe(52);
+    expect(wagons[2].wagon?.location).toBe(4);
+    expect(wagons[2].status).toBe('unchanged');
 
-    expect(wagons![3].wagon!.salesNumber).toBe(54);
-    expect(wagons![3].wagon!.location).toBe(5);
-    expect(wagons![3].status).toBe('unchanged');
+    expect(wagons[3].wagon?.salesNumber).toBe(54);
+    expect(wagons[3].wagon?.location).toBe(5);
+    expect(wagons[3].status).toBe('unchanged');
 
-    expect(wagons![4].wagon!.salesNumber).toBe(55);
-    expect(wagons![4].wagon!.location).toBe(6);
-    expect(wagons![4].status).toBe('unchanged');
+    expect(wagons[4].wagon?.salesNumber).toBe(55);
+    expect(wagons[4].wagon?.location).toBe(6);
+    expect(wagons[4].status).toBe('unchanged');
 
-    expect(wagons![5].wagon!.salesNumber).toBe(56);
-    expect(wagons![5].wagon!.location).toBe(7);
-    expect(wagons![5].status).toBe('unchanged');
+    expect(wagons[5].wagon?.salesNumber).toBe(56);
+    expect(wagons[5].wagon?.location).toBe(7);
+    expect(wagons[5].status).toBe('unchanged');
 
-    expect(wagons![6].wagon!.salesNumber).toBe(57);
-    expect(wagons![6].wagon!.location).toBe(8);
-    expect(wagons![6].status).toBe('unchanged');
+    expect(wagons[6].wagon?.salesNumber).toBe(57);
+    expect(wagons[6].wagon?.location).toBe(8);
+    expect(wagons[6].status).toBe('unchanged');
 
-    expect(wagons![7].wagon!.salesNumber).toBe(58);
-    expect(wagons![7].wagon!.location).toBe(9);
-    expect(wagons![7].status).toBe('unchanged');
+    expect(wagons[7].wagon?.salesNumber).toBe(58);
+    expect(wagons[7].wagon?.location).toBe(9);
+    expect(wagons[7].status).toBe('unchanged');
 
-    expect(wagons![8].wagon!.salesNumber).toBe(59);
-    expect(wagons![8].wagon!.location).toBe(10);
-    expect(wagons![8].status).toBe('unchanged');
+    expect(wagons[8].wagon?.salesNumber).toBe(59);
+    expect(wagons[8].wagon?.location).toBe(10);
+    expect(wagons[8].status).toBe('unchanged');
 
-    expect(wagons![9].wagon!.salesNumber).toBe(60);
-    expect(wagons![9].wagon!.location).toBe(11);
-    expect(wagons![9].status).toBe('removed');
+    expect(wagons[9].wagon?.salesNumber).toBe(60);
+    expect(wagons[9].wagon?.location).toBe(11);
+    expect(wagons[9].status).toBe('removed');
 
-    expect(wagons![10].wagon!.salesNumber).toBe(61);
-    expect(wagons![10].wagon!.location).toBe(12);
-    expect(wagons![10].status).toBe('removed');
+    expect(wagons[10].wagon?.salesNumber).toBe(61);
+    expect(wagons[10].wagon?.location).toBe(12);
+    expect(wagons[10].status).toBe('removed');
 
-    expect(wagons![11].wagon!.salesNumber).toBe(62);
-    expect(wagons![11].wagon!.location).toBe(13);
-    expect(wagons![11].status).toBe('removed');
+    expect(wagons[11].wagon?.salesNumber).toBe(62);
+    expect(wagons[11].wagon?.location).toBe(13);
+    expect(wagons[11].status).toBe('removed');
 
-    expect(wagons![12].wagon!.salesNumber).toBe(730);
-    expect(wagons![12].wagon!.location).toBe(14);
-    expect(wagons![12].status).toBe('removed');
+    expect(wagons[12].wagon?.salesNumber).toBe(730);
+    expect(wagons[12].wagon?.location).toBe(14);
+    expect(wagons[12].status).toBe('removed');
 
-    expect(wagons![13].wagon!.salesNumber).toBe(731);
-    expect(wagons![13].wagon!.location).toBe(15);
-    expect(wagons![13].status).toBe('removed');
+    expect(wagons[13].wagon?.salesNumber).toBe(731);
+    expect(wagons[13].wagon?.location).toBe(15);
+    expect(wagons[13].status).toBe('removed');
 
-    expect(wagons![14].wagon!.salesNumber).toBe(710);
-    expect(wagons![14].wagon!.location).toBe(11);
-    expect(wagons![14].status).toBe('unchanged');
+    expect(wagons[14].wagon?.salesNumber).toBe(710);
+    expect(wagons[14].wagon?.location).toBe(11);
+    expect(wagons[14].status).toBe('unchanged');
   });
 
   it('should return correct details for a train IC 266 2023-05-20 from ROI->HKI at Tampere', () => {
@@ -217,84 +217,84 @@ describe('getTrainCompositionDetailsForStation', () => {
       trainIc266RoiHkiV2 as TrainDetailsFragment
     );
 
-    expect(wagons).toBeDefined();
-    expect(wagons!.length).toBe(19);
+    expectToBeDefined(wagons);
+    expect(wagons.length).toBe(19);
 
-    expect(wagons![0].wagon!.salesNumber).toBe(50);
-    expect(wagons![0].wagon!.location).toBe(2);
-    expect(wagons![0].status).toBe('removed');
+    expect(wagons[0].wagon?.salesNumber).toBe(50);
+    expect(wagons[0].wagon?.location).toBe(2);
+    expect(wagons[0].status).toBe('removed');
 
-    expect(wagons![1].wagon!.salesNumber).toBe(51);
-    expect(wagons![1].wagon!.location).toBe(3);
-    expect(wagons![1].status).toBe('removed');
+    expect(wagons[1].wagon?.salesNumber).toBe(51);
+    expect(wagons[1].wagon?.location).toBe(3);
+    expect(wagons[1].status).toBe('removed');
 
-    expect(wagons![2].wagon!.salesNumber).toBe(52);
-    expect(wagons![2].wagon!.location).toBe(4);
-    expect(wagons![2].status).toBe('removed');
+    expect(wagons[2].wagon?.salesNumber).toBe(52);
+    expect(wagons[2].wagon?.location).toBe(4);
+    expect(wagons[2].status).toBe('removed');
 
-    expect(wagons![3].wagon!.salesNumber).toBe(55);
-    expect(wagons![3].wagon!.location).toBe(5);
-    expect(wagons![3].status).toBe('removed');
+    expect(wagons[3].wagon?.salesNumber).toBe(55);
+    expect(wagons[3].wagon?.location).toBe(5);
+    expect(wagons[3].status).toBe('removed');
 
-    expect(wagons![4].wagon!.salesNumber).toBe(56);
-    expect(wagons![4].wagon!.location).toBe(6);
-    expect(wagons![4].status).toBe('removed');
+    expect(wagons[4].wagon?.salesNumber).toBe(56);
+    expect(wagons[4].wagon?.location).toBe(6);
+    expect(wagons[4].status).toBe('removed');
 
-    expect(wagons![5].wagon!.salesNumber).toBe(57);
-    expect(wagons![5].wagon!.location).toBe(2);
-    expect(wagons![5].status).toBe('unchanged');
+    expect(wagons[5].wagon?.salesNumber).toBe(57);
+    expect(wagons[5].wagon?.location).toBe(2);
+    expect(wagons[5].status).toBe('unchanged');
 
-    expect(wagons![6].wagon!.salesNumber).toBe(58);
-    expect(wagons![6].wagon!.location).toBe(3);
-    expect(wagons![6].status).toBe('unchanged');
+    expect(wagons[6].wagon?.salesNumber).toBe(58);
+    expect(wagons[6].wagon?.location).toBe(3);
+    expect(wagons[6].status).toBe('unchanged');
 
-    expect(wagons![7].wagon!.salesNumber).toBe(59);
-    expect(wagons![7].wagon!.location).toBe(4);
-    expect(wagons![7].status).toBe('unchanged');
+    expect(wagons[7].wagon?.salesNumber).toBe(59);
+    expect(wagons[7].wagon?.location).toBe(4);
+    expect(wagons[7].status).toBe('unchanged');
 
-    expect(wagons![8].wagon!.salesNumber).toBe(60);
-    expect(wagons![8].wagon!.location).toBe(10);
-    expect(wagons![8].status).toBe('removed');
+    expect(wagons[8].wagon?.salesNumber).toBe(60);
+    expect(wagons[8].wagon?.location).toBe(10);
+    expect(wagons[8].status).toBe('removed');
 
-    expect(wagons![9].wagon!.salesNumber).toBe(61);
-    expect(wagons![9].wagon!.location).toBe(11);
-    expect(wagons![9].status).toBe('removed');
+    expect(wagons[9].wagon?.salesNumber).toBe(61);
+    expect(wagons[9].wagon?.location).toBe(11);
+    expect(wagons[9].status).toBe('removed');
 
-    expect(wagons![10].wagon!.salesNumber).toBe(62);
-    expect(wagons![10].wagon!.location).toBe(12);
-    expect(wagons![10].status).toBe('removed');
+    expect(wagons[10].wagon?.salesNumber).toBe(62);
+    expect(wagons[10].wagon?.location).toBe(12);
+    expect(wagons[10].status).toBe('removed');
 
-    expect(wagons![11].wagon!.salesNumber).toBe(730);
-    expect(wagons![11].wagon!.location).toBe(13);
-    expect(wagons![11].status).toBe('removed');
+    expect(wagons[11].wagon?.salesNumber).toBe(730);
+    expect(wagons[11].wagon?.location).toBe(13);
+    expect(wagons[11].status).toBe('removed');
 
-    expect(wagons![12].wagon!.salesNumber).toBe(56);
-    expect(wagons![12].wagon!.location).toBe(5);
-    expect(wagons![12].status).toBe('added');
+    expect(wagons[12].wagon?.salesNumber).toBe(56);
+    expect(wagons[12].wagon?.location).toBe(5);
+    expect(wagons[12].status).toBe('added');
 
-    expect(wagons![13].wagon!.salesNumber).toBe(55);
-    expect(wagons![13].wagon!.location).toBe(6);
-    expect(wagons![13].status).toBe('added');
+    expect(wagons[13].wagon?.salesNumber).toBe(55);
+    expect(wagons[13].wagon?.location).toBe(6);
+    expect(wagons[13].status).toBe('added');
 
-    expect(wagons![14].wagon!.salesNumber).toBe(50);
-    expect(wagons![14].wagon!.location).toBe(7);
-    expect(wagons![14].status).toBe('added');
+    expect(wagons[14].wagon?.salesNumber).toBe(50);
+    expect(wagons[14].wagon?.location).toBe(7);
+    expect(wagons[14].status).toBe('added');
 
-    expect(wagons![15].wagon!.salesNumber).toBe(51);
-    expect(wagons![15].wagon!.location).toBe(8);
-    expect(wagons![15].status).toBe('added');
+    expect(wagons[15].wagon?.salesNumber).toBe(51);
+    expect(wagons[15].wagon?.location).toBe(8);
+    expect(wagons[15].status).toBe('added');
 
-    expect(wagons![16].wagon!.salesNumber).toBe(52);
-    expect(wagons![16].wagon!.location).toBe(9);
-    expect(wagons![16].status).toBe('added');
+    expect(wagons[16].wagon?.salesNumber).toBe(52);
+    expect(wagons[16].wagon?.location).toBe(9);
+    expect(wagons[16].status).toBe('added');
 
-    expect(wagons![17].wagon!.salesNumber).toBe(710);
-    expect(wagons![17].wagon!.location).toBe(10);
-    expect(wagons![17].status).toBe('unchanged');
+    expect(wagons[17].wagon?.salesNumber).toBe(710);
+    expect(wagons[17].wagon?.location).toBe(10);
+    expect(wagons[17].status).toBe('unchanged');
 
-    expect(wagons![18].wagon!.salesNumber).toBe(999);
-    expect(wagons![18].wagon!.location).toBe(11);
-    expect(wagons![18].status).toBe('unchanged');
+    expect(wagons[18].wagon?.salesNumber).toBe(999);
+    expect(wagons[18].wagon?.location).toBe(11);
+    expect(wagons[18].status).toBe('unchanged');
   });
 
   it('should return correct details for a train IC 266 2023-05-20 from ROI->HKI at Pasila tavara', () => {
@@ -314,68 +314,68 @@ describe('getTrainCompositionDetailsForStation', () => {
       trainIc266RoiHkiV2 as TrainDetailsFragment
     );
 
-    expect(wagons).toBeDefined();
-    expect(wagons!.length).toBe(15);
+    expectToBeDefined(wagons);
+    expect(wagons.length).toBe(15);
 
-    expect(wagons![0].wagon!.salesNumber).toBe(57);
-    expect(wagons![0].wagon!.location).toBe(2);
-    expect(wagons![0].status).toBe('removed');
+    expect(wagons[0].wagon?.salesNumber).toBe(57);
+    expect(wagons[0].wagon?.location).toBe(2);
+    expect(wagons[0].status).toBe('removed');
 
-    expect(wagons![1].wagon!.salesNumber).toBe(58);
-    expect(wagons![1].wagon!.location).toBe(3);
-    expect(wagons![1].status).toBe('removed');
+    expect(wagons[1].wagon?.salesNumber).toBe(58);
+    expect(wagons[1].wagon?.location).toBe(3);
+    expect(wagons[1].status).toBe('removed');
 
-    expect(wagons![2].wagon!.salesNumber).toBe(59);
-    expect(wagons![2].wagon!.location).toBe(4);
-    expect(wagons![2].status).toBe('removed');
+    expect(wagons[2].wagon?.salesNumber).toBe(59);
+    expect(wagons[2].wagon?.location).toBe(4);
+    expect(wagons[2].status).toBe('removed');
 
-    expect(wagons![3].wagon!.salesNumber).toBe(56);
-    expect(wagons![3].wagon!.location).toBe(5);
-    expect(wagons![3].status).toBe('removed');
+    expect(wagons[3].wagon?.salesNumber).toBe(56);
+    expect(wagons[3].wagon?.location).toBe(5);
+    expect(wagons[3].status).toBe('removed');
 
-    expect(wagons![4].wagon!.salesNumber).toBe(55);
-    expect(wagons![4].wagon!.location).toBe(6);
-    expect(wagons![4].status).toBe('removed');
+    expect(wagons[4].wagon?.salesNumber).toBe(55);
+    expect(wagons[4].wagon?.location).toBe(6);
+    expect(wagons[4].status).toBe('removed');
 
-    expect(wagons![5].wagon!.salesNumber).toBe(50);
-    expect(wagons![5].wagon!.location).toBe(2);
-    expect(wagons![5].status).toBe('unchanged');
+    expect(wagons[5].wagon?.salesNumber).toBe(50);
+    expect(wagons[5].wagon?.location).toBe(2);
+    expect(wagons[5].status).toBe('unchanged');
 
-    expect(wagons![6].wagon!.salesNumber).toBe(51);
-    expect(wagons![6].wagon!.location).toBe(3);
-    expect(wagons![6].status).toBe('unchanged');
+    expect(wagons[6].wagon?.salesNumber).toBe(51);
+    expect(wagons[6].wagon?.location).toBe(3);
+    expect(wagons[6].status).toBe('unchanged');
 
-    expect(wagons![7].wagon!.salesNumber).toBe(52);
-    expect(wagons![7].wagon!.location).toBe(4);
-    expect(wagons![7].status).toBe('unchanged');
+    expect(wagons[7].wagon?.salesNumber).toBe(52);
+    expect(wagons[7].wagon?.location).toBe(4);
+    expect(wagons[7].status).toBe('unchanged');
 
-    expect(wagons![8].wagon!.salesNumber).toBe(710);
-    expect(wagons![8].wagon!.location).toBe(10);
-    expect(wagons![8].status).toBe('removed');
+    expect(wagons[8].wagon?.salesNumber).toBe(710);
+    expect(wagons[8].wagon?.location).toBe(10);
+    expect(wagons[8].status).toBe('removed');
 
-    expect(wagons![9].wagon!.salesNumber).toBe(999);
-    expect(wagons![9].wagon!.location).toBe(11);
-    expect(wagons![9].status).toBe('removed');
+    expect(wagons[9].wagon?.salesNumber).toBe(999);
+    expect(wagons[9].wagon?.location).toBe(11);
+    expect(wagons[9].status).toBe('removed');
 
-    expect(wagons![10].wagon!.salesNumber).toBe(55);
-    expect(wagons![10].wagon!.location).toBe(5);
-    expect(wagons![10].status).toBe('added');
+    expect(wagons[10].wagon?.salesNumber).toBe(55);
+    expect(wagons[10].wagon?.location).toBe(5);
+    expect(wagons[10].status).toBe('added');
 
-    expect(wagons![11].wagon!.salesNumber).toBe(56);
-    expect(wagons![11].wagon!.location).toBe(6);
-    expect(wagons![11].status).toBe('added');
+    expect(wagons[11].wagon?.salesNumber).toBe(56);
+    expect(wagons[11].wagon?.location).toBe(6);
+    expect(wagons[11].status).toBe('added');
 
-    expect(wagons![12].wagon!.salesNumber).toBe(57);
-    expect(wagons![12].wagon!.location).toBe(7);
-    expect(wagons![12].status).toBe('added');
+    expect(wagons[12].wagon?.salesNumber).toBe(57);
+    expect(wagons[12].wagon?.location).toBe(7);
+    expect(wagons[12].status).toBe('added');
 
-    expect(wagons![13].wagon!.salesNumber).toBe(58);
-    expect(wagons![13].wagon!.location).toBe(8);
-    expect(wagons![13].status).toBe('added');
+    expect(wagons[13].wagon?.salesNumber).toBe(58);
+    expect(wagons[13].wagon?.location).toBe(8);
+    expect(wagons[13].status).toBe('added');
 
-    expect(wagons![14].wagon!.salesNumber).toBe(59);
-    expect(wagons![14].wagon!.location).toBe(9);
-    expect(wagons![14].status).toBe('added');
+    expect(wagons[14].wagon?.salesNumber).toBe(59);
+    expect(wagons[14].wagon?.location).toBe(9);
+    expect(wagons[14].status).toBe('added');
   });
 
   it('should return correct details for a train PYO 276 from KLI->HKI', () => {
@@ -395,96 +395,96 @@ describe('getTrainCompositionDetailsForStation', () => {
       trainPyo276KliHki as TrainDetailsFragment
     );
 
-    expect(wagons).toBeDefined();
-    expect(wagons!.length).toBe(22);
+    expectToBeDefined(wagons);
+    expect(wagons.length).toBe(22);
 
-    expect(wagons![0].wagon!.salesNumber).toBe(737);
-    expect(wagons![0].wagon!.location).toBe(3);
-    expect(wagons![0].status).toBe('removed');
+    expect(wagons[0].wagon?.salesNumber).toBe(737);
+    expect(wagons[0].wagon?.location).toBe(3);
+    expect(wagons[0].status).toBe('removed');
 
-    expect(wagons![1].wagon!.salesNumber).toBe(736);
-    expect(wagons![1].wagon!.location).toBe(4);
-    expect(wagons![1].status).toBe('removed');
+    expect(wagons[1].wagon?.salesNumber).toBe(736);
+    expect(wagons[1].wagon?.location).toBe(4);
+    expect(wagons[1].status).toBe('removed');
 
-    expect(wagons![2].wagon!.salesNumber).toBe(725);
-    expect(wagons![2].wagon!.location).toBe(5);
-    expect(wagons![2].status).toBe('removed');
+    expect(wagons[2].wagon?.salesNumber).toBe(725);
+    expect(wagons[2].wagon?.location).toBe(5);
+    expect(wagons[2].status).toBe('removed');
 
-    expect(wagons![3].wagon!.salesNumber).toBe(721);
-    expect(wagons![3].wagon!.location).toBe(6);
-    expect(wagons![3].status).toBe('removed');
+    expect(wagons[3].wagon?.salesNumber).toBe(721);
+    expect(wagons[3].wagon?.location).toBe(6);
+    expect(wagons[3].status).toBe('removed');
 
-    expect(wagons![4].wagon!.salesNumber).toBe(720);
-    expect(wagons![4].wagon!.location).toBe(7);
-    expect(wagons![4].status).toBe('removed');
+    expect(wagons[4].wagon?.salesNumber).toBe(720);
+    expect(wagons[4].wagon?.location).toBe(7);
+    expect(wagons[4].status).toBe('removed');
 
-    expect(wagons![5].wagon!.salesNumber).toBe(40);
-    expect(wagons![5].wagon!.location).toBe(2);
-    expect(wagons![5].status).toBe('unchanged');
+    expect(wagons[5].wagon?.salesNumber).toBe(40);
+    expect(wagons[5].wagon?.location).toBe(2);
+    expect(wagons[5].status).toBe('unchanged');
 
-    expect(wagons![6].wagon!.salesNumber).toBe(41);
-    expect(wagons![6].wagon!.location).toBe(3);
-    expect(wagons![6].status).toBe('unchanged');
+    expect(wagons[6].wagon?.salesNumber).toBe(41);
+    expect(wagons[6].wagon?.location).toBe(3);
+    expect(wagons[6].status).toBe('unchanged');
 
-    expect(wagons![7].wagon!.salesNumber).toBe(42);
-    expect(wagons![7].wagon!.location).toBe(4);
-    expect(wagons![7].status).toBe('unchanged');
+    expect(wagons[7].wagon?.salesNumber).toBe(42);
+    expect(wagons[7].wagon?.location).toBe(4);
+    expect(wagons[7].status).toBe('unchanged');
 
-    expect(wagons![8].wagon!.salesNumber).toBe(48);
-    expect(wagons![8].wagon!.location).toBe(5);
-    expect(wagons![8].status).toBe('unchanged');
+    expect(wagons[8].wagon?.salesNumber).toBe(48);
+    expect(wagons[8].wagon?.location).toBe(5);
+    expect(wagons[8].status).toBe('unchanged');
 
-    expect(wagons![9].wagon!.salesNumber).toBe(49);
-    expect(wagons![9].wagon!.location).toBe(6);
-    expect(wagons![9].status).toBe('unchanged');
+    expect(wagons[9].wagon?.salesNumber).toBe(49);
+    expect(wagons[9].wagon?.location).toBe(6);
+    expect(wagons[9].status).toBe('unchanged');
 
-    expect(wagons![10].wagon!.salesNumber).toBe(50);
-    expect(wagons![10].wagon!.location).toBe(7);
-    expect(wagons![10].status).toBe('unchanged');
+    expect(wagons[10].wagon?.salesNumber).toBe(50);
+    expect(wagons[10].wagon?.location).toBe(7);
+    expect(wagons[10].status).toBe('unchanged');
 
-    expect(wagons![11].wagon!.salesNumber).toBe(51);
-    expect(wagons![11].wagon!.location).toBe(8);
-    expect(wagons![11].status).toBe('unchanged');
+    expect(wagons[11].wagon?.salesNumber).toBe(51);
+    expect(wagons[11].wagon?.location).toBe(8);
+    expect(wagons[11].status).toBe('unchanged');
 
-    expect(wagons![12].wagon!.salesNumber).toBe(52);
-    expect(wagons![12].wagon!.location).toBe(9);
-    expect(wagons![12].status).toBe('unchanged');
+    expect(wagons[12].wagon?.salesNumber).toBe(52);
+    expect(wagons[12].wagon?.location).toBe(9);
+    expect(wagons[12].status).toBe('unchanged');
 
-    expect(wagons![13].wagon!.salesNumber).toBe(53);
-    expect(wagons![13].wagon!.location).toBe(10);
-    expect(wagons![13].status).toBe('unchanged');
+    expect(wagons[13].wagon?.salesNumber).toBe(53);
+    expect(wagons[13].wagon?.location).toBe(10);
+    expect(wagons[13].status).toBe('unchanged');
 
-    expect(wagons![14].wagon!.salesNumber).toBe(54);
-    expect(wagons![14].wagon!.location).toBe(11);
-    expect(wagons![14].status).toBe('unchanged');
+    expect(wagons[14].wagon?.salesNumber).toBe(54);
+    expect(wagons[14].wagon?.location).toBe(11);
+    expect(wagons[14].status).toBe('unchanged');
 
-    expect(wagons![15].wagon!.salesNumber).toBe(55);
-    expect(wagons![15].wagon!.location).toBe(12);
-    expect(wagons![15].status).toBe('unchanged');
+    expect(wagons[15].wagon?.salesNumber).toBe(55);
+    expect(wagons[15].wagon?.location).toBe(12);
+    expect(wagons[15].status).toBe('unchanged');
 
-    expect(wagons![16].wagon!.salesNumber).toBe(999);
-    expect(wagons![16].wagon!.location).toBe(19);
-    expect(wagons![16].status).toBe('removed');
+    expect(wagons[16].wagon?.salesNumber).toBe(999);
+    expect(wagons[16].wagon?.location).toBe(19);
+    expect(wagons[16].status).toBe('removed');
 
-    expect(wagons![17].wagon!.salesNumber).toBe(721);
-    expect(wagons![17].wagon!.location).toBe(13);
-    expect(wagons![17].status).toBe('added');
+    expect(wagons[17].wagon?.salesNumber).toBe(721);
+    expect(wagons[17].wagon?.location).toBe(13);
+    expect(wagons[17].status).toBe('added');
 
-    expect(wagons![18].wagon!.salesNumber).toBe(720);
-    expect(wagons![18].wagon!.location).toBe(14);
-    expect(wagons![18].status).toBe('added');
+    expect(wagons[18].wagon?.salesNumber).toBe(720);
+    expect(wagons[18].wagon?.location).toBe(14);
+    expect(wagons[18].status).toBe('added');
 
-    expect(wagons![19].wagon!.salesNumber).toBe(736);
-    expect(wagons![19].wagon!.location).toBe(15);
-    expect(wagons![19].status).toBe('added');
+    expect(wagons[19].wagon?.salesNumber).toBe(736);
+    expect(wagons[19].wagon?.location).toBe(15);
+    expect(wagons[19].status).toBe('added');
 
-    expect(wagons![20].wagon!.salesNumber).toBe(737);
-    expect(wagons![20].wagon!.location).toBe(16);
-    expect(wagons![20].status).toBe('added');
+    expect(wagons[20].wagon?.salesNumber).toBe(737);
+    expect(wagons[20].wagon?.location).toBe(16);
+    expect(wagons[20].status).toBe('added');
 
-    expect(wagons![21].wagon!.salesNumber).toBe(725);
-    expect(wagons![21].wagon!.location).toBe(17);
-    expect(wagons![21].status).toBe('added');
+    expect(wagons[21].wagon?.salesNumber).toBe(725);
+    expect(wagons[21].wagon?.location).toBe(17);
+    expect(wagons[21].status).toBe('added');
   });
 
   it('should return correct details for a train IC 143 from HKI=>PKI which reverses direction at Tampere', () => {
@@ -504,31 +504,31 @@ describe('getTrainCompositionDetailsForStation', () => {
       trainIc143DirectionReversesAfterTpe as TrainDetailsFragment
     );
 
-    expect(wagons).toBeDefined();
-    expect(wagons!.length).toBe(6);
+    expectToBeDefined(wagons);
+    expect(wagons.length).toBe(6);
 
-    expect(wagons![0].wagon!.salesNumber).toBe(1);
-    expect(wagons![0].wagon!.location).toBe(1);
-    expect(wagons![0].status).toBe('unchanged');
+    expect(wagons[0].wagon?.salesNumber).toBe(1);
+    expect(wagons[0].wagon?.location).toBe(1);
+    expect(wagons[0].status).toBe('unchanged');
 
-    expect(wagons![1].wagon!.salesNumber).toBe(2);
-    expect(wagons![1].wagon!.location).toBe(2);
-    expect(wagons![1].status).toBe('unchanged');
+    expect(wagons[1].wagon?.salesNumber).toBe(2);
+    expect(wagons[1].wagon?.location).toBe(2);
+    expect(wagons[1].status).toBe('unchanged');
 
-    expect(wagons![2].wagon!.salesNumber).toBe(3);
-    expect(wagons![2].wagon!.location).toBe(3);
-    expect(wagons![2].status).toBe('unchanged');
+    expect(wagons[2].wagon?.salesNumber).toBe(3);
+    expect(wagons[2].wagon?.location).toBe(3);
+    expect(wagons[2].status).toBe('unchanged');
 
-    expect(wagons![3].wagon!.salesNumber).toBe(4);
-    expect(wagons![3].wagon!.location).toBe(4);
-    expect(wagons![3].status).toBe('unchanged');
+    expect(wagons[3].wagon?.salesNumber).toBe(4);
+    expect(wagons[3].wagon?.location).toBe(4);
+    expect(wagons[3].status).toBe('unchanged');
 
-    expect(wagons![4].wagon!.salesNumber).toBe(5);
-    expect(wagons![4].wagon!.location).toBe(5);
-    expect(wagons![4].status).toBe('unchanged');
+    expect(wagons[4].wagon?.salesNumber).toBe(5);
+    expect(wagons[4].wagon?.location).toBe(5);
+    expect(wagons[4].status).toBe('unchanged');
 
-    expect(wagons![5].wagon!.salesNumber).toBe(6);
-    expect(wagons![5].wagon!.location).toBe(6);
-    expect(wagons![5].status).toBe('unchanged');
+    expect(wagons[5].wagon?.salesNumber).toBe(6);
+    expect(wagons[5].wagon?.location).toBe(6);
+    expect(wagons[5].status).toBe('unchanged');
   });
 });

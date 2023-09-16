@@ -221,8 +221,8 @@ describe('getDepartureTimeTableRow', () => {
   it('should be the departure row with the earliest scheduled time', () => {
     const row = getDepartureTimeTableRow(train);
 
-    expect(row).toBeDefined();
-    expect(row!.station.name).toBe('Helsinki');
+    expectToBeDefined(row);
+    expect(row.station.name).toBe('Helsinki');
   });
 });
 
@@ -230,8 +230,8 @@ describe('getDestinationTimeTableRow', () => {
   it('should be the arrival row with the latest scheduled time', () => {
     const row = getDestinationTimeTableRow(train);
 
-    expect(row).toBeDefined();
-    expect(row!.station.name).toBe('Tampere');
+    expectToBeDefined(row);
+    expect(row.station.name).toBe('Tampere');
   });
 });
 
@@ -239,8 +239,8 @@ describe('getTrainDepartureStation', () => {
   it('should be the station of the departure time table row', () => {
     const station = getTrainDepartureStation(train);
 
-    expect(station).toBeDefined();
-    expect(station!.name).toBe('Helsinki');
+    expectToBeDefined(station);
+    expect(station.name).toBe('Helsinki');
   });
 });
 
@@ -248,8 +248,8 @@ describe('getTrainDestinationStation', () => {
   it('should be the station of the destination time table row', () => {
     const station = getTrainDestinationStation(train);
 
-    expect(station).toBeDefined();
-    expect(station!.name).toBe('Tampere');
+    expectToBeDefined(station);
+    expect(station.name).toBe('Tampere');
   });
   describe.each(['I', 'P'])('ring rail %s train', (commuterLineid: string) => {
     const ringRailTrain = {
@@ -269,12 +269,12 @@ describe('getTrainDestinationStation', () => {
       jest.setSystemTime(parseISO('2023-01-25T08:55:00Z'));
 
       const destStationAtHki = getTrainDestinationStation(ringRailTrain, 'HKI');
-      expect(destStationAtHki).toBeDefined();
-      expect(destStationAtHki!.name).toBe('Lentoasema');
+      expectToBeDefined(destStationAtHki);
+      expect(destStationAtHki.name).toBe('Lentoasema');
 
       const destStationAtPsl = getTrainDestinationStation(ringRailTrain, 'PSL');
-      expect(destStationAtPsl).toBeDefined();
-      expect(destStationAtPsl!.name).toBe('Lentoasema');
+      expectToBeDefined(destStationAtPsl);
+      expect(destStationAtPsl.name).toBe('Lentoasema');
     });
 
     it('should be the station of the destination time table row when the given station is later than LEN', () => {
@@ -283,16 +283,16 @@ describe('getTrainDestinationStation', () => {
       jest.setSystemTime(parseISO('2023-01-25T10:30:00Z'));
 
       const destStationAtLen = getTrainDestinationStation(ringRailTrain, 'LEN');
-      expect(destStationAtLen).toBeDefined();
-      expect(destStationAtLen!.name).toBe('Helsinki');
+      expectToBeDefined(destStationAtLen);
+      expect(destStationAtLen.name).toBe('Helsinki');
 
       const destStationAtPsl = getTrainDestinationStation(ringRailTrain, 'PSL');
-      expect(destStationAtPsl).toBeDefined();
-      expect(destStationAtPsl!.name).toBe('Helsinki');
+      expectToBeDefined(destStationAtPsl);
+      expect(destStationAtPsl.name).toBe('Helsinki');
 
       const destStationAtHki = getTrainDestinationStation(ringRailTrain, 'HKI');
-      expect(destStationAtHki).toBeDefined();
-      expect(destStationAtHki!.name).toBe('Helsinki');
+      expectToBeDefined(destStationAtHki);
+      expect(destStationAtHki.name).toBe('Helsinki');
     });
   });
 });
