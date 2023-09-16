@@ -1,5 +1,5 @@
 import { differenceInMinutes, format, parseISO, startOfDay } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import { orderBy } from 'lodash';
 
 import {
@@ -277,7 +277,7 @@ const isWithinTimeSpan = (
   if (!isWithinStartAndEnd) return false;
 
   const isWithinWeekdays =
-    !weekDays || weekDays.includes(getCurrentWeekday(now));
+    !weekDays || weekDays.includes(getCurrentWeekdayInEET(now));
   return isWithinWeekdays;
 };
 
@@ -308,7 +308,7 @@ const isWithinTimeSpanAndHours = (
   if (!isWithinStartAndEnd) return false;
 
   const isWithinWeekdays =
-    weekDays && weekDays.includes(getCurrentWeekday(now));
+    weekDays && weekDays.includes(getCurrentWeekdayInEET(now));
   if (!isWithinWeekdays) return false;
 
   const sameDayStartDateTime = getDateTime(now, startTime);
@@ -316,8 +316,9 @@ const isWithinTimeSpanAndHours = (
   return sameDayStartDateTime <= now && now <= sameDayEndDateTime;
 };
 
-const getCurrentWeekday = (date: Date): Weekday => {
-  return format(date, 'EEEE').toUpperCase() as Weekday;
+const getCurrentWeekdayInEET = (date: Date): Weekday => {
+  const dateEET = utcToZonedTime(date, 'Europe/Helsinki');
+  return format(dateEET, 'EEEE').toUpperCase() as Weekday;
 };
 
 /**
@@ -331,18 +332,19 @@ const getCurrentWeekday = (date: Date): Weekday => {
  * @returns A new Date constructed from the given parameters.
  */
 const getDateTime = (dateTimeISO: string | Date, timeISOinEET?: string) => {
-  let dateISO: Date;
+  let dateTime: Date;
   if (dateTimeISO instanceof Date) {
-    dateISO = dateTimeISO;
+    dateTime = dateTimeISO;
   } else {
-    dateISO = parseISO(dateTimeISO);
+    dateTime = parseISO(dateTimeISO);
   }
-  let dateTime = utcToZonedTime(dateISO, 'Europe/Helsinki');
   if (timeISOinEET) {
+    dateTime = utcToZonedTime(dateTime, 'Europe/Helsinki');
     const [hours, minutes] = timeISOinEET.split(':').map(Number);
     dateTime = startOfDay(dateTime);
     dateTime.setHours(hours);
     dateTime.setMinutes(minutes);
+    dateTime = zonedTimeToUtc(dateTime, 'Europe/Helsinki');
   }
   return dateTime;
 };
