@@ -14,11 +14,9 @@ function TimeTableRowTime({ row }: TimeTableRowTimeProps) {
 
   const delayInMinutes = row.differenceInMinutes ?? 0;
   const scheduledTime = parseISO(row.scheduledTime);
-  const actualTime = row.actualTime
-    ? parseISO(row.actualTime)
-    : row.liveEstimateTime
-    ? parseISO(row.liveEstimateTime)
-    : scheduledTime;
+  const actualTime = parseISO(
+    row.actualTime ?? row.liveEstimateTime ?? row.scheduledTime
+  );
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>

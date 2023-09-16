@@ -23,11 +23,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const [wagonDialogOpen, setWagonDialogOpen] = useState(false);
   const [selectedWagon, setSelectedWagon] = useState<Wagon | null>(null);
   const departureDate = train ? getTrainScheduledDepartureTime(train) : null;
-  const {
-    error,
-    data: realTimeData,
-    loading,
-  } = useTrainQuery(
+  const { error, data: realTimeData } = useTrainQuery(
     train && departureDate
       ? {
           variables: {

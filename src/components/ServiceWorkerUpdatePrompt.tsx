@@ -5,8 +5,12 @@ import { Snackbar, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
-import { serviceWorkerRegistrationVar } from '../utils/serviceWorker';
-import { onRegister, onSuccess, onUpdate } from '../utils/serviceWorker';
+import {
+  serviceWorkerRegistrationVar,
+  onRegister,
+  onSuccess,
+  onUpdate,
+} from '../utils/serviceWorker';
 
 const ServiceWorkerUpdatePrompt = () => {
   const { t } = useTranslation();

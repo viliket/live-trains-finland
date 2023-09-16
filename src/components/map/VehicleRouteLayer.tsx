@@ -3,7 +3,7 @@ import GeoJSON from 'geojson';
 import { Layer, Source } from 'react-map-gl';
 
 type VehicleRouteLayerProps = {
-  data?:
+  data:
     | GeoJSON.Feature<GeoJSON.Geometry>
     | GeoJSON.FeatureCollection<GeoJSON.Geometry>
     | GeoJSON.Geometry

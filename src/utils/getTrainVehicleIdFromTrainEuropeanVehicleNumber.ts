@@ -42,7 +42,7 @@ export default function getTrainVehicleIdFromTrainEuropeanVehicleNumber(
     // * 94106000088-7 = 6088
     // * 94106000066-3 = 6066
     // * 94106000091-1 = 6091
-    const matches = vehicleNumber.match(/9410\d{4}(\d{3})-\d/);
+    const matches = /9410\d{4}(\d{3})-\d/.exec(vehicleNumber);
     if (matches !== null && matches.length === 2) {
       return Number.parseInt('6' + matches[1], 10);
     }
@@ -54,7 +54,7 @@ export default function getTrainVehicleIdFromTrainEuropeanVehicleNumber(
     // 94106004024-8 = 6324
     // 94106004008-1 = 6308
     // 94106004025-5 = 6325
-    const matches = vehicleNumber.match(/9410\d{5}(\d{2})-\d/);
+    const matches = /9410\d{5}(\d{2})-\d/.exec(vehicleNumber);
     if (matches !== null && matches.length === 2) {
       return Number.parseInt('63' + matches[1], 10);
     }
@@ -67,7 +67,7 @@ export default function getTrainVehicleIdFromTrainEuropeanVehicleNumber(
     // * 94102081038-3 = 1038
     // * 94102081078-9 = 1078
     // * 94102081069-8 = 1069
-    const matches = vehicleNumber.match(/9410\d{3}(\d{4})-\d/);
+    const matches = /9410\d{3}(\d{4})-\d/.exec(vehicleNumber);
     if (matches !== null && matches.length === 2) {
       return Number.parseInt(matches[1], 10);
     }
