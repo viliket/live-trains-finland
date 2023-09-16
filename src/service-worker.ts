@@ -64,7 +64,7 @@ dynamicPageHandlers.forEach(([exp, handler]) => {
 
     // If this looks like a URL for a resource, because it contains
     // a file extension, skip.
-    if (url.pathname.match(fileExtensionRegexp)) {
+    if (fileExtensionRegexp.exec(url.pathname)) {
       return false;
     }
 
