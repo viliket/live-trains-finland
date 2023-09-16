@@ -43,8 +43,7 @@ const Station: NextPageWithLayout = () => {
     null
   );
   const [selectedTrainNo, setSelectedTrainNo] = useState<number | null>(null);
-  const [stationAlertDialogOpen, setStationAlertDialogOpen] =
-    useState<boolean>();
+  const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const [executeRouteSearch, { data: routeData }] = useRoutesForRailLazyQuery();
   const station = stationName
     ? trainStations.find(
@@ -214,11 +213,8 @@ const Station: NextPageWithLayout = () => {
         <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
       )}
       <PassengerInformationMessagesDialog
-        passengerInformationMessages={
-          passengerInformationMessages && stationAlertDialogOpen
-            ? passengerInformationMessages
-            : null
-        }
+        open={stationAlertDialogOpen}
+        passengerInformationMessages={passengerInformationMessages}
         onClose={() => setStationAlertDialogOpen(false)}
       />
     </div>

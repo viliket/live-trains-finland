@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Alert, DialogActions, DialogContent } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
@@ -9,13 +9,17 @@ import { PassengerInformationMessage } from '../utils/passengerInformationMessag
 
 type PassengerInformationMessagesDialogProps = {
   onClose: () => void;
-  passengerInformationMessages: PassengerInformationMessage[] | null;
+  open: boolean;
+  passengerInformationMessages:
+    | PassengerInformationMessage[]
+    | null
+    | undefined;
 };
 
 const PassengerInformationMessagesDialog = (
   props: PassengerInformationMessagesDialogProps
 ) => {
-  const { onClose, passengerInformationMessages } = props;
+  const { onClose, open, passengerInformationMessages } = props;
   const { i18n } = useTranslation();
   const { t } = useTranslation();
 
@@ -34,7 +38,7 @@ const PassengerInformationMessagesDialog = (
   };
 
   return (
-    <Dialog onClose={handleClose} open={!!passengerInformationMessages}>
+    <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{t('alerts')}</DialogTitle>
       <DialogContent>
         {passengerInformationMessages?.map((m) => (

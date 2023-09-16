@@ -26,6 +26,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const [wagonDialogOpen, setWagonDialogOpen] = useState(false);
   const [selectedWagon, setSelectedWagon] = useState<Wagon | null>(null);
   const [selectedStation, setSelectedStation] = useState<string | null>(null);
+  const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const departureDate = train ? getTrainScheduledDepartureTime(train) : null;
   const {
     error,
@@ -67,6 +68,15 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
     setWagonDialogOpen(true);
   };
 
+  const handleStationAlertDialogClose = () => {
+    setStationAlertDialogOpen(false);
+  };
+
+  const handleStationAlertClick = (stationCode: string) => {
+    setSelectedStation(stationCode);
+    setStationAlertDialogOpen(true);
+  };
+
   return (
     <>
       <Box
@@ -105,7 +115,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         train={train}
         realTimeTrain={realTimeTrain}
         onWagonClick={handleWagonClick}
-        onStationAlertClick={(stationCode) => setSelectedStation(stationCode)}
+        onStationAlertClick={handleStationAlertClick}
         stationMessages={stationMessages}
       />
       {train && (
@@ -117,12 +127,13 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         />
       )}
       <PassengerInformationMessagesDialog
+        open={stationAlertDialogOpen}
         passengerInformationMessages={
           selectedStation && stationMessages?.[selectedStation]
             ? stationMessages[selectedStation]
             : null
         }
-        onClose={() => setSelectedStation(null)}
+        onClose={handleStationAlertDialogClose}
       />
     </>
   );
