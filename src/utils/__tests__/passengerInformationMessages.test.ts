@@ -15,6 +15,35 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
   });
 
   describe('audio', () => {
+    it('should not return messages with unsupported deliveryRules type', () => {
+      const passengerInformationMessages: PassengerInformationMessage[] = [
+        {
+          id: 'SHM20220818174358380',
+          version: 94,
+          creationDateTime: '2023-09-10T14:37:00Z',
+          startValidity: '2023-09-09T21:00:00Z',
+          endValidity: '2023-09-10T20:59:00Z',
+          stations: ['HKI'],
+          audio: {
+            text: {
+              fi: 'Huomio!',
+              sv: 'Observera!',
+              en: 'Attention!',
+            },
+            deliveryRules: {
+              deliveryType: 'NO_SUPPORT_FOR_SUCH_TYPE' as any,
+            },
+          },
+        },
+      ];
+
+      const relevantMessages = getPassengerInformationMessagesCurrentlyRelevant(
+        passengerInformationMessages
+      );
+
+      expect(relevantMessages.length).toBe(0);
+    });
+
     describe('deliveryRules type NOW', () => {
       describe('message with creationDateTime "2023-09-10T14:37:00Z"', () => {
         const passengerInformationMessages: PassengerInformationMessage[] = [
@@ -293,9 +322,70 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
         });
       });
     });
+
+    describe('deliveryRules type ON_EVENT', () => {
+      it('should not return messages with type ON_EVENT because they are not currently supported', () => {
+        const passengerInformationMessages: PassengerInformationMessage[] = [
+          {
+            id: 'SHM20220818174358380',
+            version: 94,
+            creationDateTime: '2023-09-10T14:37:00Z',
+            startValidity: '2023-09-09T21:00:00Z',
+            endValidity: '2023-09-10T20:59:00Z',
+            stations: ['HKI'],
+            audio: {
+              text: {
+                fi: 'Huomio!',
+                sv: 'Observera!',
+                en: 'Attention!',
+              },
+              deliveryRules: {
+                deliveryType: 'ON_EVENT',
+              },
+            },
+          },
+        ];
+
+        const relevantMessages =
+          getPassengerInformationMessagesCurrentlyRelevant(
+            passengerInformationMessages
+          );
+
+        expect(relevantMessages.length).toBe(0);
+      });
+    });
   });
 
   describe('video', () => {
+    it('should not return messages with unsupported deliveryRules type', () => {
+      const passengerInformationMessages: PassengerInformationMessage[] = [
+        {
+          id: 'SHM20220818174358380',
+          version: 94,
+          creationDateTime: '2023-09-10T14:37:00Z',
+          startValidity: '2023-09-09T21:00:00Z',
+          endValidity: '2023-09-10T20:59:00Z',
+          stations: ['HKI'],
+          video: {
+            text: {
+              fi: 'Huomio!',
+              sv: 'Observera!',
+              en: 'Attention!',
+            },
+            deliveryRules: {
+              deliveryType: 'NO_SUPPORT_FOR_SUCH_TYPE' as any,
+            },
+          },
+        },
+      ];
+
+      const relevantMessages = getPassengerInformationMessagesCurrentlyRelevant(
+        passengerInformationMessages
+      );
+
+      expect(relevantMessages.length).toBe(0);
+    });
+
     describe('deliveryRules type CONTINUOS_VISUALIZATION', () => {
       describe('message with timespan "2023-09-11T01:00:00+03:00" to "2023-09-15T04:20:00+03:00" on Mon-Thu', () => {
         const passengerInformationMessages: PassengerInformationMessage[] = [

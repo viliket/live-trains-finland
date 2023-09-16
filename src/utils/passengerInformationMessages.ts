@@ -192,7 +192,7 @@ function isAudioMessageRelevant(
       // TODO: Not yet supported
       return false;
     default:
-      return true;
+      return false;
   }
 }
 
@@ -212,7 +212,7 @@ function isVideoMessageRelevant(
     case 'CONTINUOS_VISUALIZATION':
       return isWithinTimeSpan(deliveryRules, now);
     default:
-      return true;
+      return false;
   }
 }
 
