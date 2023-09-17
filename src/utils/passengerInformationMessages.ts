@@ -276,9 +276,9 @@ const isWithinTimeSpan = (
     startDateAdjusted <= now && now <= endDateAdjusted;
   if (!isWithinStartAndEnd) return false;
 
-  const isWithinWeekdays =
-    !weekDays || weekDays.includes(getCurrentWeekdayInEET(now));
-  return isWithinWeekdays;
+  if (!weekDays) return true;
+
+  return weekDays.includes(getCurrentWeekdayInEET(now));
 };
 
 /**
