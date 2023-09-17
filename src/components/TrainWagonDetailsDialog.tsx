@@ -143,21 +143,24 @@ const OccupancyStatusItem = ({
   showUpstairs,
 }: {
   wagonSalesNumber: number;
-  wagons: Record<string, WagonInfo>;
+  wagons: Partial<Record<string, WagonInfo>>;
   showUpstairs: boolean;
 }) => {
   const { t } = useTranslation();
 
   const wagonMapWagon = wagons[wagonSalesNumber];
+  if (!wagonMapWagon) return null;
+
   const selectedFloor = showUpstairs && wagonMapWagon.floorCount > 1 ? 2 : 1;
   const isOnSelectedFloor = (p: { floor: number }) => p.floor === selectedFloor;
+
+  const numSeatsTotal =
+    wagonMapWagon.placeList.filter(isOnSelectedFloor).length;
+  if (numSeatsTotal === 0) return null;
 
   const numBookedSeats = wagonMapWagon.placeList
     .filter(isOnSelectedFloor)
     .reduce((sum, p) => sum + (p.bookable ? 0 : 1), 0);
-
-  const numSeatsTotal =
-    wagonMapWagon.placeList.filter(isOnSelectedFloor).length;
 
   return (
     <DetailsItem
