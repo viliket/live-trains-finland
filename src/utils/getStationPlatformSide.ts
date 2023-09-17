@@ -42,18 +42,17 @@ function getPlatformSide(
     // Platform type is "side" (Reunalaituri)
     if (trainDirection === TrainDirection.Increasing) {
       return isRightSide ? StationPlatformSide.Right : StationPlatformSide.Left;
-    } else if (trainDirection === TrainDirection.Decreasing) {
+    } else {
       return isRightSide ? StationPlatformSide.Left : StationPlatformSide.Right;
     }
   } else {
     // Assume that otherwise platform type is "island" (Välilaituri)
     if (trainDirection === TrainDirection.Increasing) {
       return isRightSide ? StationPlatformSide.Left : StationPlatformSide.Right;
-    } else if (trainDirection === TrainDirection.Decreasing) {
+    } else {
       return isRightSide ? StationPlatformSide.Right : StationPlatformSide.Left;
     }
   }
-  return null;
 }
 
 /**
