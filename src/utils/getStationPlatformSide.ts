@@ -5,7 +5,6 @@ import {
   TrainTimeTableRowFragment,
 } from '../graphql/generated/digitraffic';
 
-import { isIn } from './common';
 import _stationPlatformInfoByStationPlatformId from './generated/station-platform-by-station-platform-id.json';
 
 type StationPlatform = {
@@ -30,33 +29,28 @@ function getPlatformSide(
   trainDirection: TrainDirection
 ): StationPlatformSide | null {
   const stationTrackNumberKey = `${timeTableRow.station.shortCode} L${timeTableRow.commercialTrack}`;
-  if (isIn(stationTrackNumberKey, stationPlatformInfoByStationPlatformId)) {
-    const platform =
-      stationPlatformInfoByStationPlatformId[stationTrackNumberKey];
-    if (!platform) return null;
+  const platform =
+    stationPlatformInfoByStationPlatformId[stationTrackNumberKey];
 
-    if ('platformType' in platform && platform.platformType === 'side') {
-      // Platform type is "side" (Reunalaituri)
-      if (trainDirection === TrainDirection.Increasing) {
-        return platform.platformSide === 'right'
-          ? StationPlatformSide.Right
-          : StationPlatformSide.Left;
-      } else if (trainDirection === TrainDirection.Decreasing) {
-        return platform.platformSide === 'right'
-          ? StationPlatformSide.Left
-          : StationPlatformSide.Right;
-      }
-    } else {
-      // Assume that otherwise platform type is "island" (Välilaituri)
-      if (trainDirection === TrainDirection.Increasing) {
-        return platform.platformSide === 'right'
-          ? StationPlatformSide.Left
-          : StationPlatformSide.Right;
-      } else if (trainDirection === TrainDirection.Decreasing) {
-        return platform.platformSide === 'right'
-          ? StationPlatformSide.Right
-          : StationPlatformSide.Left;
-      }
+  if (!platform) return null;
+
+  const isSidePlatform =
+    'platformType' in platform && platform.platformType === 'side';
+  const isRightSide = platform.platformSide === 'right';
+
+  if (isSidePlatform) {
+    // Platform type is "side" (Reunalaituri)
+    if (trainDirection === TrainDirection.Increasing) {
+      return isRightSide ? StationPlatformSide.Right : StationPlatformSide.Left;
+    } else if (trainDirection === TrainDirection.Decreasing) {
+      return isRightSide ? StationPlatformSide.Left : StationPlatformSide.Right;
+    }
+  } else {
+    // Assume that otherwise platform type is "island" (Välilaituri)
+    if (trainDirection === TrainDirection.Increasing) {
+      return isRightSide ? StationPlatformSide.Left : StationPlatformSide.Right;
+    } else if (trainDirection === TrainDirection.Decreasing) {
+      return isRightSide ? StationPlatformSide.Right : StationPlatformSide.Left;
     }
   }
   return null;
