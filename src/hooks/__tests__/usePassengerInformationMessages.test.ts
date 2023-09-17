@@ -122,7 +122,7 @@ describe('usePassengerInformationMessages', () => {
 
         jest
           .spyOn(global, 'fetch')
-          .mockImplementation(() => Promise.reject('error'));
+          .mockImplementation(() => Promise.reject(new Error('error')));
 
         act(() => {
           jest.advanceTimersByTime(advanceByTime);

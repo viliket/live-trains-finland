@@ -307,9 +307,7 @@ const isWithinTimeSpanAndHours = (
     startDateAdjusted <= now && now <= endDateAdjusted;
   if (!isWithinStartAndEnd) return false;
 
-  const isWithinWeekdays =
-    weekDays && weekDays.includes(getCurrentWeekdayInEET(now));
-  if (!isWithinWeekdays) return false;
+  if (!weekDays?.includes(getCurrentWeekdayInEET(now))) return false;
 
   const sameDayStartDateTime = getDateTime(now, startTime);
   const sameDayEndDateTime = getDateTime(now, endTime);
