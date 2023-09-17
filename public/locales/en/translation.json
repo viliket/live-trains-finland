@@ -24,6 +24,7 @@
   "train_composition_change_from_to_station_text": "These train units continue from {{from}} to {{to}}",
   "train_composition": "Train composition",
   "wagon_class": "Class",
+  "occupancy": "Occupancy",
   "number": "Number",
   "unit_number": "European vehicle number",
   "train_unit": "Train unit",
