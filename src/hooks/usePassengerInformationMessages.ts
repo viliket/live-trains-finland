@@ -11,7 +11,7 @@ type PassengerInformationMessageQuery = {
   trainNumber?: number;
   trainDepartureDate?: string;
   onlyGeneral?: boolean;
-  refetchIntervalMs: number;
+  refetchIntervalMs?: number;
 };
 
 export default function usePassengerInformationMessages({

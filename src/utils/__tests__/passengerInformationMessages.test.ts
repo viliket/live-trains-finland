@@ -11,6 +11,27 @@ import {
 } from '../passengerInformationMessages';
 
 describe('getPassengerInformationMessagesByStation', () => {
+  it('should add the message to the station present in stations array when there is only single station', () => {
+    const passengerInformationMessages: PassengerInformationMessage[] = [
+      {
+        id: 'SHM20220818174358380',
+        version: 94,
+        creationDateTime: '2023-09-10T14:37:00Z',
+        startValidity: '2023-09-09T21:00:00Z',
+        endValidity: '2023-09-10T20:59:00Z',
+        stations: ['PSL'],
+      },
+    ];
+
+    const messagesByStation = getPassengerInformationMessagesByStation(
+      passengerInformationMessages
+    );
+
+    expectToBeDefined(messagesByStation);
+    expect(messagesByStation['PSL']).toBeDefined();
+    expect(messagesByStation['PSL'].length).toBe(1);
+  });
+
   it('should only add the message to first and last station in the stations array when there are multiple stations', () => {
     const passengerInformationMessages: PassengerInformationMessage[] = [
       {
@@ -26,20 +47,70 @@ describe('getPassengerInformationMessagesByStation', () => {
     const messagesByStation = getPassengerInformationMessagesByStation(
       passengerInformationMessages
     );
-    expect(messagesByStation).toBeDefined();
-    expect(messagesByStation!['HKI']).toBeDefined();
-    expect(messagesByStation!['HKI'].length).toBe(1);
-    expect(messagesByStation!['PSL']).toBeUndefined();
-    expect(messagesByStation!['TKL']).toBeUndefined();
-    expect(messagesByStation!['KE']).toBeUndefined();
-    expect(messagesByStation!['RI']).toBeDefined();
-    expect(messagesByStation!['RI'].length).toBe(1);
+
+    expectToBeDefined(messagesByStation);
+    expect(messagesByStation['HKI']).toBeDefined();
+    expect(messagesByStation['HKI'].length).toBe(1);
+    expect(messagesByStation['PSL']).toBeUndefined();
+    expect(messagesByStation['TKL']).toBeUndefined();
+    expect(messagesByStation['KE']).toBeUndefined();
+    expect(messagesByStation['RI']).toBeDefined();
+    expect(messagesByStation['RI'].length).toBe(1);
   });
 });
 
 describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
   beforeAll(() => {
     jest.useFakeTimers();
+  });
+
+  describe('text content modifications', () => {
+    it('should add junaan.fi text to both audio and video text content if the text contains junalahdot.fi', () => {
+      const passengerInformationMessages: PassengerInformationMessage[] = [
+        {
+          id: 'SHM20220818174358380',
+          version: 94,
+          creationDateTime: '2023-09-10T14:37:00Z',
+          startValidity: '2023-09-09T21:00:00Z',
+          endValidity: '2023-09-10T20:59:00Z',
+          stations: ['HKI'],
+          audio: {
+            text: {
+              fi: 'Huomio! junalahdot.fi',
+              sv: 'Observera! junalahdot.fi',
+              en: 'Attention! vr.fi',
+            },
+          },
+          video: {
+            text: {
+              fi: 'Huomio! junalahdot.fi',
+              sv: undefined,
+              en: 'Attention! junalahdot.fi',
+            },
+          },
+        },
+      ];
+
+      const relevantMessages = getPassengerInformationMessagesCurrentlyRelevant(
+        passengerInformationMessages
+      );
+
+      expect(relevantMessages.length).toBe(1);
+      expect(relevantMessages[0].audio?.text?.fi).toBe(
+        'Huomio! junaan.fi / junalahdot.fi'
+      );
+      expect(relevantMessages[0].audio?.text?.sv).toBe(
+        'Observera! junaan.fi / junalahdot.fi'
+      );
+      expect(relevantMessages[0].audio?.text?.en).toBe('Attention! vr.fi');
+      expect(relevantMessages[0].video?.text?.fi).toBe(
+        'Huomio! junaan.fi / junalahdot.fi'
+      );
+      expect(relevantMessages[0].video?.text?.sv).toBeUndefined();
+      expect(relevantMessages[0].video?.text?.en).toBe(
+        'Attention! junaan.fi / junalahdot.fi'
+      );
+    });
   });
 
   describe('audio', () => {
@@ -70,6 +141,32 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
       );
 
       expect(relevantMessages.length).toBe(0);
+    });
+
+    it('should return messages that have no deliveryRules', () => {
+      const passengerInformationMessages: PassengerInformationMessage[] = [
+        {
+          id: 'SHM20220818174358380',
+          version: 94,
+          creationDateTime: '2023-09-10T14:37:00Z',
+          startValidity: '2023-09-09T21:00:00Z',
+          endValidity: '2023-09-10T20:59:00Z',
+          stations: ['HKI'],
+          audio: {
+            text: {
+              fi: 'Huomio!',
+              sv: 'Observera!',
+              en: 'Attention!',
+            },
+          },
+        },
+      ];
+
+      const relevantMessages = getPassengerInformationMessagesCurrentlyRelevant(
+        passengerInformationMessages
+      );
+
+      expect(relevantMessages.length).toBe(1);
     });
 
     describe('deliveryRules type NOW', () => {
@@ -128,6 +225,36 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
     });
 
     describe('deliveryRules type DELIVERY_AT', () => {
+      it('should return messages with no deliveryAt specified', () => {
+        const passengerInformationMessages: PassengerInformationMessage[] = [
+          {
+            id: 'SHM20220818174358380',
+            version: 94,
+            creationDateTime: '2023-09-10T14:37:00Z',
+            startValidity: '2023-09-09T21:00:00Z',
+            endValidity: '2023-09-10T20:59:00Z',
+            stations: ['HKI'],
+            audio: {
+              text: {
+                fi: 'Huomio!',
+                sv: 'Observera!',
+                en: 'Attention!',
+              },
+              deliveryRules: {
+                deliveryType: 'DELIVERY_AT',
+              },
+            },
+          },
+        ];
+
+        const relevantMessages =
+          getPassengerInformationMessagesCurrentlyRelevant(
+            passengerInformationMessages
+          );
+
+        expect(relevantMessages.length).toBe(1);
+      });
+
       describe('message with deliveryAt "2023-09-10T14:30:00Z"', () => {
         const passengerInformationMessages: PassengerInformationMessage[] = [
           {
@@ -348,6 +475,17 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
 
           expect(relevantMessages.length).toBe(0);
         });
+
+        it('should not return messages if no train is given as parameter', () => {
+          jest.setSystemTime(parseISO('2023-09-02T15:50:59Z'));
+
+          const relevantMessages =
+            getPassengerInformationMessagesCurrentlyRelevant(
+              passengerInformationMessages
+            );
+
+          expect(relevantMessages.length).toBe(0);
+        });
       });
     });
 
@@ -412,6 +550,32 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
       );
 
       expect(relevantMessages.length).toBe(0);
+    });
+
+    it('should return messages that have no deliveryRules', () => {
+      const passengerInformationMessages: PassengerInformationMessage[] = [
+        {
+          id: 'SHM20220818174358380',
+          version: 94,
+          creationDateTime: '2023-09-10T14:37:00Z',
+          startValidity: '2023-09-09T21:00:00Z',
+          endValidity: '2023-09-10T20:59:00Z',
+          stations: ['HKI'],
+          video: {
+            text: {
+              fi: 'Huomio!',
+              sv: 'Observera!',
+              en: 'Attention!',
+            },
+          },
+        },
+      ];
+
+      const relevantMessages = getPassengerInformationMessagesCurrentlyRelevant(
+        passengerInformationMessages
+      );
+
+      expect(relevantMessages.length).toBe(1);
     });
 
     describe('deliveryRules type CONTINUOS_VISUALIZATION', () => {

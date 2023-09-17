@@ -34,64 +34,105 @@ describe('usePassengerInformationMessages', () => {
   const mockFetchPromise = Promise.resolve({
     json: () => Promise.resolve(mockPassengerInformationMessages),
   });
-  const refreshCycle = 10000;
 
-  beforeEach(() => {
-    jest
-      .spyOn(global, 'fetch')
-      .mockImplementation(() => mockFetchPromise as any);
-  });
+  describe.each([undefined, 5000])(
+    'using different refresh cycles',
+    (refreshCycle) => {
+      const advanceByTime = refreshCycle ?? 10000;
 
-  afterEach(() => {
-    jest.useRealTimers();
-    jest.resetAllMocks();
-  });
+      beforeEach(() => {
+        jest
+          .spyOn(global, 'fetch')
+          .mockImplementation(() => mockFetchPromise as any);
+      });
 
-  it('should return relevant messages immediately before first refresh cycle', async () => {
-    jest.useFakeTimers().setSystemTime(parseISO('2023-09-15T04:19:55+03:00'));
+      afterEach(() => {
+        jest.useRealTimers();
+        jest.resetAllMocks();
+      });
 
-    const { result } = renderHook(() =>
-      usePassengerInformationMessages({
-        skip: false,
-        refetchIntervalMs: refreshCycle,
-      })
-    );
+      it('should return relevant messages immediately before first refresh cycle', async () => {
+        jest
+          .useFakeTimers()
+          .setSystemTime(parseISO('2023-09-15T04:19:55+03:00'));
 
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
-    await waitFor(() => expect(result.current.messages).toBeDefined());
+        const { result } = renderHook(() =>
+          usePassengerInformationMessages({
+            skip: false,
+            refetchIntervalMs: refreshCycle,
+          })
+        );
 
-    expect(result.current.messages!.length).toStrictEqual(1);
+        await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(result.current.messages).toBeDefined());
 
-    act(() => {
-      jest.advanceTimersByTime(refreshCycle);
-    });
+        expect(result.current.messages!.length).toStrictEqual(1);
 
-    await waitFor(() =>
-      expect(result.current.messages!.length).toStrictEqual(0)
-    );
-  });
+        act(() => {
+          jest.advanceTimersByTime(advanceByTime);
+        });
 
-  it('should update the relevant messages after each refresh cycle', async () => {
-    jest.useFakeTimers().setSystemTime(parseISO('2023-09-11T00:00:55+03:00'));
+        await waitFor(() =>
+          expect(result.current.messages!.length).toStrictEqual(0)
+        );
+      });
 
-    const { result } = renderHook(() =>
-      usePassengerInformationMessages({
-        skip: false,
-        refetchIntervalMs: refreshCycle,
-      })
-    );
+      it('should update the relevant messages after each refresh cycle', async () => {
+        jest
+          .useFakeTimers()
+          .setSystemTime(parseISO('2023-09-11T00:00:55+03:00'));
 
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
-    await waitFor(() => expect(result.current.messages).toBeDefined());
+        const { result } = renderHook(() =>
+          usePassengerInformationMessages({
+            skip: false,
+            refetchIntervalMs: refreshCycle,
+          })
+        );
 
-    expect(result.current.messages!.length).toStrictEqual(0);
+        await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(result.current.messages).toBeDefined());
 
-    act(() => {
-      jest.advanceTimersByTime(refreshCycle);
-    });
+        expect(result.current.messages!.length).toStrictEqual(0);
 
-    await waitFor(() =>
-      expect(result.current.messages!.length).toStrictEqual(1)
-    );
-  });
+        act(() => {
+          jest.advanceTimersByTime(advanceByTime);
+        });
+
+        await waitFor(() =>
+          expect(result.current.messages!.length).toStrictEqual(1)
+        );
+      });
+
+      it('should return error and previously fetched messages if fetching fails', async () => {
+        jest
+          .useFakeTimers()
+          .setSystemTime(parseISO('2023-09-15T04:19:55+03:00'));
+
+        const { result } = renderHook(() =>
+          usePassengerInformationMessages({
+            skip: false,
+            refetchIntervalMs: refreshCycle,
+          })
+        );
+
+        await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(result.current.messages).toBeDefined());
+
+        expect(result.current.messages!.length).toStrictEqual(1);
+
+        jest
+          .spyOn(global, 'fetch')
+          .mockImplementation(() => Promise.reject('error'));
+
+        act(() => {
+          jest.advanceTimersByTime(advanceByTime);
+        });
+
+        await waitFor(() => expect(result.current.error).toBeDefined());
+
+        expect(result.current.messages).toBeDefined();
+        expect(result.current.messages!.length).toStrictEqual(1);
+      });
+    }
+  );
 });
