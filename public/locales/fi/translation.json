@@ -23,6 +23,7 @@
   "train_composition_change_from_to_station_text": "Nämä junayksiköt jatkavat asemalta {{from}} asemalle {{to}}",
   "train_composition": "Junan kokoonpano",
   "wagon_class": "Sarjatunnus",
+  "occupancy": "Täyttöaste",
   "number": "Numero",
   "unit_number": "Kalustoyksikkönumero",
   "train_unit": "Junayksikkö",

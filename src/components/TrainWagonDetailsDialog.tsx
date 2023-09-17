@@ -137,6 +137,44 @@ const DetailsItem = ({
   </Paper>
 );
 
+const OccupancyStatusItem = ({
+  wagonSalesNumber,
+  wagons,
+  showUpstairs,
+}: {
+  wagonSalesNumber: number;
+  wagons: Partial<Record<string, WagonInfo>>;
+  showUpstairs: boolean;
+}) => {
+  const { t } = useTranslation();
+
+  const wagonMapWagon = wagons[wagonSalesNumber];
+  if (!wagonMapWagon) return null;
+
+  const selectedFloor = showUpstairs && wagonMapWagon.floorCount > 1 ? 2 : 1;
+  const isOnSelectedFloor = (p: { floor: number }) => p.floor === selectedFloor;
+
+  const numSeatsTotal =
+    wagonMapWagon.placeList.filter(isOnSelectedFloor).length;
+  if (numSeatsTotal === 0) return null;
+
+  const numBookedSeats = wagonMapWagon.placeList
+    .filter(isOnSelectedFloor)
+    .reduce((sum, p) => sum + (p.bookable ? 0 : 1), 0);
+
+  return (
+    <DetailsItem
+      value={
+        <>
+          {numBookedSeats} / {numSeatsTotal} (
+          {Math.round((numBookedSeats / numSeatsTotal) * 100)}%)
+        </>
+      }
+      caption={t('occupancy')}
+    />
+  );
+};
+
 function getWagonMap(wagon: Wagon | null) {
   if (wagon?.wagonType) {
     if (wagon.wagonType !== 'Sm3') {
@@ -262,6 +300,13 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
               <DetailsItem
                 value={selectedWagon.vehicleNumber}
                 caption={t('unit_number')}
+              />
+            )}
+            {wagons && selectedWagon?.salesNumber && (
+              <OccupancyStatusItem
+                wagonSalesNumber={selectedWagon.salesNumber}
+                wagons={wagons}
+                showUpstairs={showUpstairs}
               />
             )}
           </Stack>
