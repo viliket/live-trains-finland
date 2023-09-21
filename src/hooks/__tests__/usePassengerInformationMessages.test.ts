@@ -28,7 +28,7 @@ describe('usePassengerInformationMessages', () => {
   });
 
   it('should construct the correct URL and call fetch after each refetch interval', async () => {
-    jest.useFakeTimers().setSystemTime(parseISO('2023-09-12T00:00:00+03:00'));
+    jest.useFakeTimers().setSystemTime(parseISO('2023-09-12T00:00:00Z'));
 
     const queryParameters = {
       stationCode: 'HKI',
@@ -57,7 +57,7 @@ describe('usePassengerInformationMessages', () => {
     await waitFor(() => {
       expect(fetchMock).toHaveBeenNthCalledWith(
         2,
-        `${baseUrl}/updated-after/2023-09-12T00:00:00+03:00?station=HKI&train_number=123&train_departure_date=2023-09-20&only_general=true`
+        `${baseUrl}/updated-after/2023-09-12T00:00:00Z?station=HKI&train_number=123&train_departure_date=2023-09-20&only_general=true`
       );
     });
 
@@ -68,7 +68,7 @@ describe('usePassengerInformationMessages', () => {
     await waitFor(() => {
       expect(fetchMock).toHaveBeenNthCalledWith(
         3,
-        `${baseUrl}/updated-after/2023-09-12T00:00:10+03:00?station=HKI&train_number=123&train_departure_date=2023-09-20&only_general=true`
+        `${baseUrl}/updated-after/2023-09-12T00:00:10Z?station=HKI&train_number=123&train_departure_date=2023-09-20&only_general=true`
       );
     });
   });
@@ -179,7 +179,7 @@ describe('usePassengerInformationMessages', () => {
   });
 
   it('should clear messages and use api path /active on first fetch when props change', async () => {
-    jest.useFakeTimers().setSystemTime(parseISO('2023-09-12T00:00:00+03:00'));
+    jest.useFakeTimers().setSystemTime(parseISO('2023-09-12T00:00:00Z'));
     const mockResponse1 = [{ id: '1', text: 'Message 1 HKI' }];
     const mockResponse2 = [{ id: '1', text: 'Message 1 PSL' }];
     const fetchSpy = jest
@@ -220,7 +220,7 @@ describe('usePassengerInformationMessages', () => {
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenNthCalledWith(
         3,
-        `${baseUrl}/updated-after/2023-09-12T00:00:00+03:00?station=PSL`
+        `${baseUrl}/updated-after/2023-09-12T00:00:00Z?station=PSL`
       );
     });
 

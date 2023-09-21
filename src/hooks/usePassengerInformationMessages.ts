@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { formatISO } from 'date-fns';
 import { unionBy } from 'lodash';
 
 import {
@@ -40,37 +39,38 @@ export default function usePassengerInformationMessages({
     });
   }, [onlyGeneral, stationCode, trainDepartureDate, trainNumber]);
 
+  const fetchData = useCallback(async () => {
+    try {
+      let url: string;
+      if (!lastFetchTimeRef.current) {
+        url = `${apiBaseUrl}/active?${params}`;
+      } else {
+        url = `${apiBaseUrl}/updated-after/${
+          lastFetchTimeRef.current.toISOString().split('.')[0] + 'Z'
+        }?${params}`;
+      }
+
+      setError(undefined);
+      lastFetchTimeRef.current = new Date();
+
+      const res = await fetch(url);
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch data (status ${res.status})`);
+      }
+
+      const latestMessages =
+        (await res.json()) as PassengerInformationMessage[];
+
+      setMessages((msgs) => unionBy(latestMessages, msgs, 'id'));
+    } catch (error) {
+      setError(error);
+    }
+  }, [params]);
+
   useEffect(() => {
     let interval: NodeJS.Timer | null = null;
     if (!skip) {
-      const fetchData = async () => {
-        try {
-          let url: string;
-          if (!lastFetchTimeRef.current) {
-            url = `${apiBaseUrl}/active?${params}`;
-          } else {
-            url = `${apiBaseUrl}/updated-after/${formatISO(
-              lastFetchTimeRef.current
-            )}?${params}`;
-          }
-
-          setError(undefined);
-          lastFetchTimeRef.current = new Date();
-
-          const res = await fetch(url);
-
-          if (!res.ok) {
-            throw new Error(`Failed to fetch data (status ${res.status})`);
-          }
-
-          const latestMessages =
-            (await res.json()) as PassengerInformationMessage[];
-
-          setMessages((msgs) => unionBy(latestMessages, msgs, 'id'));
-        } catch (error) {
-          setError(error);
-        }
-      };
       interval = setInterval(fetchData, refetchIntervalMs);
       fetchData();
     }
@@ -82,7 +82,7 @@ export default function usePassengerInformationMessages({
         clearInterval(interval);
       }
     };
-  }, [params, refetchIntervalMs, skip]);
+  }, [fetchData, refetchIntervalMs, skip]);
 
   const relevantMessages = messages
     ? getPassengerInformationMessagesCurrentlyRelevant(messages)
