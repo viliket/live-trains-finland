@@ -12,7 +12,7 @@ jest.mock('../../utils/passengerInformationMessages', () => ({
 
 describe('usePassengerInformationMessages', () => {
   const baseUrl = 'https://rata.digitraffic.fi/api/v1/passenger-information';
-  const defaultRefetchIntervalMs = 10000;
+  const defaultRefetchIntervalMs = 20000;
 
   const getMockFetchResponse = (
     mockResponse: Partial<PassengerInformationMessage>[]
@@ -29,12 +29,14 @@ describe('usePassengerInformationMessages', () => {
 
   it('should construct the correct URL and call fetch after each refetch interval', async () => {
     jest.useFakeTimers().setSystemTime(parseISO('2023-09-12T00:00:00Z'));
+    const refetchIntervalMs = 10000;
 
     const queryParameters = {
       stationCode: 'HKI',
       trainNumber: 123,
       trainDepartureDate: '2023-09-20',
       onlyGeneral: true,
+      refetchIntervalMs,
     };
 
     const fetchMock = jest
@@ -51,7 +53,7 @@ describe('usePassengerInformationMessages', () => {
     });
 
     act(() => {
-      jest.advanceTimersByTime(defaultRefetchIntervalMs);
+      jest.advanceTimersByTime(refetchIntervalMs);
     });
 
     await waitFor(() => {
@@ -62,7 +64,7 @@ describe('usePassengerInformationMessages', () => {
     });
 
     act(() => {
-      jest.advanceTimersByTime(defaultRefetchIntervalMs);
+      jest.advanceTimersByTime(refetchIntervalMs);
     });
 
     await waitFor(() => {

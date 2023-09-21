@@ -24,7 +24,7 @@ export default function usePassengerInformationMessages({
   trainNumber,
   trainDepartureDate,
   onlyGeneral,
-  refetchIntervalMs = 10000,
+  refetchIntervalMs = 20000,
 }: PassengerInformationMessageQuery) {
   const [messages, setMessages] = useState<PassengerInformationMessage[]>();
   const lastFetchTimeRef = useRef<Date>();
