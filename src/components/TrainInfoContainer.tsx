@@ -45,7 +45,7 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const { messages: passengerInformationMessages } =
     usePassengerInformationMessages({
       skip: !train,
-      refetchIntervalMs: 10000,
+      refetchIntervalMs: 20000,
       trainNumber: train?.trainNumber,
       trainDepartureDate: train?.departureDate,
     });

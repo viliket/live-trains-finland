@@ -68,7 +68,7 @@ const Station: NextPageWithLayout = () => {
   const { messages: passengerInformationMessages } =
     usePassengerInformationMessages({
       skip: stationCode == null,
-      refetchIntervalMs: 10000,
+      refetchIntervalMs: 20000,
       onlyGeneral: true,
       stationCode: stationCode,
     });
