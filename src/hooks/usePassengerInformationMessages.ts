@@ -18,6 +18,19 @@ type PassengerInformationMessageQuery = {
 
 const apiBaseUrl = 'https://rata.digitraffic.fi/api/v1/passenger-information';
 
+function createSearchParams(params: Partial<Record<string, string>>) {
+  const filteredParams: Record<string, string> = {};
+
+  for (const key in params) {
+    const paramValue = params[key];
+    if (paramValue != null) {
+      filteredParams[key] = paramValue;
+    }
+  }
+
+  return new URLSearchParams(filteredParams);
+}
+
 export default function usePassengerInformationMessages({
   skip,
   stationCode,
@@ -30,14 +43,16 @@ export default function usePassengerInformationMessages({
   const lastFetchTimeRef = useRef<Date>();
   const [error, setError] = useState<unknown>();
 
-  const params = useMemo(() => {
-    return new URLSearchParams({
-      ...(stationCode && { station: stationCode }),
-      ...(trainNumber && { train_number: trainNumber?.toString() }),
-      ...(trainDepartureDate && { train_departure_date: trainDepartureDate }),
-      ...(onlyGeneral && { only_general: onlyGeneral?.toString() }),
-    });
-  }, [onlyGeneral, stationCode, trainDepartureDate, trainNumber]);
+  const params = useMemo(
+    () =>
+      createSearchParams({
+        station: stationCode,
+        train_number: trainNumber?.toString(),
+        train_departure_date: trainDepartureDate,
+        only_general: onlyGeneral?.toString(),
+      }),
+    [onlyGeneral, stationCode, trainDepartureDate, trainNumber]
+  );
 
   const fetchData = useCallback(async () => {
     try {
