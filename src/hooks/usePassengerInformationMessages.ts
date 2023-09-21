@@ -1,4 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+
+import { formatISO } from 'date-fns';
+import { unionBy } from 'lodash';
 
 import {
   getPassengerInformationMessagesCurrentlyRelevant,
@@ -14,6 +17,8 @@ type PassengerInformationMessageQuery = {
   refetchIntervalMs?: number;
 };
 
+const apiBaseUrl = 'https://rata.digitraffic.fi/api/v1/passenger-information';
+
 export default function usePassengerInformationMessages({
   skip,
   stationCode,
@@ -23,6 +28,7 @@ export default function usePassengerInformationMessages({
   refetchIntervalMs = 10000,
 }: PassengerInformationMessageQuery) {
   const [messages, setMessages] = useState<PassengerInformationMessage[]>();
+  const lastFetchTimeRef = useRef<Date>();
   const [error, setError] = useState<unknown>();
 
   const params = useMemo(() => {
@@ -39,15 +45,28 @@ export default function usePassengerInformationMessages({
     if (!skip) {
       const fetchData = async () => {
         try {
+          let url: string;
+          if (!lastFetchTimeRef.current) {
+            url = `${apiBaseUrl}/active?${params}`;
+          } else {
+            url = `${apiBaseUrl}/updated-after/${formatISO(
+              lastFetchTimeRef.current
+            )}?${params}`;
+          }
+
           setError(undefined);
-          const res = await fetch(
-            `https://rata.digitraffic.fi/api/v1/passenger-information/active?${params}`
-          );
-          const allMessages =
+          lastFetchTimeRef.current = new Date();
+
+          const res = await fetch(url);
+
+          if (!res.ok) {
+            throw new Error(`Failed to fetch data (status ${res.status})`);
+          }
+
+          const latestMessages =
             (await res.json()) as PassengerInformationMessage[];
-          const relevantMessages =
-            getPassengerInformationMessagesCurrentlyRelevant(allMessages);
-          setMessages(relevantMessages);
+
+          setMessages((msgs) => unionBy(latestMessages, msgs, 'id'));
         } catch (error) {
           setError(error);
         }
@@ -57,11 +76,17 @@ export default function usePassengerInformationMessages({
     }
 
     return () => {
+      setMessages(undefined);
+      lastFetchTimeRef.current = undefined;
       if (interval) {
         clearInterval(interval);
       }
     };
   }, [params, refetchIntervalMs, skip]);
 
-  return { messages, error };
+  const relevantMessages = messages
+    ? getPassengerInformationMessagesCurrentlyRelevant(messages)
+    : undefined;
+
+  return { messages: relevantMessages, error };
 }
