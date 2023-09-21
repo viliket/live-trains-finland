@@ -144,6 +144,17 @@ function isMessageRelevant(
   now: Date,
   train?: TrainByStationFragment
 ): boolean {
+  if (
+    !isWithinTimeSpan(
+      {
+        startDateTime: message.startValidity,
+        endDateTime: message.endValidity,
+      },
+      now
+    )
+  ) {
+    return false;
+  }
   if (message.video && isVideoMessageRelevant(message, now)) {
     return true;
   }
@@ -329,7 +340,10 @@ const getCurrentWeekdayInEET = (date: Date): Weekday => {
  * @param time - The optional time part (format: "H:mm") in Europe/Helsinki (EET) time zone.
  * @returns A new Date constructed from the given parameters.
  */
-const getDateTime = (dateTimeISO: string | Date, timeISOinEET?: string) => {
+const getDateTime = (
+  dateTimeISO: string | Date,
+  timeISOinEET?: string
+): Date => {
   let dateTime: Date;
   if (dateTimeISO instanceof Date) {
     dateTime = dateTimeISO;

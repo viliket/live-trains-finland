@@ -64,12 +64,18 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
     jest.useFakeTimers();
   });
 
+  beforeEach(() => {
+    // Default system time within validity of passengerInformationMessageBase
+    // that can be overwritten by individual tests
+    jest.setSystemTime(parseISO('2023-09-09T00:00:00Z'));
+  });
+
   const passengerInformationMessageBase: PassengerInformationMessage = {
     id: 'SHM20220818174358380',
     version: 94,
     creationDateTime: '2023-09-10T14:37:00Z',
-    startValidity: '2023-09-09T21:00:00Z',
-    endValidity: '2023-09-10T20:59:00Z',
+    startValidity: '2023-09-01T00:00:00Z',
+    endValidity: '2023-09-14T21:00:00Z',
     stations: ['HKI'],
   };
 
@@ -121,6 +127,47 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
         'Attention! junaan.fi / junalahdot.fi'
       );
     });
+  });
+
+  describe('overall message validity', () => {
+    const passengerInformationMessages: PassengerInformationMessage[] = [
+      {
+        ...passengerInformationMessageBase,
+        startValidity: '2023-09-01T00:00:00Z',
+        endValidity: '2023-09-14T21:00:00Z',
+        audio: {
+          text: defaultPassengerInformationTextContent,
+        },
+      },
+    ];
+
+    it.each(['2023-09-01T00:00:00Z', '2023-09-14T21:00:00Z'])(
+      'should be relevant at time %p',
+      (nowISO: string) => {
+        jest.setSystemTime(parseISO(nowISO));
+
+        const relevantMessages =
+          getPassengerInformationMessagesCurrentlyRelevant(
+            passengerInformationMessages
+          );
+
+        expect(relevantMessages.length).toBe(1);
+      }
+    );
+
+    it.each(['2023-08-31T23:59:59Z', '2023-09-14T21:00:01Z'])(
+      'should not be relevant at time %p',
+      (nowISO: string) => {
+        jest.setSystemTime(parseISO(nowISO));
+
+        const relevantMessages =
+          getPassengerInformationMessagesCurrentlyRelevant(
+            passengerInformationMessages
+          );
+
+        expect(relevantMessages.length).toBe(0);
+      }
+    );
   });
 
   describe('audio', () => {
