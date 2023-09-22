@@ -5,10 +5,92 @@ import {
   TrainByStationFragment,
 } from '../../graphql/generated/digitraffic';
 import {
+  getPassengerInformationMessageForLanguage,
   getPassengerInformationMessagesByStation,
   getPassengerInformationMessagesCurrentlyRelevant,
   PassengerInformationMessage,
 } from '../passengerInformationMessages';
+
+describe('getPassengerInformationMessageForLanguage', () => {
+  const passengerInformationMessageBase: PassengerInformationMessage = {
+    id: '',
+    version: 1,
+    creationDateTime: '',
+    startValidity: '',
+    endValidity: '',
+    stations: [],
+  };
+
+  describe('message with audio only', () => {
+    const passengerInformationMessage: PassengerInformationMessage = {
+      ...passengerInformationMessageBase,
+      audio: {
+        text: {
+          fi: 'Huomio! junalahdot.fi',
+          sv: 'Observera! junalahdot.fi',
+          en: 'Attention! vr.fi',
+        },
+      },
+    };
+
+    it('should return text for given language and add junaan.fi to text if the text contains junalahdot.fi', () => {
+      expect(
+        getPassengerInformationMessageForLanguage(
+          passengerInformationMessage,
+          'fi'
+        )
+      ).toBe('Huomio! junaan.fi / junalahdot.fi');
+
+      expect(
+        getPassengerInformationMessageForLanguage(
+          passengerInformationMessage,
+          'sv'
+        )
+      ).toBe('Observera! junaan.fi / junalahdot.fi');
+
+      expect(
+        getPassengerInformationMessageForLanguage(
+          passengerInformationMessage,
+          'en'
+        )
+      ).toBe('Attention! vr.fi');
+    });
+  });
+
+  describe('message with video only', () => {
+    const passengerInformationMessage: PassengerInformationMessage = {
+      ...passengerInformationMessageBase,
+      video: {
+        text: {
+          fi: 'Huomio! junalahdot.fi',
+          sv: undefined,
+          en: 'Attention! junalahdot.fi',
+        },
+      },
+    };
+
+    it('should return text for given language and add junaan.fi to text if the text contains junalahdot.fi', () => {
+      expect(
+        getPassengerInformationMessageForLanguage(
+          passengerInformationMessage,
+          'fi'
+        )
+      ).toBe('Huomio! junaan.fi / junalahdot.fi');
+      expect(
+        getPassengerInformationMessageForLanguage(
+          passengerInformationMessage,
+          'sv'
+        )
+      ).toBeUndefined();
+      expect(
+        getPassengerInformationMessageForLanguage(
+          passengerInformationMessage,
+          'en'
+        )
+      ).toBe('Attention! junaan.fi / junalahdot.fi');
+    });
+  });
+});
 
 describe('getPassengerInformationMessagesByStation', () => {
   it('should add the message to the station present in stations array when there is only single station', () => {
@@ -84,50 +166,6 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
     sv: 'Observera!',
     en: 'Attention!',
   };
-
-  describe('text content modifications', () => {
-    it('should add junaan.fi text to both audio and video text content if the text contains junalahdot.fi', () => {
-      const passengerInformationMessages: PassengerInformationMessage[] = [
-        {
-          ...passengerInformationMessageBase,
-          audio: {
-            text: {
-              fi: 'Huomio! junalahdot.fi',
-              sv: 'Observera! junalahdot.fi',
-              en: 'Attention! vr.fi',
-            },
-          },
-          video: {
-            text: {
-              fi: 'Huomio! junalahdot.fi',
-              sv: undefined,
-              en: 'Attention! junalahdot.fi',
-            },
-          },
-        },
-      ];
-
-      const relevantMessages = getPassengerInformationMessagesCurrentlyRelevant(
-        passengerInformationMessages
-      );
-
-      expect(relevantMessages.length).toBe(1);
-      expect(relevantMessages[0].audio?.text?.fi).toBe(
-        'Huomio! junaan.fi / junalahdot.fi'
-      );
-      expect(relevantMessages[0].audio?.text?.sv).toBe(
-        'Observera! junaan.fi / junalahdot.fi'
-      );
-      expect(relevantMessages[0].audio?.text?.en).toBe('Attention! vr.fi');
-      expect(relevantMessages[0].video?.text?.fi).toBe(
-        'Huomio! junaan.fi / junalahdot.fi'
-      );
-      expect(relevantMessages[0].video?.text?.sv).toBeUndefined();
-      expect(relevantMessages[0].video?.text?.en).toBe(
-        'Attention! junaan.fi / junalahdot.fi'
-      );
-    });
-  });
 
   describe('overall message validity', () => {
     const passengerInformationMessages: PassengerInformationMessage[] = [

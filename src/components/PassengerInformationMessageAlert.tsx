@@ -1,7 +1,10 @@
 import { Alert, ButtonBase } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { PassengerInformationMessage } from '../utils/passengerInformationMessages';
+import {
+  getPassengerInformationMessageForLanguage,
+  PassengerInformationMessage,
+} from '../utils/passengerInformationMessages';
 
 type PassengerInformationMessageAlertProps = {
   onClick: () => void;
@@ -18,16 +21,6 @@ const PassengerInformationMessageAlert = ({
 
   const firstMessage = passengerInformationMessages[0];
 
-  const getTextForCurrentLanguage = (text?: Record<string, string>) => {
-    if (!text) {
-      return '';
-    }
-    if (i18n.resolvedLanguage in text) {
-      return text[i18n.resolvedLanguage];
-    }
-    return text.fi;
-  };
-
   return (
     <ButtonBase
       onClick={onClick}
@@ -40,8 +33,9 @@ const PassengerInformationMessageAlert = ({
       }}
     >
       <Alert severity="info" sx={{ width: '100%' }}>
-        {getTextForCurrentLanguage(
-          (firstMessage.video ?? firstMessage.audio)?.text
+        {getPassengerInformationMessageForLanguage(
+          firstMessage,
+          i18n.resolvedLanguage
         )}
         {passengerInformationMessages.length > 1 && (
           <strong> + {passengerInformationMessages.length - 1}</strong>

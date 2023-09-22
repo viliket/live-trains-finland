@@ -3,7 +3,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTranslation } from 'react-i18next';
 
-import { PassengerInformationMessage } from '../utils/passengerInformationMessages';
+import {
+  getPassengerInformationMessageForLanguage,
+  PassengerInformationMessage,
+} from '../utils/passengerInformationMessages';
 
 type PassengerInformationMessagesDialogProps = {
   onClose: () => void;
@@ -25,23 +28,16 @@ const PassengerInformationMessagesDialog = (
     onClose();
   };
 
-  const getTextForCurrentLanguage = (text?: Record<string, string>) => {
-    if (!text) {
-      return '';
-    }
-    if (i18n.resolvedLanguage in text) {
-      return text[i18n.resolvedLanguage];
-    }
-    return text.fi;
-  };
-
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{t('alerts')}</DialogTitle>
       <DialogContent>
         {passengerInformationMessages?.map((m) => (
           <Alert key={m.id} severity="info" sx={{ mb: 1 }}>
-            {getTextForCurrentLanguage((m.video ?? m.audio)?.text)}
+            {getPassengerInformationMessageForLanguage(
+              m,
+              i18n.resolvedLanguage
+            )}
           </Alert>
         ))}
       </DialogContent>

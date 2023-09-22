@@ -73,6 +73,27 @@ type Weekday =
   | 'SATURDAY'
   | 'SUNDAY';
 
+export function getPassengerInformationMessageForLanguage(
+  message: PassengerInformationMessage,
+  languageCode: string
+) {
+  const textContent: Record<string, string> | undefined = (
+    message.video ?? message.audio
+  )?.text;
+
+  if (!textContent) {
+    return '';
+  }
+
+  let text: string;
+  if (languageCode in textContent) {
+    text = textContent[languageCode];
+  } else {
+    text = textContent.fi;
+  }
+  return getImprovedText(text);
+}
+
 export function getPassengerInformationMessagesByStation(
   passengerInformationMessages: PassengerInformationMessage[] | undefined
 ) {
@@ -101,42 +122,18 @@ export function getPassengerInformationMessagesCurrentlyRelevant(
   const relevantMessages = passengerInformationMessages.filter((message) =>
     isMessageRelevant(message, now, train)
   );
-  relevantMessages.forEach((m) => {
-    if (m.audio?.text) {
-      m.audio.text = getImprovedTextContent(m.audio.text);
-    }
-    if (m.video?.text) {
-      m.video.text = getImprovedTextContent(m.video.text);
-    }
-  });
   return relevantMessages;
 }
 
-function getImprovedTextContent(
-  textContent: PassengerInformationTextContent
-): PassengerInformationTextContent {
-  const modifiedContent: PassengerInformationTextContent = {};
+function getImprovedText(text: string | undefined): string | undefined {
+  if (text) {
+    const idx = text.indexOf('junalahdot.fi');
 
-  for (const lng of Object.keys(textContent) as Array<
-    keyof PassengerInformationTextContent
-  >) {
-    const currentText = textContent[lng];
-
-    if (currentText) {
-      const idx = currentText.indexOf('junalahdot.fi');
-
-      if (idx !== -1) {
-        modifiedContent[lng] =
-          currentText.slice(0, idx) + 'junaan.fi / ' + currentText.slice(idx);
-      } else {
-        modifiedContent[lng] = currentText;
-      }
-    } else {
-      modifiedContent[lng] = currentText;
+    if (idx !== -1) {
+      return text.slice(0, idx) + 'junaan.fi / ' + text.slice(idx);
     }
   }
-
-  return modifiedContent;
+  return text;
 }
 
 function isMessageRelevant(
