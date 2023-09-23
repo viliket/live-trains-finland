@@ -21,74 +21,63 @@ describe('getPassengerInformationMessageForLanguage', () => {
     stations: [],
   };
 
-  describe('message with audio only', () => {
-    const passengerInformationMessage: PassengerInformationMessage = {
-      ...passengerInformationMessageBase,
-      audio: {
-        text: {
-          fi: 'Huomio! junalahdot.fi',
-          sv: 'Observera! junalahdot.fi',
-          en: 'Attention! vr.fi',
-        },
+  const videoAudioMessage: PassengerInformationMessage = {
+    ...passengerInformationMessageBase,
+    video: {
+      text: {
+        en: 'English video text! junalahdot.fi',
+        fi: 'Finnish video text! junalahdot.fi',
       },
-    };
+    },
+    audio: {
+      text: {
+        en: 'English audio text! junalahdot.fi',
+        fi: 'Finnish audio text! junalahdot.fi',
+      },
+    },
+  };
 
-    it('should return text for given language and add junaan.fi to text if the text contains junalahdot.fi', () => {
-      expect(
-        getPassengerInformationMessageForLanguage(
-          passengerInformationMessage,
-          'fi'
-        )
-      ).toBe('Huomio! junaan.fi / junalahdot.fi');
+  const audioOnlyMessage: PassengerInformationMessage = {
+    ...passengerInformationMessageBase,
+    audio: {
+      text: {
+        en: 'English audio text! junalahdot.fi',
+        sv: 'Swedish audio text!',
+        fi: 'Finnish audio text! junalahdot.fi',
+      },
+    },
+  };
 
-      expect(
-        getPassengerInformationMessageForLanguage(
-          passengerInformationMessage,
-          'sv'
-        )
-      ).toBe('Observera! junaan.fi / junalahdot.fi');
-
-      expect(
-        getPassengerInformationMessageForLanguage(
-          passengerInformationMessage,
-          'en'
-        )
-      ).toBe('Attention! vr.fi');
-    });
+  it('should return the message from video content when available in the specified language', () => {
+    const result = getPassengerInformationMessageForLanguage(
+      videoAudioMessage,
+      'en'
+    );
+    expect(result).toBe('English video text! junaan.fi / junalahdot.fi');
   });
 
-  describe('message with video only', () => {
-    const passengerInformationMessage: PassengerInformationMessage = {
-      ...passengerInformationMessageBase,
-      video: {
-        text: {
-          fi: 'Huomio! junalahdot.fi',
-          sv: undefined,
-          en: 'Attention! junalahdot.fi',
-        },
-      },
-    };
+  it('should return the message from audio content when video content is not available in the specified language', () => {
+    const result = getPassengerInformationMessageForLanguage(
+      audioOnlyMessage,
+      'sv'
+    );
+    expect(result).toBe('Swedish audio text!');
+  });
 
-    it('should return text for given language and add junaan.fi to text if the text contains junalahdot.fi', () => {
-      expect(
-        getPassengerInformationMessageForLanguage(
-          passengerInformationMessage,
-          'fi'
-        )
-      ).toBe('Huomio! junaan.fi / junalahdot.fi');
-      expect(
-        getPassengerInformationMessageForLanguage(
-          passengerInformationMessage,
-          'sv'
-        )
-      ).toBeUndefined();
-      expect(
-        getPassengerInformationMessageForLanguage(
-          passengerInformationMessage,
-          'en'
-        )
-      ).toBe('Attention! junaan.fi / junalahdot.fi');
-    });
+  it('should return the default language message when the specified language is not available', () => {
+    const result = getPassengerInformationMessageForLanguage(
+      videoAudioMessage,
+      'fr'
+    );
+    expect(result).toBe('Finnish video text! junaan.fi / junalahdot.fi');
+  });
+
+  it('should return an empty string when both video and audio content are undefined', () => {
+    const result = getPassengerInformationMessageForLanguage(
+      passengerInformationMessageBase,
+      'en'
+    );
+    expect(result).toBe('');
   });
 });
 
