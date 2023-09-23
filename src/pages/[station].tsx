@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 
 import FavoriteStation from '../components/FavoriteStation';
 import MapLayout, { VehicleMapContainerPortal } from '../components/MapLayout';
+import PassengerInformationMessageAlert from '../components/PassengerInformationMessageAlert';
+import PassengerInformationMessagesDialog from '../components/PassengerInformationMessagesDialog';
 import StationTimeTable from '../components/StationTimeTable';
 import SubNavBar from '../components/SubNavBar';
 import { gqlClients, vehiclesVar } from '../graphql/client';
@@ -18,6 +20,7 @@ import {
   useTrainsByStationQuery,
 } from '../graphql/generated/digitraffic';
 import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
+import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
 import { isDefined } from '../utils/common';
 import getRouteForTrain from '../utils/getRouteForTrain';
@@ -38,6 +41,7 @@ const Station: NextPageWithLayout = () => {
     null
   );
   const [selectedTrainNo, setSelectedTrainNo] = useState<number | null>(null);
+  const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const [executeRouteSearch, { data: routeData }] = useRoutesForRailLazyQuery();
   const station = stationName
     ? trainStations.find(
@@ -61,6 +65,13 @@ const Station: NextPageWithLayout = () => {
     fetchPolicy: 'no-cache',
   });
   useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
+  const { messages: passengerInformationMessages } =
+    usePassengerInformationMessages({
+      skip: stationCode == null,
+      refetchIntervalMs: 20000,
+      onlyGeneral: true,
+      stationCode: stationCode,
+    });
 
   const handleVehicleIdSelected = useCallback((vehicleId: number) => {
     setSelectedVehicleId(vehicleId);
@@ -178,6 +189,14 @@ const Station: NextPageWithLayout = () => {
             <ClockEnd /> {t('arrivals')}
           </ToggleButton>
         </ToggleButtonGroup>
+        <Box paddingY={1}>
+          {passengerInformationMessages && (
+            <PassengerInformationMessageAlert
+              onClick={() => setStationAlertDialogOpen(true)}
+              passengerInformationMessages={passengerInformationMessages}
+            />
+          )}
+        </Box>
       </Box>
       {stationCode && !loading && data?.trainsByStationAndQuantity && (
         <StationTimeTable
@@ -191,6 +210,11 @@ const Station: NextPageWithLayout = () => {
       {error && (
         <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
       )}
+      <PassengerInformationMessagesDialog
+        open={stationAlertDialogOpen}
+        passengerInformationMessages={passengerInformationMessages}
+        onClose={() => setStationAlertDialogOpen(false)}
+      />
     </div>
   );
 };

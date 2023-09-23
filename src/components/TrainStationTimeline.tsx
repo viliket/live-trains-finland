@@ -9,8 +9,10 @@ import getTrainCurrentStation from '../utils/getTrainCurrentStation';
 import getTrainLatestArrivalRow from '../utils/getTrainLatestArrivalRow';
 import getTrainLatestDepartureTimeTableRow from '../utils/getTrainLatestDepartureTimeTableRow';
 import getTrainPreviousStation from '../utils/getTrainPreviousStation';
+import { PassengerInformationMessage } from '../utils/passengerInformationMessages';
 import { getTrainStationName } from '../utils/train';
 
+import PassengerInformationMessageAlert from './PassengerInformationMessageAlert';
 import TimelineRouteStopSeparator from './TimelineRouteStopSeparator';
 import TimeTableRowTime from './TimeTableRowTime';
 import TrainComposition from './TrainComposition';
@@ -19,12 +21,16 @@ type TrainStationTimelineProps = {
   train?: TrainDetailsFragment | null;
   realTimeTrain?: TrainDetailsFragment | null;
   onWagonClick: (w: Wagon) => void;
+  onStationAlertClick: (stationCode: string) => void;
+  stationMessages?: Record<string, PassengerInformationMessage[]>;
 };
 
 const TrainStationTimeline = ({
   train,
   realTimeTrain,
   onWagonClick,
+  onStationAlertClick,
+  stationMessages,
 }: TrainStationTimelineProps) => {
   const { t } = useTranslation();
 
@@ -101,6 +107,15 @@ const TrainStationTimeline = ({
                     />
                   </div>
                 )}
+                {stationMessages &&
+                  stationMessages[station.shortCode]?.length > 0 && (
+                    <PassengerInformationMessageAlert
+                      onClick={() => onStationAlertClick(station.shortCode)}
+                      passengerInformationMessages={
+                        stationMessages[station.shortCode]
+                      }
+                    />
+                  )}
                 <Divider />
               </Grid>
             </Grid>

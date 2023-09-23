@@ -8,9 +8,12 @@ import {
   useTrainQuery,
   Wagon,
 } from '../graphql/generated/digitraffic';
+import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
 import { formatEET } from '../utils/date';
+import { getPassengerInformationMessagesByStation } from '../utils/passengerInformationMessages';
 import { getTrainScheduledDepartureTime } from '../utils/train';
 
+import PassengerInformationMessagesDialog from './PassengerInformationMessagesDialog';
 import TrainComposition from './TrainComposition';
 import TrainStationTimeline from './TrainStationTimeline';
 import TrainWagonDetailsDialog from './TrainWagonDetailsDialog';
@@ -22,6 +25,8 @@ type TrainInfoContainerProps = {
 function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const [wagonDialogOpen, setWagonDialogOpen] = useState(false);
   const [selectedWagon, setSelectedWagon] = useState<Wagon | null>(null);
+  const [selectedStation, setSelectedStation] = useState<string | null>(null);
+  const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const departureDate = train ? getTrainScheduledDepartureTime(train) : null;
   const { error, data: realTimeData } = useTrainQuery(
     train && departureDate
@@ -37,6 +42,16 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         }
       : { skip: true }
   );
+  const { messages: passengerInformationMessages } =
+    usePassengerInformationMessages({
+      skip: !train,
+      refetchIntervalMs: 20000,
+      trainNumber: train?.trainNumber,
+      trainDepartureDate: train?.departureDate,
+    });
+  const stationMessages = getPassengerInformationMessagesByStation(
+    passengerInformationMessages
+  );
 
   const realTimeTrain = realTimeData?.train?.[0];
 
@@ -47,6 +62,15 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const handleWagonClick = (w: Wagon) => {
     setSelectedWagon(w);
     setWagonDialogOpen(true);
+  };
+
+  const handleStationAlertDialogClose = () => {
+    setStationAlertDialogOpen(false);
+  };
+
+  const handleStationAlertClick = (stationCode: string) => {
+    setSelectedStation(stationCode);
+    setStationAlertDialogOpen(true);
   };
 
   return (
@@ -87,6 +111,8 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         train={train}
         realTimeTrain={realTimeTrain}
         onWagonClick={handleWagonClick}
+        onStationAlertClick={handleStationAlertClick}
+        stationMessages={stationMessages}
       />
       {train && (
         <TrainWagonDetailsDialog
@@ -96,6 +122,15 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
           onClose={handleWagonDialogClose}
         />
       )}
+      <PassengerInformationMessagesDialog
+        open={stationAlertDialogOpen}
+        passengerInformationMessages={
+          selectedStation && stationMessages?.[selectedStation]
+            ? stationMessages[selectedStation]
+            : null
+        }
+        onClose={handleStationAlertDialogClose}
+      />
     </>
   );
 }
