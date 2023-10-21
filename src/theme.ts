@@ -26,6 +26,17 @@ const baseTheme = createTheme({
         },
       },
     },
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
+      styleOverrides: {
+        root: {
+          borderRadius: '24px',
+          textTransform: 'none',
+        },
+      },
+    },
   },
 });
 

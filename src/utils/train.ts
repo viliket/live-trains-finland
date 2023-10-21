@@ -99,3 +99,9 @@ export function getWagonNumberFromVehicleId(
   }
   return vehicleId.toString();
 }
+
+export function getTrainDisplayName(train: TrainByStationFragment) {
+  return train.commuterLineid
+    ? train.commuterLineid
+    : train.trainType.name + ' ' + train.trainNumber;
+}

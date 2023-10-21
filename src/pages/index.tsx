@@ -4,6 +4,7 @@ import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import FavoriteStationList from '../components/FavoriteStationList';
+import FindNearest from '../components/FindNearest';
 import Hero from '../components/Hero';
 import StationSearch from '../components/StationSearch';
 
@@ -49,6 +50,7 @@ export default function Home() {
         >
           <Box>
             <StationSearch />
+            <FindNearest />
             <FavoriteStationList />
           </Box>
           <Card

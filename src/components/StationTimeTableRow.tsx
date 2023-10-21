@@ -19,6 +19,7 @@ import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import {
   getTrainDepartureStation,
   getTrainDestinationStation,
+  getTrainDisplayName,
   getTrainStationName,
 } from '../utils/train';
 
@@ -42,9 +43,7 @@ function StationTimeTableRow({
 
   const trainNumber = train.trainNumber;
   const departureDate = train.departureDate;
-  const trainName = train.commuterLineid
-    ? train.commuterLineid
-    : train.trainType.name + train.trainNumber;
+  const trainName = getTrainDisplayName(train);
   const deptOrDestStation =
     timeTableType === TimeTableRowType.Departure
       ? getTrainDestinationStation(train, stationCode)

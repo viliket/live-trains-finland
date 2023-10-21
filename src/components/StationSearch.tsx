@@ -6,13 +6,10 @@ import {
   DialogContent,
   DialogContentText,
   InputBase,
-  ListItemButton,
 } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
 import Slide from '@mui/material/Slide';
 import Toolbar from '@mui/material/Toolbar';
 import { TransitionProps } from '@mui/material/transitions';
@@ -20,17 +17,40 @@ import { ChevronLeft, Magnify } from 'mdi-material-ui';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
+import { gqlClients } from '../graphql/client';
+import {
+  TrainByStationFragment,
+  useRunningTrainsQuery,
+} from '../graphql/generated/digitraffic';
+import { isDefined } from '../utils/common';
 import { TrainStation, trainStations } from '../utils/stations';
+import {
+  getTrainDepartureStationName,
+  getTrainDestinationStationName,
+  getTrainDisplayName,
+} from '../utils/train';
+
+import OptionList from './OptionList';
 
 const trainStationsWithPassengerTraffic = trainStations.filter(
   (s) => s.passengerTraffic
 );
 
-const filterOptions = (options: TrainStation[], inputValue: string) => {
+const filterOptions = (options: SearchItem[], inputValue: string) => {
   if (!inputValue) return options;
   const input = inputValue.trim().toLowerCase();
-  return options.filter((o) => o.stationName.toLowerCase().indexOf(input) > -1);
+  return options.filter((o) => {
+    if (o.type === 'station') {
+      return o.station.stationName.toLowerCase().includes(input);
+    } else {
+      return getTrainDisplayName(o.train).toLowerCase().includes(input);
+    }
+  });
 };
+
+type SearchItem =
+  | { type: 'station'; station: TrainStation }
+  | { type: 'train'; train: TrainByStationFragment };
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -48,6 +68,12 @@ export default function StationSearch() {
   const [inputValue, setInputValue] = useState('');
   const router = useRouter();
   const { t } = useTranslation();
+  const { data } = useRunningTrainsQuery({
+    context: { clientName: gqlClients.digitraffic },
+    pollInterval: 10000,
+    fetchPolicy: 'no-cache',
+  });
+  const currentlyRunningTrains = data?.currentlyRunningTrains;
 
   useEffect(() => {
     const onHashChange = () => {
@@ -70,14 +96,28 @@ export default function StationSearch() {
     router.back();
   };
 
-  const handleClickStation = (station: TrainStation) => {
-    router.replace(`/${station.stationName}`);
-  };
+  const allOptions = [
+    ...trainStationsWithPassengerTraffic.map(
+      (s): SearchItem => ({
+        type: 'station',
+        station: s,
+      })
+    ),
+    ...(currentlyRunningTrains
+      ?.filter(isDefined)
+      .map((t): SearchItem => ({ type: 'train', train: t })) || []),
+  ];
 
-  const filteredOptions = filterOptions(
-    trainStationsWithPassengerTraffic,
-    inputValue
-  );
+  const filteredOptions = filterOptions(allOptions, inputValue).sort((a, b) => {
+    if (a.type !== b.type) return -1;
+    if (a.type === 'station' && b.type === 'station') {
+      return a.station.stationName.localeCompare(b.station.stationName);
+    } else if (a.type === 'train' && b.type === 'train') {
+      return a.train.trainNumber - b.train.trainNumber;
+    } else {
+      return 0;
+    }
+  });
 
   return (
     <div>
@@ -109,7 +149,7 @@ export default function StationSearch() {
           component="span"
           sx={{ ml: 1, flex: 1, textAlign: 'left', opacity: 0.7 }}
         >
-          {t('search_station_by_name')}
+          {t('search_station_or_train_by_name')}
         </Box>
       </Box>
       <Dialog
@@ -125,7 +165,7 @@ export default function StationSearch() {
             </IconButton>
             <InputBase
               autoFocus
-              placeholder={t('search_station_by_name') ?? undefined}
+              placeholder={t('search_station_or_train_by_name') ?? undefined}
               fullWidth
               value={inputValue}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,16 +176,30 @@ export default function StationSearch() {
         </AppBar>
         <Box sx={(theme) => ({ ...theme.mixins.toolbar })} />
         {filteredOptions.length > 0 && (
-          <List>
-            {filteredOptions.map((s) => (
-              <ListItemButton
-                key={s.stationShortCode}
-                onClick={() => handleClickStation(s)}
-              >
-                <ListItemText primary={s.stationName} />
-              </ListItemButton>
-            ))}
-          </List>
+          <OptionList
+            items={filteredOptions}
+            getAvatarContent={(o) =>
+              o.type === 'station'
+                ? o.station.stationShortCode
+                : getTrainDisplayName(o.train)
+            }
+            getPrimaryText={(o) =>
+              o.type === 'station'
+                ? o.station.stationName
+                : `${getTrainDepartureStationName(
+                    o.train
+                  )} - ${getTrainDestinationStationName(o.train)}`
+            }
+            navigateTo={(o) => {
+              if (o.type === 'station') {
+                router.replace(`/${o.station.stationName}`);
+              } else {
+                router.replace(
+                  `/train/${o.train.trainNumber}/${o.train.departureDate}`
+                );
+              }
+            }}
+          />
         )}
         {filteredOptions.length === 0 && (
           <DialogContent>

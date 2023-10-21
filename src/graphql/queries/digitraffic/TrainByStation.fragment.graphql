@@ -1,6 +1,5 @@
 fragment TrainByStation on Train {
   commuterLineid
-  runningCurrently
   trainNumber
   departureDate
   version
@@ -12,10 +11,6 @@ fragment TrainByStation on Train {
   }
   timeTableRows(where: { and: [{ trainStopping: { equals: true } }] }) {
     ...TrainTimeTableRow
-  }
-  operator {
-    shortCode
-    uicCode
   }
   trainType {
     name

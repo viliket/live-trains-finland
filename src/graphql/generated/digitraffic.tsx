@@ -992,6 +992,11 @@ export type WagonWhere = {
   wagonType?: InputMaybe<StringWhere>;
 };
 
+export type RunningTrainsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RunningTrainsQuery = { __typename?: 'Query', currentlyRunningTrains?: Array<{ __typename?: 'Train', trainNumber: number, commuterLineid?: string | null, departureDate: string, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, trainLocations?: Array<{ __typename?: 'TrainLocation', speed: number, timestamp: string, location?: Array<number | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
+
 export type StationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1007,7 +1012,7 @@ export type TrainQueryVariables = Exact<{
 
 export type TrainQuery = { __typename?: 'Query', train?: Array<{ __typename?: 'Train', trainNumber: number, departureDate: string, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions?: Array<{ __typename?: 'Composition', journeySections?: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, station: { __typename?: 'Station', name: string } } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, station: { __typename?: 'Station', name: string } } | null, locomotives?: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number, vehicleId?: number | null } | null> | null, wagons?: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null, vehicleId?: number | null } | null> | null } | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null, timeTableGroups?: Array<{ __typename?: 'TimeTableGroup', trainDirection?: TrainDirection | null, stationPlatformSide?: StationPlatformSide | null, arrival?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, departure?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null }> | null } | null> | null };
 
-export type TrainByStationFragment = { __typename?: 'Train', commuterLineid?: string | null, runningCurrently: boolean, trainNumber: number, departureDate: string, version: string, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null, operator: { __typename?: 'Operator', shortCode: string, uicCode: number } };
+export type TrainByStationFragment = { __typename?: 'Train', commuterLineid?: string | null, trainNumber: number, departureDate: string, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null };
 
 export type TrainDetailsFragment = { __typename?: 'Train', trainNumber: number, departureDate: string, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions?: Array<{ __typename?: 'Composition', journeySections?: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, station: { __typename?: 'Station', name: string } } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, station: { __typename?: 'Station', name: string } } | null, locomotives?: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number, vehicleId?: number | null } | null> | null, wagons?: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null, vehicleId?: number | null } | null> | null } | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null, timeTableGroups?: Array<{ __typename?: 'TimeTableGroup', trainDirection?: TrainDirection | null, stationPlatformSide?: StationPlatformSide | null, arrival?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, departure?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null }> | null };
 
@@ -1024,7 +1029,7 @@ export type TrainsByStationQueryVariables = Exact<{
 }>;
 
 
-export type TrainsByStationQuery = { __typename?: 'Query', trainsByStationAndQuantity?: Array<{ __typename?: 'Train', commuterLineid?: string | null, runningCurrently: boolean, trainNumber: number, departureDate: string, version: string, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null, operator: { __typename?: 'Operator', shortCode: string, uicCode: number } } | null> | null };
+export type TrainsByStationQuery = { __typename?: 'Query', trainsByStationAndQuantity?: Array<{ __typename?: 'Train', commuterLineid?: string | null, trainNumber: number, departureDate: string, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
 
 export const StationSummaryFragmentDoc = gql`
     fragment StationSummary on Station {
@@ -1066,10 +1071,8 @@ export const TrainTimeTableRowFragmentDoc = gql`
 export const TrainByStationFragmentDoc = gql`
     fragment TrainByStation on Train {
   commuterLineid
-  runningCurrently
   trainNumber
   departureDate
-  version
   trainType {
     name
     trainCategory {
@@ -1078,10 +1081,6 @@ export const TrainByStationFragmentDoc = gql`
   }
   timeTableRows(where: {and: [{trainStopping: {equals: true}}]}) {
     ...TrainTimeTableRow
-  }
-  operator {
-    shortCode
-    uicCode
   }
   trainType {
     name
@@ -1179,6 +1178,58 @@ export const TrainTimeTableGroupFragmentDoc = gql`
   stationPlatformSide
 }
     ${TrainTimeTableRowFragmentDoc}`;
+export const RunningTrainsDocument = gql`
+    query RunningTrains {
+  currentlyRunningTrains(
+    where: {and: [{trainType: {trainCategory: {or: [{name: {equals: "Commuter"}}, {name: {equals: "Long-distance"}}]}}}, {operator: {shortCode: {equals: "vr"}}}]}
+  ) {
+    trainNumber
+    commuterLineid
+    departureDate
+    trainType {
+      name
+      trainCategory {
+        name
+      }
+    }
+    trainLocations(orderBy: {timestamp: DESCENDING}, take: 2) {
+      speed
+      timestamp
+      location
+    }
+    timeTableRows(where: {commercialStop: {equals: true}}) {
+      ...TrainTimeTableRow
+    }
+  }
+}
+    ${TrainTimeTableRowFragmentDoc}`;
+
+/**
+ * __useRunningTrainsQuery__
+ *
+ * To run a query within a React component, call `useRunningTrainsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRunningTrainsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRunningTrainsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRunningTrainsQuery(baseOptions?: Apollo.QueryHookOptions<RunningTrainsQuery, RunningTrainsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RunningTrainsQuery, RunningTrainsQueryVariables>(RunningTrainsDocument, options);
+      }
+export function useRunningTrainsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RunningTrainsQuery, RunningTrainsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RunningTrainsQuery, RunningTrainsQueryVariables>(RunningTrainsDocument, options);
+        }
+export type RunningTrainsQueryHookResult = ReturnType<typeof useRunningTrainsQuery>;
+export type RunningTrainsLazyQueryHookResult = ReturnType<typeof useRunningTrainsLazyQuery>;
+export type RunningTrainsQueryResult = Apollo.QueryResult<RunningTrainsQuery, RunningTrainsQueryVariables>;
 export const StationDocument = gql`
     query Station {
   stations(where: {passengerTraffic: {equals: true}}) {
