@@ -425,7 +425,6 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
         ];
 
         const train: TrainByStationFragment = {
-          runningCurrently: true,
           trainNumber: 750,
           departureDate: '2023-09-02',
           version: '1',
@@ -434,10 +433,6 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
             trainCategory: {
               name: '',
             },
-          },
-          operator: {
-            shortCode: '',
-            uicCode: 1,
           },
           timeTableRows: [
             {
