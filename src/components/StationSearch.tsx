@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   InputBase,
+  ListSubheader,
 } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Dialog from '@mui/material/Dialog';
@@ -35,22 +36,6 @@ import OptionList from './OptionList';
 const trainStationsWithPassengerTraffic = trainStations.filter(
   (s) => s.passengerTraffic
 );
-
-const filterOptions = (options: SearchItem[], inputValue: string) => {
-  if (!inputValue) return options;
-  const input = inputValue.trim().toLowerCase();
-  return options.filter((o) => {
-    if (o.type === 'station') {
-      return o.station.stationName.toLowerCase().includes(input);
-    } else {
-      return getTrainDisplayName(o.train).toLowerCase().includes(input);
-    }
-  });
-};
-
-type SearchItem =
-  | { type: 'station'; station: TrainStation }
-  | { type: 'train'; train: TrainByStationFragment };
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -96,27 +81,16 @@ export default function StationSearch() {
     router.back();
   };
 
-  const allOptions = [
-    ...trainStationsWithPassengerTraffic.map(
-      (s): SearchItem => ({
-        type: 'station',
-        station: s,
-      })
-    ),
-    ...(currentlyRunningTrains
-      ?.filter(isDefined)
-      .map((t): SearchItem => ({ type: 'train', train: t })) || []),
-  ];
-
-  const filteredOptions = filterOptions(allOptions, inputValue).sort((a, b) => {
-    if (a.type !== b.type) return -1;
-    if (a.type === 'station' && b.type === 'station') {
-      return a.station.stationName.localeCompare(b.station.stationName);
-    } else if (a.type === 'train' && b.type === 'train') {
-      return a.train.trainNumber - b.train.trainNumber;
-    } else {
-      return 0;
+  const filteredStations = trainStationsWithPassengerTraffic.filter(
+    (station) => {
+      return station.stationName.toLowerCase().includes(inputValue);
     }
+  );
+
+  const filteredTrains = (
+    currentlyRunningTrains?.filter(isDefined) ?? []
+  ).filter((train) => {
+    return getTrainDisplayName(train).toLowerCase().includes(inputValue);
   });
 
   return (
@@ -175,42 +149,48 @@ export default function StationSearch() {
           </Toolbar>
         </AppBar>
         <Box sx={(theme) => ({ ...theme.mixins.toolbar })} />
-        {filteredOptions.length > 0 && (
+        <>
           <OptionList
-            items={filteredOptions}
-            keyExtractor={(o) =>
-              o.type === 'station'
-                ? o.station.stationShortCode
-                : o.train.trainNumber.toString()
+            subheader={
+              <ListSubheader component="div" sx={{ top: '64px' }}>
+                {t('station')}
+              </ListSubheader>
             }
-            getAvatarContent={(o) =>
-              o.type === 'station'
-                ? o.station.stationShortCode
-                : getTrainDisplayName(o.train)
-            }
-            getPrimaryText={(o) =>
-              o.type === 'station'
-                ? o.station.stationName
-                : `${getTrainDepartureStationName(
-                    o.train
-                  )} - ${getTrainDestinationStationName(o.train)}`
-            }
-            navigateTo={(o) => {
-              if (o.type === 'station') {
-                router.replace(`/${o.station.stationName}`);
-              } else {
-                router.replace(
-                  `/train/${o.train.trainNumber}/${o.train.departureDate}`
-                );
-              }
-            }}
+            items={filteredStations}
+            keyExtractor={(s) => s.stationShortCode}
+            getAvatarContent={(s) => s.stationShortCode}
+            getPrimaryText={(s) => s.stationName}
+            navigateTo={(s) => router.replace(`/${s.stationName}`)}
           />
-        )}
-        {filteredOptions.length === 0 && (
-          <DialogContent>
-            <DialogContentText>{t('no_results')}</DialogContentText>
-          </DialogContent>
-        )}
+          {filteredStations.length === 0 && (
+            <DialogContentText sx={{ paddingLeft: 2 }}>
+              {t('no_results')}
+            </DialogContentText>
+          )}
+          <OptionList
+            subheader={
+              <ListSubheader component="div" sx={{ top: '64px' }}>
+                {t('train')}
+              </ListSubheader>
+            }
+            items={filteredTrains}
+            keyExtractor={(t) => t.trainNumber.toString()}
+            getAvatarContent={(t) => getTrainDisplayName(t)}
+            getPrimaryText={(t) =>
+              `${getTrainDepartureStationName(
+                t
+              )} - ${getTrainDestinationStationName(t)}`
+            }
+            navigateTo={(t) =>
+              router.replace(`/train/${t.trainNumber}/${t.departureDate}`)
+            }
+          />
+          {filteredTrains.length === 0 && (
+            <DialogContentText sx={{ paddingLeft: 2 }}>
+              {t('no_results')}
+            </DialogContentText>
+          )}
+        </>
       </Dialog>
     </div>
   );

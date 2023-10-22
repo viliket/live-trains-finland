@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import {
   alpha,
   Avatar,
@@ -14,6 +16,7 @@ type OptionListProps<T> = {
   getPrimaryText: (item: T) => string;
   getSecondaryText?: (item: T) => string;
   navigateTo: (item: T) => void;
+  subheader?: ReactNode;
 };
 
 function OptionList<T>({
@@ -23,11 +26,12 @@ function OptionList<T>({
   getPrimaryText,
   getSecondaryText,
   navigateTo,
+  subheader,
 }: OptionListProps<T>) {
   if (!items) return null;
 
   return (
-    <List>
+    <List subheader={subheader}>
       {items.map((item) => {
         return (
           <ListItemButton
