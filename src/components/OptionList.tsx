@@ -9,6 +9,7 @@ import {
 
 type OptionListProps<T> = {
   items: T[] | null | undefined;
+  keyExtractor: (item: T) => string;
   getAvatarContent: (item: T) => React.ReactNode;
   getPrimaryText: (item: T) => string;
   getSecondaryText?: (item: T) => string;
@@ -17,6 +18,7 @@ type OptionListProps<T> = {
 
 function OptionList<T>({
   items,
+  keyExtractor,
   getAvatarContent,
   getPrimaryText,
   getSecondaryText,
@@ -26,9 +28,12 @@ function OptionList<T>({
 
   return (
     <List>
-      {items.map((item, i) => {
+      {items.map((item) => {
         return (
-          <ListItemButton key={i} onClick={() => navigateTo(item)}>
+          <ListItemButton
+            key={keyExtractor(item)}
+            onClick={() => navigateTo(item)}
+          >
             <ListItemAvatar>
               <Avatar
                 sx={(theme) => ({

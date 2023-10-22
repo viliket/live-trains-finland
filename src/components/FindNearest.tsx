@@ -87,7 +87,7 @@ function NearestTrainsList({ position }: { position: GeolocationPosition }) {
           const trainLocation = train.trainLocations?.[0]?.location as
             | [number, number]
             | undefined;
-          return trainLocation || [0, 0];
+          return trainLocation ?? [0, 0];
         }
       )
     : null;
@@ -95,6 +95,7 @@ function NearestTrainsList({ position }: { position: GeolocationPosition }) {
     <>
       <OptionList
         items={trainsByDistance}
+        keyExtractor={({ item: train }) => train.trainNumber}
         getAvatarContent={({ item: train }) => getTrainDisplayName(train)}
         getPrimaryText={({ item: train }) =>
           `${getTrainDepartureStationName(
@@ -140,6 +141,7 @@ function NearestStationsList({ position }: { position: GeolocationPosition }) {
   return (
     <OptionList
       items={stationsByDistance}
+      keyExtractor={({ item: station }) => station.stationShortCode}
       getAvatarContent={({ item: station }) => station.stationShortCode}
       getPrimaryText={({ item: station }) => station.stationName}
       getSecondaryText={({ distance }) => `${distance.toFixed(2)} km`}

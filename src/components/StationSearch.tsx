@@ -178,6 +178,11 @@ export default function StationSearch() {
         {filteredOptions.length > 0 && (
           <OptionList
             items={filteredOptions}
+            keyExtractor={(o) =>
+              o.type === 'station'
+                ? o.station.stationShortCode
+                : o.train.trainNumber.toString()
+            }
             getAvatarContent={(o) =>
               o.type === 'station'
                 ? o.station.stationShortCode
