@@ -83,14 +83,18 @@ export default function StationSearch() {
 
   const filteredStations = trainStationsWithPassengerTraffic.filter(
     (station) => {
-      return station.stationName.toLowerCase().includes(inputValue);
+      return station.stationName
+        .toLowerCase()
+        .includes(inputValue.toLowerCase());
     }
   );
 
   const filteredTrains = (
     currentlyRunningTrains?.filter(isDefined) ?? []
   ).filter((train) => {
-    return getTrainDisplayName(train).toLowerCase().includes(inputValue);
+    return getTrainDisplayName(train)
+      .toLowerCase()
+      .includes(inputValue.toLowerCase());
   });
 
   return (
