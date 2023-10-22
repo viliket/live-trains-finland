@@ -156,7 +156,15 @@ export default function StationSearch() {
         <>
           <OptionList
             subheader={
-              <ListSubheader component="div" sx={{ top: '64px' }}>
+              <ListSubheader
+                component="div"
+                sx={(theme) => ({
+                  top: '56px',
+                  [theme.breakpoints.up('sm')]: {
+                    top: '64px',
+                  },
+                })}
+              >
                 {t('station')}
               </ListSubheader>
             }
@@ -173,7 +181,15 @@ export default function StationSearch() {
           )}
           <OptionList
             subheader={
-              <ListSubheader component="div" sx={{ top: '64px' }}>
+              <ListSubheader
+                component="div"
+                sx={(theme) => ({
+                  top: '56px',
+                  [theme.breakpoints.up('sm')]: {
+                    top: '64px',
+                  },
+                })}
+              >
                 {t('train')}
               </ListSubheader>
             }
