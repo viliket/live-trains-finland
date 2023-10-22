@@ -95,7 +95,7 @@ function NearestTrainsList({ position }: { position: GeolocationPosition }) {
     <>
       <OptionList
         items={trainsByDistance}
-        keyExtractor={({ item: train }) => train.trainNumber}
+        keyExtractor={({ item: train }) => train.trainNumber.toString()}
         getAvatarContent={({ item: train }) => getTrainDisplayName(train)}
         getPrimaryText={({ item: train }) =>
           `${getTrainDepartureStationName(
