@@ -1,9 +1,15 @@
-import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react';
+import {
+  forwardRef,
+  ReactElement,
+  ReactNode,
+  Ref,
+  useEffect,
+  useState,
+} from 'react';
 
 import {
   Box,
   alpha,
-  DialogContent,
   DialogContentText,
   InputBase,
   ListSubheader,
@@ -14,18 +20,18 @@ import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
 import Toolbar from '@mui/material/Toolbar';
 import { TransitionProps } from '@mui/material/transitions';
+import { format, parseISO } from 'date-fns';
 import { ChevronLeft, Magnify } from 'mdi-material-ui';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 import { gqlClients } from '../graphql/client';
-import {
-  TrainByStationFragment,
-  useRunningTrainsQuery,
-} from '../graphql/generated/digitraffic';
+import { useRunningTrainsQuery } from '../graphql/generated/digitraffic';
 import { isDefined } from '../utils/common';
-import { TrainStation, trainStations } from '../utils/stations';
+import { trainStations } from '../utils/stations';
 import {
+  getDepartureTimeTableRow,
+  getDestinationTimeTableRow,
   getTrainDepartureStationName,
   getTrainDestinationStationName,
   getTrainDisplayName,
@@ -46,6 +52,31 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const OptionListSubHeader = ({ children }: { children: ReactNode }) => (
+  <ListSubheader
+    component="div"
+    sx={(theme) => ({
+      top: '56px',
+      [theme.breakpoints.up('sm')]: {
+        top: '64px',
+      },
+    })}
+  >
+    {children}
+  </ListSubheader>
+);
+
+function filterBySearchQuery<T>(
+  items: T[],
+  keyExtractor: (item: T) => string,
+  searchQuery: string
+): T[] {
+  const queryLowerCase = searchQuery.toLowerCase();
+  return items.filter((item) =>
+    keyExtractor(item).toLowerCase().includes(queryLowerCase)
+  );
+}
+
 const searchDialogUrlHash = '#search';
 
 export default function StationSearch() {
@@ -53,7 +84,7 @@ export default function StationSearch() {
   const [inputValue, setInputValue] = useState('');
   const router = useRouter();
   const { t } = useTranslation();
-  const { data } = useRunningTrainsQuery({
+  const { loading, error, data } = useRunningTrainsQuery({
     context: { clientName: gqlClients.digitraffic },
     pollInterval: 10000,
     fetchPolicy: 'no-cache',
@@ -81,21 +112,17 @@ export default function StationSearch() {
     router.back();
   };
 
-  const filteredStations = trainStationsWithPassengerTraffic.filter(
-    (station) => {
-      return station.stationName
-        .toLowerCase()
-        .includes(inputValue.toLowerCase());
-    }
+  const filteredStations = filterBySearchQuery(
+    trainStationsWithPassengerTraffic,
+    (s) => s.stationName,
+    inputValue
   );
 
-  const filteredTrains = (
-    currentlyRunningTrains?.filter(isDefined) ?? []
-  ).filter((train) => {
-    return getTrainDisplayName(train)
-      .toLowerCase()
-      .includes(inputValue.toLowerCase());
-  });
+  const filteredTrains = filterBySearchQuery(
+    currentlyRunningTrains?.filter(isDefined) ?? [],
+    (t) => getTrainDisplayName(t),
+    inputValue
+  );
 
   return (
     <div>
@@ -146,9 +173,7 @@ export default function StationSearch() {
               placeholder={t('search_station_or_train_by_name') ?? undefined}
               fullWidth
               value={inputValue}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setInputValue(event.target.value);
-              }}
+              onChange={(event) => setInputValue(event.target.value)}
             />
           </Toolbar>
         </AppBar>
@@ -156,17 +181,7 @@ export default function StationSearch() {
         <>
           <OptionList
             subheader={
-              <ListSubheader
-                component="div"
-                sx={(theme) => ({
-                  top: '56px',
-                  [theme.breakpoints.up('sm')]: {
-                    top: '64px',
-                  },
-                })}
-              >
-                {t('station')}
-              </ListSubheader>
+              <OptionListSubHeader>{t('station')}</OptionListSubHeader>
             }
             items={filteredStations}
             keyExtractor={(s) => s.stationShortCode}
@@ -180,19 +195,7 @@ export default function StationSearch() {
             </DialogContentText>
           )}
           <OptionList
-            subheader={
-              <ListSubheader
-                component="div"
-                sx={(theme) => ({
-                  top: '56px',
-                  [theme.breakpoints.up('sm')]: {
-                    top: '64px',
-                  },
-                })}
-              >
-                {t('train')}
-              </ListSubheader>
-            }
+            subheader={<OptionListSubHeader>{t('train')}</OptionListSubHeader>}
             items={filteredTrains}
             keyExtractor={(t) => t.trainNumber.toString()}
             getAvatarContent={(t) => getTrainDisplayName(t)}
@@ -201,15 +204,26 @@ export default function StationSearch() {
                 t
               )} - ${getTrainDestinationStationName(t)}`
             }
+            getSecondaryText={(t) => {
+              const deptRow = getDepartureTimeTableRow(t);
+              const destRow = getDestinationTimeTableRow(t);
+              if (!deptRow || !destRow) return '';
+              const deptTime = parseISO(deptRow.scheduledTime);
+              const destTime = parseISO(destRow.scheduledTime);
+              return `${format(deptTime, 'HH:mm')} - ${format(
+                destTime,
+                'HH:mm'
+              )}`;
+            }}
             navigateTo={(t) =>
               router.replace(`/train/${t.trainNumber}/${t.departureDate}`)
             }
           />
-          {filteredTrains.length === 0 && (
-            <DialogContentText sx={{ paddingLeft: 2 }}>
-              {t('no_results')}
-            </DialogContentText>
-          )}
+          <DialogContentText sx={{ paddingLeft: 2 }}>
+            {filteredTrains?.length === 0 && t('no_results')}
+            {loading && '...'}
+            {error && error.message}
+          </DialogContentText>
         </>
       </Dialog>
     </div>
