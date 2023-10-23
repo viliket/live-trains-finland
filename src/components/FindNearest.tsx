@@ -76,7 +76,6 @@ function NearestTrainsList({ position }: { position: GeolocationPosition }) {
   const { loading, error, data } = useRunningTrainsQuery({
     context: { clientName: gqlClients.digitraffic },
     pollInterval: 10000,
-    fetchPolicy: 'no-cache',
   });
 
   const trainsByDistance = data?.currentlyRunningTrains

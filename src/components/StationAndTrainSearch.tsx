@@ -88,7 +88,6 @@ export default function StationAndTrainSearch() {
   const { loading, error, data } = useRunningTrainsQuery({
     context: { clientName: gqlClients.digitraffic },
     pollInterval: 10000,
-    fetchPolicy: 'no-cache',
   });
   const currentlyRunningTrains = data?.currentlyRunningTrains;
 

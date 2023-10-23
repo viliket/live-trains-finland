@@ -178,6 +178,9 @@ export const client = new ApolloClient({
           trainsByStationAndQuantity: {
             merge: false,
           },
+          currentlyRunningTrains: {
+            merge: false,
+          },
         },
       },
     },
