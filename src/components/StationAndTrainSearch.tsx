@@ -80,7 +80,7 @@ function filterBySearchQuery<T>(
 
 const searchDialogUrlHash = '#search';
 
-export default function StationSearch() {
+export default function StationAndTrainSearch() {
   const open = useUrlHashState(searchDialogUrlHash);
   const [inputValue, setInputValue] = useState('');
   const router = useRouter();

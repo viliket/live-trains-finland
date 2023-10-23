@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import FavoriteStationList from '../components/FavoriteStationList';
 import FindNearest from '../components/FindNearest';
 import Hero from '../components/Hero';
-import StationSearch from '../components/StationSearch';
+import StationAndTrainSearch from '../components/StationAndTrainSearch';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -49,7 +49,7 @@ export default function Home() {
           }}
         >
           <Box>
-            <StationSearch />
+            <StationAndTrainSearch />
             <FindNearest />
             <FavoriteStationList />
           </Box>
