@@ -142,7 +142,6 @@ function NearestStationsList({ position }: { position: GeolocationPosition }) {
     <OptionList
       items={stationsByDistance}
       keyExtractor={({ item: station }) => station.stationShortCode}
-      getAvatarContent={({ item: station }) => station.stationShortCode}
       getPrimaryText={({ item: station }) => station.stationName}
       getSecondaryText={({ distance }) => `${distance.toFixed(2)} km`}
       navigateTo={({ item: station }) =>

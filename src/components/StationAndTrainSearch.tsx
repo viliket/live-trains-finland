@@ -178,7 +178,6 @@ export default function StationAndTrainSearch() {
             }
             items={filteredStations}
             keyExtractor={(s) => s.stationShortCode}
-            getAvatarContent={(s) => s.stationShortCode}
             getPrimaryText={(s) => s.stationName}
             navigateTo={(s) => router.replace(`/${s.stationName}`)}
           />
