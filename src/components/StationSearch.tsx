@@ -27,6 +27,7 @@ import { useTranslation } from 'react-i18next';
 
 import { gqlClients } from '../graphql/client';
 import { useRunningTrainsQuery } from '../graphql/generated/digitraffic';
+import { useUrlHashState } from '../hooks/useUrlHashState';
 import { isDefined } from '../utils/common';
 import { trainStations } from '../utils/stations';
 import {
@@ -80,7 +81,7 @@ function filterBySearchQuery<T>(
 const searchDialogUrlHash = '#search';
 
 export default function StationSearch() {
-  const [open, setOpen] = useState(false);
+  const open = useUrlHashState(searchDialogUrlHash);
   const [inputValue, setInputValue] = useState('');
   const router = useRouter();
   const { t } = useTranslation();
@@ -92,17 +93,10 @@ export default function StationSearch() {
   const currentlyRunningTrains = data?.currentlyRunningTrains;
 
   useEffect(() => {
-    const onHashChange = () => {
-      const isSearchDialogOpen = window.location.hash === searchDialogUrlHash;
-      if (!isSearchDialogOpen) {
-        setInputValue('');
-      }
-      setOpen(isSearchDialogOpen);
-    };
-    window.addEventListener('hashchange', onHashChange);
-    setOpen(window.location.hash === searchDialogUrlHash);
-    return () => window.removeEventListener('hashchange', onHashChange);
-  }, []);
+    if (!open) {
+      setInputValue('');
+    }
+  }, [open]);
 
   const handleClickOpen = () => {
     window.location.hash = searchDialogUrlHash;

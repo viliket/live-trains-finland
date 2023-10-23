@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 
 import { gqlClients } from '../graphql/client';
 import { useRunningTrainsQuery } from '../graphql/generated/digitraffic';
+import { useUrlHashState } from '../hooks/useUrlHashState';
 import { isDefined } from '../utils/common';
 import { trainStations } from '../utils/stations';
 import {
@@ -154,22 +155,19 @@ function NearestStationsList({ position }: { position: GeolocationPosition }) {
 
 function FindNearest() {
   const [geoLocationErrorOpen, setGeoLocationErrorOpen] = useState(false);
-  const [open, setOpen] = useState(false);
+  const open = useUrlHashState(findNearestDialogUrlHash);
   const [nearestType, setNearestType] = useState<'trains' | 'stations'>();
   const [position, setPosition] = useState<GeolocationPosition>();
   const { t } = useTranslation();
   const router = useRouter();
 
   useEffect(() => {
-    const onHashChange = () => {
-      const isSearchDialogOpen =
-        window.location.hash === findNearestDialogUrlHash;
-      setOpen(isSearchDialogOpen);
-    };
-    window.addEventListener('hashchange', onHashChange);
-    setOpen(window.location.hash === findNearestDialogUrlHash);
-    return () => window.removeEventListener('hashchange', onHashChange);
-  }, []);
+    // Handle case where the page is refreshed with the findNearestDialogUrlHash in the URL
+    if (open && !position) {
+      router.back();
+      findNearest('stations');
+    }
+  }, [open, position, router]);
 
   if (!isSSR && !navigator.geolocation) return null;
 
