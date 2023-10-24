@@ -35,6 +35,7 @@ export const wagonMaps: Record<string, WagonMap | undefined> = {
   Sm3_6: { downstairs: 'SM3_IM2' },
   Sm4: { downstairs: 'SM4', height: 2500, type: 'custom' },
   Sm5: { downstairs: 'SM5', height: 3690, type: 'custom' },
+  Dm12: { downstairs: 'DM12', height: 1206, type: 'custom' },
 };
 
 const StyledReactSVG = styled(ReactSVG)`
