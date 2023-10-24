@@ -1,6 +1,13 @@
 'use client';
 
-import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react';
+import {
+  forwardRef,
+  ReactElement,
+  Ref,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 import {
   AppBar,
@@ -46,8 +53,6 @@ const Transition = forwardRef(function Transition(
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-const findNearestDialogUrlHash = '#nearest';
 
 function getDistancesToPosition<T>(
   items: T[],
@@ -153,38 +158,41 @@ function NearestStationsList({ position }: { position: GeolocationPosition }) {
 
 function FindNearest() {
   const [geoLocationErrorOpen, setGeoLocationErrorOpen] = useState(false);
-  const open = useUrlHashState(findNearestDialogUrlHash);
+  const [open, setOpen] = useUrlHashState('#nearest');
   const [nearestType, setNearestType] = useState<'trains' | 'stations'>();
   const [position, setPosition] = useState<GeolocationPosition>();
   const { t } = useTranslation();
   const router = useRouter();
 
+  const findNearest = useCallback(
+    (nearestType: 'stations' | 'trains') => {
+      setNearestType(nearestType);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setPosition(position);
+          setOpen(true);
+        },
+        (error) => {
+          console.error('geolocation error', error);
+          setGeoLocationErrorOpen(true);
+        }
+      );
+    },
+    [setOpen]
+  );
+
   useEffect(() => {
-    // Handle case where the page is refreshed with the findNearestDialogUrlHash in the URL
+    // Handle case where the page is refreshed with the dialog hash in the URL
     if (open && !position) {
-      router.back();
+      setOpen(false);
       findNearest('stations');
     }
-  }, [open, position, router]);
+  }, [findNearest, open, position, router, setOpen]);
 
   if (!isSSR && !navigator.geolocation) return null;
 
-  const findNearest = (nearestType: 'stations' | 'trains') => {
-    setNearestType(nearestType);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setPosition(position);
-        window.location.hash = findNearestDialogUrlHash;
-      },
-      (error) => {
-        console.error('geolocation error', error);
-        setGeoLocationErrorOpen(true);
-      }
-    );
-  };
-
   const handleClose = () => {
-    router.back();
+    setOpen(false);
   };
 
   return (

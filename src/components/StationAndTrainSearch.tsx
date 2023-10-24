@@ -60,10 +60,8 @@ function filterBySearchQuery<T>(
   );
 }
 
-const searchDialogUrlHash = '#search';
-
 export default function StationAndTrainSearch() {
-  const open = useUrlHashState(searchDialogUrlHash);
+  const [open, setOpen] = useUrlHashState('#search');
   const [inputValue, setInputValue] = useState('');
   const router = useRouter();
   const { t } = useTranslation();
@@ -80,11 +78,11 @@ export default function StationAndTrainSearch() {
   }, [open]);
 
   const handleClickOpen = () => {
-    window.location.hash = searchDialogUrlHash;
+    setOpen(true);
   };
 
   const handleClose = () => {
-    router.back();
+    setOpen(false);
   };
 
   const filteredStations = filterBySearchQuery(
