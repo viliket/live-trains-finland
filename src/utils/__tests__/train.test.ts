@@ -2,6 +2,7 @@ import { parseISO } from 'date-fns';
 
 import {
   TimeTableRowType,
+  TrainByStationFragment,
   TrainDetailsFragment,
 } from '../../graphql/generated/digitraffic';
 import {
@@ -14,6 +15,7 @@ import {
   getTrainDepartureStationName,
   getTrainDestinationStationName,
   getWagonNumberFromVehicleId,
+  getTrainDisplayName,
 } from '../train';
 
 const trainBase: TrainDetailsFragment = {
@@ -331,5 +333,32 @@ describe('getWagonNumberFromVehicleId', () => {
 
     const wagonNumber2 = getWagonNumberFromVehicleId(4321, 'Sm5');
     expect(wagonNumber2).toBe('21');
+  });
+});
+
+describe('getTrainDisplayName', () => {
+  it('should be the commuter line ID when the train has a commuter line ID', () => {
+    const train: TrainByStationFragment = {
+      ...trainBase,
+      commuterLineid: 'U',
+      trainNumber: 1234,
+    };
+    const displayName = getTrainDisplayName(train);
+    expect(displayName).toBe('U');
+  });
+
+  it('should be the train type name + train number when the train has no commuter line ID', () => {
+    const train: TrainByStationFragment = {
+      ...trainBase,
+      trainType: {
+        name: 'IC',
+        trainCategory: {
+          name: 'InterCity',
+        },
+      },
+      trainNumber: 1234,
+    };
+    const displayName = getTrainDisplayName(train);
+    expect(displayName).toBe('IC 1234');
   });
 });

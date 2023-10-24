@@ -1,0 +1,38 @@
+query RunningTrains {
+  currentlyRunningTrains(
+    where: {
+      and: [
+        {
+          trainType: {
+            trainCategory: {
+              or: [
+                { name: { equals: "Commuter" } }
+                { name: { equals: "Long-distance" } }
+              ]
+            }
+          }
+        }
+        { operator: { shortCode: { equals: "vr" } } }
+      ]
+    }
+  ) {
+    trainNumber
+    commuterLineid
+    departureDate
+    version
+    trainType {
+      name
+      trainCategory {
+        name
+      }
+    }
+    trainLocations(orderBy: { timestamp: DESCENDING }, take: 2) {
+      speed
+      timestamp
+      location
+    }
+    timeTableRows(where: { commercialStop: { equals: true } }) {
+      ...TrainTimeTableRow
+    }
+  }
+}
