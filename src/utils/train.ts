@@ -101,7 +101,9 @@ export function getWagonNumberFromVehicleId(
 }
 
 export function getTrainDisplayName(train: TrainByStationFragment) {
-  return train.commuterLineid
-    ? train.commuterLineid
-    : train.trainType.name + ' ' + train.trainNumber;
+  if (train.commuterLineid) {
+    return train.commuterLineid;
+  } else {
+    return `${train.trainType.name} ${train.trainNumber}`;
+  }
 }
