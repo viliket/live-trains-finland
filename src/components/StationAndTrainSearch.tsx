@@ -212,7 +212,7 @@ export default function StationAndTrainSearch() {
           <DialogContentText sx={{ paddingLeft: 2 }}>
             {filteredTrains?.length === 0 && t('no_results')}
             {loading && '...'}
-            {error && error.message}
+            {error?.message}
           </DialogContentText>
         </>
       </Dialog>

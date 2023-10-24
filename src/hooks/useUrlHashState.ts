@@ -23,12 +23,10 @@ export function useUrlHashState(
       ) {
         window.location.hash = hash;
         setState(true);
+      } else if (window.location.hash === hash) {
+        window.history.back();
       } else {
-        if (window.location.hash === hash) {
-          window.history.back();
-        } else {
-          setState(false);
-        }
+        setState(false);
       }
     },
   ];
