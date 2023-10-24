@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  forwardRef,
-  ReactElement,
-  Ref,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   AppBar,
@@ -18,13 +11,11 @@ import {
   DialogContentText,
   IconButton,
   Skeleton,
-  Slide,
   Snackbar,
   Stack,
   Toolbar,
   Typography,
 } from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
 import distance from '@turf/distance';
 import { ChevronLeft, HomeClockOutline, Train } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
@@ -42,17 +33,9 @@ import {
 } from '../utils/train';
 
 import OptionList from './OptionList';
+import SlideUpTransition from './SlideUpTransition';
 
 const isSSR = typeof navigator === 'undefined';
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: ReactElement;
-  },
-  ref: Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 function getDistancesToPosition<T>(
   items: T[],
@@ -223,7 +206,7 @@ function FindNearest() {
         fullScreen
         open={open}
         onClose={handleClose}
-        TransitionComponent={Transition}
+        TransitionComponent={SlideUpTransition}
       >
         <AppBar position="fixed" elevation={0}>
           <Toolbar>

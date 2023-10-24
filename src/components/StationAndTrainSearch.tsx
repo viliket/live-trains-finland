@@ -1,11 +1,4 @@
-import {
-  forwardRef,
-  ReactElement,
-  ReactNode,
-  Ref,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import {
   Box,
@@ -17,9 +10,7 @@ import {
 import AppBar from '@mui/material/AppBar';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
-import Slide from '@mui/material/Slide';
 import Toolbar from '@mui/material/Toolbar';
-import { TransitionProps } from '@mui/material/transitions';
 import { format, parseISO } from 'date-fns';
 import { ChevronLeft, Magnify } from 'mdi-material-ui';
 import { useRouter } from 'next/navigation';
@@ -39,19 +30,11 @@ import {
 } from '../utils/train';
 
 import OptionList from './OptionList';
+import SlideUpTransition from './SlideUpTransition';
 
 const trainStationsWithPassengerTraffic = trainStations.filter(
   (s) => s.passengerTraffic
 );
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: ReactElement;
-  },
-  ref: Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 const OptionListSubHeader = ({ children }: { children: ReactNode }) => (
   <ListSubheader
@@ -152,7 +135,7 @@ export default function StationAndTrainSearch() {
         fullScreen
         open={open}
         onClose={handleClose}
-        TransitionComponent={Transition}
+        TransitionComponent={SlideUpTransition}
       >
         <AppBar position="fixed" elevation={0}>
           <Toolbar>
