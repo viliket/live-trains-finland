@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Box, useTheme } from '@mui/material';
 import maplibregl from 'maplibre-gl';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
+import { useTranslation } from 'react-i18next';
 import Map, {
   FullscreenControl,
   Layer,
@@ -50,6 +51,7 @@ const VehicleMapContainer = ({
       defaultValue: false,
     }
   );
+  const { i18n } = useTranslation();
   const map = mapRef.current;
 
   useEffect(() => {
@@ -92,7 +94,11 @@ const VehicleMapContainer = ({
         latitude: station?.latitude ?? fallbackStation?.latitude,
         zoom: initialZoom,
       }}
-      mapStyle={getMapStyle(useVectorBaseTiles, theme.palette.mode)}
+      mapStyle={getMapStyle(
+        useVectorBaseTiles,
+        theme.palette.mode,
+        i18n.resolvedLanguage
+      )}
       transformRequest={(url) => {
         if (
           url.includes('api.digitransit.fi') ||

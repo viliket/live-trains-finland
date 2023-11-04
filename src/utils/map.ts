@@ -147,25 +147,26 @@ const generateMapStyle = (options?: Options) => {
   return mapStyle;
 };
 
-const mapStyle = generateMapStyle();
+function getRasterMapSource(isDarkMode: boolean, languageCode: string) {
+  if (isDarkMode) return 'hsl-map-greyscale';
+  if (languageCode == 'sv') return 'hsl-map-sv';
+  if (languageCode == 'en') return 'hsl-map-en';
+  return 'hsl-map';
+}
 
-const mapStyleDark = generateMapStyle({
-  components: {
-    greyscale: {
-      enabled: true,
-    },
-  },
-});
-
-const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
+const getRasterMapStyle = (
+  isDarkMode: boolean,
+  languageCode: string
+): mapboxgl.Style => ({
   version: 8,
   sources: {
     'raster-tiles': {
       type: 'raster',
       tiles: [
-        isDarkMode
-          ? 'https://cdn.digitransit.fi/map/v2/hsl-map-greyscale/{z}/{x}/{y}.png'
-          : 'https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png',
+        `https://cdn.digitransit.fi/map/v2/${getRasterMapSource(
+          isDarkMode,
+          languageCode
+        )}/{z}/{x}/{y}.png`,
       ],
       tileSize: 512,
       attribution: baseAttribution,
@@ -184,13 +185,41 @@ const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
   ],
 });
 
-const rasterMapStyle = getRasterMapStyle(false);
-const rasterMapStyleDark = getRasterMapStyle(true);
+const mapStyleCache = new Map<string, mapboxgl.Style>();
 
-export function getMapStyle(useVectorBaseTiles: boolean, mode: PaletteMode) {
-  if (useVectorBaseTiles) {
-    return mode === 'light' ? mapStyle : mapStyleDark;
-  } else {
-    return mode === 'light' ? rasterMapStyle : rasterMapStyleDark;
+export function getMapStyle(
+  useVectorBaseTiles: boolean,
+  mode: PaletteMode,
+  languageCode: string
+) {
+  const cacheKey = `${useVectorBaseTiles}_${mode}_${languageCode}`;
+
+  if (mapStyleCache.has(cacheKey)) {
+    return mapStyleCache.get(cacheKey);
   }
+
+  let mapStyle: mapboxgl.Style;
+
+  if (useVectorBaseTiles) {
+    mapStyle = generateMapStyle({
+      components: {
+        greyscale: {
+          enabled: mode === 'dark',
+        },
+        text_en: {
+          enabled: languageCode === 'en',
+        },
+        text_sv: {
+          enabled: languageCode === 'sv',
+        },
+      },
+    });
+  } else {
+    mapStyle = getRasterMapStyle(mode === 'dark', languageCode);
+  }
+
+  // Store the computed map style in the cache
+  mapStyleCache.set(cacheKey, mapStyle);
+
+  return mapStyle;
 }
