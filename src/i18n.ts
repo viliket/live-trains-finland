@@ -22,6 +22,9 @@ i18n
           fi: {
             translation: require('../public/locales/fi/translation.json'),
           },
+          sv: {
+            translation: require('../public/locales/sv/translation.json'),
+          },
           en: {
             translation: require('../public/locales/en/translation.json'),
           },
@@ -30,7 +33,7 @@ i18n
     debug: process.env.NODE_ENV === 'development',
     fallbackLng: 'fi',
     load: 'languageOnly',
-    supportedLngs: ['en', 'fi'],
+    supportedLngs: ['en', 'fi', 'sv'],
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
