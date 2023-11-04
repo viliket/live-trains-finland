@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 const lngs: Record<string, { shortCode: string }> = {
   en: { shortCode: 'EN' },
   fi: { shortCode: 'FI' },
+  sv: { shortCode: 'SV' },
 };
 
 export function LanguageSelector() {

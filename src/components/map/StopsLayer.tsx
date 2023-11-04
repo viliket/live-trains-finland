@@ -6,7 +6,6 @@ import {
   format,
   formatDistanceToNowStrict,
 } from 'date-fns';
-import { fi } from 'date-fns/locale';
 import { MapLibreZoomEvent, MapStyleImageMissingEvent } from 'maplibre-gl';
 import { useTranslation } from 'react-i18next';
 import { Layer, Source, useMap } from 'react-map-gl';
@@ -34,6 +33,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
   const { current: map } = useMap();
   const theme = useTheme();
   const [currentZoom, setCurrentZoom] = useState<number>();
+  const [locale, setLocale] = useState<Locale>();
   const { i18n, t } = useTranslation();
 
   const { data: realTimeData } = useTrainQuery(
@@ -95,6 +95,20 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     };
   }, [map]);
 
+  useEffect(() => {
+    const fetchAndSetLocale = async (languageCode: string) => {
+      let locale: Locale | undefined;
+      if (languageCode === 'fi') {
+        locale = (await import(`date-fns/locale/fi`)).default;
+      } else if (i18n.resolvedLanguage === 'sv') {
+        locale = (await import(`date-fns/locale/sv`)).default;
+      }
+      setLocale(locale);
+    };
+
+    fetchAndSetLocale(i18n.resolvedLanguage);
+  }, [i18n.resolvedLanguage]);
+
   const getPropertyValueByStationName = <T,>(
     stationNames: string[],
     valueMatch: T,
@@ -139,7 +153,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
       stationTime = t('canceled');
     } else if (diffInMinsToNow <= 5 && diffInMinsToNow > 0) {
       stationTime = formatDistanceToNowStrict(timeTableRowTime, {
-        locale: i18n.resolvedLanguage === 'fi' ? fi : undefined,
+        locale,
       });
     } else {
       stationTime = format(timeTableRowTime, 'HH:mm');
