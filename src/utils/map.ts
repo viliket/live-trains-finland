@@ -157,7 +157,9 @@ const mapStyleDark = generateMapStyle({
   },
 });
 
-const getRasterMapStyle = (isDarkMode: boolean): mapboxgl.Style => ({
+const getRasterMapStyle = (
+  isDarkMode: boolean
+): maplibregl.StyleSpecification => ({
   version: 8,
   sources: {
     'raster-tiles': {
