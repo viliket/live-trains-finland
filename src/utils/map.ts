@@ -185,7 +185,7 @@ const getRasterMapStyle = (
   ],
 });
 
-const mapStyleCache = new Map<string, mapboxgl.Style>();
+const mapStyleCache = new Map<string, maplibregl.StyleSpecification>();
 
 export function getMapStyle(
   useVectorBaseTiles: boolean,
@@ -198,7 +198,7 @@ export function getMapStyle(
     return mapStyleCache.get(cacheKey);
   }
 
-  let mapStyle: mapboxgl.Style;
+  let mapStyle: maplibregl.StyleSpecification;
 
   if (useVectorBaseTiles) {
     mapStyle = generateMapStyle({
