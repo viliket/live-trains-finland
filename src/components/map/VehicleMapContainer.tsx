@@ -97,6 +97,7 @@ const VehicleMapContainer = ({
         theme.palette.mode,
         i18n.resolvedLanguage
       )}
+      styleDiffing={false}
       transformRequest={(url) => {
         if (
           url.includes('api.digitransit.fi') ||
