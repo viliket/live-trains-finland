@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 import { Box, useTheme } from '@mui/material';
-import maplibregl from 'maplibre-gl';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import Map, {
@@ -10,7 +9,7 @@ import Map, {
   MapRef,
   NavigationControl,
   ScaleControl,
-} from 'react-map-gl';
+} from 'react-map-gl/maplibre';
 import useLocalStorageState from 'use-local-storage-state';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic';
@@ -84,7 +83,6 @@ const VehicleMapContainer = ({
 
   return (
     <Map
-      mapLib={maplibregl}
       ref={mapRef}
       reuseMaps
       // Disable unneeded RTLTextPlugin that is set by react-map-gl by default

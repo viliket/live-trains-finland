@@ -157,7 +157,7 @@ function getRasterMapSource(isDarkMode: boolean, languageCode: string) {
 const getRasterMapStyle = (
   isDarkMode: boolean,
   languageCode: string
-): mapboxgl.Style => ({
+): maplibregl.StyleSpecification => ({
   version: 8,
   sources: {
     'raster-tiles': {

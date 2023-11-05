@@ -66,5 +66,7 @@ declare module 'hsl-map-style' {
    * map styles/elements. For example { components: { poi: { enabled: true } } } would show point of interest
    * icons on map. The result can be passed to MapLibre's 'mapStyle' paremeter as it is.
    */
-  export function generateStyle(options?: Options): mapboxgl.Style;
+  export function generateStyle(
+    options?: Options
+  ): maplibregl.StyleSpecification;
 }
