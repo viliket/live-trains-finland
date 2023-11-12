@@ -40,7 +40,7 @@ const animDurationInMs = 1000;
  * If the distance if larger than than this threshold, the vehicle position will
  * not be interpolated but updated immediately to the new location.
  */
-const maxInterpolationDistanceKm = 0.2;
+const maxInterpolationDistanceKm = 0.3;
 
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
