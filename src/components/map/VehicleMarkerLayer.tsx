@@ -12,11 +12,12 @@ import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl';
 
 import { vehiclesVar } from '../../graphql/client';
 import useAnimationFrame from '../../hooks/useAnimationFrame';
+import { VehicleDetails } from '../../types/vehicles';
 import {
   getVehicleMarkerIconImage,
   getVehiclesGeoJsonData,
 } from '../../utils/map';
-import { distanceInKm } from '../../utils/math';
+import { distanceInKm, toDegrees, toRadians } from '../../utils/math';
 
 import CustomOverlay from './CustomOverlay';
 import DeckGLOverlay from './DeckGLOverlay';
@@ -41,6 +42,29 @@ const animDurationInMs = 1000;
  * not be interpolated but updated immediately to the new location.
  */
 const maxInterpolationDistanceKm = 0.4;
+
+function getPredictedPosition(
+  vehicle: VehicleDetails,
+  elapsedTimeInSeconds: number,
+  startPos: GeoJSON.Position
+): GeoJSON.Position {
+  // Convert speed from km/h to km/s
+  const distance = vehicle.spd * (elapsedTimeInSeconds / 3600);
+  // Earth's radius in km
+  const R = 6371;
+
+  const headingRad = toRadians(vehicle.heading ?? 0);
+
+  // Calculate change in latitude and longitude
+  const deltaLat = (distance * Math.cos(headingRad)) / R;
+  const deltaLon =
+    (distance * Math.sin(headingRad)) / (R * Math.cos(toRadians(startPos[1])));
+
+  const newLat = startPos[1] + toDegrees(deltaLat);
+  const newLon = startPos[0] + toDegrees(deltaLon);
+
+  return [newLon, newLat];
+}
 
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
@@ -203,18 +227,30 @@ export default function VehicleMarkerLayer({
           }
         }
 
-        const elapsedTime = performance.now() - vehicle.timestamp;
-        let progress = elapsedTime / animDurationInMs;
+        const elapsedTimeInMs = performance.now() - vehicle.timestamp;
+
+        // Gradually interpolate the anim start position to latest actual current
+        // position within animDurationInMs because the anim start position might
+        // be off from the latest actual current position due to prediction error
+        let progress = elapsedTimeInMs / animDurationInMs;
         if (progress > 1) progress = 1;
         if (progress < 0) progress = 0;
+        const adjustedStartPos = [
+          startPos[0] + (curPos[0] - startPos[0]) * progress,
+          startPos[1] + (curPos[1] - startPos[1]) * progress,
+        ];
+
+        // Predict the current anim position based on vehicle speed
+        const animPos = getPredictedPosition(
+          vehicle,
+          elapsedTimeInMs / 1000,
+          adjustedStartPos
+        );
 
         nextPositions[id] = {
           animStartTimestamp: vehicle.timestamp,
           startPos,
-          animPos: [
-            startPos[0] + (curPos[0] - startPos[0]) * progress,
-            startPos[1] + (curPos[1] - startPos[1]) * progress,
-          ],
+          animPos,
         };
       });
       return nextPositions;
