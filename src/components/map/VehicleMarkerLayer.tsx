@@ -16,6 +16,7 @@ import {
   getVehicleMarkerIconImage,
   getVehiclesGeoJsonData,
 } from '../../utils/map';
+import { distanceInKm } from '../../utils/math';
 
 import CustomOverlay from './CustomOverlay';
 import DeckGLOverlay from './DeckGLOverlay';
@@ -32,6 +33,14 @@ type VehicleInterpolatedPosition = {
 };
 
 const animDurationInMs = 1000;
+
+/**
+ * Maximum distance in kilometers between the vehicle's new location
+ * and previous location to use interpolation to animate the position change.
+ * If the distance if larger than than this threshold, the vehicle position will
+ * not be interpolated but updated immediately to the new location.
+ */
+const maxInterpolationDistanceKm = 0.4;
 
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
@@ -182,6 +191,16 @@ export default function VehicleMarkerLayer({
         ) {
           // Vehicle has received new position from MQTT, set previous position to latest interpolated position
           startPos = vehiclePrevInterpolatedPos.animPos;
+
+          // If the distance between new position and previous position exceeds
+          // the max threshold, skip interpolation by setting start position as
+          // the current vehicle position. This could occur if there is a long
+          // gap between the  previous MQTT message and the next message, e.g.
+          // due to a temporary connection problem.
+          const interpolationDistanceKm = distanceInKm(startPos, curPos);
+          if (interpolationDistanceKm > maxInterpolationDistanceKm) {
+            startPos = curPos;
+          }
         }
 
         const elapsedTime = performance.now() - vehicle.timestamp;

@@ -31,3 +31,19 @@ export function getBearing(start: LatLngLiteral, dest: LatLngLiteral) {
 export function toKmsPerHour(metersPerSecond: number) {
   return Math.round(metersPerSecond * 3.6);
 }
+
+/**
+ * Get distance in kilometers between two coordinates using equirectangular
+ * distance approximation. This approximation is faster than the Haversine formula
+ * used in @turf/distance.
+ */
+export function distanceInKm(from: GeoJSON.Position, to: GeoJSON.Position) {
+  const R = 6371; // Earth radius in kilometers
+  const x =
+    (toRadians(to[0]) - toRadians(from[0])) *
+    Math.cos(0.5 * (toRadians(to[1]) + toRadians(from[1])));
+  const y = toRadians(to[1]) - toRadians(from[1]);
+  const distance = R * Math.sqrt(x * x + y * y);
+
+  return distance;
+}
