@@ -48,12 +48,14 @@ function getPredictedPosition(
   elapsedTimeInSeconds: number,
   startPos: GeoJSON.Position
 ): GeoJSON.Position {
+  if (vehicle.heading == null) return startPos;
+
+  const headingRad = toRadians(vehicle.heading);
+
   // Convert speed from km/h to km/s
   const distance = vehicle.spd * (elapsedTimeInSeconds / 3600);
   // Earth's radius in km
   const R = 6371;
-
-  const headingRad = toRadians(vehicle.heading ?? 0);
 
   // Calculate change in latitude and longitude
   const deltaLat = (distance * Math.cos(headingRad)) / R;
