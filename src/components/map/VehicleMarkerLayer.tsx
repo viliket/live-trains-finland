@@ -34,6 +34,7 @@ type VehicleInterpolatedPosition = {
 };
 
 const animDurationInMs = 1000;
+const maxAnimDurationAfterPositionUpdate = 5000;
 
 /**
  * Maximum distance in kilometers between the vehicle's new location
@@ -230,6 +231,16 @@ export default function VehicleMarkerLayer({
         }
 
         const elapsedTimeInMs = performance.now() - vehicle.timestamp;
+
+        if (
+          elapsedTimeInMs > maxAnimDurationAfterPositionUpdate &&
+          vehiclePrevInterpolatedPos
+        ) {
+          // Too long since the last vehicle timestamp, stop further animation
+          // to prevent the position prediction error becoming too noticeable
+          nextPositions[id] = vehiclePrevInterpolatedPos;
+          return;
+        }
 
         // Gradually interpolate the anim start position to latest actual current
         // position within animDurationInMs because the anim start position might
