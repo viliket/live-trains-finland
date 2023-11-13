@@ -59,18 +59,22 @@ export const getVehicleMarkerIconImage = ({
 
   // Draw base (circle)
   ctx.shadowColor = colorShadow;
-  ctx.shadowBlur = 5;
+  ctx.shadowBlur = 10;
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, 2 * Math.PI);
   ctx.lineWidth = 4;
   ctx.strokeStyle = colorSecondary;
   ctx.fillStyle = colorPrimary;
-  ctx.fill('evenodd');
+  ctx.fill();
+  ctx.shadowBlur = 0;
   ctx.stroke();
 
   // Draw heading angle
   if (heading != null) {
     ctx.rotate(toRadians(heading));
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.05)';
+    ctx.shadowBlur = 3;
+    ctx.shadowOffsetY = -3;
     ctx.beginPath();
     ctx.fillStyle = colorSecondary;
     const height = 15;
@@ -79,7 +83,7 @@ export const getVehicleMarkerIconImage = ({
     ctx.lineTo(0 - width / 2, 0 - radius);
     ctx.lineTo(0 + width / 2, 0 - radius);
     ctx.closePath();
-    ctx.fill('evenodd');
+    ctx.fill();
     ctx.rotate(toRadians(-heading));
   }
 

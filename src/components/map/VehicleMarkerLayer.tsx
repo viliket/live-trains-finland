@@ -66,8 +66,8 @@ export default function VehicleMarkerLayer({
       id: `vehiclemarker${theme.palette.mode}-x-0`,
       mapBearing: map?.getBearing() ?? 0,
       colorPrimary: theme.palette.secondary.main,
-      colorSecondary: theme.palette.mode === 'light' ? '#eee' : '#ccc',
-      colorShadow: '#aaa',
+      colorSecondary: theme.palette.mode === 'light' ? '#eee' : '#666',
+      colorShadow: theme.palette.mode === 'light' ? '#aaa' : '#000',
     });
   }, [map, theme.palette.mode, theme.palette.secondary.main]);
 
@@ -236,7 +236,7 @@ export default function VehicleMarkerLayer({
         // Use CollisionFilterExtension to hide overlapping texts.
         extensions: [new CollisionFilterExtension()],
         // Increase text size when computing collisions to provide greater spacing between visible features.
-        collisionTestProps: { sizeScale: 3 },
+        collisionTestProps: { sizeScale: 5 },
       },
     },
     pointType: 'icon+text',
@@ -253,12 +253,13 @@ export default function VehicleMarkerLayer({
       // Disable depth test from this layer to avoid z-fighting issues
       depthTest: false,
     },
-    getIconSize: 50,
+    getIconSize: 60,
     getIconAngle: (d) => -d.properties?.bearing,
     getText: (d: GeoJSON.Feature) => d.properties?.vehicleNumber,
     getTextColor: [255, 255, 255],
     textFontFamily: 'sans-serif',
     getTextSize: 15,
+    textFontWeight: 700,
     pickable: true,
     onClick: (info) => {
       const id = info.object.properties!.vehicleId;
