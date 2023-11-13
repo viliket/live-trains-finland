@@ -184,11 +184,11 @@ export default function VehicleMarkerLayer({
   }, [selectedVehicleId]);
 
   if (map && isTracking && selectedVehicleId) {
-    const vehicle = vehiclesVar()[selectedVehicleId];
+    const vehicle = interpolatedPositions[selectedVehicleId];
     if (vehicle && !map.isMoving()) {
       map.flyTo(
         {
-          center: vehicle.position,
+          center: vehicle.animPos as [number, number],
           animate: true,
           easing: (t) => t,
           duration: animDurationInMs,
