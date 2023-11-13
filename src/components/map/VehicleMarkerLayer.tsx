@@ -33,7 +33,7 @@ type VehicleInterpolatedPosition = {
   animPos: GeoJSON.Position;
 };
 
-const animDurationInMs = 1000;
+const animDurationInMs = 2000;
 const maxAnimDurationAfterPositionUpdate = 5000;
 
 /**
