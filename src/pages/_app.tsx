@@ -10,8 +10,8 @@ import SwitchLanguage from '../components/SwitchLanguage';
 import { TopNavBar } from '../components/TopNavBar';
 import Providers from '../providers/Providers';
 
-import '../App.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import '../App.css';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
