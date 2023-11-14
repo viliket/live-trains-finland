@@ -236,7 +236,7 @@ export default function VehicleMarkerLayer({
         // Use CollisionFilterExtension to hide overlapping texts.
         extensions: [new CollisionFilterExtension()],
         // Increase text size when computing collisions to provide greater spacing between visible features.
-        collisionTestProps: { sizeScale: 5 },
+        collisionTestProps: { sizeScale: 4 },
       },
     },
     pointType: 'icon+text',
