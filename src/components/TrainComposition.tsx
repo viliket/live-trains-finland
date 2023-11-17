@@ -195,18 +195,20 @@ function TrainComposition({
                   <PlusCircle color="success" />
                 )}
               </span>
-              {w.catering && <SilverwareForkKnife />}
-              {w.pet && <Paw />}
-              {w.disabled && <WheelchairAccessibility />}
-              {w.playground && <Seesaw />}
-              {w.luggage && <BagChecked />}
-              {w.wagonType === 'Gfot' && (
-                <CarSide titleAccess="Kattamaton autovaunu" />
-              )}
-              {w.wagonType === 'Gd' && (
-                <CarSide titleAccess="Katettu autovaunu" />
-              )}
-              {w.wagonType === 'Edm' && <BunkBed titleAccess="Makuuvaunu" />}
+              <Box sx={{ color: 'text.secondary' }}>
+                {w.catering && <SilverwareForkKnife />}
+                {w.pet && <Paw />}
+                {w.disabled && <WheelchairAccessibility />}
+                {w.playground && <Seesaw />}
+                {w.luggage && <BagChecked />}
+                {w.wagonType === 'Gfot' && (
+                  <CarSide titleAccess="Kattamaton autovaunu" />
+                )}
+                {w.wagonType === 'Gd' && (
+                  <CarSide titleAccess="Katettu autovaunu" />
+                )}
+                {w.wagonType === 'Edm' && <BunkBed titleAccess="Makuuvaunu" />}
+              </Box>
               <Box
                 sx={(theme) => ({
                   display: 'flex',
@@ -214,16 +216,16 @@ function TrainComposition({
                   justifyContent: 'center',
                   color:
                     theme.palette.mode === 'dark'
-                      ? theme.palette.grey[300]
+                      ? theme.palette.grey[400]
                       : theme.palette.primary.main,
                   'svg path.door': {
                     fill:
                       theme.palette.mode === 'dark'
-                        ? theme.palette.grey[400]
+                        ? theme.palette.grey[500]
                         : theme.palette.primary.light,
                     stroke:
                       theme.palette.mode === 'dark'
-                        ? theme.palette.grey[400]
+                        ? theme.palette.grey[500]
                         : theme.palette.primary.light,
                     strokeWidth: '0.5px',
                   },
@@ -261,15 +263,18 @@ function TrainComposition({
       {stationName && (
         <Box
           className="stopping-sectors"
-          sx={{
+          sx={(theme) => ({
             display: 'flex',
             div: {
               border: '1px solid transparent',
-              backgroundColor: '#e5e5e5',
+              backgroundColor:
+                theme.palette.mode === 'light'
+                  ? 'divider'
+                  : theme.palette.grey[400],
               color: 'black',
               backgroundClip: 'padding-box',
             },
-          }}
+          })}
         >
           <Box sx={{ flex: 1 }}>A</Box>
           <Box sx={{ flex: 0.8 }}>B</Box>
