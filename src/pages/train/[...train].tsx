@@ -19,6 +19,7 @@ import { isDefined } from '../../utils/common';
 import getHeadTrainVehicleId from '../../utils/getHeadTrainVehicleId';
 import getRouteForTrain from '../../utils/getRouteForTrain';
 import { trainStations } from '../../utils/stations';
+import { getTrainRouteShortName } from '../../utils/train';
 import NotFound from '../404';
 import { NextPageWithLayout } from '../_app';
 
@@ -80,7 +81,7 @@ const Train: NextPageWithLayout = () => {
     if (train) {
       executeRouteSearch({
         variables: {
-          name: train.commuterLineid || train.trainNumber.toString(),
+          name: getTrainRouteShortName(train),
         },
       });
     }

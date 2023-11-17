@@ -26,7 +26,10 @@ import { isDefined } from '../utils/common';
 import getRouteForTrain from '../utils/getRouteForTrain';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
-import { getTimeTableRowRealTime } from '../utils/train';
+import {
+  getTimeTableRowRealTime,
+  getTrainRouteShortName,
+} from '../utils/train';
 
 import { NextPageWithLayout } from './_app';
 
@@ -99,9 +102,7 @@ const Station: NextPageWithLayout = () => {
     if (selectedTrain) {
       executeRouteSearch({
         variables: {
-          name:
-            selectedTrain.commuterLineid ||
-            selectedTrain.trainNumber.toString(),
+          name: getTrainRouteShortName(selectedTrain),
         },
       });
     }

@@ -7,6 +7,7 @@ import {
 import {
   getTrainDepartureStationName,
   getTrainDestinationStationName,
+  getTrainRouteShortName,
 } from './train';
 
 export default function getRouteForTrain(
@@ -22,8 +23,7 @@ export default function getRouteForTrain(
     selectedRoute =
       routeData.routes.find(
         (r) =>
-          ((train.commuterLineid && r?.shortName === train.commuterLineid) ||
-            r?.shortName === train.trainNumber.toString()) &&
+          r?.shortName === getTrainRouteShortName(train) &&
           r?.longName
             ?.toLowerCase()
             .includes(departureStationName.toLowerCase()) &&

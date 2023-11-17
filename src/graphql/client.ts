@@ -32,7 +32,7 @@ export const gqlClients = {
 
 // Digitransit: HSL
 const digitransitLink = new HttpLink({
-  uri: 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql',
+  uri: 'https://api.digitransit.fi/routing/v2/routers/finland/index/graphql',
   headers: {
     'digitransit-subscription-key':
       process.env.NEXT_PUBLIC_DIGITRANSIT_SUBSCRIPTION_KEY ?? '',
