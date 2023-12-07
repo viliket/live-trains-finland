@@ -109,7 +109,7 @@ export function getTrainDisplayName(train: TrainByStationFragment) {
 }
 
 /**
- * Gets the train route short name used in Digitransit routing (v2) API.
+ * Gets the train route short name used in Digitransit routing API.
  */
 export function getTrainRouteShortName(train: TrainByStationFragment) {
   return getTrainDisplayName(train);

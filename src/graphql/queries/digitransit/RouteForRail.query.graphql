@@ -1,5 +1,5 @@
 query RoutesForRail($name: String!) {
-  routes(name: $name, transportModes: RAIL) {
+  routes(name: $name, modes: "RAIL") {
     ...RouteForRail
   }
 }
