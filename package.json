@@ -19,7 +19,7 @@
     "autosuggest-highlight": "^3.3.4",
     "date-fns": "^2.29.3",
     "date-fns-tz": "^2.0.0",
-    "deck.gl": "^8.9.32",
+    "deck.gl": "^9.0.0-alpha.6",
     "graphql": "^16.6.0",
     "hsl-map-style": "github:HSLdevcom/hsl-map-style#master",
     "i18next": "^22.4.10",

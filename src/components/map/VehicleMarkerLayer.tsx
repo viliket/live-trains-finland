@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { CollisionFilterExtension } from '@deck.gl/extensions/typed';
-import { GeoJsonLayer } from '@deck.gl/layers/typed';
+import { CollisionFilterExtension } from '@deck.gl/extensions';
+import { GeoJsonLayer } from '@deck.gl/layers';
 import { Box, Button, useTheme } from '@mui/material';
 import { format } from 'date-fns';
 import { mapValues } from 'lodash';
