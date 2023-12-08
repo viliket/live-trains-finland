@@ -13,13 +13,12 @@ import TrainInfoContainer from '../../components/TrainInfoContainer';
 import TrainSubNavBar from '../../components/TrainSubNavBar';
 import { gqlClients, vehiclesVar } from '../../graphql/client';
 import { useTrainLazyQuery } from '../../graphql/generated/digitraffic';
-import { useRoutesForRailLazyQuery } from '../../graphql/generated/digitransit';
+import { useRouteLazyQuery } from '../../graphql/generated/digitransit';
 import useTrainLiveTracking from '../../hooks/useTrainLiveTracking';
 import { isDefined } from '../../utils/common';
 import getHeadTrainVehicleId from '../../utils/getHeadTrainVehicleId';
-import getRouteForTrain from '../../utils/getRouteForTrain';
 import { trainStations } from '../../utils/stations';
-import { getTrainRouteShortName } from '../../utils/train';
+import { getTrainRouteGtfsId } from '../../utils/train';
 import NotFound from '../404';
 import { NextPageWithLayout } from '../_app';
 
@@ -31,7 +30,7 @@ const Train: NextPageWithLayout = () => {
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
-  const [executeRouteSearch, { data: routeData }] = useRoutesForRailLazyQuery({
+  const [executeRouteSearch, { data: routeData }] = useRouteLazyQuery({
     fetchPolicy: 'no-cache',
   });
 
@@ -70,7 +69,7 @@ const Train: NextPageWithLayout = () => {
   const train = trainData?.train?.[0];
   const stationCode = searchParams.get('station');
   const station = trainStations.find((s) => s.stationShortCode === stationCode);
-  const selectedRoute = getRouteForTrain(train, routeData);
+  const selectedRoute = routeData?.route;
 
   const handleVehicleIdSelected = useCallback(
     (vehicleId: number) => setSelectedVehicleId(vehicleId),
@@ -81,7 +80,7 @@ const Train: NextPageWithLayout = () => {
     if (train) {
       executeRouteSearch({
         variables: {
-          name: getTrainRouteShortName(train),
+          id: getTrainRouteGtfsId(train),
         },
       });
     }

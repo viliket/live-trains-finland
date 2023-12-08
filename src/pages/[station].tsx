@@ -19,15 +19,15 @@ import {
   TimeTableRowType,
   useTrainsByStationQuery,
 } from '../graphql/generated/digitraffic';
-import { useRoutesForRailLazyQuery } from '../graphql/generated/digitransit';
+import { useRouteLazyQuery } from '../graphql/generated/digitransit';
 import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
 import { isDefined } from '../utils/common';
-import getRouteForTrain from '../utils/getRouteForTrain';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
 import {
   getTimeTableRowRealTime,
+  getTrainRouteGtfsId,
   getTrainRouteShortName,
 } from '../utils/train';
 
@@ -45,7 +45,7 @@ const Station: NextPageWithLayout = () => {
   );
   const [selectedTrainNo, setSelectedTrainNo] = useState<number | null>(null);
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
-  const [executeRouteSearch, { data: routeData }] = useRoutesForRailLazyQuery();
+  const [executeRouteSearch, { data: routeData }] = useRouteLazyQuery();
   const station = stationName
     ? trainStations.find(
         (s) => s.stationName.toUpperCase() === stationName.toUpperCase()
@@ -96,13 +96,13 @@ const Station: NextPageWithLayout = () => {
         (t) => t?.trainNumber === selectedTrainNo
       )
     : null;
-  const selectedRoute = getRouteForTrain(selectedTrain, routeData);
+  const selectedRoute = routeData?.route;
 
   useEffect(() => {
     if (selectedTrain) {
       executeRouteSearch({
         variables: {
-          name: getTrainRouteShortName(selectedTrain),
+          id: getTrainRouteGtfsId(selectedTrain),
         },
       });
     }

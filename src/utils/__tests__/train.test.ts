@@ -17,6 +17,7 @@ import {
   getWagonNumberFromVehicleId,
   getTrainDisplayName,
   getTrainRouteShortName,
+  getTrainRouteGtfsId,
 } from '../train';
 
 const trainBase: TrainDetailsFragment = {
@@ -388,5 +389,74 @@ describe('getTrainRouteShortName', () => {
     };
     const displayName = getTrainRouteShortName(train);
     expect(displayName).toBe('IC 1234');
+  });
+});
+
+describe('getTrainRouteGtfsId', () => {
+  it('should return correct GTFS ID for a commuter train', () => {
+    const train: TrainByStationFragment = {
+      ...trainBase,
+      commuterLineid: 'U',
+      trainNumber: 1234,
+      trainType: {
+        name: '',
+        trainCategory: {
+          name: 'Commuter',
+        },
+      },
+      timeTableRows: [
+        {
+          ...departureTimeTableRowBase,
+          scheduledTime: '2023-01-25T09:00:00Z',
+          station: {
+            shortCode: 'HKI',
+            name: 'Helsinki',
+          },
+        },
+        {
+          ...arrivalTimeTableRowBase,
+          scheduledTime: '2023-01-25T10:00:00Z',
+          station: {
+            shortCode: 'KKN',
+            name: 'Kirkkonummi',
+          },
+        },
+      ],
+    };
+    const displayName = getTrainRouteGtfsId(train);
+    expect(displayName).toBe('digitraffic:HKI_KKN_U_109_10');
+  });
+
+  it('should return correct GTFS ID for a long distance train', () => {
+    const train: TrainByStationFragment = {
+      ...trainBase,
+      trainNumber: 1234,
+      trainType: {
+        name: '',
+        trainCategory: {
+          name: 'Long-distance',
+        },
+      },
+      timeTableRows: [
+        {
+          ...departureTimeTableRowBase,
+          scheduledTime: '2023-01-25T09:00:00Z',
+          station: {
+            shortCode: 'HKI',
+            name: 'Helsinki',
+          },
+        },
+        {
+          ...arrivalTimeTableRowBase,
+          scheduledTime: '2023-01-25T10:00:00Z',
+          station: {
+            shortCode: 'TPE',
+            name: 'Tampere',
+          },
+        },
+      ],
+    };
+    const displayName = getTrainRouteGtfsId(train);
+    expect(displayName).toBe('digitraffic:HKI_TPE_1234_102_10');
   });
 });
