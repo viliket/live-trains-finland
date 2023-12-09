@@ -434,6 +434,9 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
               name: '',
             },
           },
+          operator: {
+            uicCode: 10,
+          },
           timeTableRows: [
             {
               scheduledTime: '2023-09-02T15:51:00Z',
