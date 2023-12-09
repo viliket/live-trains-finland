@@ -1447,14 +1447,14 @@ export type StopAtDistanceEdge = {
   node?: Maybe<StopAtDistance>;
 };
 
-export type RouteForRailFragment = { __typename?: 'Route', gtfsId: string, shortName?: string | null, longName?: string | null, patterns?: Array<{ __typename?: 'Pattern', headsign?: string | null, geometry?: Array<{ __typename?: 'Coordinates', lat?: number | null, lon?: number | null } | null> | null } | null> | null };
-
-export type RoutesForRailQueryVariables = Exact<{
-  name: Scalars['String'];
+export type RouteQueryVariables = Exact<{
+  id: Scalars['String'];
 }>;
 
 
-export type RoutesForRailQuery = { __typename?: 'QueryType', routes?: Array<{ __typename?: 'Route', gtfsId: string, shortName?: string | null, longName?: string | null, patterns?: Array<{ __typename?: 'Pattern', headsign?: string | null, geometry?: Array<{ __typename?: 'Coordinates', lat?: number | null, lon?: number | null } | null> | null } | null> | null } | null> | null };
+export type RouteQuery = { __typename?: 'QueryType', route?: { __typename?: 'Route', gtfsId: string, shortName?: string | null, longName?: string | null, patterns?: Array<{ __typename?: 'Pattern', headsign?: string | null, geometry?: Array<{ __typename?: 'Coordinates', lat?: number | null, lon?: number | null } | null> | null } | null> | null } | null };
+
+export type RouteForRailFragment = { __typename?: 'Route', gtfsId: string, shortName?: string | null, longName?: string | null, patterns?: Array<{ __typename?: 'Pattern', headsign?: string | null, geometry?: Array<{ __typename?: 'Coordinates', lat?: number | null, lon?: number | null } | null> | null } | null> | null };
 
 export const RouteForRailFragmentDoc = gql`
     fragment RouteForRail on Route {
@@ -1470,38 +1470,38 @@ export const RouteForRailFragmentDoc = gql`
   }
 }
     `;
-export const RoutesForRailDocument = gql`
-    query RoutesForRail($name: String!) {
-  routes(name: $name, modes: "RAIL") {
+export const RouteDocument = gql`
+    query Route($id: String!) {
+  route(id: $id) {
     ...RouteForRail
   }
 }
     ${RouteForRailFragmentDoc}`;
 
 /**
- * __useRoutesForRailQuery__
+ * __useRouteQuery__
  *
- * To run a query within a React component, call `useRoutesForRailQuery` and pass it any options that fit your needs.
- * When your component renders, `useRoutesForRailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useRouteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRouteQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useRoutesForRailQuery({
+ * const { data, loading, error } = useRouteQuery({
  *   variables: {
- *      name: // value for 'name'
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useRoutesForRailQuery(baseOptions: Apollo.QueryHookOptions<RoutesForRailQuery, RoutesForRailQueryVariables>) {
+export function useRouteQuery(baseOptions: Apollo.QueryHookOptions<RouteQuery, RouteQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<RoutesForRailQuery, RoutesForRailQueryVariables>(RoutesForRailDocument, options);
+        return Apollo.useQuery<RouteQuery, RouteQueryVariables>(RouteDocument, options);
       }
-export function useRoutesForRailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RoutesForRailQuery, RoutesForRailQueryVariables>) {
+export function useRouteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RouteQuery, RouteQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<RoutesForRailQuery, RoutesForRailQueryVariables>(RoutesForRailDocument, options);
+          return Apollo.useLazyQuery<RouteQuery, RouteQueryVariables>(RouteDocument, options);
         }
-export type RoutesForRailQueryHookResult = ReturnType<typeof useRoutesForRailQuery>;
-export type RoutesForRailLazyQueryHookResult = ReturnType<typeof useRoutesForRailLazyQuery>;
-export type RoutesForRailQueryResult = Apollo.QueryResult<RoutesForRailQuery, RoutesForRailQueryVariables>;
+export type RouteQueryHookResult = ReturnType<typeof useRouteQuery>;
+export type RouteLazyQueryHookResult = ReturnType<typeof useRouteLazyQuery>;
+export type RouteQueryResult = Apollo.QueryResult<RouteQuery, RouteQueryVariables>;

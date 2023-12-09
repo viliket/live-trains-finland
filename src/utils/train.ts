@@ -107,3 +107,33 @@ export function getTrainDisplayName(train: TrainByStationFragment) {
     return `${train.trainType.name} ${train.trainNumber}`;
   }
 }
+
+/**
+ * A map from the the Digitraffic train category name to the GTFS extended route type (integer).
+ * - 109 = Suburban Railway - used in Finland for commuter rails
+ * - 102 = Long Distance Trains - used in Finland for IC, S, and regional (HDM) trains
+ *
+ * @see https://developers.google.com/transit/gtfs/reference/extended-route-type
+ */
+const trainCategoryNameToGtfsRouteTypeMap: Record<string, number> = {
+  'Long-distance': 102,
+  Commuter: 109,
+};
+
+/**
+ * Gets the train route GTFS ID used in Digitransit routing API.
+ *
+ * @example
+ * // returns "digitraffic:TPE_HKI_R_109_10"
+ * getTrainRouteGtfsId(<R train from Tampere to Helsinki operated by VR>);
+ */
+export function getTrainRouteGtfsId(train: TrainByStationFragment) {
+  const deptStationCode = getTrainDepartureStation(train)?.shortCode;
+  const destStationCode = getTrainDestinationStation(train)?.shortCode;
+  const routeType =
+    trainCategoryNameToGtfsRouteTypeMap[train.trainType.trainCategory.name];
+  const agency = train.operator.uicCode;
+  return `digitraffic:${deptStationCode}_${destStationCode}_${
+    train.commuterLineid ? train.commuterLineid : train.trainNumber
+  }_${routeType}_${agency}`;
+}
