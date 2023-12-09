@@ -409,6 +409,9 @@ describe('getTrainRouteGtfsId', () => {
           name: 'Long-distance',
         },
       },
+      operator: {
+        uicCode: 987,
+      },
       timeTableRows: [
         {
           ...departureTimeTableRowBase,
@@ -429,6 +432,6 @@ describe('getTrainRouteGtfsId', () => {
       ],
     };
     const displayName = getTrainRouteGtfsId(train);
-    expect(displayName).toBe('digitraffic:HKI_TPE_1234_102_10');
+    expect(displayName).toBe('digitraffic:HKI_TPE_1234_102_987');
   });
 });

@@ -132,9 +132,7 @@ export function getTrainRouteGtfsId(train: TrainByStationFragment) {
   const destStationCode = getTrainDestinationStation(train)?.shortCode;
   const routeType =
     trainCategoryNameToGtfsRouteTypeMap[train.trainType.trainCategory.name];
-  // See https://rata.digitraffic.fi/api/v1/metadata/operators
-  // TODO: Could also use Train.operator.uicCode
-  const agency = 10;
+  const agency = train.operator.uicCode;
   return `digitraffic:${deptStationCode}_${destStationCode}_${
     train.commuterLineid ? train.commuterLineid : train.trainNumber
   }_${routeType}_${agency}`;

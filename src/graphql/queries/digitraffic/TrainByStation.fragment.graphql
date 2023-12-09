@@ -3,6 +3,9 @@ fragment TrainByStation on Train {
   trainNumber
   departureDate
   version
+  operator {
+    uicCode
+  }
   trainType {
     name
     trainCategory {
