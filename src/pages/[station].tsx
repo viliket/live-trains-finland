@@ -25,11 +25,7 @@ import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
 import { isDefined } from '../utils/common';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
-import {
-  getTimeTableRowRealTime,
-  getTrainRouteGtfsId,
-  getTrainRouteShortName,
-} from '../utils/train';
+import { getTimeTableRowRealTime, getTrainRouteGtfsId } from '../utils/train';
 
 import { NextPageWithLayout } from './_app';
 
