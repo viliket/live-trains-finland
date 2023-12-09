@@ -16,7 +16,6 @@ import {
   getTrainDestinationStationName,
   getWagonNumberFromVehicleId,
   getTrainDisplayName,
-  getTrainRouteShortName,
   getTrainRouteGtfsId,
 } from '../train';
 
@@ -361,33 +360,6 @@ describe('getTrainDisplayName', () => {
       trainNumber: 1234,
     };
     const displayName = getTrainDisplayName(train);
-    expect(displayName).toBe('IC 1234');
-  });
-});
-
-describe('getTrainRouteShortName', () => {
-  it('should be the commuter line ID when the train has a commuter line ID', () => {
-    const train: TrainByStationFragment = {
-      ...trainBase,
-      commuterLineid: 'U',
-      trainNumber: 1234,
-    };
-    const displayName = getTrainRouteShortName(train);
-    expect(displayName).toBe('U');
-  });
-
-  it('should be the train type name + train number when the train has no commuter line ID', () => {
-    const train: TrainByStationFragment = {
-      ...trainBase,
-      trainType: {
-        name: 'IC',
-        trainCategory: {
-          name: 'InterCity',
-        },
-      },
-      trainNumber: 1234,
-    };
-    const displayName = getTrainRouteShortName(train);
     expect(displayName).toBe('IC 1234');
   });
 });

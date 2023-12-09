@@ -109,13 +109,6 @@ export function getTrainDisplayName(train: TrainByStationFragment) {
 }
 
 /**
- * Gets the train route short name used in Digitransit routing API.
- */
-export function getTrainRouteShortName(train: TrainByStationFragment) {
-  return getTrainDisplayName(train);
-}
-
-/**
  * A map from the the Digitraffic train category name to the GTFS extended route type (integer).
  * - 109 = Suburban Railway - used in Finland for commuter rails
  * - 102 = Long Distance Trains - used in Finland for IC, S, and regional (HDM) trains
