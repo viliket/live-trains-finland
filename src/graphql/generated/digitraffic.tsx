@@ -995,7 +995,7 @@ export type WagonWhere = {
 export type RunningTrainsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RunningTrainsQuery = { __typename?: 'Query', currentlyRunningTrains?: Array<{ __typename?: 'Train', trainNumber: number, commuterLineid?: string | null, departureDate: string, version: string, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, trainLocations?: Array<{ __typename?: 'TrainLocation', speed: number, timestamp: string, location?: Array<number | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
+export type RunningTrainsQuery = { __typename?: 'Query', currentlyRunningTrains?: Array<{ __typename?: 'Train', trainNumber: number, commuterLineid?: string | null, departureDate: string, version: string, operator: { __typename?: 'Operator', uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, trainLocations?: Array<{ __typename?: 'TrainLocation', speed: number, timestamp: string, location?: Array<number | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
 
 export type StationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1191,6 +1191,9 @@ export const RunningTrainsDocument = gql`
     commuterLineid
     departureDate
     version
+    operator {
+      uicCode
+    }
     trainType {
       name
       trainCategory {
