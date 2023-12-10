@@ -1502,6 +1502,11 @@ export function useRouteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Rout
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<RouteQuery, RouteQueryVariables>(RouteDocument, options);
         }
+export function useRouteSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<RouteQuery, RouteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<RouteQuery, RouteQueryVariables>(RouteDocument, options);
+        }
 export type RouteQueryHookResult = ReturnType<typeof useRouteQuery>;
 export type RouteLazyQueryHookResult = ReturnType<typeof useRouteLazyQuery>;
+export type RouteSuspenseQueryHookResult = ReturnType<typeof useRouteSuspenseQuery>;
 export type RouteQueryResult = Apollo.QueryResult<RouteQuery, RouteQueryVariables>;
