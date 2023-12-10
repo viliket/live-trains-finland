@@ -25,8 +25,8 @@ See the instructions below for development.
 
 You need the following tools:
 
-- Node.js `>= 16`
-- npm `>= 8`
+- Node.js `>= 18`
+- npm `>= 10`
 
 Register to the [Digitransit API Portal](https://portal-api.digitransit.fi/)
 and create yourself a new API subscription key.
