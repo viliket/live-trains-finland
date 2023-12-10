@@ -1235,8 +1235,13 @@ export function useRunningTrainsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<RunningTrainsQuery, RunningTrainsQueryVariables>(RunningTrainsDocument, options);
         }
+export function useRunningTrainsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<RunningTrainsQuery, RunningTrainsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<RunningTrainsQuery, RunningTrainsQueryVariables>(RunningTrainsDocument, options);
+        }
 export type RunningTrainsQueryHookResult = ReturnType<typeof useRunningTrainsQuery>;
 export type RunningTrainsLazyQueryHookResult = ReturnType<typeof useRunningTrainsLazyQuery>;
+export type RunningTrainsSuspenseQueryHookResult = ReturnType<typeof useRunningTrainsSuspenseQuery>;
 export type RunningTrainsQueryResult = Apollo.QueryResult<RunningTrainsQuery, RunningTrainsQueryVariables>;
 export const StationDocument = gql`
     query Station {
@@ -1269,8 +1274,13 @@ export function useStationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<St
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<StationQuery, StationQueryVariables>(StationDocument, options);
         }
+export function useStationSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<StationQuery, StationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<StationQuery, StationQueryVariables>(StationDocument, options);
+        }
 export type StationQueryHookResult = ReturnType<typeof useStationQuery>;
 export type StationLazyQueryHookResult = ReturnType<typeof useStationLazyQuery>;
+export type StationSuspenseQueryHookResult = ReturnType<typeof useStationSuspenseQuery>;
 export type StationQueryResult = Apollo.QueryResult<StationQuery, StationQueryVariables>;
 export const TrainDocument = gql`
     query Train($trainNumber: Int!, $departureDate: Date!) {
@@ -1305,8 +1315,13 @@ export function useTrainLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Trai
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TrainQuery, TrainQueryVariables>(TrainDocument, options);
         }
+export function useTrainSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TrainQuery, TrainQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TrainQuery, TrainQueryVariables>(TrainDocument, options);
+        }
 export type TrainQueryHookResult = ReturnType<typeof useTrainQuery>;
 export type TrainLazyQueryHookResult = ReturnType<typeof useTrainLazyQuery>;
+export type TrainSuspenseQueryHookResult = ReturnType<typeof useTrainSuspenseQuery>;
 export type TrainQueryResult = Apollo.QueryResult<TrainQuery, TrainQueryVariables>;
 export const TrainsByStationDocument = gql`
     query TrainsByStation($station: String!, $departingTrains: Int!, $departedTrains: Int!, $arrivingTrains: Int!, $arrivedTrains: Int!) {
@@ -1351,6 +1366,11 @@ export function useTrainsByStationLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TrainsByStationQuery, TrainsByStationQueryVariables>(TrainsByStationDocument, options);
         }
+export function useTrainsByStationSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TrainsByStationQuery, TrainsByStationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TrainsByStationQuery, TrainsByStationQueryVariables>(TrainsByStationDocument, options);
+        }
 export type TrainsByStationQueryHookResult = ReturnType<typeof useTrainsByStationQuery>;
 export type TrainsByStationLazyQueryHookResult = ReturnType<typeof useTrainsByStationLazyQuery>;
+export type TrainsByStationSuspenseQueryHookResult = ReturnType<typeof useTrainsByStationSuspenseQuery>;
 export type TrainsByStationQueryResult = Apollo.QueryResult<TrainsByStationQuery, TrainsByStationQueryVariables>;
