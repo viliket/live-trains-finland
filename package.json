@@ -22,7 +22,7 @@
     "deck.gl": "^8.9.33",
     "graphql": "^16.8.1",
     "hsl-map-style": "github:HSLdevcom/hsl-map-style#master",
-    "i18next": "^22.4.10",
+    "i18next": "^23.7.8",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-http-backend": "^2.4.2",
     "lodash": "^4.17.21",
