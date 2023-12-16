@@ -96,11 +96,11 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
   }, [map]);
 
   useEffect(() => {
-    const fetchAndSetLocale = async (languageCode: string) => {
+    const fetchAndSetLocale = async (languageCode?: string) => {
       let locale: Locale | undefined;
       if (languageCode === 'fi') {
         locale = (await import(`date-fns/locale/fi`)).default;
-      } else if (i18n.resolvedLanguage === 'sv') {
+      } else if (languageCode === 'sv') {
         locale = (await import(`date-fns/locale/sv`)).default;
       }
       setLocale(locale);
