@@ -6,32 +6,34 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
   /** An RFC-3339 compliant Full Date Scalar */
-  Date: string;
+  Date: { input: string; output: string; }
   /** A slightly refined version of RFC-3339 compliant DateTime Scalar */
-  DateTime: string;
+  DateTime: { input: string; output: string; }
 };
 
 /** # PRIMITIVE FILTERS */
 export type BooleanWhere = {
-  equals?: InputMaybe<Scalars['Boolean']>;
-  unequals?: InputMaybe<Scalars['Boolean']>;
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  unequals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type CategoryCode = {
   __typename?: 'CategoryCode';
-  code: Scalars['String'];
-  name: Scalars['String'];
-  validFrom: Scalars['Date'];
-  validTo?: Maybe<Scalars['Date']>;
+  code: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  validFrom: Scalars['Date']['output'];
+  validTo?: Maybe<Scalars['Date']['output']>;
 };
 
 export type CategoryCodeCollectionWhere = {
@@ -83,14 +85,14 @@ export type Composition = {
   __typename?: 'Composition';
   journeySections?: Maybe<Array<Maybe<JourneySection>>>;
   train?: Maybe<Train>;
-  version: Scalars['String'];
+  version: Scalars['String']['output'];
 };
 
 
 export type CompositionJourneySectionsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<JourneySectionOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<JourneySectionWhere>;
 };
 
@@ -112,29 +114,29 @@ export type CompositionWhere = {
 };
 
 export type CoordinateWhere = {
-  inside?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
+  inside?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
 };
 
 export type DateTimeWhere = {
-  equals?: InputMaybe<Scalars['DateTime']>;
-  greaterThan?: InputMaybe<Scalars['DateTime']>;
-  lessThan?: InputMaybe<Scalars['DateTime']>;
-  unequals?: InputMaybe<Scalars['DateTime']>;
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greaterThan?: InputMaybe<Scalars['DateTime']['input']>;
+  lessThan?: InputMaybe<Scalars['DateTime']['input']>;
+  unequals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type DateWhere = {
-  equals?: InputMaybe<Scalars['Date']>;
-  greaterThan?: InputMaybe<Scalars['Date']>;
-  lessThan?: InputMaybe<Scalars['Date']>;
-  unequals?: InputMaybe<Scalars['Date']>;
+  equals?: InputMaybe<Scalars['Date']['input']>;
+  greaterThan?: InputMaybe<Scalars['Date']['input']>;
+  lessThan?: InputMaybe<Scalars['Date']['input']>;
+  unequals?: InputMaybe<Scalars['Date']['input']>;
 };
 
 export type DetailedCategoryCode = {
   __typename?: 'DetailedCategoryCode';
-  code: Scalars['String'];
-  name: Scalars['String'];
-  validFrom: Scalars['Date'];
-  validTo?: Maybe<Scalars['Date']>;
+  code: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  validFrom: Scalars['Date']['output'];
+  validTo?: Maybe<Scalars['Date']['output']>;
 };
 
 export type DetailedCategoryCodeCollectionWhere = {
@@ -158,8 +160,8 @@ export type DetailedCategoryCodeWhere = {
 };
 
 export type EnumWhere = {
-  equals?: InputMaybe<Scalars['String']>;
-  unequals?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  unequals?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum EstimateSourceType {
@@ -171,35 +173,35 @@ export enum EstimateSourceType {
 }
 
 export type IntWhere = {
-  equals?: InputMaybe<Scalars['Int']>;
-  greaterThan?: InputMaybe<Scalars['Int']>;
-  lessThan?: InputMaybe<Scalars['Int']>;
-  unequals?: InputMaybe<Scalars['Int']>;
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  greaterThan?: InputMaybe<Scalars['Int']['input']>;
+  lessThan?: InputMaybe<Scalars['Int']['input']>;
+  unequals?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type JourneySection = {
   __typename?: 'JourneySection';
   endTimeTableRow?: Maybe<TimeTableRow>;
   locomotives?: Maybe<Array<Maybe<Locomotive>>>;
-  maximumSpeed: Scalars['Int'];
+  maximumSpeed: Scalars['Int']['output'];
   startTimeTableRow?: Maybe<TimeTableRow>;
-  totalLength: Scalars['Int'];
+  totalLength: Scalars['Int']['output'];
   wagons?: Maybe<Array<Maybe<Wagon>>>;
 };
 
 
 export type JourneySectionLocomotivesArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<LocomotiveOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<LocomotiveWhere>;
 };
 
 
 export type JourneySectionWagonsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<WagonOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<WagonWhere>;
 };
 
@@ -227,11 +229,11 @@ export type JourneySectionWhere = {
 
 export type Locomotive = {
   __typename?: 'Locomotive';
-  location: Scalars['Int'];
-  locomotiveType: Scalars['String'];
-  powerTypeAbbreviation: Scalars['String'];
-  vehicleId?: Maybe<Scalars['Int']>;
-  vehicleNumber?: Maybe<Scalars['String']>;
+  location: Scalars['Int']['output'];
+  locomotiveType: Scalars['String']['output'];
+  powerTypeAbbreviation: Scalars['String']['output'];
+  vehicleId?: Maybe<Scalars['Int']['output']>;
+  vehicleNumber?: Maybe<Scalars['String']['output']>;
 };
 
 export type LocomotiveCollectionWhere = {
@@ -256,9 +258,9 @@ export type LocomotiveWhere = {
 
 export type Operator = {
   __typename?: 'Operator';
-  name: Scalars['String'];
-  shortCode: Scalars['String'];
-  uicCode: Scalars['Int'];
+  name: Scalars['String']['output'];
+  shortCode: Scalars['String']['output'];
+  uicCode: Scalars['Int']['output'];
 };
 
 export type OperatorCollectionWhere = {
@@ -301,102 +303,102 @@ export type Query = {
 
 export type QueryCompositionsGreaterThanVersionArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<CompositionOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  version: Scalars['String'];
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  version: Scalars['String']['input'];
   where?: InputMaybe<CompositionWhere>;
 };
 
 
 export type QueryCurrentlyRunningTrainsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<TrainOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TrainWhere>;
 };
 
 
 export type QueryLatestTrainLocationsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<TrainLocationOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TrainLocationWhere>;
 };
 
 
 export type QueryRoutesetMessagesByVersionGreaterThanArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<RoutesetMessageOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  version: Scalars['String'];
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  version: Scalars['String']['input'];
   where?: InputMaybe<RoutesetMessageWhere>;
 };
 
 
 export type QueryStationsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<StationOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<StationWhere>;
 };
 
 
 export type QueryTrainArgs = {
-  departureDate: Scalars['Date'];
+  departureDate: Scalars['Date']['input'];
   orderBy?: InputMaybe<Array<InputMaybe<TrainOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  trainNumber: Scalars['Int'];
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  trainNumber: Scalars['Int']['input'];
   where?: InputMaybe<TrainWhere>;
 };
 
 
 export type QueryTrainTrackingMessagesByVersionGreaterThanArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<TrainTrackingMessageOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  version: Scalars['String'];
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  version: Scalars['String']['input'];
   where?: InputMaybe<TrainTrackingMessageWhere>;
 };
 
 
 export type QueryTrainsByDepartureDateArgs = {
-  departureDate: Scalars['Date'];
+  departureDate: Scalars['Date']['input'];
   orderBy?: InputMaybe<Array<InputMaybe<TrainOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TrainWhere>;
 };
 
 
 export type QueryTrainsByStationAndQuantityArgs = {
-  arrivedTrains?: InputMaybe<Scalars['Int']>;
-  arrivingTrains?: InputMaybe<Scalars['Int']>;
-  departedTrains?: InputMaybe<Scalars['Int']>;
-  departingTrains?: InputMaybe<Scalars['Int']>;
-  includeNonStopping?: InputMaybe<Scalars['Boolean']>;
+  arrivedTrains?: InputMaybe<Scalars['Int']['input']>;
+  arrivingTrains?: InputMaybe<Scalars['Int']['input']>;
+  departedTrains?: InputMaybe<Scalars['Int']['input']>;
+  departingTrains?: InputMaybe<Scalars['Int']['input']>;
+  includeNonStopping?: InputMaybe<Scalars['Boolean']['input']>;
   orderBy?: InputMaybe<Array<InputMaybe<TrainOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  station: Scalars['String'];
-  take?: InputMaybe<Scalars['Int']>;
-  trainCategories?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  station: Scalars['String']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  trainCategories?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   where?: InputMaybe<TrainWhere>;
 };
 
 
 export type QueryTrainsByVersionGreaterThanArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<TrainOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  version: Scalars['String'];
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  version: Scalars['String']['input'];
   where?: InputMaybe<TrainWhere>;
 };
 
 export type Routesection = {
   __typename?: 'Routesection';
-  commercialTrackId: Scalars['String'];
-  routesetId: Scalars['Int'];
-  sectionId: Scalars['String'];
+  commercialTrackId: Scalars['String']['output'];
+  routesetId: Scalars['Int']['output'];
+  sectionId: Scalars['String']['output'];
   station: Station;
 };
 
@@ -422,20 +424,20 @@ export type RoutesectionWhere = {
 
 export type RoutesetMessage = {
   __typename?: 'RoutesetMessage';
-  clientSystem: Scalars['String'];
-  id: Scalars['Int'];
-  messageTime: Scalars['DateTime'];
-  routeType: Scalars['String'];
+  clientSystem: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  messageTime: Scalars['DateTime']['output'];
+  routeType: Scalars['String']['output'];
   routesections?: Maybe<Array<Maybe<Routesection>>>;
   train?: Maybe<Train>;
-  version: Scalars['String'];
+  version: Scalars['String']['output'];
 };
 
 
 export type RoutesetMessageRoutesectionsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<RoutesectionOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RoutesectionWhere>;
 };
 
@@ -466,21 +468,21 @@ export type RoutesetMessageWhere = {
 
 export type Station = {
   __typename?: 'Station';
-  countryCode: Scalars['String'];
-  location?: Maybe<Array<Maybe<Scalars['Float']>>>;
-  name: Scalars['String'];
-  passengerTraffic: Scalars['Boolean'];
-  shortCode: Scalars['String'];
+  countryCode: Scalars['String']['output'];
+  location?: Maybe<Array<Maybe<Scalars['Float']['output']>>>;
+  name: Scalars['String']['output'];
+  passengerTraffic: Scalars['Boolean']['output'];
+  shortCode: Scalars['String']['output'];
   timeTableRows?: Maybe<Array<Maybe<TimeTableRow>>>;
   type: StationType;
-  uicCode: Scalars['Int'];
+  uicCode: Scalars['Int']['output'];
 };
 
 
 export type StationTimeTableRowsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<TimeTableRowOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TimeTableRowWhere>;
 };
 
@@ -521,17 +523,17 @@ export type StationWhere = {
 };
 
 export type StringWhere = {
-  equals?: InputMaybe<Scalars['String']>;
-  unequals?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  unequals?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ThirdCategoryCode = {
   __typename?: 'ThirdCategoryCode';
-  code: Scalars['String'];
-  description: Scalars['String'];
-  name: Scalars['String'];
-  validFrom: Scalars['Date'];
-  validTo?: Maybe<Scalars['Date']>;
+  code: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  validFrom: Scalars['Date']['output'];
+  validTo?: Maybe<Scalars['Date']['output']>;
 };
 
 export type ThirdCategoryCodeCollectionWhere = {
@@ -566,27 +568,27 @@ export type TimeTableGroup = {
 
 export type TimeTableRow = {
   __typename?: 'TimeTableRow';
-  actualTime?: Maybe<Scalars['DateTime']>;
-  cancelled: Scalars['Boolean'];
+  actualTime?: Maybe<Scalars['DateTime']['output']>;
+  cancelled: Scalars['Boolean']['output'];
   causes?: Maybe<Array<Maybe<Cause>>>;
-  commercialStop?: Maybe<Scalars['Boolean']>;
-  commercialTrack?: Maybe<Scalars['String']>;
-  differenceInMinutes?: Maybe<Scalars['Int']>;
+  commercialStop?: Maybe<Scalars['Boolean']['output']>;
+  commercialTrack?: Maybe<Scalars['String']['output']>;
+  differenceInMinutes?: Maybe<Scalars['Int']['output']>;
   estimateSourceType?: Maybe<EstimateSourceType>;
-  liveEstimateTime?: Maybe<Scalars['DateTime']>;
-  scheduledTime: Scalars['DateTime'];
+  liveEstimateTime?: Maybe<Scalars['DateTime']['output']>;
+  scheduledTime: Scalars['DateTime']['output'];
   station: Station;
   train: Train;
-  trainStopping: Scalars['Boolean'];
+  trainStopping: Scalars['Boolean']['output'];
   type: TimeTableRowType;
-  unknownDelay?: Maybe<Scalars['Boolean']>;
+  unknownDelay?: Maybe<Scalars['Boolean']['output']>;
 };
 
 
 export type TimeTableRowCausesArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<CauseOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CauseWhere>;
 };
 
@@ -642,12 +644,12 @@ export enum TimetableType {
 
 export type TrackRange = {
   __typename?: 'TrackRange';
-  endKilometres: Scalars['Int'];
-  endMetres: Scalars['Int'];
-  endTrack: Scalars['String'];
-  startKilometres: Scalars['Int'];
-  startMetres: Scalars['Int'];
-  startTrack: Scalars['String'];
+  endKilometres: Scalars['Int']['output'];
+  endMetres: Scalars['Int']['output'];
+  endTrack: Scalars['String']['output'];
+  startKilometres: Scalars['Int']['output'];
+  startMetres: Scalars['Int']['output'];
+  startTrack: Scalars['String']['output'];
 };
 
 export type TrackRangeCollectionWhere = {
@@ -676,10 +678,10 @@ export type TrackRangeWhere = {
 
 export type TrackSection = {
   __typename?: 'TrackSection';
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   ranges: Array<Maybe<TrackRange>>;
   station: Station;
-  trackSectionCode: Scalars['String'];
+  trackSectionCode: Scalars['String']['output'];
 };
 
 export type TrackSectionCollectionWhere = {
@@ -702,68 +704,68 @@ export type TrackSectionWhere = {
 
 export type Train = {
   __typename?: 'Train';
-  cancelled: Scalars['Boolean'];
-  commuterLineid?: Maybe<Scalars['String']>;
+  cancelled: Scalars['Boolean']['output'];
+  commuterLineid?: Maybe<Scalars['String']['output']>;
   compositions?: Maybe<Array<Maybe<Composition>>>;
-  deleted?: Maybe<Scalars['Boolean']>;
-  departureDate: Scalars['Date'];
+  deleted?: Maybe<Scalars['Boolean']['output']>;
+  departureDate: Scalars['Date']['output'];
   operator: Operator;
   routesetMessages?: Maybe<Array<Maybe<RoutesetMessage>>>;
-  runningCurrently: Scalars['Boolean'];
+  runningCurrently: Scalars['Boolean']['output'];
   timeTableGroups?: Maybe<Array<TimeTableGroup>>;
   timeTableRows?: Maybe<Array<Maybe<TimeTableRow>>>;
-  timetableAcceptanceDate: Scalars['DateTime'];
+  timetableAcceptanceDate: Scalars['DateTime']['output'];
   timetableType: TimetableType;
   trainLocations?: Maybe<Array<Maybe<TrainLocation>>>;
-  trainNumber: Scalars['Int'];
+  trainNumber: Scalars['Int']['output'];
   trainTrackingMessages?: Maybe<Array<Maybe<TrainTrackingMessage>>>;
   trainType: TrainType;
-  version: Scalars['String'];
+  version: Scalars['String']['output'];
 };
 
 
 export type TrainCompositionsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<CompositionOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CompositionWhere>;
 };
 
 
 export type TrainRoutesetMessagesArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<RoutesetMessageOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RoutesetMessageWhere>;
 };
 
 
 export type TrainTimeTableRowsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<TimeTableRowOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TimeTableRowWhere>;
 };
 
 
 export type TrainTrainLocationsArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<TrainLocationOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TrainLocationWhere>;
 };
 
 
 export type TrainTrainTrackingMessagesArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<TrainTrackingMessageOrderBy>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TrainTrackingMessageWhere>;
 };
 
 export type TrainCategory = {
   __typename?: 'TrainCategory';
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
 };
 
 export type TrainCategoryCollectionWhere = {
@@ -791,10 +793,10 @@ export enum TrainDirection {
 
 export type TrainLocation = {
   __typename?: 'TrainLocation';
-  accuracy?: Maybe<Scalars['Int']>;
-  location?: Maybe<Array<Maybe<Scalars['Float']>>>;
-  speed: Scalars['Int'];
-  timestamp: Scalars['DateTime'];
+  accuracy?: Maybe<Scalars['Int']['output']>;
+  location?: Maybe<Array<Maybe<Scalars['Float']['output']>>>;
+  speed: Scalars['Int']['output'];
+  timestamp: Scalars['DateTime']['output'];
   train?: Maybe<Train>;
 };
 
@@ -834,18 +836,18 @@ export type TrainOrderBy = {
 
 export type TrainTrackingMessage = {
   __typename?: 'TrainTrackingMessage';
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   nextStation?: Maybe<Station>;
-  nextTrackSectionCode?: Maybe<Scalars['String']>;
+  nextTrackSectionCode?: Maybe<Scalars['String']['output']>;
   previousStation?: Maybe<Station>;
-  previousTrackSectionCode?: Maybe<Scalars['String']>;
+  previousTrackSectionCode?: Maybe<Scalars['String']['output']>;
   station: Station;
-  timestamp: Scalars['DateTime'];
+  timestamp: Scalars['DateTime']['output'];
   trackSection?: Maybe<TrackSection>;
-  trackSectionCode: Scalars['String'];
+  trackSectionCode: Scalars['String']['output'];
   train?: Maybe<Train>;
   type: TrainTrackingMessageType;
-  version: Scalars['String'];
+  version: Scalars['String']['output'];
 };
 
 export type TrainTrackingMessageCollectionWhere = {
@@ -891,7 +893,7 @@ export type TrainTrackingMessageWhere = {
 
 export type TrainType = {
   __typename?: 'TrainType';
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
   trainCategory: TrainCategory;
 };
 
@@ -933,27 +935,27 @@ export type TrainWhere = {
 };
 
 export type VersionWhere = {
-  equals?: InputMaybe<Scalars['String']>;
-  greaterThan?: InputMaybe<Scalars['String']>;
-  lessThan?: InputMaybe<Scalars['String']>;
-  unequals?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  greaterThan?: InputMaybe<Scalars['String']['input']>;
+  lessThan?: InputMaybe<Scalars['String']['input']>;
+  unequals?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Wagon = {
   __typename?: 'Wagon';
-  catering?: Maybe<Scalars['Boolean']>;
-  disabled?: Maybe<Scalars['Boolean']>;
-  length: Scalars['Int'];
-  location: Scalars['Int'];
-  luggage?: Maybe<Scalars['Boolean']>;
-  pet?: Maybe<Scalars['Boolean']>;
-  playground?: Maybe<Scalars['Boolean']>;
-  salesNumber: Scalars['Int'];
-  smoking?: Maybe<Scalars['Boolean']>;
-  vehicleId?: Maybe<Scalars['Int']>;
-  vehicleNumber?: Maybe<Scalars['String']>;
-  video?: Maybe<Scalars['Boolean']>;
-  wagonType?: Maybe<Scalars['String']>;
+  catering?: Maybe<Scalars['Boolean']['output']>;
+  disabled?: Maybe<Scalars['Boolean']['output']>;
+  length: Scalars['Int']['output'];
+  location: Scalars['Int']['output'];
+  luggage?: Maybe<Scalars['Boolean']['output']>;
+  pet?: Maybe<Scalars['Boolean']['output']>;
+  playground?: Maybe<Scalars['Boolean']['output']>;
+  salesNumber: Scalars['Int']['output'];
+  smoking?: Maybe<Scalars['Boolean']['output']>;
+  vehicleId?: Maybe<Scalars['Int']['output']>;
+  vehicleNumber?: Maybe<Scalars['String']['output']>;
+  video?: Maybe<Scalars['Boolean']['output']>;
+  wagonType?: Maybe<Scalars['String']['output']>;
 };
 
 export type WagonCollectionWhere = {
@@ -1005,8 +1007,8 @@ export type StationQuery = { __typename?: 'Query', stations?: Array<{ __typename
 export type StationSummaryFragment = { __typename?: 'Station', name: string, shortCode: string };
 
 export type TrainQueryVariables = Exact<{
-  trainNumber: Scalars['Int'];
-  departureDate: Scalars['Date'];
+  trainNumber: Scalars['Int']['input'];
+  departureDate: Scalars['Date']['input'];
 }>;
 
 
@@ -1021,11 +1023,11 @@ export type TrainTimeTableGroupFragment = { __typename?: 'TimeTableGroup', train
 export type TrainTimeTableRowFragment = { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } };
 
 export type TrainsByStationQueryVariables = Exact<{
-  station: Scalars['String'];
-  departingTrains: Scalars['Int'];
-  departedTrains: Scalars['Int'];
-  arrivingTrains: Scalars['Int'];
-  arrivedTrains: Scalars['Int'];
+  station: Scalars['String']['input'];
+  departingTrains: Scalars['Int']['input'];
+  departedTrains: Scalars['Int']['input'];
+  arrivingTrains: Scalars['Int']['input'];
+  arrivedTrains: Scalars['Int']['input'];
 }>;
 
 
