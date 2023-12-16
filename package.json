@@ -66,7 +66,7 @@
   ],
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231121.0",
-    "@graphql-codegen/add": "^4.0.1",
+    "@graphql-codegen/add": "^5.0.0",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-operations": "^4.0.1",
