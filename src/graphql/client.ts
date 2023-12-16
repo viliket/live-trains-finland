@@ -173,6 +173,9 @@ export const client = new ApolloClient({
           },
         },
       },
+      Operator: {
+        keyFields: ['uicCode'],
+      },
       Query: {
         fields: {
           trainsByStationAndQuantity: {
