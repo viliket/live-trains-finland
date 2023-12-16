@@ -35,7 +35,7 @@ const PassengerInformationMessageAlert = ({
       <Alert severity="info" sx={{ width: '100%' }}>
         {getPassengerInformationMessageForLanguage(
           firstMessage,
-          i18n.resolvedLanguage
+          i18n.resolvedLanguage ?? i18n.language
         )}
         {passengerInformationMessages.length > 1 && (
           <strong> + {passengerInformationMessages.length - 1}</strong>
