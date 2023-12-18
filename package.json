@@ -6,7 +6,7 @@
     "@apollo/client": "^3.8.8",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/lab": "^5.0.0-alpha.155",
+    "@mui/lab": "^5.0.0-alpha.156",
     "@mui/material": "^5.14.20",
     "@turf/distance": "^6.5.0",
     "@types/autosuggest-highlight": "^3.2.3",
