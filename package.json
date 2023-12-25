@@ -17,7 +17,7 @@
     "@types/react-dom": "^18.2.18",
     "@types/use-sync-external-store": "^0.0.6",
     "autosuggest-highlight": "^3.3.4",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.0.6",
     "date-fns-tz": "^2.0.0",
     "deck.gl": "^8.9.33",
     "graphql": "^16.8.1",
