@@ -65,14 +65,14 @@
     "not ie 11"
   ],
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20231121.0",
+    "@cloudflare/workers-types": "^4.20231218.0",
     "@graphql-codegen/add": "^5.0.0",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-operations": "^4.0.1",
     "@graphql-codegen/typescript-react-apollo": "^4.1.0",
     "@svgr/webpack": "^8.1.0",
-    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/jest-dom": "^6.1.6",
     "@testing-library/react": "^14.1.2",
     "dotenv": "^16.3.1",
     "eslint-config-next": "^14.0.4",
