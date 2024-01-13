@@ -22,7 +22,7 @@ function Footer() {
           underline="none"
           color="inherit"
         >
-          © Copyright Junaan.fi 2023
+          © Copyright Junaan.fi 2024
         </Link>
         ,{' '}
         <Link href="https://www.gnu.org/licenses/gpl-3.0.html" color="inherit">
