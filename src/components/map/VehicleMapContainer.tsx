@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react';
 
 import { Box, useTheme } from '@mui/material';
+import maplibregl from 'maplibre-gl';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
+import * as pmtiles from 'pmtiles';
 import Map, {
   FullscreenControl,
   Layer,
@@ -64,6 +66,14 @@ const VehicleMapContainer = ({
       defaultValue: false,
     }
   );
+
+  useEffect(() => {
+    const protocol = new pmtiles.Protocol();
+    maplibregl.addProtocol('pmtiles', protocol.tile);
+    return () => {
+      maplibregl.removeProtocol('pmtiles');
+    };
+  }, []);
 
   useEffect(() => {
     if (mapRef.current) {

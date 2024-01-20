@@ -30,6 +30,7 @@
     "mdi-material-ui": "^7.8.0",
     "mqtt": "^5.3.4",
     "next": "^14.0.4",
+    "pmtiles": "^2.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.0.0",
@@ -43,7 +44,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "npm run extract-tiles && next build",
+    "build": "next build",
     "start": "next start",
     "test": "jest",
     "lint": "next lint --max-warnings=0",

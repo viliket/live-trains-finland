@@ -16,7 +16,8 @@
 /public/service-worker.js.map
 
 # auto-generated map tiles
-/public/tiles
+/public/tiles/*
+!/public/tiles/*.pmtiles
 
 # misc
 .DS_Store
