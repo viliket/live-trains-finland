@@ -7,9 +7,7 @@ const RailwayPlatformsLayer = () => {
   return (
     <Source
       type="vector"
-      tiles={[
-        window.location.origin + '/tiles/railway_platforms/{z}/{x}/{y}.pbf',
-      ]}
+      url={`pmtiles://${window.location.origin}/tiles/railway_platforms.pmtiles`}
     >
       <Layer
         {...{

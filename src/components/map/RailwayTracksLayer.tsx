@@ -4,7 +4,7 @@ const RailwayTracksLayer = () => {
   return (
     <Source
       type="vector"
-      tiles={[window.location.origin + '/tiles/railway_tracks/{z}/{x}/{y}.pbf']}
+      url={`pmtiles://${window.location.origin}/tiles/railway_tracks.pmtiles`}
       attribution='<a href="https://vayla.fi/" target="_blank">&copy; Väylävirasto</a>'
     >
       <Layer
