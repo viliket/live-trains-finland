@@ -58,7 +58,7 @@
     "generate-station-line-km-location-data": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/generateStationLineKmLocationData.ts",
     "generate-station-platform-data": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/generateStationPlatformData.ts",
     "prestart": "npm run gql-codegen",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky"
   },
   "browserslist": [
     "defaults",
@@ -78,7 +78,7 @@
     "eslint-config-next": "^14.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
-    "husky": "^8.0.3",
+    "husky": "^9.0.11",
     "is-ci": "^3.0.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
