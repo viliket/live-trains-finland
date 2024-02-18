@@ -281,7 +281,7 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
     });
 
     describe('deliveryRules type DELIVERY_AT', () => {
-      it('should return messages with no deliveryAt specified', () => {
+      describe('message with deliveryAt "2023-09-10T14:30:00Z"', () => {
         const passengerInformationMessages: PassengerInformationMessage[] = [
           {
             ...passengerInformationMessageBase,
@@ -289,20 +289,42 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
               text: defaultPassengerInformationTextContent,
               deliveryRules: {
                 deliveryType: 'DELIVERY_AT',
+                deliveryAt: '2023-09-10T14:30:00Z',
               },
             },
           },
         ];
 
-        const relevantMessages =
-          getPassengerInformationMessagesCurrentlyRelevant(
-            passengerInformationMessages
-          );
+        it.each(['2023-09-10T14:30:00Z', '2023-09-10T14:45:00Z'])(
+          'should be relevant at time %p',
+          (nowISO: string) => {
+            jest.setSystemTime(parseISO(nowISO));
 
-        expect(relevantMessages.length).toBe(1);
+            const relevantMessages =
+              getPassengerInformationMessagesCurrentlyRelevant(
+                passengerInformationMessages
+              );
+
+            expect(relevantMessages.length).toBe(1);
+          }
+        );
+
+        it.each(['2023-09-10T14:29:00Z', '2023-09-10T14:46:00Z'])(
+          'should not be relevant at time %p',
+          (nowISO: string) => {
+            jest.setSystemTime(parseISO(nowISO));
+
+            const relevantMessages =
+              getPassengerInformationMessagesCurrentlyRelevant(
+                passengerInformationMessages
+              );
+
+            expect(relevantMessages.length).toBe(0);
+          }
+        );
       });
 
-      describe('message with deliveryAt "2023-09-10T14:30:00Z"', () => {
+      describe('message with no deliveryAt set but creationDateTime set as "2023-09-10T14:30:00Z"', () => {
         const passengerInformationMessages: PassengerInformationMessage[] = [
           {
             ...passengerInformationMessageBase,
@@ -433,6 +455,9 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
             trainCategory: {
               name: '',
             },
+          },
+          operator: {
+            uicCode: 10,
           },
           timeTableRows: [
             {

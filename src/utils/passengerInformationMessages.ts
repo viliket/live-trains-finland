@@ -181,10 +181,9 @@ function isAudioMessageRelevant(
       return diffInMinutes <= 15 && diffInMinutes >= 0;
     }
     case 'DELIVERY_AT': {
-      if (!deliveryRules.deliveryAt) return true;
       const diffInMinutes = differenceInMinutes(
         now,
-        parseISO(deliveryRules.deliveryAt)
+        parseISO(deliveryRules.deliveryAt ?? message.creationDateTime)
       );
       return diffInMinutes <= 15 && diffInMinutes >= 0;
     }
