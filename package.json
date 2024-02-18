@@ -58,7 +58,7 @@
     "generate-station-line-km-location-data": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/generateStationLineKmLocationData.ts",
     "generate-station-platform-data": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/generateStationPlatformData.ts",
     "prestart": "npm run gql-codegen",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky"
   },
   "browserslist": [
     "defaults",
