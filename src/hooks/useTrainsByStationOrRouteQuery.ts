@@ -102,7 +102,7 @@ export default function useTrainsByStationOrRouteQuery({
       trainsByStation.flatMap((t) => t.timeTableRows?.map((r) => r?.station)),
       (s) => s?.shortCode
     ),
-    (s) => s?.name
+    (s) => s?.shortCode
   ).filter(isDefined);
 
   return {
