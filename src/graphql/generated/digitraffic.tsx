@@ -1022,6 +1022,16 @@ export type TrainTimeTableGroupFragment = { __typename?: 'TimeTableGroup', train
 
 export type TrainTimeTableRowFragment = { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } };
 
+export type TrainsByRouteQueryVariables = Exact<{
+  departureStation: Scalars['String']['input'];
+  arrivalStation: Scalars['String']['input'];
+  departureDateGreaterThan: Scalars['Date']['input'];
+  departureDateLessThan: Scalars['Date']['input'];
+}>;
+
+
+export type TrainsByRouteQuery = { __typename?: 'Query', trainsByVersionGreaterThan?: Array<{ __typename?: 'Train', commuterLineid?: string | null, trainNumber: number, departureDate: string, version: string, operator: { __typename?: 'Operator', uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
+
 export type TrainsByStationQueryVariables = Exact<{
   station: Scalars['String']['input'];
   departingTrains: Scalars['Int']['input'];
@@ -1309,7 +1319,7 @@ export const TrainDocument = gql`
  *   },
  * });
  */
-export function useTrainQuery(baseOptions: Apollo.QueryHookOptions<TrainQuery, TrainQueryVariables>) {
+export function useTrainQuery(baseOptions: Apollo.QueryHookOptions<TrainQuery, TrainQueryVariables> & ({ variables: TrainQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<TrainQuery, TrainQueryVariables>(TrainDocument, options);
       }
@@ -1325,6 +1335,52 @@ export type TrainQueryHookResult = ReturnType<typeof useTrainQuery>;
 export type TrainLazyQueryHookResult = ReturnType<typeof useTrainLazyQuery>;
 export type TrainSuspenseQueryHookResult = ReturnType<typeof useTrainSuspenseQuery>;
 export type TrainQueryResult = Apollo.QueryResult<TrainQuery, TrainQueryVariables>;
+export const TrainsByRouteDocument = gql`
+    query TrainsByRoute($departureStation: String!, $arrivalStation: String!, $departureDateGreaterThan: Date!, $departureDateLessThan: Date!) {
+  trainsByVersionGreaterThan(
+    version: "1"
+    where: {and: [{and: [{departureDate: {greaterThan: $departureDateGreaterThan}}, {departureDate: {lessThan: $departureDateLessThan}}]}, {timeTableRows: {contains: {and: [{station: {shortCode: {equals: $departureStation}}}, {station: {shortCode: {equals: $arrivalStation}}}]}}}]}
+  ) {
+    ...TrainByStation
+  }
+}
+    ${TrainByStationFragmentDoc}`;
+
+/**
+ * __useTrainsByRouteQuery__
+ *
+ * To run a query within a React component, call `useTrainsByRouteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTrainsByRouteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTrainsByRouteQuery({
+ *   variables: {
+ *      departureStation: // value for 'departureStation'
+ *      arrivalStation: // value for 'arrivalStation'
+ *      departureDateGreaterThan: // value for 'departureDateGreaterThan'
+ *      departureDateLessThan: // value for 'departureDateLessThan'
+ *   },
+ * });
+ */
+export function useTrainsByRouteQuery(baseOptions: Apollo.QueryHookOptions<TrainsByRouteQuery, TrainsByRouteQueryVariables> & ({ variables: TrainsByRouteQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TrainsByRouteQuery, TrainsByRouteQueryVariables>(TrainsByRouteDocument, options);
+      }
+export function useTrainsByRouteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TrainsByRouteQuery, TrainsByRouteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TrainsByRouteQuery, TrainsByRouteQueryVariables>(TrainsByRouteDocument, options);
+        }
+export function useTrainsByRouteSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TrainsByRouteQuery, TrainsByRouteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TrainsByRouteQuery, TrainsByRouteQueryVariables>(TrainsByRouteDocument, options);
+        }
+export type TrainsByRouteQueryHookResult = ReturnType<typeof useTrainsByRouteQuery>;
+export type TrainsByRouteLazyQueryHookResult = ReturnType<typeof useTrainsByRouteLazyQuery>;
+export type TrainsByRouteSuspenseQueryHookResult = ReturnType<typeof useTrainsByRouteSuspenseQuery>;
+export type TrainsByRouteQueryResult = Apollo.QueryResult<TrainsByRouteQuery, TrainsByRouteQueryVariables>;
 export const TrainsByStationDocument = gql`
     query TrainsByStation($station: String!, $departingTrains: Int!, $departedTrains: Int!, $arrivingTrains: Int!, $arrivedTrains: Int!) {
   trainsByStationAndQuantity(
@@ -1360,7 +1416,7 @@ export const TrainsByStationDocument = gql`
  *   },
  * });
  */
-export function useTrainsByStationQuery(baseOptions: Apollo.QueryHookOptions<TrainsByStationQuery, TrainsByStationQueryVariables>) {
+export function useTrainsByStationQuery(baseOptions: Apollo.QueryHookOptions<TrainsByStationQuery, TrainsByStationQueryVariables> & ({ variables: TrainsByStationQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<TrainsByStationQuery, TrainsByStationQueryVariables>(TrainsByStationDocument, options);
       }

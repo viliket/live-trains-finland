@@ -1,0 +1,32 @@
+query TrainsByRoute(
+  $departureStation: String!
+  $arrivalStation: String!
+  $departureDateGreaterThan: Date!
+  $departureDateLessThan: Date!
+) {
+  trainsByVersionGreaterThan(
+    version: "1"
+    where: {
+      and: [
+        {
+          and: [
+            { departureDate: { greaterThan: $departureDateGreaterThan } }
+            { departureDate: { lessThan: $departureDateLessThan } }
+          ]
+        }
+        {
+          timeTableRows: {
+            contains: {
+              and: [
+                { station: { shortCode: { equals: $departureStation } } }
+                { station: { shortCode: { equals: $arrivalStation } } }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ) {
+    ...TrainByStation
+  }
+}

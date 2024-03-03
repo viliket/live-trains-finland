@@ -2,27 +2,32 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+  Badge,
+  Box,
+  IconButton,
+  Skeleton,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material';
 import { orderBy } from 'lodash';
-import { ClockStart, ClockEnd } from 'mdi-material-ui';
+import { ClockStart, ClockEnd, FilterCog } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
 import FavoriteStation from '../components/FavoriteStation';
+import FilterStationTrainsDialog from '../components/FilterStationTrainsDialog';
 import MapLayout, { VehicleMapContainerPortal } from '../components/MapLayout';
 import PassengerInformationMessageAlert from '../components/PassengerInformationMessageAlert';
 import PassengerInformationMessagesDialog from '../components/PassengerInformationMessagesDialog';
 import StationTimeTable from '../components/StationTimeTable';
 import SubNavBar from '../components/SubNavBar';
-import { gqlClients, vehiclesVar } from '../graphql/client';
-import {
-  TimeTableRowType,
-  useTrainsByStationQuery,
-} from '../graphql/generated/digitraffic';
+import { vehiclesVar } from '../graphql/client';
+import { TimeTableRowType } from '../graphql/generated/digitraffic';
 import { useRouteLazyQuery } from '../graphql/generated/digitransit';
 import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
-import { isDefined } from '../utils/common';
+import useTrainsByStationOrRouteQuery from '../hooks/useTrainsByStationOrRouteQuery';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
 import { getTimeTableRowRealTime, getTrainRouteGtfsId } from '../utils/train';
@@ -41,6 +46,9 @@ const Station: NextPageWithLayout = () => {
   );
   const [selectedTrainNo, setSelectedTrainNo] = useState<number | null>(null);
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
+  const [filterDialogOpen, setFilterDialogOpen] = useState(false);
+  const [deptOrArrStationCodeFilter, setDeptOrArrStationCodeFilter] =
+    useState<string>();
   const [executeRouteSearch, { data: routeData }] = useRouteLazyQuery();
   const station = stationName
     ? trainStations.find(
@@ -48,22 +56,14 @@ const Station: NextPageWithLayout = () => {
       )
     : undefined;
   const stationCode = station?.stationShortCode;
-  const { loading, error, data } = useTrainsByStationQuery({
-    variables: stationCode
-      ? {
-          station: stationCode,
-          departingTrains: 100,
-          departedTrains: 0,
-          arrivingTrains: 100,
-          arrivedTrains: 0,
-        }
-      : undefined,
-    skip: stationCode == null,
-    context: { clientName: gqlClients.digitraffic },
-    pollInterval: 10000,
-    fetchPolicy: 'no-cache',
-  });
-  useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
+  const { loading, error, trains, stationsFromCurrentStation } =
+    useTrainsByStationOrRouteQuery({
+      stationCode,
+      deptOrArrStationCodeFilter,
+      timeTableType,
+    });
+
+  const { unsubscribeAll } = useTrainLiveTracking(trains);
   const { messages: passengerInformationMessages } =
     usePassengerInformationMessages({
       skip: stationCode == null,
@@ -71,6 +71,14 @@ const Station: NextPageWithLayout = () => {
       onlyGeneral: true,
       stationCode: stationCode,
     });
+
+  useEffect(() => {
+    unsubscribeAll();
+  }, [deptOrArrStationCodeFilter, unsubscribeAll]);
+
+  useEffect(() => {
+    setDeptOrArrStationCodeFilter(undefined);
+  }, [stationCode]);
 
   const handleVehicleIdSelected = useCallback((vehicleId: number) => {
     setSelectedVehicleId(vehicleId);
@@ -88,9 +96,7 @@ const Station: NextPageWithLayout = () => {
   );
 
   const selectedTrain = selectedTrainNo
-    ? data?.trainsByStationAndQuantity?.find(
-        (t) => t?.trainNumber === selectedTrainNo
-      )
+    ? trains.find((t) => t?.trainNumber === selectedTrainNo)
     : null;
   const selectedRoute = routeData?.route;
 
@@ -120,19 +126,18 @@ const Station: NextPageWithLayout = () => {
     );
   };
 
-  const trains =
-    stationCode && data?.trainsByStationAndQuantity
-      ? orderBy(
-          data.trainsByStationAndQuantity.filter(isDefined),
-          (t) =>
-            getTimeTableRowForStation(stationCode, t, timeTableType)
-              ?.scheduledTime
-        ).filter((t) => {
-          const row = getTimeTableRowForStation(stationCode, t, timeTableType);
-          if (!row) return false;
-          return getTimeTableRowRealTime(row) >= new Date();
-        })
-      : [];
+  const relevantTrains = stationCode
+    ? orderBy(
+        trains,
+        (t) =>
+          getTimeTableRowForStation(stationCode, t, timeTableType)
+            ?.scheduledTime
+      ).filter((t) => {
+        const row = getTimeTableRowForStation(stationCode, t, timeTableType);
+        if (!row) return false;
+        return getTimeTableRowRealTime(row) >= new Date();
+      })
+    : [];
 
   const handleTimeTableTypeChange = (
     _event: unknown,
@@ -166,26 +171,40 @@ const Station: NextPageWithLayout = () => {
           bgcolor: 'common.secondaryBackground.default',
         }}
       >
-        <ToggleButtonGroup
-          color="primary"
-          value={timeTableType}
-          exclusive
-          fullWidth
-          onChange={handleTimeTableTypeChange}
-          sx={{
-            borderRadius: '24px',
-            button: {
+        <Box sx={{ display: 'flex' }}>
+          <ToggleButtonGroup
+            color="primary"
+            value={timeTableType}
+            exclusive
+            fullWidth
+            onChange={handleTimeTableTypeChange}
+            sx={{
               borderRadius: '24px',
-            },
-          }}
-        >
-          <ToggleButton value={TimeTableRowType.Departure}>
-            {t('departures')} <ClockStart />
-          </ToggleButton>
-          <ToggleButton value={TimeTableRowType.Arrival}>
-            <ClockEnd /> {t('arrivals')}
-          </ToggleButton>
-        </ToggleButtonGroup>
+              button: {
+                borderRadius: '24px',
+              },
+            }}
+          >
+            <ToggleButton value={TimeTableRowType.Departure}>
+              {t('departures')} <ClockStart />
+            </ToggleButton>
+            <ToggleButton value={TimeTableRowType.Arrival}>
+              <ClockEnd /> {t('arrivals')}
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <IconButton
+            size="small"
+            onClick={() => setFilterDialogOpen(true)}
+            sx={{ padding: 2 }}
+          >
+            <Badge
+              badgeContent={deptOrArrStationCodeFilter ? 1 : 0}
+              color="primary"
+            >
+              <FilterCog fontSize="inherit" />
+            </Badge>
+          </IconButton>
+        </Box>
         <Box paddingY={1}>
           {passengerInformationMessages && (
             <PassengerInformationMessageAlert
@@ -195,15 +214,15 @@ const Station: NextPageWithLayout = () => {
           )}
         </Box>
       </Box>
-      {stationCode && !loading && data?.trainsByStationAndQuantity && (
+      {stationCode && !loading && (
         <StationTimeTable
           stationCode={stationCode}
           timeTableType={timeTableType}
-          trains={trains}
+          trains={relevantTrains}
           tableRowOnClick={handleTimeTableRowClick}
         />
       )}
-      {(!stationCode || loading) && getLoadingSkeleton()}
+      {loading && getLoadingSkeleton()}
       {error && (
         <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
       )}
@@ -211,6 +230,14 @@ const Station: NextPageWithLayout = () => {
         open={stationAlertDialogOpen}
         passengerInformationMessages={passengerInformationMessages}
         onClose={() => setStationAlertDialogOpen(false)}
+      />
+      <FilterStationTrainsDialog
+        open={filterDialogOpen}
+        stationOptions={stationsFromCurrentStation}
+        stationCodeFilter={deptOrArrStationCodeFilter}
+        setStationCodeFilter={setDeptOrArrStationCodeFilter}
+        timeTableType={timeTableType}
+        onClose={() => setFilterDialogOpen(false)}
       />
     </div>
   );
