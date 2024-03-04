@@ -332,26 +332,25 @@ describe('getTrainDestinationStation', () => {
       });
     });
 
-    describe('current time is after LEN arrival (11:00)', () => {
-      it.each([
-        '2023-01-25T11:00:00Z',
-        '2023-01-25T11:30:00Z',
-        '2023-01-25T19:30:00Z',
-      ])(
-        'should be the station of the destination time table row for all stations after LEN arrival (%s)',
-        (nowISO) => {
-          jest.setSystemTime(parseISO(nowISO));
+    describe.each([
+      '2023-01-25T11:00:00Z',
+      '2023-01-25T11:30:00Z',
+      '2023-01-25T19:30:00Z',
+    ])('current time (%s) is after LEN arrival (11:00)', (nowISO) => {
+      beforeEach(() => {
+        jest.setSystemTime(parseISO(nowISO));
+      });
 
-          ['HPL', 'LEN', 'TKL', 'PSL', 'HKI'].forEach((station) => {
-            const destStation = getTrainDestinationStation(
-              ringRailTrain,
-              station
-            );
-            expectToBeDefined(destStation);
-            expect(destStation.name).toBe('Helsinki');
-          });
-        }
-      );
+      it('should be the station of the destination time table row for all stations', () => {
+        ['HPL', 'LEN', 'TKL', 'PSL', 'HKI'].forEach((station) => {
+          const destStation = getTrainDestinationStation(
+            ringRailTrain,
+            station
+          );
+          expectToBeDefined(destStation);
+          expect(destStation.name).toBe('Helsinki');
+        });
+      });
     });
   });
 });
