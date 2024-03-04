@@ -31,11 +31,11 @@ export default function getTimeTableRowForStation(
   // For these cases we want to find the time table row that is next in the future
   // (with a margin of 10 minutes) if such exists, and otherwise the latest.
 
-  const now = addMinutes(new Date(), -10);
+  const nowMinusMargin = addMinutes(new Date(), -10);
   for (const row of matchingRows) {
     if (
-      now < parseISO(row.scheduledTime) ||
-      (row.liveEstimateTime && now < parseISO(row.liveEstimateTime))
+      nowMinusMargin < parseISO(row.scheduledTime) ||
+      (row.liveEstimateTime && nowMinusMargin < parseISO(row.liveEstimateTime))
     ) {
       // Return the time table row closest to the future, accounting for 10-minute margin
       return row;
