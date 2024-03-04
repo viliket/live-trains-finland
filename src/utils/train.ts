@@ -6,8 +6,6 @@ import {
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic';
 
-import getTimeTableRowForStation from './getTimeTableRowForStation';
-
 export function getTimeTableRowRealTime(row: {
   scheduledTime: string;
   actualTime?: string | null;
@@ -39,31 +37,38 @@ export function getTrainDestinationStation(
   train: TrainByStationFragment,
   stationCode?: string
 ) {
-  // Special handling for ring route (kehärata) trains:
-  // Return LEN (airport) as the destination station if
-  // the given station code is earlier on the train
-  // time table rows than the airport.
+  // Special handling for ring route (kehärata) trains: Return LEN (airport) as
+  // the destination station if the first time table row for the given station
+  // code is before the airport time table row on the train time table rows
+  // (ordered by scheduled time) and based on the current time we have not arrived
+  // at the airport.
   if (
     stationCode &&
     train.commuterLineid &&
+    train.timeTableRows &&
     ['I', 'P'].includes(train.commuterLineid)
   ) {
-    const stationRow = getTimeTableRowForStation(
-      stationCode,
-      train,
-      TimeTableRowType.Departure
+    const stationDepartureRowIdx = train.timeTableRows.findIndex(
+      (r) =>
+        r?.station?.shortCode === stationCode &&
+        r?.type === TimeTableRowType.Departure
     );
-    const airportArrivalRow = getTimeTableRowForStation(
-      'LEN',
-      train,
-      TimeTableRowType.Arrival
+    const airportArrivalRowIndex = train.timeTableRows.findIndex(
+      (r) =>
+        r?.station?.shortCode === 'LEN' && r?.type === TimeTableRowType.Arrival
     );
+
     if (
-      airportArrivalRow &&
-      stationRow &&
-      stationRow.scheduledTime < airportArrivalRow.scheduledTime
+      stationDepartureRowIdx !== -1 &&
+      stationDepartureRowIdx < airportArrivalRowIndex
     ) {
-      return airportArrivalRow.station;
+      const airportArrivalRow = train.timeTableRows[airportArrivalRowIndex];
+      if (
+        airportArrivalRow &&
+        new Date() < getTimeTableRowRealTime(airportArrivalRow)
+      ) {
+        return airportArrivalRow.station;
+      }
     }
   }
   return getDestinationTimeTableRow(train)?.station;

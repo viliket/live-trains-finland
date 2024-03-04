@@ -142,6 +142,22 @@ const ringRailTrainBase: TrainDetailsFragment = {
     },
     {
       ...arrivalTimeTableRowBase,
+      scheduledTime: '2023-01-25T09:30:00Z',
+      station: {
+        name: 'Huopalahti',
+        shortCode: 'HPL',
+      },
+    },
+    {
+      ...departureTimeTableRowBase,
+      scheduledTime: '2023-01-25T09:35:00Z',
+      station: {
+        name: 'Huopalahti',
+        shortCode: 'HPL',
+      },
+    },
+    {
+      ...arrivalTimeTableRowBase,
       scheduledTime: '2023-01-25T11:00:00Z',
       station: {
         name: 'Lentoasema',
@@ -154,6 +170,22 @@ const ringRailTrainBase: TrainDetailsFragment = {
       station: {
         name: 'Lentoasema',
         shortCode: 'LEN',
+      },
+    },
+    {
+      ...arrivalTimeTableRowBase,
+      scheduledTime: '2023-01-25T11:15:00Z',
+      station: {
+        name: 'Tikkurila',
+        shortCode: 'TKL',
+      },
+    },
+    {
+      ...departureTimeTableRowBase,
+      scheduledTime: '2023-01-25T11:20:00Z',
+      station: {
+        name: 'Tikkurila',
+        shortCode: 'TKL',
       },
     },
     {
@@ -268,34 +300,58 @@ describe('getTrainDestinationStation', () => {
       jest.useRealTimers();
     });
 
-    it('should be the LEN (airport) station when the given station is earlier than LEN', () => {
-      jest.setSystemTime(parseISO('2023-01-25T08:55:00Z'));
+    describe.each([
+      '2023-01-25T08:55:00Z',
+      '2023-01-25T10:30:00Z',
+      '2023-01-25T10:59:59Z',
+    ])('current time (%s) is before LEN arrival (11:00)', (nowISO) => {
+      beforeEach(() => {
+        jest.setSystemTime(parseISO(nowISO));
+      });
 
-      const destStationAtHki = getTrainDestinationStation(ringRailTrain, 'HKI');
-      expectToBeDefined(destStationAtHki);
-      expect(destStationAtHki.name).toBe('Lentoasema');
+      it('should be the LEN (airport) when the first time table row for station is before LEN', () => {
+        ['HKI', 'PSL', 'HPL'].forEach((station) => {
+          const destStation = getTrainDestinationStation(
+            ringRailTrain,
+            station
+          );
+          expectToBeDefined(destStation);
+          expect(destStation.name).toBe('Lentoasema');
+        });
+      });
 
-      const destStationAtPsl = getTrainDestinationStation(ringRailTrain, 'PSL');
-      expectToBeDefined(destStationAtPsl);
-      expect(destStationAtPsl.name).toBe('Lentoasema');
+      it('should be the station of the destination time table row when the first time table row for station is after LEN', () => {
+        ['LEN', 'TKL'].forEach((station) => {
+          const destStation = getTrainDestinationStation(
+            ringRailTrain,
+            station
+          );
+          expectToBeDefined(destStation);
+          expect(destStation.name).toBe('Helsinki');
+        });
+      });
     });
 
-    it('should be the station of the destination time table row when the given station is later than LEN', () => {
-      // Train is between section PSL - LEN based on current time and train schedule
-      // So train has already passed PSL (first time)
-      jest.setSystemTime(parseISO('2023-01-25T10:30:00Z'));
+    describe('current time is after LEN arrival (11:00)', () => {
+      it.each([
+        '2023-01-25T11:00:00Z',
+        '2023-01-25T11:30:00Z',
+        '2023-01-25T19:30:00Z',
+      ])(
+        'should be the station of the destination time table row for all stations after LEN arrival (%s)',
+        (nowISO) => {
+          jest.setSystemTime(parseISO(nowISO));
 
-      const destStationAtLen = getTrainDestinationStation(ringRailTrain, 'LEN');
-      expectToBeDefined(destStationAtLen);
-      expect(destStationAtLen.name).toBe('Helsinki');
-
-      const destStationAtPsl = getTrainDestinationStation(ringRailTrain, 'PSL');
-      expectToBeDefined(destStationAtPsl);
-      expect(destStationAtPsl.name).toBe('Helsinki');
-
-      const destStationAtHki = getTrainDestinationStation(ringRailTrain, 'HKI');
-      expectToBeDefined(destStationAtHki);
-      expect(destStationAtHki.name).toBe('Helsinki');
+          ['HPL', 'LEN', 'TKL', 'PSL', 'HKI'].forEach((station) => {
+            const destStation = getTrainDestinationStation(
+              ringRailTrain,
+              station
+            );
+            expectToBeDefined(destStation);
+            expect(destStation.name).toBe('Helsinki');
+          });
+        }
+      );
     });
   });
 });
