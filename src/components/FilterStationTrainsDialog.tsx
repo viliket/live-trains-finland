@@ -42,13 +42,17 @@ const FilterStationTrainsDialog = (props: FilterStationTrainsDialogProps) => {
     onClose();
   };
 
+  const resetFilters = () => {
+    setStation(null);
+    setStationCodeFilter('');
+  };
+
   const handleChange = (_event: unknown, station: StationFragment | null) => {
     if (station) {
       setStation(station);
       setStationCodeFilter(station.shortCode);
     } else {
-      setStation(null);
-      setStationCodeFilter('');
+      resetFilters();
     }
   };
 
@@ -86,6 +90,7 @@ const FilterStationTrainsDialog = (props: FilterStationTrainsDialogProps) => {
         </FormControl>
       </DialogContent>
       <DialogActions>
+        <Button onClick={resetFilters}>{t('reset')}</Button>
         <Button onClick={handleClose}>{t('close')}</Button>
       </DialogActions>
     </Dialog>
