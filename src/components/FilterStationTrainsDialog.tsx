@@ -22,7 +22,7 @@ type FilterStationTrainsDialogProps = {
   open: boolean;
   stationOptions: StationFragment[];
   stationCodeFilter: string | null;
-  setStationCodeFilter: (stationCode: string) => void;
+  setStationCodeFilter: (stationCode: string | null) => void;
   timeTableType: TimeTableRowType;
 };
 
