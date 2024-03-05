@@ -5,6 +5,7 @@ import { gqlClients } from '../graphql/client';
 import {
   Station,
   TimeTableRowType,
+  TrainByStationFragment,
   TrainsByRouteQuery,
   TrainsByRouteQueryVariables,
   TrainsByStationQuery,
@@ -113,7 +114,7 @@ function getTrains(
   timeTableType: TimeTableRowType,
   trainsByStation: TrainsByStationQuery['trainsByStationAndQuantity'],
   trainsByRoute: TrainsByRouteQuery['trainsByVersionGreaterThan']
-) {
+): TrainByStationFragment[] {
   const trainsByRouteRelevant =
     deptOrArrStationCodeFilter && stationCode
       ? (trainsByRoute ?? []).filter(isDefined).filter((train) => {
@@ -144,7 +145,7 @@ function getTrains(
 
   const trains = deptOrArrStationCodeFilter
     ? trainsByRouteRelevant
-    : trainsByStation?.filter(isDefined);
+    : (trainsByStation ?? []).filter(isDefined);
   return trains;
 }
 
