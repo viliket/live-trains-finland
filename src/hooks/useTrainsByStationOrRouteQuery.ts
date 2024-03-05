@@ -18,7 +18,7 @@ import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 
 type TrainsByStationOrRouteQuery = {
   stationCode?: string;
-  deptOrArrStationCodeFilter?: string;
+  deptOrArrStationCodeFilter: string | null;
   timeTableType: TimeTableRowType;
 };
 
@@ -71,7 +71,7 @@ export default function useTrainsByStationOrRouteQuery({
 }
 
 function getTrainsByRouteQueryVariables(
-  deptOrArrStationCodeFilter: string | undefined,
+  deptOrArrStationCodeFilter: string | null,
   stationCode: string | undefined,
   timeTableType: TimeTableRowType
 ): TrainsByRouteQueryVariables | undefined {
@@ -109,7 +109,7 @@ function getTrainsByStationQueryVariables(
 }
 
 function getTrains(
-  deptOrArrStationCodeFilter: string | undefined,
+  deptOrArrStationCodeFilter: string | null,
   stationCode: string | undefined,
   timeTableType: TimeTableRowType,
   trainsByStation: TrainsByStationQuery['trainsByStationAndQuantity'],

@@ -13,6 +13,7 @@ import {
 import { orderBy } from 'lodash';
 import { ClockStart, ClockEnd, FilterCog } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
+import { useQueryState } from 'nuqs';
 import { useTranslation } from 'react-i18next';
 
 import FavoriteStation from '../components/FavoriteStation';
@@ -48,7 +49,10 @@ const Station: NextPageWithLayout = () => {
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [deptOrArrStationCodeFilter, setDeptOrArrStationCodeFilter] =
-    useState<string>();
+    useQueryState('station', {
+      history: 'push',
+      clearOnDefault: true,
+    });
   const [executeRouteSearch, { data: routeData }] = useRouteLazyQuery();
   const station = stationName
     ? trainStations.find(
@@ -75,10 +79,6 @@ const Station: NextPageWithLayout = () => {
   useEffect(() => {
     unsubscribeAll();
   }, [deptOrArrStationCodeFilter, unsubscribeAll]);
-
-  useEffect(() => {
-    setDeptOrArrStationCodeFilter(undefined);
-  }, [stationCode]);
 
   const handleVehicleIdSelected = useCallback((vehicleId: number) => {
     setSelectedVehicleId(vehicleId);

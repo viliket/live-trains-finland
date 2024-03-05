@@ -21,7 +21,7 @@ type FilterStationTrainsDialogProps = {
   onClose: () => void;
   open: boolean;
   stationOptions: StationFragment[];
-  stationCodeFilter?: string;
+  stationCodeFilter: string | null;
   setStationCodeFilter: (stationCode: string) => void;
   timeTableType: TimeTableRowType;
 };
@@ -44,7 +44,7 @@ const FilterStationTrainsDialog = (props: FilterStationTrainsDialogProps) => {
 
   const resetFilters = () => {
     setStation(null);
-    setStationCodeFilter('');
+    setStationCodeFilter(null);
   };
 
   const handleChange = (_event: unknown, station: StationFragment | null) => {
