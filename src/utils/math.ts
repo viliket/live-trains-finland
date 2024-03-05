@@ -2,7 +2,7 @@ export function toRadians(degrees: number) {
   return (degrees * Math.PI) / 180;
 }
 
-function toDegrees(radians: number) {
+export function toDegrees(radians: number) {
   return (radians * 180) / Math.PI;
 }
 
