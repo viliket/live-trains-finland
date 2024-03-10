@@ -36,7 +36,7 @@ async function getExtendedTrain(
   departureDate: string | undefined | null
 ): Promise<TrainExtendedDetails | undefined> {
   const data = await digitrafficClient.request(TrainDocument, {
-    trainNumber: trainNumber ? trainNumber : 0,
+    trainNumber: trainNumber ?? 0,
     departureDate: departureDate,
   });
   const train = data.train?.[0];

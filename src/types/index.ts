@@ -16,12 +16,8 @@ type TrainJourneySectionFragment = NonNullable<
 
 export type TrainExtendedDetails = TrainDetailsFragment & {
   timeTableGroups?: Array<{
-    arrival?:
-      | NonNullable<TrainDetailsFragment['timeTableRows']>[number]
-      | undefined;
-    departure?:
-      | NonNullable<TrainDetailsFragment['timeTableRows']>[number]
-      | undefined;
+    arrival?: NonNullable<TrainDetailsFragment['timeTableRows']>[number];
+    departure?: NonNullable<TrainDetailsFragment['timeTableRows']>[number];
     trainDirection?: TrainDirection | null;
     stationPlatformSide?: StationPlatformSide | null;
   }>;
