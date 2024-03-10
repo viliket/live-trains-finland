@@ -11,11 +11,10 @@ import MapLayout, {
 } from '../../components/MapLayout';
 import TrainInfoContainer from '../../components/TrainInfoContainer';
 import TrainSubNavBar from '../../components/TrainSubNavBar';
-import { gqlClients, vehiclesVar } from '../../graphql/client';
-import { useTrainLazyQuery } from '../../graphql/generated/digitraffic';
-import { useRouteLazyQuery } from '../../graphql/generated/digitransit';
+import { useRouteQuery } from '../../hooks/useRouteQuery';
 import useTrainLiveTracking from '../../hooks/useTrainLiveTracking';
-import { isDefined } from '../../utils/common';
+import useTrainQuery from '../../hooks/useTrainQuery';
+import useVehicleStore from '../../hooks/useVehicleStore';
 import getHeadTrainVehicleId from '../../utils/getHeadTrainVehicleId';
 import { trainStations } from '../../utils/stations';
 import { getTrainRouteGtfsId } from '../../utils/train';
@@ -25,48 +24,36 @@ import { NextPageWithLayout } from '../_app';
 const Train: NextPageWithLayout = () => {
   const router = useRouter();
   const trainParams = router.query.train as string[] | undefined;
-  const [trainNumber, departureDate] = trainParams ?? [null, null];
+  const [trainNumberParam, departureDate] = trainParams ?? [null, null];
+  const trainNumber = trainNumberParam
+    ? Number.parseInt(trainNumberParam, 10)
+    : null;
   const searchParams = useSearchParams();
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
-  const [executeRouteSearch, { data: routeData }] = useRouteLazyQuery({
-    fetchPolicy: 'no-cache',
-  });
+  const removeAllExceptVehicleWithTrainNumber = useVehicleStore(
+    (state) => state.removeAllExceptVehicleWithTrainNumber
+  );
 
-  const [
-    getTrain,
-    { loading, error, data: trainData, called: getTrainCalled },
-  ] = useTrainLazyQuery();
-
-  useEffect(() => {
-    if (trainNumber != null && departureDate) {
-      const trainNumberInt = parseInt(trainNumber, 10);
-      getTrain({
-        variables: {
-          trainNumber: trainNumberInt,
-          departureDate: departureDate,
-        },
-        context: { clientName: gqlClients.digitraffic },
-      });
-    }
-  }, [trainNumber, departureDate, getTrain]);
+  const {
+    isLoading,
+    error,
+    data: train,
+  } = useTrainQuery(trainNumber, departureDate);
+  const { data: routeData } = useRouteQuery(
+    train ? getTrainRouteGtfsId(train) : null
+  );
 
   useEffect(() => {
     // Stop tracking any already tracked vehicles except current train
-    const vehicles = vehiclesVar();
-    Object.keys(vehicles).forEach((v) => {
-      const vId = Number.parseInt(v, 10);
-      if (vehicles[vId].jrn?.toString() !== trainNumber) {
-        delete vehicles[vId];
-      }
-    });
-    vehiclesVar(vehicles);
-  }, [trainNumber]);
+    if (trainNumber) {
+      removeAllExceptVehicleWithTrainNumber(trainNumber);
+    }
+  }, [trainNumber, removeAllExceptVehicleWithTrainNumber]);
 
-  useTrainLiveTracking(trainData?.train?.filter(isDefined));
+  useTrainLiveTracking(train ? [train] : []);
 
-  const train = trainData?.train?.[0];
   const stationCode = searchParams.get('station');
   const station = trainStations.find((s) => s.stationShortCode === stationCode);
   const selectedRoute = routeData?.route;
@@ -78,16 +65,6 @@ const Train: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (train) {
-      executeRouteSearch({
-        variables: {
-          id: getTrainRouteGtfsId(train),
-        },
-      });
-    }
-  }, [train, executeRouteSearch]);
-
-  useEffect(() => {
-    if (train) {
       const headTrainVehicleId = getHeadTrainVehicleId(train);
       if (headTrainVehicleId) {
         // set the first unit of the train as selected vehicle
@@ -96,7 +73,7 @@ const Train: NextPageWithLayout = () => {
     }
   }, [train]);
 
-  if (getTrainCalled && !loading && !train) {
+  if (trainNumber && departureDate && !isLoading && !train) {
     return <NotFound />;
   }
 

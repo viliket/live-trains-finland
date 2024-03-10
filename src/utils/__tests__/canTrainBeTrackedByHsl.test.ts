@@ -1,7 +1,7 @@
 import {
   TimeTableRowType,
   TrainDetailsFragment,
-} from '../../graphql/generated/digitraffic';
+} from '../../graphql/generated/digitraffic/graphql';
 import canTrainBeTrackedByHsl from '../canTrainBeTrackedByHsl';
 
 const trainBase: TrainDetailsFragment = {

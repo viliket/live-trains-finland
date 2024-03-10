@@ -1,7 +1,8 @@
 import { parseISO } from 'date-fns';
 
-import { vehiclesVar, trainsVar } from '../graphql/client';
-import { TrainByStationFragment } from '../graphql/generated/digitraffic';
+import { TrainByStationFragment } from '../graphql/generated/digitraffic/graphql';
+import useTrainStore from '../hooks/useTrainStore';
+import useVehicleStore from '../hooks/useVehicleStore';
 import { TrainLocationMessage } from '../types/vehicles';
 
 import { formatEET } from './date';
@@ -11,10 +12,11 @@ import { getDepartureTimeTableRow } from './train';
 const digitrafficEndpointUrl = 'wss://rata.digitraffic.fi:443/mqtt';
 
 function getTrainCurrentHeading(tl: TrainLocationMessage): number | null {
-  const prevLoc = vehiclesVar()[tl.trainNumber]
+  const vehicles = useVehicleStore.getState().vehicles;
+  const prevLoc = vehicles[tl.trainNumber]
     ? {
-        lat: vehiclesVar()[tl.trainNumber].position[1],
-        lng: vehiclesVar()[tl.trainNumber].position[0],
+        lat: vehicles[tl.trainNumber].position[1],
+        lng: vehicles[tl.trainNumber].position[0],
       }
     : null;
   let heading: number | null = null;
@@ -23,7 +25,7 @@ function getTrainCurrentHeading(tl: TrainLocationMessage): number | null {
       prevLoc.lat === tl.location.coordinates[1] &&
       prevLoc.lng === tl.location.coordinates[0]
     ) {
-      heading = vehiclesVar()[tl.trainNumber].heading;
+      heading = vehicles[tl.trainNumber].heading;
     } else {
       heading = getBearing(prevLoc, {
         lat: tl.location.coordinates[1],
@@ -47,9 +49,9 @@ export const handleTrainLocationMessage = (
   );
   const heading = getTrainCurrentHeading(tl);
 
-  const trackedTrains = trainsVar();
+  const trackedTrains = useTrainStore.getState().trains;
   if (!(tl.trainNumber in trackedTrains)) {
-    trainsVar({
+    useTrainStore.getState().setTrains({
       ...trackedTrains,
       [tl.trainNumber]: {
         departureDate: tl.departureDate,
@@ -57,9 +59,9 @@ export const handleTrainLocationMessage = (
     });
   }
 
-  const oldVehicles = vehiclesVar();
+  const oldVehicles = useVehicleStore.getState().vehicles;
 
-  vehiclesVar({
+  useVehicleStore.getState().setVehicles({
     ...oldVehicles,
     [tl.trainNumber]: {
       position: tl.location.coordinates,

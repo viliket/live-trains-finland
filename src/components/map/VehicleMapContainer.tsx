@@ -11,8 +11,8 @@ import Map, {
 } from 'react-map-gl/maplibre';
 import useLocalStorageState from 'use-local-storage-state';
 
-import { TrainByStationFragment } from '../../graphql/generated/digitraffic';
-import { RouteForRailFragment } from '../../graphql/generated/digitransit';
+import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
+import { RouteForRailFragment } from '../../graphql/generated/digitransit/graphql';
 import { getMapStyle } from '../../utils/map';
 import { TrainStation, trainStations } from '../../utils/stations';
 

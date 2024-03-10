@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo } from 'react';
 
-import { ApolloProvider } from '@apollo/client';
 import {
   createTheme as createMuiTheme,
   Theme,
@@ -10,12 +9,13 @@ import {
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { fiFI, enUS } from '@mui/material/locale';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-import { client } from '../graphql/client';
 import { lightTheme, darkTheme } from '../theme';
 
 import { ThemeProvider, useTheme } from './ThemeProvider';
+
 import '../i18n';
 
 const getPreferredScheme = () =>
@@ -73,12 +73,14 @@ const NextThemeProvider = ({ children }: { children: React.ReactNode }) => (
   <ThemeProvider>{children}</ThemeProvider>
 );
 
+const queryClient = new QueryClient();
+
 const Providers = ({ children }: { children: React.ReactNode }) => (
-  <ApolloProvider client={client}>
+  <QueryClientProvider client={queryClient}>
     <NextThemeProvider>
       <MuiProvider>{children}</MuiProvider>
     </NextThemeProvider>
-  </ApolloProvider>
+  </QueryClientProvider>
 );
 
 export default Providers;

@@ -1,7 +1,6 @@
 import { styled } from '@mui/material';
 
-import { vehiclesVar } from '../graphql/client';
-import useReactiveVarWithSelector from '../hooks/useReactiveVarWithSelector';
+import useVehicleStore from '../hooks/useVehicleStore';
 
 const WagonSvg = styled('svg')({});
 
@@ -13,8 +12,10 @@ type TrainWagonSm5Props = {
  * Sm5 wagon, used for e.g. by U and E trains in HSL region
  */
 export function TrainWagonSm5({ vehicleId }: TrainWagonSm5Props) {
-  const vehicleDoorStatus = useReactiveVarWithSelector(vehiclesVar, (v) =>
-    vehicleId && vehicleId in v ? v[vehicleId].drst : null
+  const vehicleDoorStatus = useVehicleStore((state) =>
+    vehicleId && vehicleId in state.vehicles
+      ? state.vehicles[vehicleId].drst
+      : null
   );
 
   const doorsOpen = vehicleDoorStatus === 1;

@@ -1,6 +1,5 @@
 /* eslint-disable */
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -8,7 +7,6 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -16,7 +14,9 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /** Long type */
   Long: { input: any; output: any; }
+  /** List of coordinates in an encoded polyline format (see https://developers.google.com/maps/documentation/utilities/polylinealgorithm). The value appears in JSON as a string. */
   Polyline: { input: any; output: any; }
 };
 
@@ -1458,57 +1458,5 @@ export type RouteQuery = { __typename?: 'QueryType', route?: { __typename?: 'Rou
 
 export type RouteForRailFragment = { __typename?: 'Route', gtfsId: string, shortName?: string | null, longName?: string | null, patterns?: Array<{ __typename?: 'Pattern', headsign?: string | null, geometry?: Array<{ __typename?: 'Coordinates', lat?: number | null, lon?: number | null } | null> | null } | null> | null };
 
-export const RouteForRailFragmentDoc = gql`
-    fragment RouteForRail on Route {
-  gtfsId
-  shortName
-  longName
-  patterns {
-    headsign
-    geometry {
-      lat
-      lon
-    }
-  }
-}
-    `;
-export const RouteDocument = gql`
-    query Route($id: String!) {
-  route(id: $id) {
-    ...RouteForRail
-  }
-}
-    ${RouteForRailFragmentDoc}`;
-
-/**
- * __useRouteQuery__
- *
- * To run a query within a React component, call `useRouteQuery` and pass it any options that fit your needs.
- * When your component renders, `useRouteQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRouteQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useRouteQuery(baseOptions: Apollo.QueryHookOptions<RouteQuery, RouteQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<RouteQuery, RouteQueryVariables>(RouteDocument, options);
-      }
-export function useRouteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RouteQuery, RouteQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<RouteQuery, RouteQueryVariables>(RouteDocument, options);
-        }
-export function useRouteSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<RouteQuery, RouteQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<RouteQuery, RouteQueryVariables>(RouteDocument, options);
-        }
-export type RouteQueryHookResult = ReturnType<typeof useRouteQuery>;
-export type RouteLazyQueryHookResult = ReturnType<typeof useRouteLazyQuery>;
-export type RouteSuspenseQueryHookResult = ReturnType<typeof useRouteSuspenseQuery>;
-export type RouteQueryResult = Apollo.QueryResult<RouteQuery, RouteQueryVariables>;
+export const RouteForRailFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"RouteForRail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Route"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gtfsId"}},{"kind":"Field","name":{"kind":"Name","value":"shortName"}},{"kind":"Field","name":{"kind":"Name","value":"longName"}},{"kind":"Field","name":{"kind":"Name","value":"patterns"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"headsign"}},{"kind":"Field","name":{"kind":"Name","value":"geometry"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lat"}},{"kind":"Field","name":{"kind":"Name","value":"lon"}}]}}]}}]}}]} as unknown as DocumentNode<RouteForRailFragment, unknown>;
+export const RouteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Route"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"route"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"RouteForRail"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"RouteForRail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Route"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gtfsId"}},{"kind":"Field","name":{"kind":"Name","value":"shortName"}},{"kind":"Field","name":{"kind":"Name","value":"longName"}},{"kind":"Field","name":{"kind":"Name","value":"patterns"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"headsign"}},{"kind":"Field","name":{"kind":"Name","value":"geometry"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lat"}},{"kind":"Field","name":{"kind":"Name","value":"lon"}}]}}]}}]}}]} as unknown as DocumentNode<RouteQuery, RouteQueryVariables>;

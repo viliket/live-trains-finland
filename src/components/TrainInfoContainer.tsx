@@ -2,16 +2,11 @@ import { useState } from 'react';
 
 import { Box, Skeleton } from '@mui/material';
 
-import { gqlClients } from '../graphql/client';
-import {
-  TrainDetailsFragment,
-  useTrainQuery,
-  Wagon,
-} from '../graphql/generated/digitraffic';
+import { Wagon } from '../graphql/generated/digitraffic/graphql';
 import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
-import { formatEET } from '../utils/date';
+import useTrainQuery from '../hooks/useTrainQuery';
+import { TrainExtendedDetails } from '../types';
 import { getPassengerInformationMessagesByStation } from '../utils/passengerInformationMessages';
-import { getTrainScheduledDepartureTime } from '../utils/train';
 
 import PassengerInformationMessagesDialog from './PassengerInformationMessagesDialog';
 import TrainComposition from './TrainComposition';
@@ -19,7 +14,7 @@ import TrainStationTimeline from './TrainStationTimeline';
 import TrainWagonDetailsDialog from './TrainWagonDetailsDialog';
 
 type TrainInfoContainerProps = {
-  train?: TrainDetailsFragment | null;
+  train?: TrainExtendedDetails | null;
 };
 
 function TrainInfoContainer({ train }: TrainInfoContainerProps) {
@@ -27,20 +22,9 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const [selectedWagon, setSelectedWagon] = useState<Wagon | null>(null);
   const [selectedStation, setSelectedStation] = useState<string | null>(null);
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
-  const departureDate = train ? getTrainScheduledDepartureTime(train) : null;
-  const { error, data: realTimeData } = useTrainQuery(
-    train && departureDate
-      ? {
-          variables: {
-            trainNumber: train.trainNumber,
-            departureDate: formatEET(departureDate, 'yyyy-MM-dd'),
-          },
-          context: { clientName: gqlClients.digitraffic },
-          pollInterval: 10000,
-          fetchPolicy: 'network-only',
-          notifyOnNetworkStatusChange: true,
-        }
-      : { skip: true }
+  const { error, data: realTimeTrain } = useTrainQuery(
+    train?.trainNumber,
+    train?.departureDate
   );
   const { messages: passengerInformationMessages } =
     usePassengerInformationMessages({
@@ -52,8 +36,6 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
   const stationMessages = getPassengerInformationMessagesByStation(
     passengerInformationMessages
   );
-
-  const realTimeTrain = realTimeData?.train?.[0];
 
   const handleWagonDialogClose = () => {
     setWagonDialogOpen(false);

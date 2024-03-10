@@ -2,7 +2,7 @@ import { TimelineConnector, TimelineDot, TimelineSeparator } from '@mui/lab';
 import { alpha, useTheme } from '@mui/material';
 import { ArrowDown, ChevronLeft, ChevronRight } from 'mdi-material-ui';
 
-import { StationPlatformSide } from '../graphql/generated/digitraffic';
+import { StationPlatformSide } from '../graphql/generated/digitraffic/graphql';
 
 type TimelineRouteStopSeparatorProps = {
   passed: boolean;

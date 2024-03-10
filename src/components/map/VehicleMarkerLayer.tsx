@@ -10,8 +10,8 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl';
 
-import { vehiclesVar } from '../../graphql/client';
 import useAnimationFrame from '../../hooks/useAnimationFrame';
+import useVehicleStore from '../../hooks/useVehicleStore';
 import {
   getVehicleMarkerIconImage,
   getVehiclesGeoJsonData,
@@ -158,7 +158,9 @@ export default function VehicleMarkerLayer({
   }, [selectedVehicleId]);
 
   if (map && isTracking && selectedVehicleId) {
-    const vehicle = vehiclesVar()[selectedVehicleId];
+    const vehicle = useVehicleStore
+      .getState()
+      .getVehicleById(selectedVehicleId);
     if (vehicle && !map.isMoving()) {
       map.flyTo(
         {
@@ -176,7 +178,7 @@ export default function VehicleMarkerLayer({
 
   useAnimationFrame(() => {
     setInterpolatedPositions((prevPositions) => {
-      const currentVehicles = vehiclesVar();
+      const currentVehicles = useVehicleStore.getState().vehicles;
       const nextPositions: Record<number, VehicleInterpolatedPosition> = {};
       Object.keys(currentVehicles).forEach((idString) => {
         const id = Number.parseInt(idString);
@@ -222,13 +224,13 @@ export default function VehicleMarkerLayer({
   });
 
   const selectedVehicleForPopup = vehicleIdForPopup
-    ? vehiclesVar()[vehicleIdForPopup]
+    ? useVehicleStore.getState().getVehicleById(vehicleIdForPopup)
     : null;
 
   const vehiclesLayer = new GeoJsonLayer({
     id: 'vehicles',
     data: getVehiclesGeoJsonData(
-      vehiclesVar(),
+      useVehicleStore.getState().vehicles,
       mapValues(interpolatedPositions, (p) => p.animPos)
     ),
     _subLayerProps: {

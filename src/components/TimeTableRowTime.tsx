@@ -3,7 +3,7 @@ import { format, parseISO } from 'date-fns';
 import { ClockAlert } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 
-import { TrainTimeTableRowFragment } from '../graphql/generated/digitraffic';
+import { TrainTimeTableRowFragment } from '../graphql/generated/digitraffic/graphql';
 
 type TimeTableRowTimeProps = {
   row: TrainTimeTableRowFragment;
