@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Skeleton } from '@mui/material';
+import { Box, Skeleton, Snackbar } from '@mui/material';
 
 import { Wagon } from '../graphql/generated/digitraffic/graphql';
 import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
@@ -65,9 +65,11 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
           borderTop: `solid 1px ${theme.palette.divider}`,
         })}
       >
-        {error && (
-          <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
-        )}
+        <Snackbar
+          open={!!error}
+          autoHideDuration={5000}
+          message={error?.message}
+        />
         {realTimeTrain && (
           <TrainComposition
             train={realTimeTrain}

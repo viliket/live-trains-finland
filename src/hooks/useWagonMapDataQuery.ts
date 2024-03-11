@@ -92,7 +92,7 @@ const wagonMapDataQuery = ({
         !isCommuterLine
     ),
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnMount: 'always',
     refetchOnReconnect: false,
     staleTime: Infinity,
   });

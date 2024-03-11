@@ -2,7 +2,13 @@
 
 import { useCallback, useState } from 'react';
 
-import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+  Box,
+  Skeleton,
+  Snackbar,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material';
 import { orderBy } from 'lodash';
 import { ClockStart, ClockEnd } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
@@ -46,7 +52,9 @@ const Station: NextPageWithLayout = () => {
       )
     : undefined;
   const stationCode = station?.stationShortCode;
-  const { isLoading, error, data } = useTrainsByStationQuery(stationCode);
+  const { isLoading, isFetchedAfterMount, error, data } =
+    useTrainsByStationQuery(stationCode);
+  const showLoading = isLoading || !isFetchedAfterMount;
   useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
   const { messages: passengerInformationMessages } =
     usePassengerInformationMessages({
@@ -176,7 +184,12 @@ const Station: NextPageWithLayout = () => {
           )}
         </Box>
       </Box>
-      {stationCode && !isLoading && data?.trainsByStationAndQuantity && (
+      <Snackbar
+        open={!!error}
+        autoHideDuration={5000}
+        message={error?.message}
+      />
+      {stationCode && !showLoading && data?.trainsByStationAndQuantity && (
         <StationTimeTable
           stationCode={stationCode}
           timeTableType={timeTableType}
@@ -184,10 +197,7 @@ const Station: NextPageWithLayout = () => {
           tableRowOnClick={handleTimeTableRowClick}
         />
       )}
-      {(!stationCode || isLoading) && getLoadingSkeleton()}
-      {error && (
-        <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
-      )}
+      {(!stationCode || showLoading) && getLoadingSkeleton()}
       <PassengerInformationMessagesDialog
         open={stationAlertDialogOpen}
         passengerInformationMessages={passengerInformationMessages}

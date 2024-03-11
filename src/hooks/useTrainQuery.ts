@@ -34,14 +34,14 @@ export default useTrainQuery;
 async function getExtendedTrain(
   trainNumber: number | undefined | null,
   departureDate: string | undefined | null
-): Promise<TrainExtendedDetails | undefined> {
+): Promise<TrainExtendedDetails | null> {
   const data = await digitrafficClient.request(TrainDocument, {
     trainNumber: trainNumber ?? 0,
     departureDate: departureDate,
   });
   const train = data.train?.[0];
 
-  if (!train) return undefined;
+  if (!train) return null;
 
   const timeTableGroups = getTimeTableRowsGroupedByStation({
     timeTableRows: train?.timeTableRows,

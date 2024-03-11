@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import { Box } from '@mui/material';
+import { Box, Snackbar } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 
@@ -73,7 +73,7 @@ const Train: NextPageWithLayout = () => {
     }
   }, [train]);
 
-  if (trainNumber && departureDate && !isLoading && !train) {
+  if (trainNumber && departureDate && !isLoading && !train && !error) {
     return <NotFound />;
   }
 
@@ -89,10 +89,12 @@ const Train: NextPageWithLayout = () => {
           onVehicleSelected={handleVehicleIdSelected}
         />
       </Box>
+      <Snackbar
+        open={!!error}
+        autoHideDuration={5000}
+        message={error?.message}
+      />
       <TrainInfoContainer train={train} />
-      {error && (
-        <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
-      )}
     </div>
   );
 };
