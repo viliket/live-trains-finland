@@ -21,7 +21,12 @@ const trainsByRouteQuery = (
       ? deptOrArrStationCodeFilter
       : stationCode;
   return queryOptions({
-    queryKey: ['trainsByRouteQuery', stationCode],
+    queryKey: [
+      'trainsByRouteQuery',
+      deptOrArrStationCodeFilter,
+      stationCode,
+      timeTableType,
+    ],
     queryFn: () =>
       digitrafficClient.request(TrainsByRouteDocument, {
         departureStation: departureStation ?? '',
