@@ -48,6 +48,7 @@ export default function VehicleMarkerLayer({
 }: VehicleMarkerLayerProps) {
   const { current: map } = useMap();
   const glRef = useRef<WebGLRenderingContext>();
+  const getVehicleById = useVehicleStore((state) => state.getVehicleById);
   const [vehicleIdForPopup, setVehicleIdForPopup] = useState<number | null>(
     null
   );
@@ -158,9 +159,7 @@ export default function VehicleMarkerLayer({
   }, [selectedVehicleId]);
 
   if (map && isTracking && selectedVehicleId) {
-    const vehicle = useVehicleStore
-      .getState()
-      .getVehicleById(selectedVehicleId);
+    const vehicle = getVehicleById(selectedVehicleId);
     if (vehicle && !map.isMoving()) {
       map.flyTo(
         {
@@ -224,7 +223,7 @@ export default function VehicleMarkerLayer({
   });
 
   const selectedVehicleForPopup = vehicleIdForPopup
-    ? useVehicleStore.getState().getVehicleById(vehicleIdForPopup)
+    ? getVehicleById(vehicleIdForPopup)
     : null;
 
   const vehiclesLayer = new GeoJsonLayer({
