@@ -5,7 +5,7 @@ import { orderBy } from 'lodash';
 import {
   TimeTableRowType,
   TrainByStationFragment,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
 import { getTimeTableRowRealTime } from '../utils/train';
 
 export type PassengerInformationMessage = {

@@ -1,7 +1,8 @@
 import {
   StationPlatformSide,
   TrainDetailsFragment,
-} from '../../graphql/generated/digitraffic';
+} from '../../graphql/generated/digitraffic/graphql';
+import { TrainExtendedDetails } from '../../types';
 import getStationPlatformSide from '../getStationPlatformSide';
 import getTimeTableRowsGroupedByStation from '../getTimeTableRowsGroupedByStation';
 import getTrainDirection from '../getTrainDirection';
@@ -15,7 +16,7 @@ import trainUHkiKknSingleUnit from './__fixtures__/train-U-HKI-KKN-single-unit.j
 import trainUKknHkiSingleUnit from './__fixtures__/train-U-KKN-HKI-single-unit.json';
 
 function testStationPlatformSides(
-  train: TrainDetailsFragment,
+  train: TrainExtendedDetails,
   expectedPlatformSides: (string | null)[]
 ) {
   const timeTableGroups = getTimeTableRowsGroupedByStation(train);

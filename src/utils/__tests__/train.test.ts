@@ -4,7 +4,7 @@ import {
   TimeTableRowType,
   TrainByStationFragment,
   TrainDetailsFragment,
-} from '../../graphql/generated/digitraffic';
+} from '../../graphql/generated/digitraffic/graphql';
 import {
   getTimeTableRowRealTime,
   getDepartureTimeTableRow,

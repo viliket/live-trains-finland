@@ -2,7 +2,7 @@ import {
   JourneySection,
   Maybe,
   TrainDetailsFragment,
-} from '../../graphql/generated/digitraffic';
+} from '../../graphql/generated/digitraffic/graphql';
 import * as canTrainBeTrackedByHslModule from '../canTrainBeTrackedByHsl';
 import getHeadTrainVehicleId from '../getHeadTrainVehicleId';
 import * as getTrainCurrentJourneySectionModule from '../getTrainCurrentJourneySection';

@@ -1,11 +1,11 @@
 import { minBy } from 'lodash';
 
-import { TrainDetailsFragment } from '../graphql/generated/digitraffic';
+import { TrainExtendedDetails } from '../types';
 
 import canTrainBeTrackedByHsl from './canTrainBeTrackedByHsl';
 import getTrainCurrentJourneySection from './getTrainCurrentJourneySection';
 
-export default function getHeadTrainVehicleId(train: TrainDetailsFragment) {
+export default function getHeadTrainVehicleId(train: TrainExtendedDetails) {
   if (!canTrainBeTrackedByHsl(train)) {
     // When train is not tracked by HSL (Digitransit) use trainNumber instead
     // of vehicleId because trains tracked by Digitraffic MQTT are identified

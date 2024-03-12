@@ -1,6 +1,9 @@
 import { orderBy } from 'lodash';
 
-import { TrainDetailsFragment, Wagon } from '../graphql/generated/digitraffic';
+import {
+  TrainDetailsFragment,
+  Wagon,
+} from '../graphql/generated/digitraffic/graphql';
 
 import getTrainJourneySectionForStation from './getTrainJourneySectionForStation';
 
@@ -212,8 +215,16 @@ export default function getTrainCompositionDetailsForStation(
 
   if (!sectionBefore || !sectionAfter) return null;
 
-  const wagonsBefore = orderBy(sectionBefore.wagons, getWagonLoc, 'desc');
-  const wagonsAfter = orderBy(sectionAfter.wagons, getWagonLoc, 'desc');
+  const wagonsBefore = orderBy(
+    sectionBefore.wagons as Wagon[],
+    getWagonLoc,
+    'desc'
+  );
+  const wagonsAfter = orderBy(
+    sectionAfter.wagons as Wagon[],
+    getWagonLoc,
+    'desc'
+  );
 
   if (wagonsBefore.length === 0 || wagonsAfter.length === 0) return null;
 

@@ -1,7 +1,6 @@
 import { SignalVariant } from 'mdi-material-ui';
 
-import { trainsVar } from '../graphql/client';
-import useReactiveVarWithSelector from '../hooks/useReactiveVarWithSelector';
+import useTrainStore from '../hooks/useTrainStore';
 
 type VehicleTrackingIconProps = {
   trainNumber: number;
@@ -12,9 +11,11 @@ const VehicleTrackingIcon = ({
   trainNumber,
   departureDate,
 }: VehicleTrackingIconProps) => {
-  const isTracked = useReactiveVarWithSelector(trainsVar, (v) => {
-    return v[trainNumber] && v[trainNumber].departureDate === departureDate;
-  });
+  const isTracked = useTrainStore(
+    (state) =>
+      trainNumber in state.trains &&
+      state.getTrainByVehicleId(trainNumber).departureDate === departureDate
+  );
 
   return (
     <>

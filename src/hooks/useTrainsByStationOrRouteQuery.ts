@@ -1,20 +1,17 @@
-import { addDays, format, subDays } from 'date-fns';
 import { sortBy, uniqBy } from 'lodash';
 
-import { gqlClients } from '../graphql/client';
 import {
   Station,
   TimeTableRowType,
   TrainByStationFragment,
   TrainsByRouteQuery,
-  TrainsByRouteQueryVariables,
   TrainsByStationQuery,
-  TrainsByStationQueryVariables,
-  useTrainsByRouteQuery,
-  useTrainsByStationQuery,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
 import { isDefined } from '../utils/common';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
+
+import { useTrainsByRouteQuery } from './useTrainsByRouteQuery';
+import { useTrainsByStationQuery } from './useTrainsByStationQuery';
 
 type TrainsByStationOrRouteQuery = {
   stationCode?: string;
@@ -27,25 +24,13 @@ export default function useTrainsByStationOrRouteQuery({
   deptOrArrStationCodeFilter,
   timeTableType,
 }: TrainsByStationOrRouteQuery) {
-  const trainsByStationResult = useTrainsByStationQuery({
-    variables: getTrainsByStationQueryVariables(stationCode),
-    skip: stationCode == null,
-    context: { clientName: gqlClients.digitraffic },
-    pollInterval: !deptOrArrStationCodeFilter ? 10000 : 0,
-    fetchPolicy: 'no-cache',
-  });
+  const trainsByStationResult = useTrainsByStationQuery(stationCode);
 
-  const trainsByRouteResult = useTrainsByRouteQuery({
-    variables: getTrainsByRouteQueryVariables(
-      deptOrArrStationCodeFilter,
-      stationCode,
-      timeTableType
-    ),
-    skip: !deptOrArrStationCodeFilter || !stationCode,
-    context: { clientName: gqlClients.digitraffic },
-    pollInterval: 10000,
-    fetchPolicy: 'no-cache',
-  });
+  const trainsByRouteResult = useTrainsByRouteQuery(
+    deptOrArrStationCodeFilter,
+    stationCode,
+    timeTableType
+  );
 
   const trains = getTrains(
     deptOrArrStationCodeFilter,
@@ -63,48 +48,10 @@ export default function useTrainsByStationOrRouteQuery({
     trains,
     loading:
       !stationCode ||
-      trainsByStationResult.loading ||
-      trainsByRouteResult.loading,
+      trainsByStationResult.isLoading ||
+      trainsByRouteResult.isLoading,
     error: trainsByRouteResult.error || trainsByStationResult.error,
     stationsFromCurrentStation,
-  };
-}
-
-function getTrainsByRouteQueryVariables(
-  deptOrArrStationCodeFilter: string | null,
-  stationCode: string | undefined,
-  timeTableType: TimeTableRowType
-): TrainsByRouteQueryVariables | undefined {
-  if (!deptOrArrStationCodeFilter || !stationCode) return undefined;
-
-  const departureStation =
-    timeTableType === TimeTableRowType.Departure
-      ? stationCode
-      : deptOrArrStationCodeFilter;
-  const arrivalStation =
-    timeTableType === TimeTableRowType.Departure
-      ? deptOrArrStationCodeFilter
-      : stationCode;
-
-  return {
-    departureStation,
-    arrivalStation,
-    departureDateGreaterThan: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
-    departureDateLessThan: format(addDays(new Date(), 2), 'yyyy-MM-dd'),
-  };
-}
-
-function getTrainsByStationQueryVariables(
-  stationCode: string | undefined
-): TrainsByStationQueryVariables | undefined {
-  if (!stationCode) return undefined;
-
-  return {
-    station: stationCode,
-    departingTrains: 100,
-    departedTrains: 0,
-    arrivingTrains: 100,
-    arrivedTrains: 0,
   };
 }
 

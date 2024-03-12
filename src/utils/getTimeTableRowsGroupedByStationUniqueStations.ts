@@ -1,9 +1,7 @@
 import { addMinutes } from 'date-fns';
 
-import {
-  TrainByStationFragment,
-  TrainDetailsFragment,
-} from '../graphql/generated/digitraffic';
+import { TrainByStationFragment } from '../graphql/generated/digitraffic/graphql';
+import { TrainExtendedDetails } from '../types';
 
 import getTimeTableRowsGroupedByStation, {
   StationTimeTableRowGroup,
@@ -11,7 +9,7 @@ import getTimeTableRowsGroupedByStation, {
 import { getTimeTableRowRealTime } from './train';
 
 export default function getTimeTableRowsGroupedByStationUniqueStations(
-  train: TrainDetailsFragment | TrainByStationFragment
+  train: TrainExtendedDetails | TrainByStationFragment
 ) {
   let trainTimeTableRows: StationTimeTableRowGroup[] | undefined | null;
   if ('timeTableGroups' in train) {

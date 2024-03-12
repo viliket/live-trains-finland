@@ -1,9 +1,9 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { vehiclesVar } from '../../graphql/client';
-import { TrainDetailsFragment } from '../../graphql/generated/digitraffic';
+import { TrainDetailsFragment } from '../../graphql/generated/digitraffic/graphql';
 import { VehicleDetails } from '../../types/vehicles';
 import { useTrainSpeed } from '../useTrainSpeed';
+import useVehicleStore from '../useVehicleStore';
 
 const vehicleBase: VehicleDetails = {
   spd: 0,
@@ -39,7 +39,7 @@ describe('useTrainSpeed', () => {
     expect(result.current).toBe(null);
 
     act(() => {
-      vehiclesVar({
+      useVehicleStore.getState().setVehicles({
         1234: {
           ...vehicleBase,
         },
@@ -49,7 +49,7 @@ describe('useTrainSpeed', () => {
     expect(result.current).toBe(0);
 
     act(() => {
-      vehiclesVar({
+      useVehicleStore.getState().setVehicles({
         1234: {
           ...vehicleBase,
           spd: 100,

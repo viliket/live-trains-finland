@@ -1,4 +1,4 @@
-import { TrainDetailsFragment } from '../graphql/generated/digitraffic';
+import { TrainDetailsFragment } from '../graphql/generated/digitraffic/graphql';
 
 export default function getTrainJourneySectionForStation(
   train: TrainDetailsFragment,

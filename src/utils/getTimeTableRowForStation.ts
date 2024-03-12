@@ -4,7 +4,7 @@ import {
   TrainByStationFragment,
   TimeTableRowType,
   TrainTimeTableRowFragment,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
 
 export default function getTimeTableRowForStation(
   stationShortCode: string,

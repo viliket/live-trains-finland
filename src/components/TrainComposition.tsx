@@ -20,7 +20,7 @@ import {
   TrainDirection,
   TrainTimeTableGroupFragment,
   Wagon,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
 import getTrainCompositionDetailsForStation from '../utils/getTrainCompositionDetailsForStation';
 import getTrainCurrentJourneySection from '../utils/getTrainCurrentJourneySection';
 import getTrainJourneySectionForStation from '../utils/getTrainJourneySectionForStation';

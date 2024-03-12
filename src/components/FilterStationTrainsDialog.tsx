@@ -12,7 +12,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTranslation } from 'react-i18next';
 
-import { Station, TimeTableRowType } from '../graphql/generated/digitraffic';
+import {
+  Station,
+  TimeTableRowType,
+} from '../graphql/generated/digitraffic/graphql';
 import { getTrainStationName } from '../utils/train';
 
 type StationFragment = Pick<Station, 'name' | 'shortCode'>;
