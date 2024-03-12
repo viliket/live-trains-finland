@@ -1,8 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import { Box, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+  Box,
+  Skeleton,
+  Snackbar,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material';
 import { orderBy } from 'lodash';
 import { ClockStart, ClockEnd } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
@@ -14,14 +20,12 @@ import PassengerInformationMessageAlert from '../components/PassengerInformation
 import PassengerInformationMessagesDialog from '../components/PassengerInformationMessagesDialog';
 import StationTimeTable from '../components/StationTimeTable';
 import SubNavBar from '../components/SubNavBar';
-import { gqlClients, vehiclesVar } from '../graphql/client';
-import {
-  TimeTableRowType,
-  useTrainsByStationQuery,
-} from '../graphql/generated/digitraffic';
-import { useRouteLazyQuery } from '../graphql/generated/digitransit';
+import { TimeTableRowType } from '../graphql/generated/digitraffic/graphql';
 import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
+import { useRouteQuery } from '../hooks/useRouteQuery';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
+import { useTrainsByStationQuery } from '../hooks/useTrainsByStationQuery';
+import useVehicleStore from '../hooks/useVehicleStore';
 import { isDefined } from '../utils/common';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
@@ -35,34 +39,22 @@ const Station: NextPageWithLayout = () => {
   const [timeTableType, setTimeTableType] = useState(
     TimeTableRowType.Departure
   );
+  const getVehicleById = useVehicleStore((state) => state.getVehicleById);
   const { t } = useTranslation();
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
   const [selectedTrainNo, setSelectedTrainNo] = useState<number | null>(null);
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
-  const [executeRouteSearch, { data: routeData }] = useRouteLazyQuery();
   const station = stationName
     ? trainStations.find(
         (s) => s.stationName.toUpperCase() === stationName.toUpperCase()
       )
     : undefined;
   const stationCode = station?.stationShortCode;
-  const { loading, error, data } = useTrainsByStationQuery({
-    variables: stationCode
-      ? {
-          station: stationCode,
-          departingTrains: 100,
-          departedTrains: 0,
-          arrivingTrains: 100,
-          arrivedTrains: 0,
-        }
-      : undefined,
-    skip: stationCode == null,
-    context: { clientName: gqlClients.digitraffic },
-    pollInterval: 10000,
-    fetchPolicy: 'no-cache',
-  });
+  const { isLoading, isFetchedAfterMount, error, data } =
+    useTrainsByStationQuery(stationCode);
+  const showLoading = isLoading || !isFetchedAfterMount;
   useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
   const { messages: passengerInformationMessages } =
     usePassengerInformationMessages({
@@ -72,11 +64,14 @@ const Station: NextPageWithLayout = () => {
       stationCode: stationCode,
     });
 
-  const handleVehicleIdSelected = useCallback((vehicleId: number) => {
-    setSelectedVehicleId(vehicleId);
-    const trainNumber = vehiclesVar()[vehicleId].jrn;
-    setSelectedTrainNo(trainNumber);
-  }, []);
+  const handleVehicleIdSelected = useCallback(
+    (vehicleId: number) => {
+      setSelectedVehicleId(vehicleId);
+      const trainNumber = getVehicleById(vehicleId).jrn;
+      setSelectedTrainNo(trainNumber);
+    },
+    [getVehicleById]
+  );
 
   const handleTimeTableRowClick = useCallback(
     (trainNumber: number, departureDate: string) => {
@@ -92,17 +87,11 @@ const Station: NextPageWithLayout = () => {
         (t) => t?.trainNumber === selectedTrainNo
       )
     : null;
-  const selectedRoute = routeData?.route;
 
-  useEffect(() => {
-    if (selectedTrain) {
-      executeRouteSearch({
-        variables: {
-          id: getTrainRouteGtfsId(selectedTrain),
-        },
-      });
-    }
-  }, [selectedTrain, executeRouteSearch]);
+  const { data: routeData } = useRouteQuery(
+    selectedTrain ? getTrainRouteGtfsId(selectedTrain) : null
+  );
+  const selectedRoute = routeData?.route;
 
   const getLoadingSkeleton = () => {
     return (
@@ -195,7 +184,12 @@ const Station: NextPageWithLayout = () => {
           )}
         </Box>
       </Box>
-      {stationCode && !loading && data?.trainsByStationAndQuantity && (
+      <Snackbar
+        open={!!error}
+        autoHideDuration={5000}
+        message={error?.message}
+      />
+      {stationCode && !showLoading && data?.trainsByStationAndQuantity && (
         <StationTimeTable
           stationCode={stationCode}
           timeTableType={timeTableType}
@@ -203,10 +197,7 @@ const Station: NextPageWithLayout = () => {
           tableRowOnClick={handleTimeTableRowClick}
         />
       )}
-      {(!stationCode || loading) && getLoadingSkeleton()}
-      {error && (
-        <Box sx={{ width: '100%', textAlign: 'center' }}>{error.message}</Box>
-      )}
+      {(!stationCode || showLoading) && getLoadingSkeleton()}
       <PassengerInformationMessagesDialog
         open={stationAlertDialogOpen}
         passengerInformationMessages={passengerInformationMessages}

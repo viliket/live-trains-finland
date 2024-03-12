@@ -5,10 +5,7 @@ schema:
         digitransit-subscription-key: ${NEXT_PUBLIC_DIGITRANSIT_SUBSCRIPTION_KEY}
 documents: src/graphql/queries/digitransit/**/*.graphql
 generates:
-  src/graphql/generated/digitransit.tsx:
-    plugins:
-      - add:
-          content: '/* eslint-disable */'
-      - typescript
-      - typescript-operations
-      - typescript-react-apollo
+  src/graphql/generated/digitransit/:
+    preset: 'client'
+    presetConfig:
+      fragmentMasking: false

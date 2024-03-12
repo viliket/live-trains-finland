@@ -1,8 +1,8 @@
 import {
-  TrainDetailsFragment,
   TrainDirection,
   TrainTimeTableRowFragment,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
+import { TrainExtendedDetails } from '../types';
 
 import { isIn } from './common';
 import lineKmLocationByStationCode from './generated/line-km-location-by-station-code.json';
@@ -69,7 +69,7 @@ function getLineKmsOnCommonTrack(
  * pysähdyspaikkamerkkien sijoitussuunnitelmat
  */
 export default function getTrainDirection(
-  train: TrainDetailsFragment,
+  train: TrainExtendedDetails,
   stationTimeTableRowGroup: StationTimeTableRowGroup
 ) {
   const timeTableGroups = train.timeTableGroups;

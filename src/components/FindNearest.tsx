@@ -21,8 +21,7 @@ import { ChevronLeft, HomeClockOutline, Train } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
-import { gqlClients } from '../graphql/client';
-import { useRunningTrainsQuery } from '../graphql/generated/digitraffic';
+import { useRunningTrainsQuery } from '../hooks/useRunningTrainsQuery';
 import { useUrlHashState } from '../hooks/useUrlHashState';
 import { isDefined } from '../utils/common';
 import { trainStations } from '../utils/stations';
@@ -61,10 +60,7 @@ function getDistancesToPosition<T>(
 
 function NearestTrainsList({ position }: { position: GeolocationPosition }) {
   const router = useRouter();
-  const { loading, error, data } = useRunningTrainsQuery({
-    context: { clientName: gqlClients.digitraffic },
-    pollInterval: 10000,
-  });
+  const { isLoading, error, data } = useRunningTrainsQuery();
 
   const trainsByDistance = data?.currentlyRunningTrains
     ? getDistancesToPosition(
@@ -95,7 +91,7 @@ function NearestTrainsList({ position }: { position: GeolocationPosition }) {
           router.replace(`/train/${train.trainNumber}/${train.departureDate}`)
         }
       />
-      {loading && (
+      {isLoading && (
         <DialogContent>
           {Array.from(Array(7).keys()).map((i) => (
             <Skeleton

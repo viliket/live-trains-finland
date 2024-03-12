@@ -1,4 +1,4 @@
-import { TrainDetailsFragment } from '../../graphql/generated/digitraffic';
+import { TrainDetailsFragment } from '../../graphql/generated/digitraffic/graphql';
 import getTrainCompositionDetailsForStation from '../getTrainCompositionDetailsForStation';
 
 import trainIc143DirectionReversesAfterTpe from './__fixtures__/train-IC-143-HKI-PM-composition-direction-reverse-after-TPE.json';

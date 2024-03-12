@@ -1,6 +1,6 @@
 import { Avatar, Box } from '@mui/material';
 
-import { TrainDetailsFragment } from '../graphql/generated/digitraffic';
+import { TrainDetailsFragment } from '../graphql/generated/digitraffic/graphql';
 import { useTrainSpeed } from '../hooks/useTrainSpeed';
 import {
   getTrainDepartureStationName,

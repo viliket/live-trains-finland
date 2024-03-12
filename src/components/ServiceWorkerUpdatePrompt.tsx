@@ -1,21 +1,17 @@
 import { useEffect } from 'react';
 
-import { useReactiveVar } from '@apollo/client';
 import { Snackbar, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useShallow } from 'zustand/react/shallow';
 
+import useServiceWorkerStore from '../hooks/useServiceWorkerStore';
 import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
-import {
-  serviceWorkerRegistrationVar,
-  onRegister,
-  onSuccess,
-  onUpdate,
-} from '../utils/serviceWorker';
+import { onRegister, onSuccess, onUpdate } from '../utils/serviceWorker';
 
 const ServiceWorkerUpdatePrompt = () => {
   const { t } = useTranslation();
-  const { registration, updateAvailable } = useReactiveVar(
-    serviceWorkerRegistrationVar
+  const [registration, updateAvailable] = useServiceWorkerStore(
+    useShallow((state) => [state.registration, state.updateAvailable])
   );
 
   useEffect(() => {

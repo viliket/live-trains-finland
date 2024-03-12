@@ -4,7 +4,8 @@ import { parseISO } from 'date-fns';
 import RouterLink from 'next/link';
 import { useTranslation } from 'react-i18next';
 
-import { TrainDetailsFragment, Wagon } from '../graphql/generated/digitraffic';
+import { Wagon } from '../graphql/generated/digitraffic/graphql';
+import { TrainExtendedDetails } from '../types';
 import getTrainCurrentStation from '../utils/getTrainCurrentStation';
 import getTrainLatestArrivalRow from '../utils/getTrainLatestArrivalRow';
 import getTrainLatestDepartureTimeTableRow from '../utils/getTrainLatestDepartureTimeTableRow';
@@ -18,8 +19,8 @@ import TimeTableRowTime from './TimeTableRowTime';
 import TrainComposition from './TrainComposition';
 
 type TrainStationTimelineProps = {
-  train?: TrainDetailsFragment | null;
-  realTimeTrain?: TrainDetailsFragment | null;
+  train?: TrainExtendedDetails | null;
+  realTimeTrain?: TrainExtendedDetails | null;
   onWagonClick: (w: Wagon) => void;
   onStationAlertClick: (stationCode: string) => void;
   stationMessages?: Record<string, PassengerInformationMessage[]>;

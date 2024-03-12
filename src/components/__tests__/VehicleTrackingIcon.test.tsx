@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 
-import { trainsVar } from '../../graphql/client';
+import useTrainStore from '../../hooks/useTrainStore';
 import VehicleTrackingIcon from '../VehicleTrackingIcon';
 
 describe('VehicleTrackingIcon', () => {
   it('should not render tracking icon when vehicle is not tracked', () => {
-    trainsVar({});
+    useTrainStore.getState().setTrains({});
 
     render(
       <VehicleTrackingIcon trainNumber={123} departureDate={'2023-03-07'} />
@@ -15,7 +15,7 @@ describe('VehicleTrackingIcon', () => {
   });
 
   it('should render tracking icon when train number exists but departure date does not match', () => {
-    trainsVar({
+    useTrainStore.getState().setTrains({
       123: { departureDate: '2023-03-07' },
     });
 
@@ -27,7 +27,7 @@ describe('VehicleTrackingIcon', () => {
   });
 
   it('should render tracking icon when vehicle is tracked', () => {
-    trainsVar({
+    useTrainStore.getState().setTrains({
       123: { departureDate: '2023-03-07' },
     });
 
