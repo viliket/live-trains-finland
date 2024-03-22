@@ -4,11 +4,9 @@ import {
   Station,
   TimeTableRowType,
   TrainByStationFragment,
-  TrainsByRouteQuery,
   TrainsByStationQuery,
 } from '../graphql/generated/digitraffic/graphql';
 import { isDefined } from '../utils/common';
-import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 
 import { useTrainsByRouteQuery } from './useTrainsByRouteQuery';
 import { useTrainsByStationQuery } from './useTrainsByStationQuery';
@@ -34,10 +32,8 @@ export default function useTrainsByStationOrRouteQuery({
 
   const trains = getTrains(
     deptOrArrStationCodeFilter,
-    stationCode,
-    timeTableType,
     trainsByStationResult.data?.trainsByStationAndQuantity,
-    trainsByRouteResult.data?.trainsByVersionGreaterThan
+    trainsByRouteResult.data
   );
 
   const stationsFromCurrentStation = getStationsFromCurrentStation(
@@ -46,10 +42,11 @@ export default function useTrainsByStationOrRouteQuery({
 
   return {
     trains,
-    loading:
-      !stationCode ||
-      trainsByStationResult.isLoading ||
-      trainsByRouteResult.isLoading,
+    loading: deptOrArrStationCodeFilter
+      ? trainsByRouteResult.isLoading ||
+        !trainsByRouteResult.isFetchedAfterMount
+      : trainsByStationResult.isLoading ||
+        !trainsByStationResult.isFetchedAfterMount,
     error: trainsByRouteResult.error || trainsByStationResult.error,
     stationsFromCurrentStation,
   };
@@ -57,43 +54,13 @@ export default function useTrainsByStationOrRouteQuery({
 
 function getTrains(
   deptOrArrStationCodeFilter: string | null,
-  stationCode: string | undefined,
-  timeTableType: TimeTableRowType,
   trainsByStation: TrainsByStationQuery['trainsByStationAndQuantity'],
-  trainsByRoute: TrainsByRouteQuery['trainsByVersionGreaterThan']
+  trainsByRoute: TrainByStationFragment[] | undefined
 ): TrainByStationFragment[] {
-  const trainsByRouteRelevant =
-    deptOrArrStationCodeFilter && stationCode
-      ? (trainsByRoute ?? []).filter(isDefined).filter((train) => {
-          const oppositeTimeTableType =
-            timeTableType === TimeTableRowType.Departure
-              ? TimeTableRowType.Arrival
-              : TimeTableRowType.Departure;
-
-          const rowA = getTimeTableRowForStation(
-            deptOrArrStationCodeFilter,
-            train,
-            oppositeTimeTableType
-          );
-          if (!rowA?.trainStopping) return false;
-
-          const rowB = getTimeTableRowForStation(
-            stationCode,
-            train,
-            timeTableType
-          );
-          if (!rowB?.trainStopping) return false;
-
-          return timeTableType === TimeTableRowType.Departure
-            ? rowA.scheduledTime > rowB.scheduledTime
-            : rowA.scheduledTime < rowB.scheduledTime;
-        })
-      : [];
-
   const trains = deptOrArrStationCodeFilter
-    ? trainsByRouteRelevant
-    : (trainsByStation ?? []).filter(isDefined);
-  return trains;
+    ? trainsByRoute
+    : trainsByStation?.filter(isDefined);
+  return trains ?? [];
 }
 
 function getStationsFromCurrentStation(
