@@ -196,7 +196,7 @@ const Station: NextPageWithLayout = () => {
             sx={{ padding: 2 }}
           >
             <Badge
-              badgeContent={deptOrArrStationCodeFilter ? 1 : 0}
+              badgeContent={stationCode && deptOrArrStationCodeFilter ? 1 : 0}
               color="primary"
             >
               <FilterCog fontSize="inherit" />
