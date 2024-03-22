@@ -51,7 +51,7 @@ const Station: NextPageWithLayout = () => {
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [deptOrArrStationCodeFilter, setDeptOrArrStationCodeFilter] =
-    useQueryState('station', {
+    useQueryState('station_filter', {
       history: 'push',
       clearOnDefault: true,
     });
