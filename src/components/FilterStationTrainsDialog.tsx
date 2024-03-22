@@ -16,6 +16,7 @@ import {
   Station,
   TimeTableRowType,
 } from '../graphql/generated/digitraffic/graphql';
+import { trainStations } from '../utils/stations';
 import { getTrainStationName } from '../utils/train';
 
 type StationFragment = Pick<Station, 'name' | 'shortCode'>;
@@ -29,6 +30,15 @@ type FilterStationTrainsDialogProps = {
   timeTableType: TimeTableRowType;
 };
 
+const getStationByCode = (stationCode: string): StationFragment | null => {
+  const station = trainStations.find((s) => s.stationShortCode === stationCode);
+  if (!station) return null;
+  return {
+    name: station.stationName,
+    shortCode: station.stationShortCode,
+  };
+};
+
 const FilterStationTrainsDialog = (props: FilterStationTrainsDialogProps) => {
   const {
     onClose,
@@ -39,7 +49,9 @@ const FilterStationTrainsDialog = (props: FilterStationTrainsDialogProps) => {
     timeTableType,
   } = props;
   const { t } = useTranslation();
-  const [station, setStation] = useState<StationFragment | null>(null);
+  const [station, setStation] = useState<StationFragment | null>(
+    stationCodeFilter ? getStationByCode(stationCodeFilter) : null
+  );
 
   const handleClose = () => {
     onClose();
@@ -60,9 +72,11 @@ const FilterStationTrainsDialog = (props: FilterStationTrainsDialogProps) => {
   };
 
   useEffect(() => {
-    // Reset selection when station code filter is cleared from the parent
+    // Reset selection when station code filter is changed from the parent
     if (!stationCodeFilter) {
       setStation(null);
+    } else {
+      setStation(getStationByCode(stationCodeFilter));
     }
   }, [stationCodeFilter]);
 
