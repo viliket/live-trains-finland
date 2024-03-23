@@ -14,7 +14,6 @@ import {
 import { orderBy } from 'lodash';
 import { ClockStart, ClockEnd, FilterCog } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
-import { useQueryState } from 'nuqs';
 import { useTranslation } from 'react-i18next';
 
 import FavoriteStation from '../components/FavoriteStation';
@@ -27,6 +26,7 @@ import SubNavBar from '../components/SubNavBar';
 import { TimeTableRowType } from '../graphql/generated/digitraffic/graphql';
 import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
 import { useRouteQuery } from '../hooks/useRouteQuery';
+import useSafeQueryState from '../hooks/useSafeQueryState';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
 import useTrainsByStationOrRouteQuery from '../hooks/useTrainsByStationOrRouteQuery';
 import useVehicleStore from '../hooks/useVehicleStore';
@@ -51,7 +51,7 @@ const Station: NextPageWithLayout = () => {
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [deptOrArrStationCodeFilter, setDeptOrArrStationCodeFilter] =
-    useQueryState('station_filter', {
+    useSafeQueryState('station', {
       history: 'push',
       clearOnDefault: true,
     });
