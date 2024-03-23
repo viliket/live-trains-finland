@@ -10,6 +10,12 @@ import { trainStations } from '../utils/stations';
 
 const apiBaseUrl = 'https://rata.digitraffic.fi/api/v1';
 
+type ExceptionMessage = {
+  queryString: string;
+  code: string;
+  errorMessage: string;
+};
+
 type SimpleCause = {
   categoryCodeId: string;
   categoryCode: string;
@@ -119,7 +125,9 @@ async function getTrainsByRoute(
     throw new Error(`Failed to fetch data (status ${res.status})`);
   }
 
-  const trains = (await res.json()) as SimpleTrain[];
+  const trains = (await res.json()) as SimpleTrain[] | ExceptionMessage;
+
+  if ('errorMessage' in trains) return [];
 
   return trains.map((t) => ({
     trainNumber: t.trainNumber,
