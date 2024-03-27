@@ -1,20 +1,23 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
+  Badge,
   Box,
+  IconButton,
   Skeleton,
   Snackbar,
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
 import { orderBy } from 'lodash';
-import { ClockStart, ClockEnd } from 'mdi-material-ui';
+import { ClockStart, ClockEnd, FilterCog } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
 import FavoriteStation from '../components/FavoriteStation';
+import FilterStationTrainsDialog from '../components/FilterStationTrainsDialog';
 import MapLayout, { VehicleMapContainerPortal } from '../components/MapLayout';
 import PassengerInformationMessageAlert from '../components/PassengerInformationMessageAlert';
 import PassengerInformationMessagesDialog from '../components/PassengerInformationMessagesDialog';
@@ -23,10 +26,10 @@ import SubNavBar from '../components/SubNavBar';
 import { TimeTableRowType } from '../graphql/generated/digitraffic/graphql';
 import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
 import { useRouteQuery } from '../hooks/useRouteQuery';
+import useSafeQueryState from '../hooks/useSafeQueryState';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
-import { useTrainsByStationQuery } from '../hooks/useTrainsByStationQuery';
+import useTrainsByStationOrRouteQuery from '../hooks/useTrainsByStationOrRouteQuery';
 import useVehicleStore from '../hooks/useVehicleStore';
-import { isDefined } from '../utils/common';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
 import { getTimeTableRowRealTime, getTrainRouteGtfsId } from '../utils/train';
@@ -46,16 +49,26 @@ const Station: NextPageWithLayout = () => {
   );
   const [selectedTrainNo, setSelectedTrainNo] = useState<number | null>(null);
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
+  const [filterDialogOpen, setFilterDialogOpen] = useState(false);
+  const [deptOrArrStationCodeFilter, setDeptOrArrStationCodeFilter] =
+    useSafeQueryState('station', {
+      history: 'push',
+      clearOnDefault: true,
+    });
   const station = stationName
     ? trainStations.find(
         (s) => s.stationName.toUpperCase() === stationName.toUpperCase()
       )
     : undefined;
   const stationCode = station?.stationShortCode;
-  const { isLoading, isFetchedAfterMount, error, data } =
-    useTrainsByStationQuery(stationCode);
-  const showLoading = isLoading || !isFetchedAfterMount;
-  useTrainLiveTracking(data?.trainsByStationAndQuantity?.filter(isDefined));
+  const { loading, error, trains, stationsFromCurrentStation } =
+    useTrainsByStationOrRouteQuery({
+      stationCode,
+      deptOrArrStationCodeFilter,
+      timeTableType,
+    });
+
+  const { unsubscribeAll } = useTrainLiveTracking(trains);
   const { messages: passengerInformationMessages } =
     usePassengerInformationMessages({
       skip: stationCode == null,
@@ -63,6 +76,10 @@ const Station: NextPageWithLayout = () => {
       onlyGeneral: true,
       stationCode: stationCode,
     });
+
+  useEffect(() => {
+    unsubscribeAll();
+  }, [deptOrArrStationCodeFilter, unsubscribeAll]);
 
   const handleVehicleIdSelected = useCallback(
     (vehicleId: number) => {
@@ -83,9 +100,7 @@ const Station: NextPageWithLayout = () => {
   );
 
   const selectedTrain = selectedTrainNo
-    ? data?.trainsByStationAndQuantity?.find(
-        (t) => t?.trainNumber === selectedTrainNo
-      )
+    ? trains.find((t) => t?.trainNumber === selectedTrainNo)
     : null;
 
   const { data: routeData } = useRouteQuery(
@@ -109,19 +124,18 @@ const Station: NextPageWithLayout = () => {
     );
   };
 
-  const trains =
-    stationCode && data?.trainsByStationAndQuantity
-      ? orderBy(
-          data.trainsByStationAndQuantity.filter(isDefined),
-          (t) =>
-            getTimeTableRowForStation(stationCode, t, timeTableType)
-              ?.scheduledTime
-        ).filter((t) => {
-          const row = getTimeTableRowForStation(stationCode, t, timeTableType);
-          if (!row) return false;
-          return getTimeTableRowRealTime(row) >= new Date();
-        })
-      : [];
+  const relevantTrains = stationCode
+    ? orderBy(
+        trains,
+        (t) =>
+          getTimeTableRowForStation(stationCode, t, timeTableType)
+            ?.scheduledTime
+      ).filter((t) => {
+        const row = getTimeTableRowForStation(stationCode, t, timeTableType);
+        if (!row) return false;
+        return getTimeTableRowRealTime(row) >= new Date();
+      })
+    : [];
 
   const handleTimeTableTypeChange = (
     _event: unknown,
@@ -155,26 +169,40 @@ const Station: NextPageWithLayout = () => {
           bgcolor: 'common.secondaryBackground.default',
         }}
       >
-        <ToggleButtonGroup
-          color="primary"
-          value={timeTableType}
-          exclusive
-          fullWidth
-          onChange={handleTimeTableTypeChange}
-          sx={{
-            borderRadius: '24px',
-            button: {
+        <Box sx={{ display: 'flex' }}>
+          <ToggleButtonGroup
+            color="primary"
+            value={timeTableType}
+            exclusive
+            fullWidth
+            onChange={handleTimeTableTypeChange}
+            sx={{
               borderRadius: '24px',
-            },
-          }}
-        >
-          <ToggleButton value={TimeTableRowType.Departure}>
-            {t('departures')} <ClockStart />
-          </ToggleButton>
-          <ToggleButton value={TimeTableRowType.Arrival}>
-            <ClockEnd /> {t('arrivals')}
-          </ToggleButton>
-        </ToggleButtonGroup>
+              button: {
+                borderRadius: '24px',
+              },
+            }}
+          >
+            <ToggleButton value={TimeTableRowType.Departure}>
+              {t('departures')} <ClockStart />
+            </ToggleButton>
+            <ToggleButton value={TimeTableRowType.Arrival}>
+              <ClockEnd /> {t('arrivals')}
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <IconButton
+            size="small"
+            onClick={() => setFilterDialogOpen(true)}
+            sx={{ padding: 2 }}
+          >
+            <Badge
+              badgeContent={stationCode && deptOrArrStationCodeFilter ? 1 : 0}
+              color="primary"
+            >
+              <FilterCog fontSize="inherit" />
+            </Badge>
+          </IconButton>
+        </Box>
         <Box paddingY={1}>
           {passengerInformationMessages && (
             <PassengerInformationMessageAlert
@@ -189,19 +217,27 @@ const Station: NextPageWithLayout = () => {
         autoHideDuration={5000}
         message={error?.message}
       />
-      {stationCode && !showLoading && data?.trainsByStationAndQuantity && (
+      {stationCode && !loading && trains && (
         <StationTimeTable
           stationCode={stationCode}
           timeTableType={timeTableType}
-          trains={trains}
+          trains={relevantTrains}
           tableRowOnClick={handleTimeTableRowClick}
         />
       )}
-      {(!stationCode || showLoading) && getLoadingSkeleton()}
+      {(!stationCode || loading) && getLoadingSkeleton()}
       <PassengerInformationMessagesDialog
         open={stationAlertDialogOpen}
         passengerInformationMessages={passengerInformationMessages}
         onClose={() => setStationAlertDialogOpen(false)}
+      />
+      <FilterStationTrainsDialog
+        open={filterDialogOpen}
+        stationOptions={stationsFromCurrentStation}
+        stationCodeFilter={deptOrArrStationCodeFilter}
+        setStationCodeFilter={setDeptOrArrStationCodeFilter}
+        timeTableType={timeTableType}
+        onClose={() => setFilterDialogOpen(false)}
       />
     </div>
   );

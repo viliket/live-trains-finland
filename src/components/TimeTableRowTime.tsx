@@ -47,7 +47,7 @@ function TimeTableRowTime({ row }: TimeTableRowTimeProps) {
           {t('canceled')}
         </Box>
       )}
-      {row.causes && (
+      {row.causes && row.causes.length > 0 && (
         <Tooltip
           enterTouchDelay={0}
           title={row.causes
