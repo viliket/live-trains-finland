@@ -5,6 +5,7 @@ import {
   differenceInMinutes,
   format,
   formatDistanceToNowStrict,
+  Locale,
 } from 'date-fns';
 import { MapLibreZoomEvent, MapStyleImageMissingEvent } from 'maplibre-gl';
 import { useTranslation } from 'react-i18next';
@@ -84,9 +85,9 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     const fetchAndSetLocale = async (languageCode?: string) => {
       let locale: Locale | undefined;
       if (languageCode === 'fi') {
-        locale = (await import(`date-fns/locale/fi`)).default;
+        locale = (await import(`date-fns/locale/fi`)).fi;
       } else if (languageCode === 'sv') {
-        locale = (await import(`date-fns/locale/sv`)).default;
+        locale = (await import(`date-fns/locale/sv`)).sv;
       }
       setLocale(locale);
     };

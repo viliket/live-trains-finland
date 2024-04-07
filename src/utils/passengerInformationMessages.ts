@@ -1,5 +1,5 @@
 import { differenceInMinutes, format, parseISO, startOfDay } from 'date-fns';
-import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
+import { toZonedTime, fromZonedTime } from 'date-fns-tz';
 import { orderBy } from 'lodash';
 
 import {
@@ -322,7 +322,7 @@ const isWithinTimeSpanAndHours = (
 };
 
 const getCurrentWeekdayInEET = (date: Date): Weekday => {
-  const dateEET = utcToZonedTime(date, 'Europe/Helsinki');
+  const dateEET = toZonedTime(date, 'Europe/Helsinki');
   return format(dateEET, 'EEEE').toUpperCase() as Weekday;
 };
 
@@ -347,12 +347,12 @@ const getDateTime = (
     dateTime = parseISO(dateTimeISO);
   }
   if (timeISOinEET) {
-    dateTime = utcToZonedTime(dateTime, 'Europe/Helsinki');
+    dateTime = toZonedTime(dateTime, 'Europe/Helsinki');
     const [hours, minutes] = timeISOinEET.split(':').map(Number);
     dateTime = startOfDay(dateTime);
     dateTime.setHours(hours);
     dateTime.setMinutes(minutes);
-    dateTime = zonedTimeToUtc(dateTime, 'Europe/Helsinki');
+    dateTime = fromZonedTime(dateTime, 'Europe/Helsinki');
   }
   return dateTime;
 };
