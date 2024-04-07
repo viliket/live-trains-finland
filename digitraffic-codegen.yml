@@ -8,14 +8,7 @@ schema:
   - src/graphql/queries/digitraffic/client-schema.graphql
 documents: src/graphql/queries/digitraffic/**/*.graphql
 generates:
-  src/graphql/generated/digitraffic.tsx:
-    plugins:
-      - add:
-          content: '/* eslint-disable */'
-      - typescript
-      - typescript-operations
-      - typescript-react-apollo
-    config:
-      scalars:
-        Date: string
-        DateTime: string
+  src/graphql/generated/digitraffic/:
+    preset: 'client'
+    presetConfig:
+      fragmentMasking: false

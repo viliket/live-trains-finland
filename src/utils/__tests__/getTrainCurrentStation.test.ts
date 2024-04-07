@@ -5,7 +5,7 @@ import {
   TimeTableRowType,
   TrainDetailsFragment,
   TrainTimeTableRowFragment,
-} from '../../graphql/generated/digitraffic';
+} from '../../graphql/generated/digitraffic/graphql';
 import getTrainCurrentStation from '../getTrainCurrentStation';
 import * as getTrainLatestArrivalRowModule from '../getTrainLatestArrivalRow';
 

@@ -1,9 +1,4 @@
-import { makeVar } from '@apollo/client';
-
-export const serviceWorkerRegistrationVar = makeVar<{
-  registration: ServiceWorkerRegistration | null;
-  updateAvailable?: boolean;
-}>({ registration: null });
+import useServiceWorkerStore from '../hooks/useServiceWorkerStore';
 
 export const onRegister = (registration: ServiceWorkerRegistration) => {
   const hasController = !!navigator.serviceWorker.controller;
@@ -27,19 +22,15 @@ export const onRegister = (registration: ServiceWorkerRegistration) => {
     registration.update();
   }, intervalMS);
 
-  serviceWorkerRegistrationVar({
-    registration,
-    updateAvailable: !!registration.waiting,
-  });
+  useServiceWorkerStore
+    .getState()
+    .setRegistrationAndUpdateAvailable(registration, !!registration.waiting);
 };
 
 export const onSuccess = (registration: ServiceWorkerRegistration) =>
-  serviceWorkerRegistrationVar({
-    registration,
-  });
+  useServiceWorkerStore.getState().setRegistration(registration);
 
 export const onUpdate = (registration: ServiceWorkerRegistration) =>
-  serviceWorkerRegistrationVar({
-    registration,
-    updateAvailable: true,
-  });
+  useServiceWorkerStore
+    .getState()
+    .setRegistrationAndUpdateAvailable(registration, true);

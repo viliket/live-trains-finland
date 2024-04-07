@@ -1,6 +1,6 @@
 import { parseISO } from 'date-fns';
 
-import { TrainDetailsFragment } from '../../graphql/generated/digitraffic';
+import { TrainDetailsFragment } from '../../graphql/generated/digitraffic/graphql';
 import getTrainCurrentJourneySection from '../getTrainCurrentJourneySection';
 
 const trainBase: TrainDetailsFragment = {

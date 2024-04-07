@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { TrainDetailsFragment } from '../../graphql/generated/digitraffic';
+import { TrainDetailsFragment } from '../../graphql/generated/digitraffic/graphql';
 import MqttClient from '../__mocks__/mqttClient';
 import useTrainLiveTrackingWithEndpoint from '../useTrainLiveTrackingWithEndpoint';
 

@@ -1,11 +1,12 @@
 import { parseISO } from 'date-fns';
 import { orderBy } from 'lodash';
 
-import { trainsVar, vehiclesVar } from '../graphql/client';
 import {
   TimeTableRowType,
   TrainByStationFragment,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
+import useTrainStore from '../hooks/useTrainStore';
+import useVehicleStore from '../hooks/useVehicleStore';
 import { VehiclePositionMessage } from '../types/vehicles';
 
 import { formatEET } from './date';
@@ -68,9 +69,9 @@ export const handleVehiclePositionMessage = (
 
   const train = topicToTrain.get(getMqttTopic(routeId, startTime));
 
-  const trackedTrains = trainsVar();
+  const trackedTrains = useTrainStore.getState().trains;
   if (vp.jrn != null && !(vp.jrn in trackedTrains) && train) {
-    trainsVar({
+    useTrainStore.getState().setTrains({
       ...trackedTrains,
       [vp.jrn]: {
         departureDate: formatEET(
@@ -81,9 +82,9 @@ export const handleVehiclePositionMessage = (
     });
   }
 
-  const oldVehicles = vehiclesVar();
+  const oldVehicles = useVehicleStore.getState().vehicles;
 
-  vehiclesVar({
+  useVehicleStore.getState().setVehicles({
     ...oldVehicles,
     [vp.veh]: {
       position: [vp.long, vp.lat],

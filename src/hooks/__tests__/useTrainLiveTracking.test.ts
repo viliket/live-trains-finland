@@ -1,16 +1,16 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { vehiclesVar } from '../../graphql/client';
 import {
   TimeTableRowType,
   TrainDetailsFragment,
-} from '../../graphql/generated/digitraffic';
+} from '../../graphql/generated/digitraffic/graphql';
 import {
   TrainLocationMessage,
   VehiclePositionMessage,
 } from '../../types/vehicles';
 import MqttClient from '../__mocks__/mqttClient';
 import useTrainLiveTracking from '../useTrainLiveTracking';
+import useVehicleStore from '../useVehicleStore';
 
 const trainBase: TrainDetailsFragment = {
   trainNumber: 123,
@@ -107,21 +107,21 @@ describe('useTrainLiveTracking', () => {
     expect(mockMqttDigitrafficClient.subscriptions).toHaveLength(0);
     expect(mockMqttDigitransitClient.subscriptions).toHaveLength(0);
 
-    expect(vehiclesVar()).toEqual({});
+    expect(useVehicleStore.getState().vehicles).toEqual({});
   });
 
   it('should correctly update vehicleVar based on messages received from Digitransit and Digitraffic MQTT', () => {
     renderHook(() => useTrainLiveTracking(trains));
 
-    expect(vehiclesVar()).toEqual({});
+    expect(useVehicleStore.getState().vehicles).toEqual({});
 
     act(() => {
       mockMqttDigitrafficClient.emit('connect');
       mockMqttDigitransitClient.emit('connect');
     });
 
-    expect(vehiclesVar()[123]).toBeUndefined();
-    expect(vehiclesVar()[321]).toBeUndefined();
+    expect(useVehicleStore.getState().vehicles[123]).toBeUndefined();
+    expect(useVehicleStore.getState().vehicles[321]).toBeUndefined();
 
     act(() => {
       mockMqttDigitrafficClient.emit(
@@ -137,7 +137,7 @@ describe('useTrainLiveTracking', () => {
       );
     });
 
-    expect(vehiclesVar()[123]).toBeDefined();
+    expect(useVehicleStore.getState().vehicles[123]).toBeDefined();
 
     act(() => {
       mockMqttDigitransitClient.emit(
@@ -159,6 +159,6 @@ describe('useTrainLiveTracking', () => {
       );
     });
 
-    expect(vehiclesVar()[1234]).toBeDefined();
+    expect(useVehicleStore.getState().vehicles[1234]).toBeDefined();
   });
 });

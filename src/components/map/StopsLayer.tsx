@@ -5,16 +5,14 @@ import {
   differenceInMinutes,
   format,
   formatDistanceToNowStrict,
+  Locale,
 } from 'date-fns';
 import { MapLibreZoomEvent, MapStyleImageMissingEvent } from 'maplibre-gl';
 import { useTranslation } from 'react-i18next';
 import { Layer, Source, useMap } from 'react-map-gl';
 
-import { gqlClients } from '../../graphql/client';
-import {
-  TrainByStationFragment,
-  useTrainQuery,
-} from '../../graphql/generated/digitraffic';
+import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
+import useTrainQuery from '../../hooks/useTrainQuery';
 import { isDefined } from '../../utils/common';
 import { StationTimeTableRowGroup } from '../../utils/getTimeTableRowsGroupedByStation';
 import getTimeTableRowsGroupedByStationUniqueStations from '../../utils/getTimeTableRowsGroupedByStationUniqueStations';
@@ -36,21 +34,9 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
   const [locale, setLocale] = useState<Locale>();
   const { i18n, t } = useTranslation();
 
-  const { data: realTimeData } = useTrainQuery(
-    train
-      ? {
-          variables: {
-            trainNumber: train.trainNumber,
-            departureDate: train.departureDate,
-          },
-          context: { clientName: gqlClients.digitraffic },
-          pollInterval: 10000,
-          // Fetch only from cache as this data is already polled every 10 seconds in TrainInfoContainer
-          fetchPolicy: 'cache-only',
-          // To trigger re-render on every poll interval even when the data has not changed
-          notifyOnNetworkStatusChange: true,
-        }
-      : { skip: true }
+  const { data: realTimeTrain } = useTrainQuery(
+    train?.trainNumber,
+    train?.departureDate
   );
 
   useEffect(() => {
@@ -99,9 +85,9 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     const fetchAndSetLocale = async (languageCode?: string) => {
       let locale: Locale | undefined;
       if (languageCode === 'fi') {
-        locale = (await import(`date-fns/locale/fi`)).default;
+        locale = (await import(`date-fns/locale/fi`)).fi;
       } else if (languageCode === 'sv') {
-        locale = (await import(`date-fns/locale/sv`)).default;
+        locale = (await import(`date-fns/locale/sv`)).sv;
       }
       setLocale(locale);
     };
@@ -135,7 +121,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
       )
     : undefined;
 
-  const trainWithRealTimeData = realTimeData?.train?.[0] ?? train;
+  const trainWithRealTimeData = realTimeTrain ?? train;
 
   const trainTimeTableRows = trainWithRealTimeData
     ? getTimeTableRowsGroupedByStationUniqueStations(trainWithRealTimeData)

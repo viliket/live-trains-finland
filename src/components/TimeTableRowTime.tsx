@@ -3,7 +3,7 @@ import { format, parseISO } from 'date-fns';
 import { ClockAlert } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 
-import { TrainTimeTableRowFragment } from '../graphql/generated/digitraffic';
+import { TrainTimeTableRowFragment } from '../graphql/generated/digitraffic/graphql';
 
 type TimeTableRowTimeProps = {
   row: TrainTimeTableRowFragment;
@@ -47,7 +47,7 @@ function TimeTableRowTime({ row }: TimeTableRowTimeProps) {
           {t('canceled')}
         </Box>
       )}
-      {row.causes && (
+      {row.causes && row.causes.length > 0 && (
         <Tooltip
           enterTouchDelay={0}
           title={row.causes
