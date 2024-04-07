@@ -18,7 +18,7 @@
     "autosuggest-highlight": "^3.3.4",
     "date-fns": "^3.6.0",
     "date-fns-tz": "^3.0.0",
-    "deck.gl": "^8.9.34",
+    "deck.gl": "^9.0.5",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "hsl-map-style": "github:HSLdevcom/hsl-map-style#master",
