@@ -1,9 +1,10 @@
-import { trainsVar, vehiclesVar } from '../../graphql/client';
 import {
   TimeTableRowType,
   TrainByStationFragment,
   TrainDetailsFragment,
-} from '../../graphql/generated/digitraffic';
+} from '../../graphql/generated/digitraffic/graphql';
+import useTrainStore from '../../hooks/useTrainStore';
+import useVehicleStore from '../../hooks/useVehicleStore';
 import { VehiclePositionMessage } from '../../types/vehicles';
 import { getTopic, handleVehiclePositionMessage } from '../mqttDigitransit';
 
@@ -127,7 +128,7 @@ describe('handleVehiclePositionMessage', () => {
       ],
     };
 
-    expect(vehiclesVar()).toEqual({});
+    expect(useVehicleStore.getState().vehicles).toEqual({});
 
     handleVehiclePositionMessage(
       '/hfp/v2/journey/ongoing/vp/+/+/+/3002U/+/+/12:01/#',
@@ -135,7 +136,7 @@ describe('handleVehiclePositionMessage', () => {
       topicToTrain
     );
 
-    expect(vehiclesVar()).toEqual({});
+    expect(useVehicleStore.getState().vehicles).toEqual({});
 
     handleVehiclePositionMessage(
       '/hfp/v2/journey/ongoing/vp/+/+/+/3002U/+/+/12:01/#',
@@ -155,15 +156,17 @@ describe('handleVehiclePositionMessage', () => {
       topicToTrain
     );
 
-    expect(trainsVar()[123]).toBeUndefined();
-    expect(vehiclesVar()[1234]).toBeDefined();
-    expect(vehiclesVar()[1234].veh).toEqual(1234);
-    expect(vehiclesVar()[1234].jrn).toEqual(null);
-    expect(vehiclesVar()[1234].heading).toEqual(12);
-    expect(vehiclesVar()[1234].position[1]).toEqual(10.5);
-    expect(vehiclesVar()[1234].position[0]).toEqual(20.6);
-    expect(vehiclesVar()[1234].spd).toEqual(380);
-    expect(vehiclesVar()[1234].routeShortName).toEqual('U');
+    expect(useTrainStore.getState().trains[123]).toBeUndefined();
+    expect(useVehicleStore.getState().vehicles[1234]).toBeDefined();
+    expect(useVehicleStore.getState().vehicles[1234].veh).toEqual(1234);
+    expect(useVehicleStore.getState().vehicles[1234].jrn).toEqual(null);
+    expect(useVehicleStore.getState().vehicles[1234].heading).toEqual(12);
+    expect(useVehicleStore.getState().vehicles[1234].position[1]).toEqual(10.5);
+    expect(useVehicleStore.getState().vehicles[1234].position[0]).toEqual(20.6);
+    expect(useVehicleStore.getState().vehicles[1234].spd).toEqual(380);
+    expect(useVehicleStore.getState().vehicles[1234].routeShortName).toEqual(
+      'U'
+    );
 
     topicToTrain.set(
       '/hfp/v2/journey/ongoing/vp/+/+/+/3002U/+/+/12:01/#',
@@ -188,15 +191,19 @@ describe('handleVehiclePositionMessage', () => {
       topicToTrain
     );
 
-    expect(trainsVar()[123]).toBeDefined();
-    expect(trainsVar()[123].departureDate).toBe('2023-03-11');
-    expect(vehiclesVar()[1234]).toBeDefined();
-    expect(vehiclesVar()[1234].veh).toEqual(1234);
-    expect(vehiclesVar()[1234].jrn).toEqual(123);
-    expect(vehiclesVar()[1234].heading).toEqual(14);
-    expect(vehiclesVar()[1234].position[1]).toEqual(10.6);
-    expect(vehiclesVar()[1234].position[0]).toEqual(20.7);
-    expect(vehiclesVar()[1234].spd).toEqual(380);
-    expect(vehiclesVar()[1234].routeShortName).toEqual('U');
+    expect(useTrainStore.getState().trains[123]).toBeDefined();
+    expect(useTrainStore.getState().trains[123].departureDate).toBe(
+      '2023-03-11'
+    );
+    expect(useVehicleStore.getState().vehicles[1234]).toBeDefined();
+    expect(useVehicleStore.getState().vehicles[1234].veh).toEqual(1234);
+    expect(useVehicleStore.getState().vehicles[1234].jrn).toEqual(123);
+    expect(useVehicleStore.getState().vehicles[1234].heading).toEqual(14);
+    expect(useVehicleStore.getState().vehicles[1234].position[1]).toEqual(10.6);
+    expect(useVehicleStore.getState().vehicles[1234].position[0]).toEqual(20.7);
+    expect(useVehicleStore.getState().vehicles[1234].spd).toEqual(380);
+    expect(useVehicleStore.getState().vehicles[1234].routeShortName).toEqual(
+      'U'
+    );
   });
 });

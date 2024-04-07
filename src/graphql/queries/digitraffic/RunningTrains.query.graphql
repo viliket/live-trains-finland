@@ -20,6 +20,9 @@ query RunningTrains {
     commuterLineid
     departureDate
     version
+    operator {
+      uicCode
+    }
     trainType {
       name
       trainCategory {

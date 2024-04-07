@@ -84,7 +84,7 @@ export default function usePassengerInformationMessages({
   }, [params]);
 
   useEffect(() => {
-    let interval: NodeJS.Timer | null = null;
+    let interval: ReturnType<typeof setInterval> | null = null;
     if (!skip) {
       interval = setInterval(fetchData, refetchIntervalMs);
       fetchData();

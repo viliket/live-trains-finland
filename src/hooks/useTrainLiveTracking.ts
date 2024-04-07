@@ -1,16 +1,17 @@
 import { useCallback } from 'react';
 
-import { vehiclesVar } from '../graphql/client';
-import { TrainByStationFragment } from '../graphql/generated/digitraffic';
+import { TrainByStationFragment } from '../graphql/generated/digitraffic/graphql';
 import canTrainBeTrackedByHsl from '../utils/canTrainBeTrackedByHsl';
 import { mqttDigitraffic } from '../utils/mqttDigitraffic';
 import { mqttDigitransit } from '../utils/mqttDigitransit';
 
 import useTrainLiveTrackingWithEndpoint from './useTrainLiveTrackingWithEndpoint';
+import useVehicleStore from './useVehicleStore';
 
 function useTrainLiveTracking(trains?: TrainByStationFragment[]) {
   const hslTrains = trains?.filter((t) => canTrainBeTrackedByHsl(t));
   const nonHslTrains = trains?.filter((t) => !canTrainBeTrackedByHsl(t));
+  const removeAllVehicles = useVehicleStore((state) => state.removeAllVehicles);
 
 
   const { unsubscribeAll: unsubscribeAllHsl } =
@@ -19,9 +20,9 @@ function useTrainLiveTracking(trains?: TrainByStationFragment[]) {
     useTrainLiveTrackingWithEndpoint(mqttDigitraffic, nonHslTrains);
 
   const unsubscribeAll = useCallback(() => {
-    unsubscribeAllHsl(() => vehiclesVar({}));
-    unsubscribeAllDigitraffic(() => vehiclesVar({}));
-  }, [unsubscribeAllDigitraffic, unsubscribeAllHsl]);
+    unsubscribeAllHsl(() => removeAllVehicles());
+    unsubscribeAllDigitraffic(() => removeAllVehicles());
+  }, [unsubscribeAllDigitraffic, unsubscribeAllHsl, removeAllVehicles]);
 
   return { unsubscribeAll };
 }

@@ -1,14 +1,11 @@
 overwrite: true
 schema:
-  - https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql:
+  - https://api.digitransit.fi/routing/v1/routers/finland/index/graphql:
       headers:
         digitransit-subscription-key: ${NEXT_PUBLIC_DIGITRANSIT_SUBSCRIPTION_KEY}
 documents: src/graphql/queries/digitransit/**/*.graphql
 generates:
-  src/graphql/generated/digitransit.tsx:
-    plugins:
-      - add:
-          content: '/* eslint-disable */'
-      - typescript
-      - typescript-operations
-      - typescript-react-apollo
+  src/graphql/generated/digitransit/:
+    preset: 'client'
+    presetConfig:
+      fragmentMasking: false

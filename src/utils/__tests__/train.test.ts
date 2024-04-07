@@ -4,7 +4,7 @@ import {
   TimeTableRowType,
   TrainByStationFragment,
   TrainDetailsFragment,
-} from '../../graphql/generated/digitraffic';
+} from '../../graphql/generated/digitraffic/graphql';
 import {
   getTimeTableRowRealTime,
   getDepartureTimeTableRow,
@@ -16,6 +16,7 @@ import {
   getTrainDestinationStationName,
   getWagonNumberFromVehicleId,
   getTrainDisplayName,
+  getTrainRouteGtfsId,
 } from '../train';
 
 const trainBase: TrainDetailsFragment = {
@@ -141,6 +142,22 @@ const ringRailTrainBase: TrainDetailsFragment = {
     },
     {
       ...arrivalTimeTableRowBase,
+      scheduledTime: '2023-01-25T09:30:00Z',
+      station: {
+        name: 'Huopalahti',
+        shortCode: 'HPL',
+      },
+    },
+    {
+      ...departureTimeTableRowBase,
+      scheduledTime: '2023-01-25T09:35:00Z',
+      station: {
+        name: 'Huopalahti',
+        shortCode: 'HPL',
+      },
+    },
+    {
+      ...arrivalTimeTableRowBase,
       scheduledTime: '2023-01-25T11:00:00Z',
       station: {
         name: 'Lentoasema',
@@ -153,6 +170,22 @@ const ringRailTrainBase: TrainDetailsFragment = {
       station: {
         name: 'Lentoasema',
         shortCode: 'LEN',
+      },
+    },
+    {
+      ...arrivalTimeTableRowBase,
+      scheduledTime: '2023-01-25T11:15:00Z',
+      station: {
+        name: 'Tikkurila',
+        shortCode: 'TKL',
+      },
+    },
+    {
+      ...departureTimeTableRowBase,
+      scheduledTime: '2023-01-25T11:20:00Z',
+      station: {
+        name: 'Tikkurila',
+        shortCode: 'TKL',
       },
     },
     {
@@ -267,34 +300,57 @@ describe('getTrainDestinationStation', () => {
       jest.useRealTimers();
     });
 
-    it('should be the LEN (airport) station when the given station is earlier than LEN', () => {
-      jest.setSystemTime(parseISO('2023-01-25T08:55:00Z'));
+    describe.each([
+      '2023-01-25T08:55:00Z',
+      '2023-01-25T10:30:00Z',
+      '2023-01-25T10:59:59Z',
+    ])('current time (%s) is before LEN arrival (11:00)', (nowISO) => {
+      beforeEach(() => {
+        jest.setSystemTime(parseISO(nowISO));
+      });
 
-      const destStationAtHki = getTrainDestinationStation(ringRailTrain, 'HKI');
-      expectToBeDefined(destStationAtHki);
-      expect(destStationAtHki.name).toBe('Lentoasema');
+      it('should be the LEN (airport) when the first time table row for station is before LEN', () => {
+        ['HKI', 'PSL', 'HPL'].forEach((station) => {
+          const destStation = getTrainDestinationStation(
+            ringRailTrain,
+            station
+          );
+          expectToBeDefined(destStation);
+          expect(destStation.name).toBe('Lentoasema');
+        });
+      });
 
-      const destStationAtPsl = getTrainDestinationStation(ringRailTrain, 'PSL');
-      expectToBeDefined(destStationAtPsl);
-      expect(destStationAtPsl.name).toBe('Lentoasema');
+      it('should be the station of the destination time table row when the first time table row for station is after LEN', () => {
+        ['LEN', 'TKL'].forEach((station) => {
+          const destStation = getTrainDestinationStation(
+            ringRailTrain,
+            station
+          );
+          expectToBeDefined(destStation);
+          expect(destStation.name).toBe('Helsinki');
+        });
+      });
     });
 
-    it('should be the station of the destination time table row when the given station is later than LEN', () => {
-      // Train is between section PSL - LEN based on current time and train schedule
-      // So train has already passed PSL (first time)
-      jest.setSystemTime(parseISO('2023-01-25T10:30:00Z'));
+    describe.each([
+      '2023-01-25T11:00:00Z',
+      '2023-01-25T11:30:00Z',
+      '2023-01-25T19:30:00Z',
+    ])('current time (%s) is after LEN arrival (11:00)', (nowISO) => {
+      beforeEach(() => {
+        jest.setSystemTime(parseISO(nowISO));
+      });
 
-      const destStationAtLen = getTrainDestinationStation(ringRailTrain, 'LEN');
-      expectToBeDefined(destStationAtLen);
-      expect(destStationAtLen.name).toBe('Helsinki');
-
-      const destStationAtPsl = getTrainDestinationStation(ringRailTrain, 'PSL');
-      expectToBeDefined(destStationAtPsl);
-      expect(destStationAtPsl.name).toBe('Helsinki');
-
-      const destStationAtHki = getTrainDestinationStation(ringRailTrain, 'HKI');
-      expectToBeDefined(destStationAtHki);
-      expect(destStationAtHki.name).toBe('Helsinki');
+      it('should be the station of the destination time table row for all stations', () => {
+        ['HPL', 'LEN', 'TKL', 'PSL', 'HKI'].forEach((station) => {
+          const destStation = getTrainDestinationStation(
+            ringRailTrain,
+            station
+          );
+          expectToBeDefined(destStation);
+          expect(destStation.name).toBe('Helsinki');
+        });
+      });
     });
   });
 });
@@ -360,5 +416,77 @@ describe('getTrainDisplayName', () => {
     };
     const displayName = getTrainDisplayName(train);
     expect(displayName).toBe('IC 1234');
+  });
+});
+
+describe('getTrainRouteGtfsId', () => {
+  it('should return correct GTFS ID for a commuter train', () => {
+    const train: TrainByStationFragment = {
+      ...trainBase,
+      commuterLineid: 'U',
+      trainNumber: 1234,
+      trainType: {
+        name: '',
+        trainCategory: {
+          name: 'Commuter',
+        },
+      },
+      timeTableRows: [
+        {
+          ...departureTimeTableRowBase,
+          scheduledTime: '2023-01-25T09:00:00Z',
+          station: {
+            shortCode: 'HKI',
+            name: 'Helsinki',
+          },
+        },
+        {
+          ...arrivalTimeTableRowBase,
+          scheduledTime: '2023-01-25T10:00:00Z',
+          station: {
+            shortCode: 'KKN',
+            name: 'Kirkkonummi',
+          },
+        },
+      ],
+    };
+    const displayName = getTrainRouteGtfsId(train);
+    expect(displayName).toBe('digitraffic:HKI_KKN_U_109_10');
+  });
+
+  it('should return correct GTFS ID for a long distance train', () => {
+    const train: TrainByStationFragment = {
+      ...trainBase,
+      trainNumber: 1234,
+      trainType: {
+        name: '',
+        trainCategory: {
+          name: 'Long-distance',
+        },
+      },
+      operator: {
+        uicCode: 987,
+      },
+      timeTableRows: [
+        {
+          ...departureTimeTableRowBase,
+          scheduledTime: '2023-01-25T09:00:00Z',
+          station: {
+            shortCode: 'HKI',
+            name: 'Helsinki',
+          },
+        },
+        {
+          ...arrivalTimeTableRowBase,
+          scheduledTime: '2023-01-25T10:00:00Z',
+          station: {
+            shortCode: 'TPE',
+            name: 'Tampere',
+          },
+        },
+      ],
+    };
+    const displayName = getTrainRouteGtfsId(train);
+    expect(displayName).toBe('digitraffic:HKI_TPE_1234_102_987');
   });
 });

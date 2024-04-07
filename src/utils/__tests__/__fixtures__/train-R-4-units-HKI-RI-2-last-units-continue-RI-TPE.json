@@ -1,6 +1,7 @@
 {
   "__typename": "Train",
   "trainNumber": 9705,
+  "departureDate": "2022-09-30",
   "version": "284236361571",
   "runningCurrently": false,
   "operator": {
