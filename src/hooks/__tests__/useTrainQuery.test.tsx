@@ -37,7 +37,7 @@ describe('useTrainQuery', () => {
       wrapper,
     });
 
-    await waitFor(() => expect(result.current.isStale).toBe(true));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
 
     expect(result.current.data).toBeUndefined();
   });
