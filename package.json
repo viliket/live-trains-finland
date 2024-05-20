@@ -23,7 +23,7 @@
     "graphql-request": "^6.1.0",
     "hsl-map-style": "github:HSLdevcom/hsl-map-style#master",
     "i18next": "^23.11.4",
-    "i18next-browser-languagedetector": "^7.2.1",
+    "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.5.2",
     "lodash": "^4.17.21",
     "maplibre-gl": "^4.3.1",
