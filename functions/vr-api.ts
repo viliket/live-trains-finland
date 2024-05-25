@@ -13,19 +13,21 @@ type LoginResponse = {
   refreshTokenExpiresOn: string;
 };
 
-type TokenRefreshResponse = {
+type RefreshTokenResponse = {
   accessToken: string;
   expiresOn: string;
   refreshToken: string;
   refreshTokenExpiresOn: string;
 };
 
-type TokenSession = {
+type AuthCredentials = {
   token: string;
   expiresOn: string;
   refreshToken: string;
   refreshTokenExpiresOn: string;
 };
+
+const authCredentialsCacheKey = 'vr-auth-credentials';
 
 function fetchWithDefaults(
   url: string,
@@ -46,7 +48,7 @@ async function fetchNewToken(
   username: string,
   password: string,
   env: Env
-): Promise<TokenSession> {
+): Promise<AuthCredentials> {
   const response = await fetchWithDefaults(
     `${env.VR_API_URL}/auth/login`,
     {
@@ -57,7 +59,9 @@ async function fetchNewToken(
   );
 
   if (!response.ok) {
-    throw new Error('Failed to login and fetch new token');
+    throw new Error(
+      `Failed to login and fetch new token: ${response.statusText}`
+    );
   }
 
   const tokenResponse = await response.json<LoginResponse>();
@@ -71,9 +75,9 @@ async function fetchNewToken(
 }
 
 async function refreshToken(
-  existingToken: TokenSession,
+  existingToken: AuthCredentials,
   env: Env
-): Promise<TokenSession> {
+): Promise<AuthCredentials> {
   const response = await fetchWithDefaults(
     `${env.VR_API_URL}/auth/token`,
     {
@@ -87,10 +91,10 @@ async function refreshToken(
   );
 
   if (!response.ok) {
-    throw new Error('Failed to refresh token');
+    throw new Error(`Failed to refresh token: ${response.statusText}`);
   }
 
-  const tokenResponse = await response.json<TokenRefreshResponse>();
+  const tokenResponse = await response.json<RefreshTokenResponse>();
 
   return {
     token: tokenResponse.accessToken,
@@ -100,31 +104,31 @@ async function refreshToken(
   };
 }
 
-async function getTokenSession(env: Env): Promise<TokenSession> {
-  const rawExistingTokenResponse = await env.KV.get('vr-token-response');
-  const existingTokenResponse: TokenSession | null = rawExistingTokenResponse
-    ? JSON.parse(rawExistingTokenResponse)
-    : null;
+async function getToken(env: Env): Promise<AuthCredentials> {
+  const rawExistingAuthCredentials = await env.KV.get(authCredentialsCacheKey);
+  const existingAuthCredentials: AuthCredentials | null =
+    rawExistingAuthCredentials ? JSON.parse(rawExistingAuthCredentials) : null;
 
-  if (existingTokenResponse) {
-    if (new Date() < new Date(existingTokenResponse.expiresOn)) {
-      return existingTokenResponse;
+  if (existingAuthCredentials) {
+    const now = new Date();
+    if (now < new Date(existingAuthCredentials.expiresOn)) {
+      return existingAuthCredentials;
     }
 
-    if (new Date() < new Date(existingTokenResponse.refreshTokenExpiresOn)) {
-      const refreshedToken = await refreshToken(existingTokenResponse, env);
-      await env.KV.put('vr-token-response', JSON.stringify(refreshedToken));
+    if (now < new Date(existingAuthCredentials.refreshTokenExpiresOn)) {
+      const refreshedToken = await refreshToken(existingAuthCredentials, env);
+      await env.KV.put(authCredentialsCacheKey, JSON.stringify(refreshedToken));
       return refreshedToken;
     }
   }
 
-  const newToken = await fetchNewToken(
+  const newAuthCredentials = await fetchNewToken(
     env.VR_API_USERNAME,
     env.VR_API_PASSWORD,
     env
   );
-  await env.KV.put('vr-token-response', JSON.stringify(newToken));
-  return newToken;
+  await env.KV.put(authCredentialsCacheKey, JSON.stringify(newAuthCredentials));
+  return newAuthCredentials;
 }
 
 type WagonMapDataParams = {
@@ -132,7 +136,7 @@ type WagonMapDataParams = {
   departureStation: string;
   arrivalStation: string;
   departureTime: string;
-  authToken: string;
+  token: string;
   env: Env;
 };
 
@@ -141,9 +145,9 @@ async function getWagonMapData({
   departureStation,
   arrivalStation,
   departureTime,
-  authToken,
+  token,
   env,
-}: WagonMapDataParams) {
+}: WagonMapDataParams): Promise<unknown> {
   const params = new URLSearchParams({
     departureStation,
     arrivalStation,
@@ -153,7 +157,7 @@ async function getWagonMapData({
     `${env.VR_API_URL}/trains/${trainNumber}/wagonmap/v3?${params}`,
     {
       headers: {
-        'x-jwt-token': authToken,
+        'x-jwt-token': token,
       },
     },
     env
@@ -161,7 +165,7 @@ async function getWagonMapData({
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch wagon map data for train ${trainNumber} departing at ${departureTime}`
+      `Failed to fetch wagon map data for train ${trainNumber} departing at ${departureTime}: ${response.statusText}`
     );
   }
 
@@ -179,7 +183,7 @@ type WagonMapDataRequest = {
 };
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  const tokenSession = await getTokenSession(context.env);
+  const authCredentials = await getToken(context.env);
   const wagonMapDataRequest = await context.request.json<WagonMapDataRequest>();
   const { trainNumber, departureStation, arrivalStation, departureTime } =
     wagonMapDataRequest.variables;
@@ -188,7 +192,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     departureStation,
     arrivalStation,
     departureTime,
-    authToken: tokenSession.token,
+    token: authCredentials.token,
     env: context.env,
   });
   // Wrap original response body JSON to data field to make response GraphQL compliant
