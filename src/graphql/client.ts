@@ -19,4 +19,4 @@ export const digitransitClient = new GraphQLClient(
   }
 );
 
-export const vrClient = new GraphQLClient('/vr-api');
+export const vrClient = new GraphQLClient(`${window.location.origin}/vr-api`);
