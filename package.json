@@ -68,7 +68,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240512.0",
     "@graphql-codegen/cli": "^5.0.2",
-    "@graphql-codegen/client-preset": "^4.2.5",
+    "@graphql-codegen/client-preset": "^4.2.6",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^15.0.7",
