@@ -1,7 +1,5 @@
 import { queryOptions, useQuery } from '@tanstack/react-query';
-import { gql } from 'graphql-request';
-
-import { vrClient } from '../graphql/client';
+import { gql, request } from 'graphql-request';
 
 export type PlaceInfo = {
   floor: number;
@@ -77,13 +75,17 @@ const wagonMapDataQuery = ({
       isCommuterLine,
     ],
     queryFn: () =>
-      vrClient.request<WagonMapData>(getWagonMapDataQueryDocument, {
-        departureStation: departureStation,
-        arrivalStation: arrivalStation,
-        departureTime: departureTime,
-        trainNumber: trainNumber,
-        trainType: trainType,
-      }),
+      request<WagonMapData>(
+        `${window.location.origin}/vr-api`,
+        getWagonMapDataQueryDocument,
+        {
+          departureStation: departureStation,
+          arrivalStation: arrivalStation,
+          departureTime: departureTime,
+          trainNumber: trainNumber,
+          trainType: trainType,
+        }
+      ),
     enabled: Boolean(
       departureTime &&
         departureStation &&
