@@ -29,7 +29,7 @@ type TokenSession = {
 
 function fetchWithDefaults(
   url: string,
-  options: RequestInit = {},
+  options: RequestInit,
   env: Env
 ): Promise<Response> {
   const defaultHeaders = {
