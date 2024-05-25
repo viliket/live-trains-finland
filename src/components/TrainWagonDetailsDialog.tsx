@@ -202,7 +202,7 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
     isCommuterLine: !!train.commuterLineid,
   });
 
-  const wagons = wagonMapData?.wagonMapData;
+  const wagons = wagonMapData?.coaches;
 
   useEffect(() => {
     if (wagons && selectedWagon) {

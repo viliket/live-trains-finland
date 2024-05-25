@@ -29,7 +29,7 @@ export type WagonInfo = {
 };
 
 type WagonMapData = {
-  wagonMapData: Record<string, WagonInfo>;
+  coaches: Record<string, WagonInfo>;
 };
 
 type WagonMapDataVariables = {
