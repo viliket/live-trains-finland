@@ -1,7 +1,6 @@
 import { PaletteMode } from '@mui/material';
 import { generateStyle, Options } from 'hsl-map-style';
 import { VectorSource } from 'mapbox-gl';
-import { StyleSpecification } from 'maplibre-gl';
 
 import { VehicleDetails } from '../types/vehicles';
 
@@ -154,7 +153,7 @@ const generateMapStyle = (options?: Options) => {
 
 const mapStyle = generateMapStyle();
 
-let mapStyleDark: StyleSpecification = generateMapStyle({
+let mapStyleDark: maplibregl.StyleSpecification = generateMapStyle({
   components: {
     greyscale: {
       enabled: true,
