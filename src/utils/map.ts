@@ -153,13 +153,33 @@ const generateMapStyle = (options?: Options) => {
 
 const mapStyle = generateMapStyle();
 
-const mapStyleDark = generateMapStyle({
+let mapStyleDark: maplibregl.StyleSpecification = generateMapStyle({
   components: {
     greyscale: {
       enabled: true,
     },
   },
 });
+
+// Patch wrong fill color on the road_bridge_area layer
+// due to https://github.com/HSLdevcom/hsl-map-style/blob/master/style/hsl-map-theme-greyscale.json
+// not having the style of the base theme overridden.
+mapStyleDark = {
+  ...mapStyleDark,
+  layers: mapStyleDark.layers.map((layer) => {
+    if (layer.id == 'road_bridge_area' && layer.type === 'fill') {
+      return {
+        ...layer,
+        paint: {
+          ...layer.paint,
+          'fill-color': '#0a0a0a',
+        },
+      };
+    } else {
+      return layer;
+    }
+  }),
+};
 
 const getRasterMapStyle = (
   isDarkMode: boolean
