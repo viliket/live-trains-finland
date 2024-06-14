@@ -116,9 +116,16 @@ async function getToken(env: Env): Promise<AuthCredentials> {
     }
 
     if (now < new Date(existingAuthCredentials.refreshTokenExpiresOn)) {
-      const refreshedToken = await refreshToken(existingAuthCredentials, env);
-      await env.KV.put(authCredentialsCacheKey, JSON.stringify(refreshedToken));
-      return refreshedToken;
+      try {
+        const refreshedToken = await refreshToken(existingAuthCredentials, env);
+        await env.KV.put(
+          authCredentialsCacheKey,
+          JSON.stringify(refreshedToken)
+        );
+        return refreshedToken;
+      } catch (error) {
+        console.warn('Failed to refresh token:', error);
+      }
     }
   }
 
