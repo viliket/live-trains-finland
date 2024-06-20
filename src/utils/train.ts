@@ -1,5 +1,5 @@
 import { parseISO } from 'date-fns';
-import { orderBy } from 'lodash';
+import { orderBy, unionBy } from 'lodash';
 
 import {
   TimeTableRowType,
@@ -142,3 +142,28 @@ export function getTrainRouteGtfsId(train: TrainByStationFragment) {
     train.commuterLineid ? train.commuterLineid : train.trainNumber
   }_${routeType}_${agency}`;
 }
+
+export const findNewestTrainVersion = (
+  trains: (TrainByStationFragment | null)[]
+) =>
+  trains.length
+    ? Math.max(...trains.map((t) => (t ? Number.parseInt(t.version, 10) : 0)))
+    : 0;
+
+export const mergeAndOrderTrainsByVersion = (
+  newTrains: (TrainByStationFragment | null)[],
+  oldTrains: (TrainByStationFragment | null)[],
+  maxTrains: number
+) => {
+  const mergedTrains = unionBy(
+    newTrains,
+    oldTrains,
+    (train) => `${train?.trainNumber}-${train?.departureDate}`
+  );
+
+  return orderBy(
+    mergedTrains,
+    (train) => (train ? Number.parseInt(train.version, 10) : 0),
+    'desc'
+  ).slice(0, maxTrains);
+};

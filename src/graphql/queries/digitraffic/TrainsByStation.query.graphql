@@ -4,6 +4,7 @@ query TrainsByStation(
   $departedTrains: Int!
   $arrivingTrains: Int!
   $arrivedTrains: Int!
+  $versionGreaterThan: String!
 ) {
   trainsByStationAndQuantity(
     station: $station
@@ -12,14 +13,19 @@ query TrainsByStation(
     arrivingTrains: $arrivingTrains
     arrivedTrains: $arrivedTrains
     where: {
-      trainType: {
-        trainCategory: {
-          or: [
-            { name: { equals: "Commuter" } }
-            { name: { equals: "Long-distance" } }
-          ]
+      and: [
+        {
+          trainType: {
+            trainCategory: {
+              or: [
+                { name: { equals: "Commuter" } }
+                { name: { equals: "Long-distance" } }
+              ]
+            }
+          }
         }
-      }
+        { version: { greaterThan: $versionGreaterThan } }
+      ]
     }
   ) {
     ...TrainByStation

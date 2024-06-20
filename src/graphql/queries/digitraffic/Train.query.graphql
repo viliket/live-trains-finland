@@ -1,5 +1,13 @@
-query Train($trainNumber: Int!, $departureDate: Date!) {
-  train(trainNumber: $trainNumber, departureDate: $departureDate) {
+query Train(
+  $trainNumber: Int!
+  $departureDate: Date!
+  $versionGreaterThan: String!
+) {
+  train(
+    trainNumber: $trainNumber
+    departureDate: $departureDate
+    where: { version: { greaterThan: $versionGreaterThan } }
+  ) {
     ...TrainDetails
   }
 }
