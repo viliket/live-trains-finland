@@ -17,6 +17,8 @@ import {
   getWagonNumberFromVehicleId,
   getTrainDisplayName,
   getTrainRouteGtfsId,
+  findNewestTrainVersion,
+  mergeAndOrderTrainsByVersion,
 } from '../train';
 
 const trainBase: TrainDetailsFragment = {
@@ -488,5 +490,307 @@ describe('getTrainRouteGtfsId', () => {
     };
     const displayName = getTrainRouteGtfsId(train);
     expect(displayName).toBe('digitraffic:HKI_TPE_1234_102_987');
+  });
+});
+
+describe('findNewestTrainVersion', () => {
+  it('should return 0 when the input array is empty', () => {
+    const trains: TrainByStationFragment[] = [];
+    expect(findNewestTrainVersion(trains)).toBe(0);
+  });
+
+  it('should ignore null values and return the highest version number', () => {
+    const trains: (TrainByStationFragment | null)[] = [
+      { ...trainBase, version: '1' },
+      { ...trainBase, version: '3' },
+      null,
+      { ...trainBase, version: '2' },
+      null,
+    ];
+    expect(findNewestTrainVersion(trains)).toBe(3);
+  });
+
+  it('should return the highest version number among valid trains', () => {
+    const trains: (TrainByStationFragment | null)[] = [
+      { ...trainBase, version: '1' },
+      { ...trainBase, version: '2' },
+      { ...trainBase, version: '5' },
+      { ...trainBase, version: '3' },
+    ];
+    expect(findNewestTrainVersion(trains)).toBe(5);
+  });
+
+  it('should return 0 when all values are null', () => {
+    const trains: (TrainByStationFragment | null)[] = [null, null, null];
+    expect(findNewestTrainVersion(trains)).toBe(0);
+  });
+});
+
+describe('mergeAndOrderTrainsByVersion', () => {
+  it('should return an empty array when both input arrays are empty', () => {
+    const newTrains: TrainByStationFragment[] = [];
+    const oldTrains: TrainByStationFragment[] = [];
+    const maxTrains = 5;
+
+    expect(
+      mergeAndOrderTrainsByVersion(newTrains, oldTrains, maxTrains)
+    ).toEqual([]);
+  });
+
+  it('should return only new trains when old trains array is empty', () => {
+    const newTrains: TrainByStationFragment[] = [
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '2',
+      },
+      {
+        ...trainBase,
+        trainNumber: 2,
+        departureDate: '2023-01-02',
+        version: '3',
+      },
+    ];
+    const oldTrains: TrainByStationFragment[] = [];
+    const maxTrains = 5;
+
+    expect(
+      mergeAndOrderTrainsByVersion(newTrains, oldTrains, maxTrains)
+    ).toEqual([
+      {
+        ...trainBase,
+        trainNumber: 2,
+        departureDate: '2023-01-02',
+        version: '3',
+      },
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '2',
+      },
+    ]);
+  });
+
+  it('should return only old trains when new trains array is empty', () => {
+    const newTrains: TrainByStationFragment[] = [];
+    const oldTrains: TrainByStationFragment[] = [
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '2',
+      },
+      {
+        ...trainBase,
+        trainNumber: 2,
+        departureDate: '2023-01-02',
+        version: '3',
+      },
+    ];
+    const maxTrains = 5;
+
+    expect(
+      mergeAndOrderTrainsByVersion(newTrains, oldTrains, maxTrains)
+    ).toEqual([
+      {
+        ...trainBase,
+        trainNumber: 2,
+        departureDate: '2023-01-02',
+        version: '3',
+      },
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '2',
+      },
+    ]);
+  });
+
+  it('should merge and order trains from both arrays, removing duplicates and limiting the number of results', () => {
+    const newTrains: TrainByStationFragment[] = [
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '2',
+      },
+      {
+        ...trainBase,
+        trainNumber: 2,
+        departureDate: '2023-01-02',
+        version: '3',
+      },
+    ];
+    const oldTrains: TrainByStationFragment[] = [
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '1',
+      },
+      {
+        ...trainBase,
+        trainNumber: 3,
+        departureDate: '2023-01-03',
+        version: '4',
+      },
+    ];
+    const maxTrains = 3;
+
+    const expected = [
+      {
+        ...trainBase,
+        trainNumber: 3,
+        departureDate: '2023-01-03',
+        version: '4',
+      },
+      {
+        ...trainBase,
+        trainNumber: 2,
+        departureDate: '2023-01-02',
+        version: '3',
+      },
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '2',
+      },
+    ];
+
+    expect(
+      mergeAndOrderTrainsByVersion(newTrains, oldTrains, maxTrains)
+    ).toEqual(expected);
+  });
+
+  it('should handle mixed valid and null values', () => {
+    const newTrains: (TrainByStationFragment | null)[] = [
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '2',
+      },
+      null,
+      {
+        ...trainBase,
+        trainNumber: 2,
+        departureDate: '2023-01-02',
+        version: '3',
+      },
+    ];
+    const oldTrains: (TrainByStationFragment | null)[] = [
+      null,
+      {
+        ...trainBase,
+        trainNumber: 3,
+        departureDate: '2023-01-03',
+        version: '4',
+      },
+    ];
+    const maxTrains = 3;
+
+    const expected = [
+      {
+        ...trainBase,
+        trainNumber: 3,
+        departureDate: '2023-01-03',
+        version: '4',
+      },
+      {
+        ...trainBase,
+        trainNumber: 2,
+        departureDate: '2023-01-02',
+        version: '3',
+      },
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '2',
+      },
+    ];
+
+    expect(
+      mergeAndOrderTrainsByVersion(newTrains, oldTrains, maxTrains)
+    ).toEqual(expected);
+  });
+
+  it('should limit the number of trains to maxTrains', () => {
+    const newTrains: (TrainByStationFragment | null)[] = [
+      {
+        ...trainBase,
+        trainNumber: 1,
+        departureDate: '2023-01-01',
+        version: '2',
+      },
+      {
+        ...trainBase,
+        trainNumber: 2,
+        departureDate: '2023-01-02',
+        version: '3',
+      },
+      {
+        ...trainBase,
+        trainNumber: 3,
+        departureDate: '2023-01-03',
+        version: '4',
+      },
+      {
+        ...trainBase,
+        trainNumber: 4,
+        departureDate: '2023-01-04',
+        version: '5',
+      },
+    ];
+    const oldTrains: (TrainByStationFragment | null)[] = [
+      {
+        ...trainBase,
+        trainNumber: 5,
+        departureDate: '2023-01-05',
+        version: '6',
+      },
+      {
+        ...trainBase,
+        trainNumber: 6,
+        departureDate: '2023-01-06',
+        version: '7',
+      },
+    ];
+    const maxTrains = 4;
+
+    const expected = [
+      {
+        ...trainBase,
+        trainNumber: 6,
+        departureDate: '2023-01-06',
+        version: '7',
+      },
+      {
+        ...trainBase,
+        trainNumber: 5,
+        departureDate: '2023-01-05',
+        version: '6',
+      },
+      {
+        ...trainBase,
+        trainNumber: 4,
+        departureDate: '2023-01-04',
+        version: '5',
+      },
+      {
+        ...trainBase,
+        trainNumber: 3,
+        departureDate: '2023-01-03',
+        version: '4',
+      },
+    ];
+
+    expect(
+      mergeAndOrderTrainsByVersion(newTrains, oldTrains, maxTrains)
+    ).toEqual(expected);
   });
 });

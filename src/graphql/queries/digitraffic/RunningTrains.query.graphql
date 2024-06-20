@@ -1,4 +1,4 @@
-query RunningTrains {
+query RunningTrains($versionGreaterThan: String!) {
   currentlyRunningTrains(
     where: {
       and: [
@@ -13,6 +13,7 @@ query RunningTrains {
           }
         }
         { operator: { shortCode: { equals: "vr" } } }
+        { version: { greaterThan: $versionGreaterThan } }
       ]
     }
   ) {

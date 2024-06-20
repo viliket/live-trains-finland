@@ -1,4 +1,10 @@
-import { queryOptions, useQuery } from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryKey,
+  queryOptions,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import { digitrafficClient } from '../graphql/client';
 import {
@@ -13,35 +19,56 @@ import getTimeTableRowsGroupedByStation from '../utils/getTimeTableRowsGroupedBy
 import getTrainDirection from '../utils/getTrainDirection';
 import getTrainVehicleIdFromTrainEuropeanVehicleNumber from '../utils/getTrainVehicleIdFromTrainEuropeanVehicleNumber';
 
-const trainQuery = (
+const REFETCH_INTERVAL = 10000; // Refetch interval in milliseconds
+
+const getTrainQueryKey = (
   trainNumber: number | undefined | null,
   departureDate: string | undefined | null
+): QueryKey => ['train', trainNumber, departureDate];
+
+const trainQuery = (
+  trainNumber: number | undefined | null,
+  departureDate: string | undefined | null,
+  queryClient: QueryClient
 ) =>
   queryOptions({
-    queryKey: ['train', trainNumber, departureDate],
-    queryFn: () => getExtendedTrain(trainNumber, departureDate),
+    queryKey: getTrainQueryKey(trainNumber, departureDate),
+    queryFn: () => getExtendedTrain(trainNumber, departureDate, queryClient),
     enabled: Boolean(trainNumber != null && departureDate),
-    refetchInterval: 10000,
+    refetchInterval: REFETCH_INTERVAL,
   });
 
 const useTrainQuery = (
   trainNumber: number | undefined | null,
   departureDate: string | undefined | null
-) => useQuery(trainQuery(trainNumber, departureDate));
+) => {
+  const queryClient = useQueryClient();
+  return useQuery(trainQuery(trainNumber, departureDate, queryClient));
+};
 
 export default useTrainQuery;
 
 async function getExtendedTrain(
   trainNumber: number | undefined | null,
-  departureDate: string | undefined | null
+  departureDate: string | undefined | null,
+  queryClient: QueryClient
 ): Promise<TrainExtendedDetails | null> {
-  const data = await digitrafficClient.request(TrainDocument, {
-    trainNumber: trainNumber ?? 0,
-    departureDate: departureDate,
-  });
-  const train = data.train?.[0];
+  if (trainNumber == null || !departureDate) return null;
 
-  if (!train) return null;
+  const queryKey = getTrainQueryKey(trainNumber, departureDate);
+
+  // Retrieve the old cached data
+  const oldTrain = queryClient.getQueryData<TrainExtendedDetails>(queryKey);
+
+  const newData = await digitrafficClient.request(TrainDocument, {
+    trainNumber,
+    departureDate,
+    versionGreaterThan: oldTrain?.version ?? '0',
+  });
+  const train = newData.train?.[0];
+
+  // Return the old train if the API did not return newer version of the train
+  if (!train) return oldTrain ?? null;
 
   const timeTableGroups = getTimeTableRowsGroupedByStation({
     timeTableRows: train?.timeTableRows,
