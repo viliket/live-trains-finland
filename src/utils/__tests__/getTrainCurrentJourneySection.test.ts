@@ -42,6 +42,7 @@ describe('getTrainCurrentJourneySection', () => {
                 scheduledTime: '2023-01-25T10:00:00Z',
                 station: {
                   name: 'Helsinki',
+                  shortCode: 'HKI',
                 },
               },
             },
@@ -91,6 +92,7 @@ describe('getTrainCurrentJourneySection', () => {
                 scheduledTime: '2023-01-25T10:00:00Z',
                 station: {
                   name: 'Helsinki',
+                  shortCode: 'HKI',
                 },
               },
             },
@@ -101,6 +103,7 @@ describe('getTrainCurrentJourneySection', () => {
                 scheduledTime: '2023-01-25T11:00:00Z',
                 station: {
                   name: 'Riihimäki',
+                  shortCode: 'RI',
                 },
               },
             },
