@@ -129,6 +129,30 @@ export type DateWhere = {
   unequals?: InputMaybe<Scalars['Date']['input']>;
 };
 
+export enum DayOfWeek {
+  Friday = 'FRIDAY',
+  Monday = 'MONDAY',
+  Saturday = 'SATURDAY',
+  Sunday = 'SUNDAY',
+  Thursday = 'THURSDAY',
+  Tuesday = 'TUESDAY',
+  Wednesday = 'WEDNESDAY'
+}
+
+export type DayOfWeekCollectionWhere = {
+  equals?: InputMaybe<Array<InputMaybe<DayOfWeek>>>;
+  notEquals?: InputMaybe<Array<InputMaybe<DayOfWeek>>>;
+};
+
+export type DayOfWeekOrderBy = {
+  direction: OrderDirection;
+};
+
+export type DayOfWeekWhere = {
+  equals?: InputMaybe<Scalars['String']['input']>;
+  unequals?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type DetailedCategoryCode = {
   __typename?: 'DetailedCategoryCode';
   code: Scalars['String']['output'];
@@ -284,11 +308,276 @@ export enum OrderDirection {
   Descending = 'DESCENDING'
 }
 
+export type PassengerInformationAudio = {
+  __typename?: 'PassengerInformationAudio';
+  deliveryRules: PassengerInformationAudioDeliveryRules;
+  messageId: Scalars['String']['output'];
+  messageVersion: Scalars['Int']['output'];
+  text: PassengerInformationTextContent;
+};
+
+export type PassengerInformationAudioCollectionWhere = {
+  contains?: InputMaybe<PassengerInformationAudioWhere>;
+};
+
+export type PassengerInformationAudioDeliveryRules = {
+  __typename?: 'PassengerInformationAudioDeliveryRules';
+  deliveryAt?: Maybe<Scalars['DateTime']['output']>;
+  deliveryType?: Maybe<Scalars['String']['output']>;
+  endDateTime?: Maybe<Scalars['DateTime']['output']>;
+  endTime?: Maybe<Scalars['String']['output']>;
+  eventType?: Maybe<Scalars['String']['output']>;
+  repeatEvery?: Maybe<Scalars['Int']['output']>;
+  repetitions?: Maybe<Scalars['Int']['output']>;
+  startDateTime?: Maybe<Scalars['DateTime']['output']>;
+  startTime?: Maybe<Scalars['String']['output']>;
+  weekDays?: Maybe<Array<Maybe<DayOfWeek>>>;
+};
+
+
+export type PassengerInformationAudioDeliveryRulesWeekDaysArgs = {
+  orderBy?: InputMaybe<Array<InputMaybe<DayOfWeekOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<DayOfWeekWhere>;
+};
+
+export type PassengerInformationAudioDeliveryRulesCollectionWhere = {
+  contains?: InputMaybe<PassengerInformationAudioDeliveryRulesWhere>;
+};
+
+export type PassengerInformationAudioDeliveryRulesOrderBy = {
+  deliveryAt?: InputMaybe<OrderDirection>;
+  deliveryType?: InputMaybe<OrderDirection>;
+  endDateTime?: InputMaybe<OrderDirection>;
+  endTime?: InputMaybe<OrderDirection>;
+  eventType?: InputMaybe<OrderDirection>;
+  repeatEvery?: InputMaybe<OrderDirection>;
+  repetitions?: InputMaybe<OrderDirection>;
+  startDateTime?: InputMaybe<OrderDirection>;
+  startTime?: InputMaybe<OrderDirection>;
+};
+
+export type PassengerInformationAudioDeliveryRulesWhere = {
+  and?: InputMaybe<Array<InputMaybe<PassengerInformationAudioDeliveryRulesWhere>>>;
+  deliveryAt?: InputMaybe<DateTimeWhere>;
+  deliveryType?: InputMaybe<StringWhere>;
+  endDateTime?: InputMaybe<DateTimeWhere>;
+  endTime?: InputMaybe<StringWhere>;
+  eventType?: InputMaybe<StringWhere>;
+  or?: InputMaybe<Array<InputMaybe<PassengerInformationAudioDeliveryRulesWhere>>>;
+  repeatEvery?: InputMaybe<IntWhere>;
+  repetitions?: InputMaybe<IntWhere>;
+  startDateTime?: InputMaybe<DateTimeWhere>;
+  startTime?: InputMaybe<StringWhere>;
+  weekDays?: InputMaybe<DayOfWeekCollectionWhere>;
+};
+
+export type PassengerInformationAudioOrderBy = {
+  deliveryRules?: InputMaybe<PassengerInformationAudioDeliveryRulesOrderBy>;
+  messageId?: InputMaybe<OrderDirection>;
+  messageVersion?: InputMaybe<OrderDirection>;
+  text?: InputMaybe<PassengerInformationTextContentOrderBy>;
+};
+
+export type PassengerInformationAudioWhere = {
+  and?: InputMaybe<Array<InputMaybe<PassengerInformationAudioWhere>>>;
+  deliveryRules?: InputMaybe<PassengerInformationAudioDeliveryRulesWhere>;
+  messageId?: InputMaybe<StringWhere>;
+  messageVersion?: InputMaybe<IntWhere>;
+  or?: InputMaybe<Array<InputMaybe<PassengerInformationAudioWhere>>>;
+  text?: InputMaybe<PassengerInformationTextContentWhere>;
+};
+
+export type PassengerInformationMessage = {
+  __typename?: 'PassengerInformationMessage';
+  audio?: Maybe<PassengerInformationAudio>;
+  creationDateTime: Scalars['DateTime']['output'];
+  endValidity: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  messageStations?: Maybe<Array<Maybe<PassengerInformationMessageStation>>>;
+  startValidity: Scalars['DateTime']['output'];
+  train?: Maybe<Train>;
+  trainDepartureDate?: Maybe<Scalars['Date']['output']>;
+  trainNumber?: Maybe<Scalars['Int']['output']>;
+  version: Scalars['Int']['output'];
+  video?: Maybe<PassengerInformationVideo>;
+};
+
+
+export type PassengerInformationMessageMessageStationsArgs = {
+  orderBy?: InputMaybe<Array<InputMaybe<PassengerInformationMessageStationOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PassengerInformationMessageStationWhere>;
+};
+
+export type PassengerInformationMessageCollectionWhere = {
+  contains?: InputMaybe<PassengerInformationMessageWhere>;
+};
+
+export type PassengerInformationMessageOrderBy = {
+  audio?: InputMaybe<PassengerInformationAudioOrderBy>;
+  creationDateTime?: InputMaybe<OrderDirection>;
+  endValidity?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  startValidity?: InputMaybe<OrderDirection>;
+  train?: InputMaybe<TrainOrderBy>;
+  trainDepartureDate?: InputMaybe<OrderDirection>;
+  trainNumber?: InputMaybe<OrderDirection>;
+  version?: InputMaybe<OrderDirection>;
+  video?: InputMaybe<PassengerInformationVideoOrderBy>;
+};
+
+export type PassengerInformationMessageStation = {
+  __typename?: 'PassengerInformationMessageStation';
+  message: PassengerInformationMessage;
+  messageId: Scalars['String']['output'];
+  messageVersion: Scalars['Int']['output'];
+  station: Station;
+  stationShortCode: Scalars['String']['output'];
+};
+
+export type PassengerInformationMessageStationCollectionWhere = {
+  contains?: InputMaybe<PassengerInformationMessageStationWhere>;
+};
+
+export type PassengerInformationMessageStationOrderBy = {
+  message?: InputMaybe<PassengerInformationMessageOrderBy>;
+  messageId?: InputMaybe<OrderDirection>;
+  messageVersion?: InputMaybe<OrderDirection>;
+  station?: InputMaybe<StationOrderBy>;
+  stationShortCode?: InputMaybe<OrderDirection>;
+};
+
+export type PassengerInformationMessageStationWhere = {
+  and?: InputMaybe<Array<InputMaybe<PassengerInformationMessageStationWhere>>>;
+  message?: InputMaybe<PassengerInformationMessageWhere>;
+  messageId?: InputMaybe<StringWhere>;
+  messageVersion?: InputMaybe<IntWhere>;
+  or?: InputMaybe<Array<InputMaybe<PassengerInformationMessageStationWhere>>>;
+  station?: InputMaybe<StationWhere>;
+  stationShortCode?: InputMaybe<StringWhere>;
+};
+
+export type PassengerInformationMessageWhere = {
+  and?: InputMaybe<Array<InputMaybe<PassengerInformationMessageWhere>>>;
+  audio?: InputMaybe<PassengerInformationAudioWhere>;
+  creationDateTime?: InputMaybe<DateTimeWhere>;
+  endValidity?: InputMaybe<DateTimeWhere>;
+  id?: InputMaybe<StringWhere>;
+  messageStations?: InputMaybe<PassengerInformationMessageStationCollectionWhere>;
+  or?: InputMaybe<Array<InputMaybe<PassengerInformationMessageWhere>>>;
+  startValidity?: InputMaybe<DateTimeWhere>;
+  train?: InputMaybe<TrainWhere>;
+  trainDepartureDate?: InputMaybe<DateWhere>;
+  trainNumber?: InputMaybe<IntWhere>;
+  version?: InputMaybe<IntWhere>;
+  video?: InputMaybe<PassengerInformationVideoWhere>;
+};
+
+export type PassengerInformationTextContent = {
+  __typename?: 'PassengerInformationTextContent';
+  en?: Maybe<Scalars['String']['output']>;
+  fi?: Maybe<Scalars['String']['output']>;
+  sv?: Maybe<Scalars['String']['output']>;
+};
+
+export type PassengerInformationTextContentCollectionWhere = {
+  contains?: InputMaybe<PassengerInformationTextContentWhere>;
+};
+
+export type PassengerInformationTextContentOrderBy = {
+  en?: InputMaybe<OrderDirection>;
+  fi?: InputMaybe<OrderDirection>;
+  sv?: InputMaybe<OrderDirection>;
+};
+
+export type PassengerInformationTextContentWhere = {
+  and?: InputMaybe<Array<InputMaybe<PassengerInformationTextContentWhere>>>;
+  en?: InputMaybe<StringWhere>;
+  fi?: InputMaybe<StringWhere>;
+  or?: InputMaybe<Array<InputMaybe<PassengerInformationTextContentWhere>>>;
+  sv?: InputMaybe<StringWhere>;
+};
+
+export type PassengerInformationVideo = {
+  __typename?: 'PassengerInformationVideo';
+  deliveryRules: PassengerInformationVideoDeliveryRules;
+  messageId: Scalars['String']['output'];
+  messageVersion: Scalars['Int']['output'];
+  text: PassengerInformationTextContent;
+};
+
+export type PassengerInformationVideoCollectionWhere = {
+  contains?: InputMaybe<PassengerInformationVideoWhere>;
+};
+
+export type PassengerInformationVideoDeliveryRules = {
+  __typename?: 'PassengerInformationVideoDeliveryRules';
+  deliveryType?: Maybe<Scalars['String']['output']>;
+  endDateTime?: Maybe<Scalars['DateTime']['output']>;
+  endTime?: Maybe<Scalars['String']['output']>;
+  startDateTime?: Maybe<Scalars['DateTime']['output']>;
+  startTime?: Maybe<Scalars['String']['output']>;
+  weekDays?: Maybe<Array<Maybe<DayOfWeek>>>;
+};
+
+
+export type PassengerInformationVideoDeliveryRulesWeekDaysArgs = {
+  orderBy?: InputMaybe<Array<InputMaybe<DayOfWeekOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<DayOfWeekWhere>;
+};
+
+export type PassengerInformationVideoDeliveryRulesCollectionWhere = {
+  contains?: InputMaybe<PassengerInformationVideoDeliveryRulesWhere>;
+};
+
+export type PassengerInformationVideoDeliveryRulesOrderBy = {
+  deliveryType?: InputMaybe<OrderDirection>;
+  endDateTime?: InputMaybe<OrderDirection>;
+  endTime?: InputMaybe<OrderDirection>;
+  startDateTime?: InputMaybe<OrderDirection>;
+  startTime?: InputMaybe<OrderDirection>;
+};
+
+export type PassengerInformationVideoDeliveryRulesWhere = {
+  and?: InputMaybe<Array<InputMaybe<PassengerInformationVideoDeliveryRulesWhere>>>;
+  deliveryType?: InputMaybe<StringWhere>;
+  endDateTime?: InputMaybe<DateTimeWhere>;
+  endTime?: InputMaybe<StringWhere>;
+  or?: InputMaybe<Array<InputMaybe<PassengerInformationVideoDeliveryRulesWhere>>>;
+  startDateTime?: InputMaybe<DateTimeWhere>;
+  startTime?: InputMaybe<StringWhere>;
+  weekDays?: InputMaybe<DayOfWeekCollectionWhere>;
+};
+
+export type PassengerInformationVideoOrderBy = {
+  deliveryRules?: InputMaybe<PassengerInformationVideoDeliveryRulesOrderBy>;
+  messageId?: InputMaybe<OrderDirection>;
+  messageVersion?: InputMaybe<OrderDirection>;
+  text?: InputMaybe<PassengerInformationTextContentOrderBy>;
+};
+
+export type PassengerInformationVideoWhere = {
+  and?: InputMaybe<Array<InputMaybe<PassengerInformationVideoWhere>>>;
+  deliveryRules?: InputMaybe<PassengerInformationVideoDeliveryRulesWhere>;
+  messageId?: InputMaybe<StringWhere>;
+  messageVersion?: InputMaybe<IntWhere>;
+  or?: InputMaybe<Array<InputMaybe<PassengerInformationVideoWhere>>>;
+  text?: InputMaybe<PassengerInformationTextContentWhere>;
+};
+
 export type Query = {
   __typename?: 'Query';
   compositionsGreaterThanVersion?: Maybe<Array<Maybe<Composition>>>;
   currentlyRunningTrains?: Maybe<Array<Maybe<Train>>>;
   latestTrainLocations?: Maybe<Array<Maybe<TrainLocation>>>;
+  passengerInformationMessages?: Maybe<Array<Maybe<PassengerInformationMessage>>>;
+  passengerInformationMessagesByStation?: Maybe<Array<Maybe<PassengerInformationMessage>>>;
+  passengerInformationMessagesByTrain?: Maybe<Array<Maybe<PassengerInformationMessage>>>;
   routesetMessagesByVersionGreaterThan?: Maybe<Array<Maybe<RoutesetMessage>>>;
   stations?: Maybe<Array<Maybe<Station>>>;
   train?: Maybe<Array<Maybe<Train>>>;
@@ -321,6 +610,34 @@ export type QueryLatestTrainLocationsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TrainLocationWhere>;
+};
+
+
+export type QueryPassengerInformationMessagesArgs = {
+  orderBy?: InputMaybe<Array<InputMaybe<PassengerInformationMessageOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PassengerInformationMessageWhere>;
+};
+
+
+export type QueryPassengerInformationMessagesByStationArgs = {
+  onlyGeneral?: InputMaybe<Scalars['Boolean']['input']>;
+  orderBy?: InputMaybe<Array<InputMaybe<PassengerInformationMessageOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stationShortCode: Scalars['String']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PassengerInformationMessageWhere>;
+};
+
+
+export type QueryPassengerInformationMessagesByTrainArgs = {
+  departureDate: Scalars['Date']['input'];
+  orderBy?: InputMaybe<Array<InputMaybe<PassengerInformationMessageOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  trainNumber: Scalars['Int']['input'];
+  where?: InputMaybe<PassengerInformationMessageWhere>;
 };
 
 
@@ -471,9 +788,18 @@ export type Station = {
   name: Scalars['String']['output'];
   passengerTraffic: Scalars['Boolean']['output'];
   shortCode: Scalars['String']['output'];
+  stationMessages?: Maybe<Array<Maybe<PassengerInformationMessageStation>>>;
   timeTableRows?: Maybe<Array<Maybe<TimeTableRow>>>;
   type: StationType;
   uicCode: Scalars['Int']['output'];
+};
+
+
+export type StationStationMessagesArgs = {
+  orderBy?: InputMaybe<Array<InputMaybe<PassengerInformationMessageStationOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PassengerInformationMessageStationWhere>;
 };
 
 
@@ -515,6 +841,7 @@ export type StationWhere = {
   or?: InputMaybe<Array<InputMaybe<StationWhere>>>;
   passengerTraffic?: InputMaybe<BooleanWhere>;
   shortCode?: InputMaybe<StringWhere>;
+  stationMessages?: InputMaybe<PassengerInformationMessageStationCollectionWhere>;
   timeTableRows?: InputMaybe<TimeTableRowCollectionWhere>;
   type?: InputMaybe<EnumWhere>;
   uicCode?: InputMaybe<IntWhere>;
@@ -522,13 +849,15 @@ export type StationWhere = {
 
 export type StringWhere = {
   equals?: InputMaybe<Scalars['String']['input']>;
+  greaterThan?: InputMaybe<Scalars['String']['input']>;
+  lessThan?: InputMaybe<Scalars['String']['input']>;
   unequals?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ThirdCategoryCode = {
   __typename?: 'ThirdCategoryCode';
   code: Scalars['String']['output'];
-  description: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   validFrom: Scalars['Date']['output'];
   validTo?: Maybe<Scalars['Date']['output']>;
@@ -678,7 +1007,8 @@ export type TrackSection = {
   __typename?: 'TrackSection';
   id: Scalars['Int']['output'];
   ranges: Array<Maybe<TrackRange>>;
-  station: Station;
+  station?: Maybe<Station>;
+  stationShortCode: Scalars['String']['output'];
   trackSectionCode: Scalars['String']['output'];
 };
 
@@ -689,6 +1019,7 @@ export type TrackSectionCollectionWhere = {
 export type TrackSectionOrderBy = {
   id?: InputMaybe<OrderDirection>;
   station?: InputMaybe<StationOrderBy>;
+  stationShortCode?: InputMaybe<OrderDirection>;
   trackSectionCode?: InputMaybe<OrderDirection>;
 };
 
@@ -697,6 +1028,7 @@ export type TrackSectionWhere = {
   id?: InputMaybe<IntWhere>;
   or?: InputMaybe<Array<InputMaybe<TrackSectionWhere>>>;
   station?: InputMaybe<StationWhere>;
+  stationShortCode?: InputMaybe<StringWhere>;
   trackSectionCode?: InputMaybe<StringWhere>;
 };
 
@@ -708,6 +1040,7 @@ export type Train = {
   deleted?: Maybe<Scalars['Boolean']['output']>;
   departureDate: Scalars['Date']['output'];
   operator: Operator;
+  passengerInformationMessages?: Maybe<Array<Maybe<PassengerInformationMessage>>>;
   routesetMessages?: Maybe<Array<Maybe<RoutesetMessage>>>;
   runningCurrently: Scalars['Boolean']['output'];
   timeTableGroups?: Maybe<Array<TimeTableGroup>>;
@@ -718,6 +1051,7 @@ export type Train = {
   trainNumber: Scalars['Int']['output'];
   trainTrackingMessages?: Maybe<Array<Maybe<TrainTrackingMessage>>>;
   trainType: TrainType;
+  /**  Represents the version number of a train. Will be parsed as a number in where clauses. */
   version: Scalars['String']['output'];
 };
 
@@ -727,6 +1061,14 @@ export type TrainCompositionsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CompositionWhere>;
+};
+
+
+export type TrainPassengerInformationMessagesArgs = {
+  orderBy?: InputMaybe<Array<InputMaybe<PassengerInformationMessageOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PassengerInformationMessageWhere>;
 };
 
 
@@ -920,6 +1262,7 @@ export type TrainWhere = {
   departureDate?: InputMaybe<DateWhere>;
   operator?: InputMaybe<OperatorWhere>;
   or?: InputMaybe<Array<InputMaybe<TrainWhere>>>;
+  passengerInformationMessages?: InputMaybe<PassengerInformationMessageCollectionWhere>;
   routesetMessages?: InputMaybe<RoutesetMessageCollectionWhere>;
   runningCurrently?: InputMaybe<BooleanWhere>;
   timeTableRows?: InputMaybe<TimeTableRowCollectionWhere>;
@@ -1010,11 +1353,11 @@ export type TrainQueryVariables = Exact<{
 }>;
 
 
-export type TrainQuery = { __typename?: 'Query', train?: Array<{ __typename?: 'Train', trainNumber: number, departureDate: any, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions?: Array<{ __typename?: 'Composition', journeySections?: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string } } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string } } | null, locomotives?: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number } | null> | null, wagons?: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null } | null> | null } | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
+export type TrainQuery = { __typename?: 'Query', train?: Array<{ __typename?: 'Train', trainNumber: number, departureDate: any, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions?: Array<{ __typename?: 'Composition', journeySections?: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, locomotives?: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number } | null> | null, wagons?: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null } | null> | null } | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
 
 export type TrainByStationFragment = { __typename?: 'Train', commuterLineid?: string | null, trainNumber: number, departureDate: any, version: string, operator: { __typename?: 'Operator', uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null };
 
-export type TrainDetailsFragment = { __typename?: 'Train', trainNumber: number, departureDate: any, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions?: Array<{ __typename?: 'Composition', journeySections?: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string } } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string } } | null, locomotives?: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number } | null> | null, wagons?: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null } | null> | null } | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null };
+export type TrainDetailsFragment = { __typename?: 'Train', trainNumber: number, departureDate: any, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions?: Array<{ __typename?: 'Composition', journeySections?: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, locomotives?: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number } | null> | null, wagons?: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null } | null> | null } | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null };
 
 export type TrainTimeTableGroupFragment = { __typename?: 'TimeTableGroup', trainDirection?: TrainDirection | null, stationPlatformSide?: StationPlatformSide | null, arrival?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, departure?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null };
 
@@ -1034,9 +1377,9 @@ export type TrainsByStationQuery = { __typename?: 'Query', trainsByStationAndQua
 export const StationSummaryFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"StationSummary"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Station"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}}]} as unknown as DocumentNode<StationSummaryFragment, unknown>;
 export const TrainTimeTableRowFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}}]} as unknown as DocumentNode<TrainTimeTableRowFragment, unknown>;
 export const TrainByStationFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainByStation"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Train"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commuterLineid"}},{"kind":"Field","name":{"kind":"Name","value":"trainNumber"}},{"kind":"Field","name":{"kind":"Name","value":"departureDate"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uicCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"trainType"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"trainCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeTableRows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainStopping"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainTimeTableRow"}}]}},{"kind":"Field","name":{"kind":"Name","value":"trainType"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}}]} as unknown as DocumentNode<TrainByStationFragment, unknown>;
-export const TrainDetailsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Train"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainNumber"}},{"kind":"Field","name":{"kind":"Name","value":"departureDate"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"runningCurrently"}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commuterLineid"}},{"kind":"Field","name":{"kind":"Name","value":"trainType"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"trainCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shortCode"}},{"kind":"Field","name":{"kind":"Name","value":"uicCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"compositions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"journeySections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startTimeTableRow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"endTimeTableRow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"maximumSpeed"}},{"kind":"Field","name":{"kind":"Name","value":"totalLength"}},{"kind":"Field","name":{"kind":"Name","value":"locomotives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleNumber"}},{"kind":"Field","name":{"kind":"Name","value":"powerTypeAbbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"locomotiveType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}},{"kind":"Field","name":{"kind":"Name","value":"wagons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleNumber"}},{"kind":"Field","name":{"kind":"Name","value":"salesNumber"}},{"kind":"Field","name":{"kind":"Name","value":"wagonType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"length"}},{"kind":"Field","name":{"kind":"Name","value":"playground"}},{"kind":"Field","name":{"kind":"Name","value":"pet"}},{"kind":"Field","name":{"kind":"Name","value":"catering"}},{"kind":"Field","name":{"kind":"Name","value":"video"}},{"kind":"Field","name":{"kind":"Name","value":"luggage"}},{"kind":"Field","name":{"kind":"Name","value":"smoking"}},{"kind":"Field","name":{"kind":"Name","value":"disabled"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeTableRows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainStopping"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainTimeTableRow"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}}]} as unknown as DocumentNode<TrainDetailsFragment, unknown>;
+export const TrainDetailsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Train"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainNumber"}},{"kind":"Field","name":{"kind":"Name","value":"departureDate"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"runningCurrently"}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commuterLineid"}},{"kind":"Field","name":{"kind":"Name","value":"trainType"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"trainCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shortCode"}},{"kind":"Field","name":{"kind":"Name","value":"uicCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"compositions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"journeySections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startTimeTableRow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"endTimeTableRow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"maximumSpeed"}},{"kind":"Field","name":{"kind":"Name","value":"totalLength"}},{"kind":"Field","name":{"kind":"Name","value":"locomotives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleNumber"}},{"kind":"Field","name":{"kind":"Name","value":"powerTypeAbbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"locomotiveType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}},{"kind":"Field","name":{"kind":"Name","value":"wagons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleNumber"}},{"kind":"Field","name":{"kind":"Name","value":"salesNumber"}},{"kind":"Field","name":{"kind":"Name","value":"wagonType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"length"}},{"kind":"Field","name":{"kind":"Name","value":"playground"}},{"kind":"Field","name":{"kind":"Name","value":"pet"}},{"kind":"Field","name":{"kind":"Name","value":"catering"}},{"kind":"Field","name":{"kind":"Name","value":"video"}},{"kind":"Field","name":{"kind":"Name","value":"luggage"}},{"kind":"Field","name":{"kind":"Name","value":"smoking"}},{"kind":"Field","name":{"kind":"Name","value":"disabled"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeTableRows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainStopping"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainTimeTableRow"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}}]} as unknown as DocumentNode<TrainDetailsFragment, unknown>;
 export const TrainTimeTableGroupFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableGroup"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableGroup"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"arrival"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainTimeTableRow"}}]}},{"kind":"Field","name":{"kind":"Name","value":"departure"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainTimeTableRow"}}]}},{"kind":"Field","name":{"kind":"Name","value":"trainDirection"}},{"kind":"Field","name":{"kind":"Name","value":"stationPlatformSide"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}}]} as unknown as DocumentNode<TrainTimeTableGroupFragment, unknown>;
 export const RunningTrainsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"RunningTrains"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentlyRunningTrains"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainType"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainCategory"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"StringValue","value":"Commuter","block":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"StringValue","value":"Long-distance","block":false}}]}}]}]}}]}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"operator"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shortCode"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"StringValue","value":"vr","block":false}}]}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainNumber"}},{"kind":"Field","name":{"kind":"Name","value":"commuterLineid"}},{"kind":"Field","name":{"kind":"Name","value":"departureDate"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uicCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"trainType"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"trainCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"trainLocations"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"DESCENDING"}}]}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"IntValue","value":"2"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"speed"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeTableRows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"commercialStop"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainTimeTableRow"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}}]} as unknown as DocumentNode<RunningTrainsQuery, RunningTrainsQueryVariables>;
 export const StationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stations"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"passengerTraffic"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"StationSummary"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"StationSummary"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Station"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}}]} as unknown as DocumentNode<StationQuery, StationQueryVariables>;
-export const TrainDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Train"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"trainNumber"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"departureDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"train"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"trainNumber"},"value":{"kind":"Variable","name":{"kind":"Name","value":"trainNumber"}}},{"kind":"Argument","name":{"kind":"Name","value":"departureDate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"departureDate"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainDetails"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Train"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainNumber"}},{"kind":"Field","name":{"kind":"Name","value":"departureDate"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"runningCurrently"}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commuterLineid"}},{"kind":"Field","name":{"kind":"Name","value":"trainType"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"trainCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shortCode"}},{"kind":"Field","name":{"kind":"Name","value":"uicCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"compositions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"journeySections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startTimeTableRow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"endTimeTableRow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"maximumSpeed"}},{"kind":"Field","name":{"kind":"Name","value":"totalLength"}},{"kind":"Field","name":{"kind":"Name","value":"locomotives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleNumber"}},{"kind":"Field","name":{"kind":"Name","value":"powerTypeAbbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"locomotiveType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}},{"kind":"Field","name":{"kind":"Name","value":"wagons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleNumber"}},{"kind":"Field","name":{"kind":"Name","value":"salesNumber"}},{"kind":"Field","name":{"kind":"Name","value":"wagonType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"length"}},{"kind":"Field","name":{"kind":"Name","value":"playground"}},{"kind":"Field","name":{"kind":"Name","value":"pet"}},{"kind":"Field","name":{"kind":"Name","value":"catering"}},{"kind":"Field","name":{"kind":"Name","value":"video"}},{"kind":"Field","name":{"kind":"Name","value":"luggage"}},{"kind":"Field","name":{"kind":"Name","value":"smoking"}},{"kind":"Field","name":{"kind":"Name","value":"disabled"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeTableRows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainStopping"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainTimeTableRow"}}]}}]}}]} as unknown as DocumentNode<TrainQuery, TrainQueryVariables>;
+export const TrainDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Train"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"trainNumber"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"departureDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"train"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"trainNumber"},"value":{"kind":"Variable","name":{"kind":"Name","value":"trainNumber"}}},{"kind":"Argument","name":{"kind":"Name","value":"departureDate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"departureDate"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainDetails"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Train"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainNumber"}},{"kind":"Field","name":{"kind":"Name","value":"departureDate"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"runningCurrently"}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commuterLineid"}},{"kind":"Field","name":{"kind":"Name","value":"trainType"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"trainCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shortCode"}},{"kind":"Field","name":{"kind":"Name","value":"uicCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"compositions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"journeySections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startTimeTableRow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"endTimeTableRow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"maximumSpeed"}},{"kind":"Field","name":{"kind":"Name","value":"totalLength"}},{"kind":"Field","name":{"kind":"Name","value":"locomotives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleNumber"}},{"kind":"Field","name":{"kind":"Name","value":"powerTypeAbbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"locomotiveType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}},{"kind":"Field","name":{"kind":"Name","value":"wagons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleNumber"}},{"kind":"Field","name":{"kind":"Name","value":"salesNumber"}},{"kind":"Field","name":{"kind":"Name","value":"wagonType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"length"}},{"kind":"Field","name":{"kind":"Name","value":"playground"}},{"kind":"Field","name":{"kind":"Name","value":"pet"}},{"kind":"Field","name":{"kind":"Name","value":"catering"}},{"kind":"Field","name":{"kind":"Name","value":"video"}},{"kind":"Field","name":{"kind":"Name","value":"luggage"}},{"kind":"Field","name":{"kind":"Name","value":"smoking"}},{"kind":"Field","name":{"kind":"Name","value":"disabled"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeTableRows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainStopping"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainTimeTableRow"}}]}}]}}]} as unknown as DocumentNode<TrainQuery, TrainQueryVariables>;
 export const TrainsByStationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TrainsByStation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"station"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"departingTrains"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"departedTrains"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"arrivingTrains"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"arrivedTrains"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainsByStationAndQuantity"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"station"},"value":{"kind":"Variable","name":{"kind":"Name","value":"station"}}},{"kind":"Argument","name":{"kind":"Name","value":"departingTrains"},"value":{"kind":"Variable","name":{"kind":"Name","value":"departingTrains"}}},{"kind":"Argument","name":{"kind":"Name","value":"departedTrains"},"value":{"kind":"Variable","name":{"kind":"Name","value":"departedTrains"}}},{"kind":"Argument","name":{"kind":"Name","value":"arrivingTrains"},"value":{"kind":"Variable","name":{"kind":"Name","value":"arrivingTrains"}}},{"kind":"Argument","name":{"kind":"Name","value":"arrivedTrains"},"value":{"kind":"Variable","name":{"kind":"Name","value":"arrivedTrains"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainType"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainCategory"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"StringValue","value":"Commuter","block":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"StringValue","value":"Long-distance","block":false}}]}}]}]}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainByStation"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainByStation"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Train"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commuterLineid"}},{"kind":"Field","name":{"kind":"Name","value":"trainNumber"}},{"kind":"Field","name":{"kind":"Name","value":"departureDate"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uicCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"trainType"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"trainCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeTableRows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"trainStopping"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TrainTimeTableRow"}}]}},{"kind":"Field","name":{"kind":"Name","value":"trainType"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<TrainsByStationQuery, TrainsByStationQueryVariables>;

@@ -203,13 +203,17 @@ const getWagonNo = (w?: Wagon | null) =>
   w?.vehicleNumber ?? w?.salesNumber.toString() ?? null;
 
 export default function getTrainCompositionDetailsForStation(
-  station: string,
+  stationCode: string,
   train: TrainDetailsFragment
 ): WagonCompositionDetails[] | null {
-  const sectionBefore = getTrainJourneySectionForStation(train, station, 'end');
+  const sectionBefore = getTrainJourneySectionForStation(
+    train,
+    stationCode,
+    'end'
+  );
   const sectionAfter = getTrainJourneySectionForStation(
     train,
-    station,
+    stationCode,
     'start'
   );
 

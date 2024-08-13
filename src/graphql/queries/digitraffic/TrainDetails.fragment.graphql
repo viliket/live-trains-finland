@@ -25,6 +25,7 @@ fragment TrainDetails on Train {
         actualTime
         station {
           name
+          shortCode
         }
       }
       endTimeTableRow {
@@ -33,6 +34,7 @@ fragment TrainDetails on Train {
         actualTime
         station {
           name
+          shortCode
         }
       }
       maximumSpeed

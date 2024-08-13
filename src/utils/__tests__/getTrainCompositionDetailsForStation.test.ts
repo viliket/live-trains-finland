@@ -23,7 +23,7 @@ describe('getTrainCompositionDetailsForStation', () => {
      * 94106004011-5 94106004021-4 94106004008-1 94106004023-0 -> (direction)
      */
     const wagons = getTrainCompositionDetailsForStation(
-      'Riihimäki',
+      'RI',
       trainR2Units2AdditionalUnitsFromRi as TrainDetailsFragment
     );
     expectToBeDefined(wagons);
@@ -59,7 +59,7 @@ describe('getTrainCompositionDetailsForStation', () => {
      * 94106004001-6 94106004028-9 94106004019-8 94106004011-5 -> (direction)
      */
     const wagons = getTrainCompositionDetailsForStation(
-      'Riihimäki',
+      'RI',
       trainR4Units2LastUnitsContinueFromRi as TrainDetailsFragment
     );
     expectToBeDefined(wagons);
@@ -95,7 +95,7 @@ describe('getTrainCompositionDetailsForStation', () => {
      * 94106004017-2 94106004021-4 94106004028-9 94106004010-7 -> (direction)
      */
     const wagons = getTrainCompositionDetailsForStation(
-      'Riihimäki',
+      'RI',
       trainR4Units2FirstUnitsContinueFromRi as TrainDetailsFragment
     );
 
@@ -132,7 +132,7 @@ describe('getTrainCompositionDetailsForStation', () => {
      * 710 731 730 62 61 60 59 58 57 56 55 54 52 51 50 -> (direction)
      */
     const wagons = getTrainCompositionDetailsForStation(
-      'Tampere',
+      'TPE',
       trainIc266RoiHki as TrainDetailsFragment
     );
 
@@ -200,7 +200,7 @@ describe('getTrainCompositionDetailsForStation', () => {
     expect(wagons[14].status).toBe('unchanged');
   });
 
-  it('should return correct details for a train IC 266 2023-05-20 from ROI->HKI at Tampere', () => {
+  it('should return correct details for a train IC 266 2023-05-20 from ROI->HKI at TPE', () => {
     /**
      * Composition at journey section Oulu -> Tampere:
      * 999 710 730 62 61 60 59 58 57 56 55 52 51 50 -> (direction)
@@ -213,7 +213,7 @@ describe('getTrainCompositionDetailsForStation', () => {
      * 999 710 52 51 50 55 56 730 62 61 60 59 58 57 56 55 52 51 50 -> (direction)
      */
     const wagons = getTrainCompositionDetailsForStation(
-      'Tampere',
+      'TPE',
       trainIc266RoiHkiV2 as TrainDetailsFragment
     );
 
@@ -297,7 +297,7 @@ describe('getTrainCompositionDetailsForStation', () => {
     expect(wagons[18].status).toBe('unchanged');
   });
 
-  it('should return correct details for a train IC 266 2023-05-20 from ROI->HKI at Pasila tavara', () => {
+  it('should return correct details for a train IC 266 2023-05-20 from ROI->HKI at PSLT', () => {
     /**
      * Composition at journey section Tampere -> Pasila tavara:
      * 999 710 52 51 50 55 56 59 58 57 -> (direction)
@@ -310,7 +310,7 @@ describe('getTrainCompositionDetailsForStation', () => {
      * 59 58 57 56 55 999 710 52 51 50 55 56 59 58 57 -> (direction)
      */
     const wagons = getTrainCompositionDetailsForStation(
-      'Pasila tavara',
+      'PSLT',
       trainIc266RoiHkiV2 as TrainDetailsFragment
     );
 
@@ -391,7 +391,7 @@ describe('getTrainCompositionDetailsForStation', () => {
      * 725 737 736 720 721 999 55 54 53 52 51 50 49 48 42 41 40 720 721 725 736 737 -> (direction)
      */
     const wagons = getTrainCompositionDetailsForStation(
-      'Oulu',
+      'OL',
       trainPyo276KliHki as TrainDetailsFragment
     );
 
@@ -487,7 +487,7 @@ describe('getTrainCompositionDetailsForStation', () => {
     expect(wagons[21].status).toBe('added');
   });
 
-  it('should return correct details for a train IC 143 from HKI=>PKI which reverses direction at Tampere', () => {
+  it('should return correct details for a train IC 143 from HKI=>PKI which reverses direction at TPE', () => {
     /**
      * Composition at journey section Helsinki -> Tampere:
      * 1 2 3 4 5 6 -> (direction)
@@ -500,7 +500,7 @@ describe('getTrainCompositionDetailsForStation', () => {
      * 6 5 4 3 2 1 -> (direction)
      */
     const wagons = getTrainCompositionDetailsForStation(
-      'Tampere',
+      'TPE',
       trainIc143DirectionReversesAfterTpe as TrainDetailsFragment
     );
 
