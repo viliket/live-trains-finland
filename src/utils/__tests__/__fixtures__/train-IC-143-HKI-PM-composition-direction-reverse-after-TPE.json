@@ -27,6 +27,7 @@
             "actualTime": null,
             "station": {
               "name": "Helsinki asema",
+              "shortCode": "HKI",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -37,6 +38,7 @@
             "actualTime": null,
             "station": {
               "name": "Tampere asema",
+              "shortCode": "TPE",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -153,6 +155,7 @@
             "actualTime": null,
             "station": {
               "name": "Tampere asema",
+              "shortCode": "TPE",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -163,6 +166,7 @@
             "actualTime": null,
             "station": {
               "name": "Pieksämäki asema",
+              "shortCode": "PM",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"

@@ -28,6 +28,7 @@
             "actualTime": "2023-05-07T16:42:21.000Z",
             "station": {
               "name": "Helsinki asema",
+              "shortCode": "HKI",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -38,6 +39,7 @@
             "actualTime": "2023-05-07T17:22:13.000Z",
             "station": {
               "name": "Kirkkonummi",
+              "shortCode": "KKN",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"

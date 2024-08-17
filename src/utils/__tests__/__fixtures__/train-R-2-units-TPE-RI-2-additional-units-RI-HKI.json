@@ -23,14 +23,22 @@
             "scheduledTime": "2023-05-05T14:35:00.000Z",
             "liveEstimateTime": null,
             "actualTime": "2023-05-05T14:35:00.000Z",
-            "station": { "name": "Tampere asema", "__typename": "Station" },
+            "station": {
+              "name": "Tampere asema",
+              "shortCode": "TPE",
+              "__typename": "Station"
+            },
             "__typename": "TimeTableRow"
           },
           "endTimeTableRow": {
             "scheduledTime": "2023-05-05T15:45:00.000Z",
             "liveEstimateTime": null,
             "actualTime": "2023-05-05T15:45:30.000Z",
-            "station": { "name": "Riihimäki asema", "__typename": "Station" },
+            "station": {
+              "name": "Riihimäki asema",
+              "shortCode": "RI",
+              "__typename": "Station"
+            },
             "__typename": "TimeTableRow"
           },
           "maximumSpeed": 160,
@@ -90,14 +98,22 @@
             "scheduledTime": "2023-05-05T15:55:00.000Z",
             "liveEstimateTime": null,
             "actualTime": "2023-05-05T15:55:08.000Z",
-            "station": { "name": "Riihimäki asema", "__typename": "Station" },
+            "station": {
+              "name": "Riihimäki asema",
+              "shortCode": "RI",
+              "__typename": "Station"
+            },
             "__typename": "TimeTableRow"
           },
           "endTimeTableRow": {
             "scheduledTime": "2023-05-05T16:49:00.000Z",
             "liveEstimateTime": null,
             "actualTime": "2023-05-05T16:49:48.000Z",
-            "station": { "name": "Helsinki asema", "__typename": "Station" },
+            "station": {
+              "name": "Helsinki asema",
+              "shortCode": "HKI",
+              "__typename": "Station"
+            },
             "__typename": "TimeTableRow"
           },
           "maximumSpeed": 160,

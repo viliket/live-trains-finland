@@ -71,15 +71,15 @@ function TrainComposition({
   onWagonClick,
 }: TrainCompositionProps) {
   const { t } = useTranslation();
-  const stationName = (
+  const stationCode = (
     stationTimeTableRowGroup?.departure ?? stationTimeTableRowGroup?.arrival
-  )?.station.name;
+  )?.station.shortCode;
 
-  const journeySection = stationName
-    ? getTrainJourneySectionForStation(train, stationName)
+  const journeySection = stationCode
+    ? getTrainJourneySectionForStation(train, stationCode)
     : getTrainCurrentJourneySection(train);
-  const compositionChangeDetailsForStation = stationName
-    ? getTrainCompositionDetailsForStation(stationName, train)?.reverse()
+  const compositionChangeDetailsForStation = stationCode
+    ? getTrainCompositionDetailsForStation(stationCode, train)?.reverse()
     : null;
 
   let wagons = compositionChangeDetailsForStation?.map((w) => w.wagon);
@@ -89,10 +89,10 @@ function TrainComposition({
   );
 
   if (!wagons) {
-    if (stationName) {
+    if (stationCode) {
       // Composition does not change at this station
       const isFirstStationInJourney =
-        getTrainDepartureStation(train)?.name === stationName;
+        getTrainDepartureStation(train)?.shortCode === stationCode;
       const numJourneySections =
         train.compositions?.[0]?.journeySections?.length;
       if (
@@ -112,7 +112,7 @@ function TrainComposition({
   }
 
   if (!wagons) {
-    return !stationName ? (
+    return !stationCode ? (
       <Typography variant="body2" color="text.secondary">
         {t('train_current_composition')} (?)
       </Typography>
@@ -174,7 +174,7 @@ function TrainComposition({
                 flexDirection: 'column',
                 alignItems: 'center',
                 opacity: wagonStatuses?.[i] === 'removed' ? '0.3' : '1.0',
-                width: !stationName
+                width: !stationCode
                   ? train.commuterLineid
                     ? 'auto'
                     : '2rem'
@@ -260,7 +260,7 @@ function TrainComposition({
           )}
         </Box>
       </div>
-      {stationName && (
+      {stationCode && (
         <Box
           className="stopping-sectors"
           sx={(theme) => ({
@@ -283,7 +283,7 @@ function TrainComposition({
         </Box>
       )}
       <Typography variant="body2" color="text.secondary">
-        {!stationName && (
+        {!stationCode && (
           <>
             {t('train_current_composition')} (
             {journeySection?.startTimeTableRow?.station &&
@@ -294,7 +294,7 @@ function TrainComposition({
             )
           </>
         )}
-        {stationName && (
+        {stationCode && (
           <>
             {t('train_composition_change_from_to_station_text', {
               from:
