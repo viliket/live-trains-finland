@@ -1,4 +1,5 @@
 import { TrainDetailsFragment } from '../../graphql/generated/digitraffic/graphql';
+import getTimeTableRowsGroupedByStation from '../getTimeTableRowsGroupedByStation';
 import getTrainCompositionDetailsForStation from '../getTrainCompositionDetailsForStation';
 
 import trainIc143DirectionReversesAfterTpe from './__fixtures__/train-IC-143-HKI-PM-composition-direction-reverse-after-TPE.json';
@@ -10,6 +11,17 @@ import trainR4Units2FirstUnitsContinueFromRi from './__fixtures__/train-R-4-unit
 import trainR4Units2LastUnitsContinueFromRi from './__fixtures__/train-R-4-units-HKI-RI-2-last-units-continue-RI-TPE.json';
 
 describe('getTrainCompositionDetailsForStation', () => {
+  const getTimeTableGroup = (
+    train: TrainDetailsFragment,
+    stationCode: string
+  ) => {
+    const timeTableGroups = getTimeTableRowsGroupedByStation(train);
+    const timeTableGroupForStation = timeTableGroups?.find(
+      (g) => (g.departure ?? g.arrival)?.station.shortCode === stationCode
+    );
+    expectToBeDefined(timeTableGroupForStation);
+    return timeTableGroupForStation;
+  };
   it('should return correct details for a 2-unit train from TPE->RI with two new units added in front from RI->HKI', () => {
     /**
      * Composition at journey section Tampere -> Riihimäki:
@@ -22,10 +34,14 @@ describe('getTrainCompositionDetailsForStation', () => {
      * Unchanged     Unchanged     Added         Added
      * 94106004011-5 94106004021-4 94106004008-1 94106004023-0 -> (direction)
      */
-    const wagons = getTrainCompositionDetailsForStation(
-      'RI',
-      trainR2Units2AdditionalUnitsFromRi as TrainDetailsFragment
+    const train = trainR2Units2AdditionalUnitsFromRi as TrainDetailsFragment;
+    const compositionStatus = getTrainCompositionDetailsForStation(
+      getTimeTableGroup(train, 'RI'),
+      train
     );
+    expect(compositionStatus.status).toBe('changed');
+
+    const wagons = compositionStatus.wagonStatuses;
     expectToBeDefined(wagons);
     expect(wagons.length).toBe(4);
 
@@ -58,10 +74,14 @@ describe('getTrainCompositionDetailsForStation', () => {
      * Unchanged     Unchanged     Removed       Removed
      * 94106004001-6 94106004028-9 94106004019-8 94106004011-5 -> (direction)
      */
-    const wagons = getTrainCompositionDetailsForStation(
-      'RI',
-      trainR4Units2LastUnitsContinueFromRi as TrainDetailsFragment
+    const train = trainR4Units2LastUnitsContinueFromRi as TrainDetailsFragment;
+    const compositionStatus = getTrainCompositionDetailsForStation(
+      getTimeTableGroup(train, 'RI'),
+      train
     );
+    expect(compositionStatus.status).toBe('changed');
+
+    const wagons = compositionStatus.wagonStatuses;
     expectToBeDefined(wagons);
     expect(wagons.length).toBe(4);
 
@@ -94,11 +114,14 @@ describe('getTrainCompositionDetailsForStation', () => {
      * Removed       Removed       Unchanged     Unchanged
      * 94106004017-2 94106004021-4 94106004028-9 94106004010-7 -> (direction)
      */
-    const wagons = getTrainCompositionDetailsForStation(
-      'RI',
-      trainR4Units2FirstUnitsContinueFromRi as TrainDetailsFragment
+    const train = trainR4Units2FirstUnitsContinueFromRi as TrainDetailsFragment;
+    const compositionStatus = getTrainCompositionDetailsForStation(
+      getTimeTableGroup(train, 'RI'),
+      train
     );
+    expect(compositionStatus.status).toBe('changed');
 
+    const wagons = compositionStatus.wagonStatuses;
     expectToBeDefined(wagons);
     expect(wagons.length).toBe(4);
 
@@ -131,11 +154,14 @@ describe('getTrainCompositionDetailsForStation', () => {
      * U   R   R   R  R  R  U  U  U  U  U  U  U  U  U
      * 710 731 730 62 61 60 59 58 57 56 55 54 52 51 50 -> (direction)
      */
-    const wagons = getTrainCompositionDetailsForStation(
-      'TPE',
-      trainIc266RoiHki as TrainDetailsFragment
+    const train = trainIc266RoiHki as TrainDetailsFragment;
+    const compositionStatus = getTrainCompositionDetailsForStation(
+      getTimeTableGroup(train, 'TPE'),
+      train
     );
+    expect(compositionStatus.status).toBe('changed');
 
+    const wagons = compositionStatus.wagonStatuses;
     expectToBeDefined(wagons);
     expect(wagons.length).toBe(15);
 
@@ -212,11 +238,14 @@ describe('getTrainCompositionDetailsForStation', () => {
      * U   U   A  A  A  A  A  R   R  R  R  U  U  U  R  R  R  R  R
      * 999 710 52 51 50 55 56 730 62 61 60 59 58 57 56 55 52 51 50 -> (direction)
      */
-    const wagons = getTrainCompositionDetailsForStation(
-      'TPE',
-      trainIc266RoiHkiV2 as TrainDetailsFragment
+    const train = trainIc266RoiHkiV2 as TrainDetailsFragment;
+    const compositionStatus = getTrainCompositionDetailsForStation(
+      getTimeTableGroup(train, 'TPE'),
+      train
     );
+    expect(compositionStatus.status).toBe('changed');
 
+    const wagons = compositionStatus.wagonStatuses;
     expectToBeDefined(wagons);
     expect(wagons.length).toBe(19);
 
@@ -309,11 +338,14 @@ describe('getTrainCompositionDetailsForStation', () => {
      * A  A  A  A  A  R   R   U  U  U  R  R  R  R  R
      * 59 58 57 56 55 999 710 52 51 50 55 56 59 58 57 -> (direction)
      */
-    const wagons = getTrainCompositionDetailsForStation(
-      'PSLT',
-      trainIc266RoiHkiV2 as TrainDetailsFragment
+    const train = trainIc266RoiHkiV2 as TrainDetailsFragment;
+    const compositionStatus = getTrainCompositionDetailsForStation(
+      getTimeTableGroup(train, 'PSLT'),
+      train
     );
+    expect(compositionStatus.status).toBe('changed');
 
+    const wagons = compositionStatus.wagonStatuses;
     expectToBeDefined(wagons);
     expect(wagons.length).toBe(15);
 
@@ -390,11 +422,14 @@ describe('getTrainCompositionDetailsForStation', () => {
      * A   A   A   A   A   R   U  U  U  U  U  U  U  U  U  U  U  R   R   R   R   R
      * 725 737 736 720 721 999 55 54 53 52 51 50 49 48 42 41 40 720 721 725 736 737 -> (direction)
      */
-    const wagons = getTrainCompositionDetailsForStation(
-      'OL',
-      trainPyo276KliHki as TrainDetailsFragment
+    const train = trainPyo276KliHki as TrainDetailsFragment;
+    const compositionStatus = getTrainCompositionDetailsForStation(
+      getTimeTableGroup(train, 'OL'),
+      train
     );
+    expect(compositionStatus.status).toBe('changed');
 
+    const wagons = compositionStatus.wagonStatuses;
     expectToBeDefined(wagons);
     expect(wagons.length).toBe(22);
 
@@ -499,11 +534,14 @@ describe('getTrainCompositionDetailsForStation', () => {
      * U U U U U U
      * 6 5 4 3 2 1 -> (direction)
      */
-    const wagons = getTrainCompositionDetailsForStation(
-      'TPE',
-      trainIc143DirectionReversesAfterTpe as TrainDetailsFragment
+    const train = trainIc143DirectionReversesAfterTpe as TrainDetailsFragment;
+    const compositionStatus = getTrainCompositionDetailsForStation(
+      getTimeTableGroup(train, 'TPE'),
+      train
     );
+    expect(compositionStatus.status).toBe('changed');
 
+    const wagons = compositionStatus.wagonStatuses;
     expectToBeDefined(wagons);
     expect(wagons.length).toBe(6);
 
