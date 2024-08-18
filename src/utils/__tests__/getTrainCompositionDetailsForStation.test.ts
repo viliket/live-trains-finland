@@ -22,7 +22,8 @@ describe('getTrainCompositionDetailsForStation', () => {
     expectToBeDefined(timeTableGroupForStation);
     return timeTableGroupForStation;
   };
-  it('should return correct details for a 2-unit train from TPE->RI with two new units added in front from RI->HKI', () => {
+
+  describe('R train with two units from TPE->RI with two new units added in front from RI->HKI', () => {
     /**
      * Composition at journey section Tampere -> Riihimäki:
      * 94106004011-5 94106004021-4 -> (direction)
@@ -35,31 +36,88 @@ describe('getTrainCompositionDetailsForStation', () => {
      * 94106004011-5 94106004021-4 94106004008-1 94106004023-0 -> (direction)
      */
     const train = trainR2Units2AdditionalUnitsFromRi as TrainDetailsFragment;
-    const compositionStatus = getTrainCompositionDetailsForStation(
-      getTimeTableGroup(train, 'RI'),
-      train
+
+    it('should have changed composition status at RI station with two unchanged wagons and two added wagons in front', () => {
+      const compositionStatus = getTrainCompositionDetailsForStation(
+        getTimeTableGroup(train, 'RI'),
+        train
+      );
+      expect(compositionStatus.status).toBe('changed');
+
+      const wagons = compositionStatus.wagonStatuses;
+      expectToBeDefined(wagons);
+      expect(wagons.length).toBe(4);
+
+      expect(wagons[0].wagon?.vehicleNumber).toBe('94106004023-0');
+      expect(wagons[0].wagon?.location).toBe(1);
+      expect(wagons[0].status).toBe('added');
+
+      expect(wagons[1].wagon?.vehicleNumber).toBe('94106004008-1');
+      expect(wagons[1].wagon?.location).toBe(2);
+      expect(wagons[1].status).toBe('added');
+
+      expect(wagons[2].wagon?.vehicleNumber).toBe('94106004021-4');
+      expect(wagons[2].wagon?.location).toBe(3);
+      expect(wagons[2].status).toBe('unchanged');
+
+      expect(wagons[3].wagon?.vehicleNumber).toBe('94106004011-5');
+      expect(wagons[3].wagon?.location).toBe(4);
+      expect(wagons[3].status).toBe('unchanged');
+    });
+
+    it.each(['TPE', 'HL', 'RY'])(
+      'should have unchanged composition status at %s station with two unchanged wagons',
+      (stationCode: string) => {
+        const compositionStatus = getTrainCompositionDetailsForStation(
+          getTimeTableGroup(train, stationCode),
+          train
+        );
+        expect(compositionStatus.status).toBe('unchanged');
+
+        const wagons = compositionStatus.wagonStatuses;
+        expectToBeDefined(wagons);
+        expect(wagons.length).toBe(2);
+
+        expect(wagons[0].wagon?.vehicleNumber).toBe('94106004021-4');
+        expect(wagons[0].wagon?.location).toBe(1);
+        expect(wagons[0].status).toBe('unchanged');
+
+        expect(wagons[1].wagon?.vehicleNumber).toBe('94106004011-5');
+        expect(wagons[1].wagon?.location).toBe(2);
+        expect(wagons[1].status).toBe('unchanged');
+      }
     );
-    expect(compositionStatus.status).toBe('changed');
 
-    const wagons = compositionStatus.wagonStatuses;
-    expectToBeDefined(wagons);
-    expect(wagons.length).toBe(4);
+    it.each(['HY', 'TKL', 'HKI'])(
+      'should have unchanged composition status at %s station with four unchanged wagons',
+      (stationCode: string) => {
+        const compositionStatus = getTrainCompositionDetailsForStation(
+          getTimeTableGroup(train, stationCode),
+          train
+        );
+        expect(compositionStatus.status).toBe('unchanged');
 
-    expect(wagons[0].wagon?.vehicleNumber).toBe('94106004023-0');
-    expect(wagons[0].wagon?.location).toBe(1);
-    expect(wagons[0].status).toBe('added');
+        const wagons = compositionStatus.wagonStatuses;
+        expectToBeDefined(wagons);
+        expect(wagons.length).toBe(4);
 
-    expect(wagons[1].wagon?.vehicleNumber).toBe('94106004008-1');
-    expect(wagons[1].wagon?.location).toBe(2);
-    expect(wagons[1].status).toBe('added');
+        expect(wagons[0].wagon?.vehicleNumber).toBe('94106004023-0');
+        expect(wagons[0].wagon?.location).toBe(1);
+        expect(wagons[0].status).toBe('unchanged');
 
-    expect(wagons[2].wagon?.vehicleNumber).toBe('94106004021-4');
-    expect(wagons[2].wagon?.location).toBe(3);
-    expect(wagons[2].status).toBe('unchanged');
+        expect(wagons[1].wagon?.vehicleNumber).toBe('94106004008-1');
+        expect(wagons[1].wagon?.location).toBe(2);
+        expect(wagons[1].status).toBe('unchanged');
 
-    expect(wagons[3].wagon?.vehicleNumber).toBe('94106004011-5');
-    expect(wagons[3].wagon?.location).toBe(4);
-    expect(wagons[3].status).toBe('unchanged');
+        expect(wagons[2].wagon?.vehicleNumber).toBe('94106004021-4');
+        expect(wagons[2].wagon?.location).toBe(3);
+        expect(wagons[2].status).toBe('unchanged');
+
+        expect(wagons[3].wagon?.vehicleNumber).toBe('94106004011-5');
+        expect(wagons[3].wagon?.location).toBe(4);
+        expect(wagons[3].status).toBe('unchanged');
+      }
+    );
   });
 
   it('should return correct details for a 4-unit train from HKI->RI with only two last units continuing from RI->TPE', () => {
