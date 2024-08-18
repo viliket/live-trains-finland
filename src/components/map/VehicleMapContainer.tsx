@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import { Box, useTheme } from '@mui/material';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
+import dynamic from 'next/dynamic';
 import Map, {
   FullscreenControl,
   Layer,
@@ -22,6 +23,13 @@ import RailwayTracksLayer from './RailwayTracksLayer';
 import StopsLayer from './StopsLayer';
 import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
+
+const TrainCompositionByStationLayer = dynamic(
+  () => import('./TrainCompositionByStationLayer'),
+  {
+    ssr: false,
+  }
+);
 
 export type VehicleMapContainerProps = {
   selectedVehicleId: number | null;
@@ -167,6 +175,7 @@ const VehicleMapContainer = ({
         })
       }
       <StopsLayer train={train} />
+      <TrainCompositionByStationLayer train={train} />
       <RailwayTracksLayer />
       <RailwayPlatformsLayer />
       {route && (
