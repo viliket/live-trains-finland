@@ -74,7 +74,9 @@ const getWagonsAndStatusesToDisplay = (
   | undefined => {
   // If no station is provided, return the wagons from the current journey section, ordered by location
   if (!stationTimeTableRowGroup) {
-    return orderBy(journeySection?.wagons, (w) => w?.location, 'desc');
+    return journeySection
+      ? orderBy(journeySection.wagons, (w) => w?.location, 'desc')
+      : undefined;
   }
 
   const compositionStatus = getTrainCompositionDetailsForStation(
@@ -121,6 +123,24 @@ const getWagonElementWidth = (wagonType?: string | null) => {
   return `${(wagonLength / stoppingAreaLength) * 100}%`;
 };
 
+const getJourneySectionToDisplay = (
+  train: TrainDetailsFragment,
+  stationTimeTableRowGroup?: TrainTimeTableGroupFragment
+) => {
+  if (!stationTimeTableRowGroup) {
+    return getTrainCurrentJourneySection(train);
+  }
+
+  if (stationTimeTableRowGroup.departure) {
+    return getTrainJourneySectionForTimeTableRow(
+      train,
+      stationTimeTableRowGroup.departure
+    );
+  }
+
+  return null;
+};
+
 type TrainCompositionProps = {
   train: TrainDetailsFragment;
   stationTimeTableRowGroup?: TrainTimeTableGroupFragment;
@@ -135,14 +155,10 @@ function TrainComposition({
   const { t } = useTranslation();
   const hasStationRow = !!stationTimeTableRowGroup;
 
-  const journeySection = hasStationRow
-    ? stationTimeTableRowGroup.departure
-      ? getTrainJourneySectionForTimeTableRow(
-          train,
-          stationTimeTableRowGroup.departure
-        )
-      : null
-    : getTrainCurrentJourneySection(train);
+  const journeySection = getJourneySectionToDisplay(
+    train,
+    stationTimeTableRowGroup
+  );
 
   const wagons = getWagonsAndStatusesToDisplay(
     train,
