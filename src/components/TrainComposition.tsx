@@ -23,11 +23,17 @@ import {
 } from '../graphql/generated/digitraffic/graphql';
 import getTrainCompositionDetailsForStation from '../utils/getTrainCompositionDetailsForStation';
 import getTrainCurrentJourneySection from '../utils/getTrainCurrentJourneySection';
-import getTrainJourneySectionForStation from '../utils/getTrainJourneySectionForStation';
-import { getTrainDepartureStation, getTrainStationName } from '../utils/train';
+import getTrainJourneySectionForTimeTableRow from '../utils/getTrainJourneySectionForTimeTableRow';
+import { getDepartureTimeTableRow, getTrainStationName } from '../utils/train';
 
 import TrainWagonSm2And4 from './TrainWagonSm2And4';
 import TrainWagonSm5 from './TrainWagonSm5';
+
+type JourneySectionFragment = NonNullable<
+  NonNullable<
+    NonNullable<TrainDetailsFragment['compositions']>[number]
+  >['journeySections']
+>[number];
 
 type WagonElementProps = {
   wagon: Wagon;
@@ -59,6 +65,82 @@ const WagonElement = ({ wagon, isCommuterTrain }: WagonElementProps) => {
   );
 };
 
+const getWagonsAndStatusesToDisplay = (
+  train: TrainDetailsFragment,
+  journeySection?: JourneySectionFragment,
+  stationTimeTableRowGroup?: TrainTimeTableGroupFragment
+):
+  | ((Wagon & { compositionStatus?: string }) | null | undefined)[]
+  | undefined => {
+  // If no station is provided, return the wagons from the current journey section, ordered by location
+  if (!stationTimeTableRowGroup) {
+    return journeySection
+      ? orderBy(journeySection.wagons, (w) => w?.location, 'desc')
+      : undefined;
+  }
+
+  const compositionStatus = getTrainCompositionDetailsForStation(
+    stationTimeTableRowGroup,
+    train
+  );
+
+  const isFirstStationOnMultiLegJourney = () => {
+    const isFirstStationInJourney =
+      getDepartureTimeTableRow(train)?.scheduledTime ===
+      stationTimeTableRowGroup.departure?.scheduledTime;
+    const hasMultipleJourneySections =
+      (train.compositions?.[0]?.journeySections?.length ?? 0) > 1;
+    return isFirstStationInJourney && hasMultipleJourneySections;
+  };
+
+  // Display composition if it has changed and always for first station of the
+  // journey if the train has more than one journey sections
+  const shouldDisplayComposition =
+    compositionStatus.status === 'changed' || isFirstStationOnMultiLegJourney();
+
+  // Return the wagon statuses if they should be displayed
+  return shouldDisplayComposition
+    ? compositionStatus.wagonStatuses
+        ?.reverse()
+        .map((w) =>
+          w.wagon ? { ...w.wagon, compositionStatus: w.status } : w.wagon
+        )
+    : undefined;
+};
+
+const getWagonElementWidth = (wagonType?: string | null) => {
+  // Total length of train stopping area (A=200, B=160, C=160, D=200) = 720
+  const stoppingAreaLength = 720;
+  const standardWagonLength = 40; // Length of long distance train wagons
+
+  const wagonLengths: Record<string, number> = {
+    Sm2: 158,
+    Sm4: 158,
+    Sm5: 236,
+  };
+  const wagonLength =
+    (wagonType && wagonLengths[wagonType]) || standardWagonLength;
+  return `${(wagonLength / stoppingAreaLength) * 100}%`;
+};
+
+const getJourneySectionToDisplay = (
+  train: TrainDetailsFragment,
+  stationTimeTableRowGroup?: TrainTimeTableGroupFragment
+) => {
+  if (!stationTimeTableRowGroup) {
+    return getTrainCurrentJourneySection(train);
+  }
+
+  if (stationTimeTableRowGroup.departure) {
+    return getTrainJourneySectionForTimeTableRow(
+      train,
+      stationTimeTableRowGroup.departure
+    );
+  }
+
+  return null;
+};
+
 type TrainCompositionProps = {
   train: TrainDetailsFragment;
   stationTimeTableRowGroup?: TrainTimeTableGroupFragment;
@@ -71,48 +153,21 @@ function TrainComposition({
   onWagonClick,
 }: TrainCompositionProps) {
   const { t } = useTranslation();
-  const stationCode = (
-    stationTimeTableRowGroup?.departure ?? stationTimeTableRowGroup?.arrival
-  )?.station.shortCode;
+  const hasStationRow = !!stationTimeTableRowGroup;
 
-  const journeySection = stationCode
-    ? getTrainJourneySectionForStation(train, stationCode)
-    : getTrainCurrentJourneySection(train);
-  const compositionChangeDetailsForStation = stationCode
-    ? getTrainCompositionDetailsForStation(stationCode, train)?.reverse()
-    : null;
+  const journeySection = getJourneySectionToDisplay(
+    train,
+    stationTimeTableRowGroup
+  );
 
-  let wagons = compositionChangeDetailsForStation?.map((w) => w.wagon);
-
-  const wagonStatuses = compositionChangeDetailsForStation?.map(
-    (w) => w.status
+  const wagons = getWagonsAndStatusesToDisplay(
+    train,
+    journeySection,
+    stationTimeTableRowGroup
   );
 
   if (!wagons) {
-    if (stationCode) {
-      // Composition does not change at this station
-      const isFirstStationInJourney =
-        getTrainDepartureStation(train)?.shortCode === stationCode;
-      const numJourneySections =
-        train.compositions?.[0]?.journeySections?.length;
-      if (
-        isFirstStationInJourney &&
-        numJourneySections &&
-        numJourneySections > 1
-      ) {
-        // Display composition for first station on journey if there are more than 1 section
-        wagons = orderBy(journeySection?.wagons, (w) => w?.location, 'desc');
-      } else {
-        return null;
-      }
-    } else if (journeySection) {
-      // No station given, use wagons from current journey section
-      wagons = orderBy(journeySection.wagons, (w) => w?.location, 'desc');
-    }
-  }
-
-  if (!wagons) {
-    return !stationCode ? (
+    return !hasStationRow ? (
       <Typography variant="body2" color="text.secondary">
         {t('train_current_composition')} (?)
       </Typography>
@@ -120,21 +175,6 @@ function TrainComposition({
   }
 
   const trainDirection = stationTimeTableRowGroup?.trainDirection;
-
-  const getWagonElementWidth = (wagonType?: string | null) => {
-    // Total length of train stopping area (A=200, B=160, C=160, D=200) = 720
-    const stoppingAreaLength = 720;
-    const standardWagonLength = 40; // Length of long distance train wagons
-
-    const wagonLengths: Record<string, number> = {
-      Sm2: 158,
-      Sm4: 158,
-      Sm5: 236,
-    };
-    const wagonLength =
-      (wagonType && wagonLengths[wagonType]) || standardWagonLength;
-    return `${(wagonLength / stoppingAreaLength) * 100}%`;
-  };
 
   return (
     <Box
@@ -167,14 +207,14 @@ function TrainComposition({
             <span key={i}>?</span>
           ) : (
             <button
-              key={`${w.location}-${wagonStatuses?.[i]}`}
+              key={`${w.location}-${w.compositionStatus}`}
               onClick={() => onWagonClick(w)}
               style={{
                 display: 'inline-flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                opacity: wagonStatuses?.[i] === 'removed' ? '0.3' : '1.0',
-                width: !stationCode
+                opacity: w.compositionStatus === 'removed' ? '0.3' : '1.0',
+                width: !hasStationRow
                   ? train.commuterLineid
                     ? 'auto'
                     : '2rem'
@@ -188,10 +228,10 @@ function TrainComposition({
               }}
             >
               <span>
-                {wagonStatuses?.[i] === 'removed' && (
+                {w.compositionStatus === 'removed' && (
                   <CloseOctagon color="warning" />
                 )}
-                {wagonStatuses?.[i] === 'added' && (
+                {w.compositionStatus === 'added' && (
                   <PlusCircle color="success" />
                 )}
               </span>
@@ -260,7 +300,7 @@ function TrainComposition({
           )}
         </Box>
       </div>
-      {stationCode && (
+      {hasStationRow && (
         <Box
           className="stopping-sectors"
           sx={(theme) => ({
@@ -283,7 +323,7 @@ function TrainComposition({
         </Box>
       )}
       <Typography variant="body2" color="text.secondary">
-        {!stationCode && (
+        {!hasStationRow && (
           <>
             {t('train_current_composition')} (
             {journeySection?.startTimeTableRow?.station &&
@@ -294,7 +334,7 @@ function TrainComposition({
             )
           </>
         )}
-        {stationCode && (
+        {hasStationRow && (
           <>
             {t('train_composition_change_from_to_station_text', {
               from:
