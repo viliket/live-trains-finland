@@ -1,3 +1,4 @@
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
@@ -31,6 +32,7 @@ export default function Document() {
         />
       </Head>
       <body>
+        <InitColorSchemeScript attribute="data-theme" />
         <Main />
         <NextScript />
       </body>

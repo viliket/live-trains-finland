@@ -39,10 +39,10 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
       <IconButton
         aria-label="back"
         sx={(theme) => ({
-          color:
-            theme.palette.mode === 'light'
-              ? 'primary.main'
-              : 'primary.contrast',
+          color: 'primary.main',
+          ...theme.applyStyles('dark', {
+            color: 'primary.contrastText',
+          }),
         })}
         onClick={() => router.back()}
       >

@@ -20,37 +20,66 @@ function Footer() {
         <Link
           href="https://github.com/viliket/live-trains-finland"
           underline="none"
-          color="inherit"
+          sx={{
+            color: 'inherit',
+          }}
         >
           © Copyright Junaan.fi 2024
         </Link>
         ,{' '}
-        <Link href="https://www.gnu.org/licenses/gpl-3.0.html" color="inherit">
+        <Link
+          href="https://www.gnu.org/licenses/gpl-3.0.html"
+          sx={{
+            color: 'inherit',
+          }}
+        >
           GPL-3.0
         </Link>
       </Typography>
       <Typography variant="body2" gutterBottom>
         <Trans i18nKey="license_text">
           Traffic data source&nbsp;
-          <Link href="https://tmfg.fi/" color="inherit">
+          <Link
+            href="https://tmfg.fi/"
+            sx={{
+              color: 'inherit',
+            }}
+          >
             Fintraffic
           </Link>
           &nbsp;/&nbsp;
-          <Link href="https://www.digitraffic.fi/" color="inherit">
+          <Link
+            href="https://www.digitraffic.fi/"
+            sx={{
+              color: 'inherit',
+            }}
+          >
             Digitraffic
           </Link>
           &nbsp;and&nbsp;
-          <Link href="https://hsl.fi/" color="inherit">
+          <Link
+            href="https://hsl.fi/"
+            sx={{
+              color: 'inherit',
+            }}
+          >
             Helsinki regional traffic
           </Link>
           &nbsp;/&nbsp;
-          <Link href="https://digitransit.fi/" color="inherit">
+          <Link
+            href="https://digitransit.fi/"
+            sx={{
+              color: 'inherit',
+            }}
+          >
             Digitransit
           </Link>
           ,&nbsp;
           <Link
             href="https://creativecommons.org/licenses/by/4.0/"
-            color="inherit"
+            sx={{
+              color: 'inherit',
+            }}
           >
             CC BY 4.0
           </Link>

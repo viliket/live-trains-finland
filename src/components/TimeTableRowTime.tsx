@@ -34,10 +34,18 @@ function TimeTableRowTime({ row }: TimeTableRowTimeProps) {
       )}
       {!row.cancelled && (
         <Box
-          sx={{
-            color: delayInMinutes > 0 ? 'error.main' : undefined,
-            fontWeight: '500',
-          }}
+          sx={[
+            {
+              fontWeight: '500',
+            },
+            delayInMinutes > 0
+              ? {
+                  color: 'error.main',
+                }
+              : {
+                  color: null,
+                },
+          ]}
         >
           {format(actualTime, 'HH:mm')}
         </Box>

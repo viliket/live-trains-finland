@@ -168,7 +168,12 @@ function TrainComposition({
 
   if (!wagons) {
     return !hasStationRow ? (
-      <Typography variant="body2" color="text.secondary">
+      <Typography
+        variant="body2"
+        sx={{
+          color: 'text.secondary',
+        }}
+      >
         {t('train_current_composition')} (?)
       </Typography>
     ) : null;
@@ -254,21 +259,19 @@ function TrainComposition({
                   display: 'flex',
                   width: '100%',
                   justifyContent: 'center',
-                  color:
-                    theme.palette.mode === 'dark'
-                      ? theme.palette.grey[400]
-                      : theme.palette.primary.main,
+                  color: theme.palette.primary.main,
                   'svg path.door': {
-                    fill:
-                      theme.palette.mode === 'dark'
-                        ? theme.palette.grey[500]
-                        : theme.palette.primary.light,
-                    stroke:
-                      theme.palette.mode === 'dark'
-                        ? theme.palette.grey[500]
-                        : theme.palette.primary.light,
+                    fill: theme.palette.primary.light,
+                    stroke: theme.palette.primary.light,
                     strokeWidth: '0.5px',
+                    ...theme.applyStyles('dark', {
+                      fill: theme.palette.grey[500],
+                      stroke: theme.palette.grey[500],
+                    }),
                   },
+                  ...theme.applyStyles('dark', {
+                    color: theme.palette.grey[400],
+                  }),
                 })}
               >
                 <WagonElement
@@ -280,18 +283,26 @@ function TrainComposition({
           )
         )}
         <Box
-          sx={{
-            display: 'flex',
-            marginRight:
-              trainDirection === TrainDirection.Increasing
-                ? '-1rem'
-                : undefined,
-            marginLeft:
-              trainDirection === TrainDirection.Decreasing
-                ? '-1rem'
-                : undefined,
-            color: 'primary.main',
-          }}
+          sx={[
+            {
+              display: 'flex',
+              color: 'primary.main',
+            },
+            trainDirection === TrainDirection.Increasing
+              ? {
+                  marginRight: '-1rem',
+                }
+              : {
+                  marginRight: null,
+                },
+            trainDirection === TrainDirection.Decreasing
+              ? {
+                  marginLeft: '-1rem',
+                }
+              : {
+                  marginLeft: null,
+                },
+          ]}
         >
           {trainDirection === TrainDirection.Decreasing ? (
             <ChevronLeft />
@@ -307,12 +318,12 @@ function TrainComposition({
             display: 'flex',
             div: {
               border: '1px solid transparent',
-              backgroundColor:
-                theme.palette.mode === 'light'
-                  ? 'divider'
-                  : theme.palette.grey[400],
+              backgroundColor: 'divider',
               color: 'black',
               backgroundClip: 'padding-box',
+              ...theme.applyStyles('dark', {
+                backgroundColor: theme.palette.grey[400],
+              }),
             },
           })}
         >
@@ -322,7 +333,12 @@ function TrainComposition({
           <Box sx={{ flex: 1 }}>D</Box>
         </Box>
       )}
-      <Typography variant="body2" color="text.secondary">
+      <Typography
+        variant="body2"
+        sx={{
+          color: 'text.secondary',
+        }}
+      >
         {!hasStationRow && (
           <>
             {t('train_current_composition')} (

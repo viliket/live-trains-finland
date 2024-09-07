@@ -1,5 +1,5 @@
 import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
-import { Box, Link, Grid, Skeleton, Divider } from '@mui/material';
+import { Box, Link, Grid2 as Grid, Skeleton, Divider } from '@mui/material';
 import { parseISO } from 'date-fns';
 import RouterLink from 'next/link';
 import { useTranslation } from 'react-i18next';
@@ -78,13 +78,15 @@ const TrainStationTimeline = ({
           />
           <TimelineContent>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <Link
                   component={RouterLink}
                   href={`/${getTrainStationName(station)}`}
-                  color="inherit"
                   underline="none"
-                  sx={{ fontWeight: 500 }}
+                  sx={{
+                    color: 'inherit',
+                    fontWeight: 500,
+                  }}
                 >
                   {getTrainStationName(station)}
                 </Link>
@@ -92,13 +94,13 @@ const TrainStationTimeline = ({
                   {t('track')} {r.commercialTrack}
                 </Box>
               </Grid>
-              <Grid item xs={3} sx={{ marginTop: '1rem' }}>
+              <Grid size={3} sx={{ marginTop: '1rem' }}>
                 {g.arrival ? <TimeTableRowTime row={g.arrival} /> : '-'}
               </Grid>
-              <Grid item xs={3} sx={{ marginTop: '1rem' }}>
+              <Grid size={3} sx={{ marginTop: '1rem' }}>
                 {g.departure ? <TimeTableRowTime row={g.departure} /> : '-'}
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 {realTimeTrain && (
                   <div style={{ textAlign: 'center' }}>
                     <TrainComposition
@@ -179,15 +181,9 @@ const TrainStationTimeline = ({
               fontWeight: theme.typography.fontWeightMedium,
             })}
           >
-            <Grid item xs={6}>
-              {t('station')}
-            </Grid>
-            <Grid item xs={3}>
-              {t('arrival')}
-            </Grid>
-            <Grid item xs={3}>
-              {t('departure')}
-            </Grid>
+            <Grid size={6}>{t('station')}</Grid>
+            <Grid size={3}>{t('arrival')}</Grid>
+            <Grid size={3}>{t('departure')}</Grid>
           </Grid>
         </TimelineContent>
       </TimelineItem>

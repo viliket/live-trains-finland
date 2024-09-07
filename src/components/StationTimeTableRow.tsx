@@ -105,9 +105,11 @@ function StationTimeTableRow({
         <Link
           component={RouterLink}
           href={`/${deptOrDestStationName}`}
-          color="inherit"
           underline="none"
           onClick={handleStationClick}
+          sx={{
+            color: 'inherit',
+          }}
         >
           {deptOrDestStationName}
           {deptOrDestStation?.shortCode === 'LEN' && (
@@ -119,8 +121,8 @@ function StationTimeTableRow({
         {stationRow ? <TimeTableRowTime row={stationRow} /> : '?'}
       </TableCell>
       <TableCell align="right">
-        <span
-          style={{
+        <Box
+          sx={{
             display: 'inline-flex',
             alignItems: 'center',
             lineHeight: 'normal',
@@ -132,7 +134,7 @@ function StationTimeTableRow({
           >
             <ChevronRight />
           </IconButton>
-        </span>
+        </Box>
       </TableCell>
     </TableRow>
   );

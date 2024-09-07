@@ -26,10 +26,10 @@ const FloorSwitch = styled(Switch)(({ theme }) => ({
         opacity: 0.1,
       },
       '& .MuiSwitch-thumb': {
-        backgroundColor:
-          theme.palette.mode === 'light'
-            ? lighten(theme.palette.primary.main, 0.62)
-            : darken(theme.palette.primary.main, 0.55),
+        backgroundColor: lighten(theme.palette.primary.main, 0.62),
+        ...theme.applyStyles('dark', {
+          backgroundColor: darken(theme.palette.primary.main, 0.55),
+        }),
       },
     },
   },
@@ -53,8 +53,11 @@ const FloorSwitch = styled(Switch)(({ theme }) => ({
   },
   '& .MuiSwitch-track': {
     opacity: 1,
-    backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+    backgroundColor: '#aab4be',
     borderRadius: 20 / 2,
+    ...theme.applyStyles('dark', {
+      backgroundColor: '#8796A5',
+    }),
   },
 }));
 
