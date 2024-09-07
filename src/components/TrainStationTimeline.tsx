@@ -160,8 +160,9 @@ const TrainStationTimeline = ({
           position: 'sticky',
           top: '3.5rem',
           zIndex: 1002,
-          backgroundColor: theme.palette.common.secondaryBackground.default,
-          boxShadow: `inset 0px -1px 1px ${theme.palette.divider}`,
+          backgroundColor:
+            theme.vars.palette.common.secondaryBackground.default,
+          boxShadow: `inset 0px -1px 1px ${theme.vars.palette.divider}`,
           minHeight: 'auto',
           marginX: '-16px', // Negate parent padding to span whole horizontal space
           padding: '0.4rem',
