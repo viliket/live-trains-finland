@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, ButtonBase, Typography } from '@mui/material';
 import { orderBy } from 'lodash';
 import {
   BagChecked,
@@ -192,9 +192,9 @@ function TrainComposition({
         },
       }}
     >
-      <div
+      <Box
         className="composition"
-        style={{
+        sx={{
           display: 'flex',
           flexDirection:
             trainDirection === TrainDirection.Decreasing
@@ -211,10 +211,10 @@ function TrainComposition({
             // Note: Should never be null
             <span key={i}>?</span>
           ) : (
-            <button
+            <ButtonBase
               key={`${w.location}-${w.compositionStatus}`}
               onClick={() => onWagonClick(w)}
-              style={{
+              sx={{
                 display: 'inline-flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -229,7 +229,9 @@ function TrainComposition({
                 margin: 0,
                 padding: 0,
                 backgroundColor: 'transparent',
-                cursor: 'pointer',
+                '&.Mui-focusVisible': {
+                  outline: 'revert',
+                },
               }}
             >
               <span>
@@ -279,7 +281,7 @@ function TrainComposition({
                   isCommuterTrain={!!train.commuterLineid}
                 />
               </Box>
-            </button>
+            </ButtonBase>
           )
         )}
         <Box
@@ -288,20 +290,12 @@ function TrainComposition({
               display: 'flex',
               color: 'primary.main',
             },
-            trainDirection === TrainDirection.Increasing
-              ? {
-                  marginRight: '-1rem',
-                }
-              : {
-                  marginRight: null,
-                },
-            trainDirection === TrainDirection.Decreasing
-              ? {
-                  marginLeft: '-1rem',
-                }
-              : {
-                  marginLeft: null,
-                },
+            trainDirection === TrainDirection.Increasing && {
+              marginRight: '-1rem',
+            },
+            trainDirection === TrainDirection.Decreasing && {
+              marginLeft: '-1rem',
+            },
           ]}
         >
           {trainDirection === TrainDirection.Decreasing ? (
@@ -310,7 +304,7 @@ function TrainComposition({
             <ChevronRight />
           )}
         </Box>
-      </div>
+      </Box>
       {hasStationRow && (
         <Box
           className="stopping-sectors"

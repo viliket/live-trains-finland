@@ -23,10 +23,10 @@ export function TopNavBar() {
               marginRight: 'auto',
               display: 'inline-flex',
               alignItems: 'center',
+              color: 'inherit',
+              textDecoration: 'none',
             }}
             component={Link}
-            color="inherit"
-            style={{ textDecoration: 'none' }}
             href="/"
           >
             <Box

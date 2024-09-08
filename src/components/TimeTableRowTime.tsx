@@ -38,13 +38,9 @@ function TimeTableRowTime({ row }: TimeTableRowTimeProps) {
             {
               fontWeight: '500',
             },
-            delayInMinutes > 0
-              ? {
-                  color: 'error.main',
-                }
-              : {
-                  color: null,
-                },
+            delayInMinutes > 0 && {
+              color: 'error.main',
+            },
           ]}
         >
           {format(actualTime, 'HH:mm')}

@@ -68,8 +68,9 @@ function StationTimeTableRow({
       onClick={() => tableRowOnClick(trainNumber, departureDate)}
     >
       <TableCell scope="row">
-        <span
-          style={{
+        <Box
+          component="span"
+          sx={{
             display: 'flex',
             alignItems: 'center',
           }}
@@ -99,7 +100,7 @@ function StationTimeTableRow({
               departureDate={departureDate}
             />
           </Box>
-        </span>
+        </Box>
       </TableCell>
       <TableCell>
         <Link

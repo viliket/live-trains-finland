@@ -102,13 +102,13 @@ const TrainStationTimeline = ({
               </Grid>
               <Grid size={12}>
                 {realTimeTrain && (
-                  <div style={{ textAlign: 'center' }}>
+                  <Box sx={{ textAlign: 'center' }}>
                     <TrainComposition
                       train={realTimeTrain}
                       stationTimeTableRowGroup={g}
                       onWagonClick={onWagonClick}
                     />
-                  </div>
+                  </Box>
                 )}
                 {stationMessages &&
                   stationMessages[station.shortCode]?.length > 0 && (
