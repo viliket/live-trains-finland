@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Menu, MenuItem, Box, IconButton } from '@mui/material';
+import { Menu, MenuItem, Box, IconButton, Skeleton } from '@mui/material';
 import { Theme, useColorScheme, useTheme } from '@mui/material/styles';
 import { Brightness7, Brightness3, BrightnessAuto } from 'mdi-material-ui';
 
@@ -43,7 +43,14 @@ export function ThemeSelector() {
   };
 
   if (!mode) {
-    return null;
+    return (
+      <Skeleton
+        variant="circular"
+        width="1.5rem"
+        height="1.5rem"
+        sx={{ margin: 1 }}
+      />
+    );
   }
 
   return (
