@@ -132,12 +132,6 @@ export default function StationAndTrainSearch() {
         open={open}
         onClose={handleClose}
         TransitionComponent={SlideUpTransition}
-        PaperProps={{
-          sx: {
-            // Temporary fix until new patch of MUI is released with https://github.com/mui/material-ui/pull/43626
-            overflowY: 'auto',
-          },
-        }}
       >
         <AppBar position="fixed" elevation={0}>
           <Toolbar>
