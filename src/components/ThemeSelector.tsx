@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Menu, MenuItem, Box, IconButton } from '@mui/material';
-import { Theme, useColorScheme } from '@mui/material/styles';
-import { useTheme } from '@mui/material/styles';
+import { Theme, useColorScheme, useTheme } from '@mui/material/styles';
 import { Brightness7, Brightness3, BrightnessAuto } from 'mdi-material-ui';
 
 const themeOptions: Record<string, { icon: React.ReactElement }> = {
@@ -12,10 +11,7 @@ const themeOptions: Record<string, { icon: React.ReactElement }> = {
 };
 
 const updateMetaThemeColor = (theme: Theme): void => {
-  const themeColorElements = document.querySelectorAll(
-    'meta[name="theme-color"]'
-  );
-  themeColorElements.forEach((meta) => {
+  document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
     meta.setAttribute(
       'content',
       theme.palette.common.secondaryBackground.default
