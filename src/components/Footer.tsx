@@ -14,73 +14,33 @@ function Footer() {
         borderTopColor: 'divider',
         padding: '1rem',
         marginTop: '2rem',
+        '& .MuiLink-root': {
+          color: 'inherit',
+          textDecorationColor: 'inherit',
+        },
       }}
     >
       <Typography variant="body2" gutterBottom>
         <Link
           href="https://github.com/viliket/live-trains-finland"
           underline="none"
-          sx={{
-            color: 'inherit',
-          }}
         >
           © Copyright Junaan.fi 2024
         </Link>
-        ,{' '}
-        <Link
-          href="https://www.gnu.org/licenses/gpl-3.0.html"
-          sx={{
-            color: 'inherit',
-          }}
-        >
-          GPL-3.0
-        </Link>
+        , <Link href="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3.0</Link>
       </Typography>
       <Typography variant="body2" gutterBottom>
         <Trans i18nKey="license_text">
           Traffic data source&nbsp;
-          <Link
-            href="https://tmfg.fi/"
-            sx={{
-              color: 'inherit',
-            }}
-          >
-            Fintraffic
-          </Link>
+          <Link href="https://tmfg.fi/">Fintraffic</Link>
           &nbsp;/&nbsp;
-          <Link
-            href="https://www.digitraffic.fi/"
-            sx={{
-              color: 'inherit',
-            }}
-          >
-            Digitraffic
-          </Link>
+          <Link href="https://www.digitraffic.fi/">Digitraffic</Link>
           &nbsp;and&nbsp;
-          <Link
-            href="https://hsl.fi/"
-            sx={{
-              color: 'inherit',
-            }}
-          >
-            Helsinki regional traffic
-          </Link>
+          <Link href="https://hsl.fi/">Helsinki regional traffic</Link>
           &nbsp;/&nbsp;
-          <Link
-            href="https://digitransit.fi/"
-            sx={{
-              color: 'inherit',
-            }}
-          >
-            Digitransit
-          </Link>
+          <Link href="https://digitransit.fi/">Digitransit</Link>
           ,&nbsp;
-          <Link
-            href="https://creativecommons.org/licenses/by/4.0/"
-            sx={{
-              color: 'inherit',
-            }}
-          >
+          <Link href="https://creativecommons.org/licenses/by/4.0/">
             CC BY 4.0
           </Link>
         </Trans>
