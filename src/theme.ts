@@ -69,13 +69,13 @@ const baseTheme: CssVarsThemeOptions = {
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: ({ theme }) => ({
-          backgroundColor: (theme.vars ?? theme).palette.common
-            .secondaryBackground.default,
-          color: (theme.vars ?? theme).palette.primary.main,
+          backgroundColor:
+            theme.vars.palette.common.secondaryBackground.default,
+          color: theme.vars.palette.primary.main,
           ...theme.applyStyles('dark', {
-            backgroundColor: (theme.vars ?? theme).palette.common
-              .secondaryBackground.default,
-            color: (theme.vars ?? theme).palette.primary.main,
+            backgroundColor:
+              theme.vars.palette.common.secondaryBackground.default,
+            color: theme.vars.palette.primary.main,
           }),
         }),
       },
