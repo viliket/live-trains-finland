@@ -28,8 +28,8 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
         paddingLeft: '4px',
         paddingRight: '1rem',
         marginTop: '-0.6rem',
-        backgroundColor: theme.palette.common.secondaryBackground.default,
-        color: theme.palette.common.secondaryBackground.text,
+        backgroundColor: theme.vars.palette.common.secondaryBackground.default,
+        color: theme.vars.palette.common.secondaryBackground.text,
         h4: {
           margin: 0,
           fontWeight: 500,
@@ -39,10 +39,10 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
       <IconButton
         aria-label="back"
         sx={(theme) => ({
-          color:
-            theme.palette.mode === 'light'
-              ? 'primary.main'
-              : 'primary.contrast',
+          color: 'primary.main',
+          ...theme.applyStyles('dark', {
+            color: 'primary.contrastText',
+          }),
         })}
         onClick={() => router.back()}
       >

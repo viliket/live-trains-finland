@@ -61,8 +61,9 @@ function TrainInfoContainer({ train }: TrainInfoContainerProps) {
         sx={(theme) => ({
           textAlign: 'center',
           paddingTop: 2,
-          backgroundColor: theme.palette.common.secondaryBackground.default,
-          borderTop: `solid 1px ${theme.palette.divider}`,
+          backgroundColor:
+            theme.vars.palette.common.secondaryBackground.default,
+          borderTop: `solid 1px ${theme.vars.palette.divider}`,
         })}
       >
         <Snackbar
