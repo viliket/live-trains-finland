@@ -27,7 +27,7 @@
     "i18next-http-backend": "^2.6.1",
     "lodash": "^4.17.21",
     "maplibre-gl": "^4.6.0",
-    "mdi-material-ui": "^7.9.1",
+    "mdi-material-ui": "^7.9.2",
     "mqtt": "^5.10.1",
     "next": "^14.2.7",
     "nuqs": "^1.18.0",
@@ -40,11 +40,6 @@
     "typescript": "^5.5.4",
     "use-local-storage-state": "^19.4.0",
     "zustand": "^4.5.5"
-  },
-  "overrides": {
-    "mdi-material-ui": {
-      "@mui/material": "$@mui/material"
-    }
   },
   "scripts": {
     "dev": "next dev",
