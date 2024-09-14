@@ -27,10 +27,12 @@ const FavoriteStationList = () => {
       {favStations.length !== 0 && (
         <Stack
           direction="row"
-          justifyContent="center"
           spacing={1}
           useFlexGap
-          flexWrap="wrap"
+          sx={{
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+          }}
         >
           {favStations.map((station, i) => (
             <Fragment key={station.stationShortCode}>

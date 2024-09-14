@@ -127,10 +127,20 @@ const DetailsItem = ({
       flexGrow: 1,
     })}
   >
-    <Typography variant="caption" display="block">
+    <Typography
+      variant="caption"
+      sx={{
+        display: 'block',
+      }}
+    >
       {value}
     </Typography>
-    <Typography variant="caption" display="block">
+    <Typography
+      variant="caption"
+      sx={{
+        display: 'block',
+      }}
+    >
       {caption}
     </Typography>
   </Paper>
@@ -268,9 +278,11 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
             spacing={1}
             direction="row"
             useFlexGap
-            flexWrap="wrap"
-            marginY={1}
-            maxWidth={164}
+            sx={{
+              flexWrap: 'wrap',
+              marginY: 1,
+              maxWidth: 164,
+            }}
           >
             <DetailsItem
               value={selectedWagon?.wagonType}

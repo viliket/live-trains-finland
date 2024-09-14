@@ -176,7 +176,14 @@ function FindNearest() {
 
   return (
     <>
-      <Stack spacing={1} direction="row" justifyContent="center" mt={2}>
+      <Stack
+        spacing={1}
+        direction="row"
+        sx={{
+          justifyContent: 'center',
+          mt: 2,
+        }}
+      >
         <Button
           variant="contained"
           onClick={() => findNearest('stations')}

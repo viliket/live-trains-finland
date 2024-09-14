@@ -1,4 +1,6 @@
-import { alpha, createTheme } from '@mui/material';
+import { CssVarsThemeOptions, alpha } from '@mui/material';
+
+import type {} from '@mui/material/themeCssVarsAugmentation';
 
 declare module '@mui/material/styles/createPalette' {
   interface CommonColors {
@@ -9,21 +11,98 @@ declare module '@mui/material/styles/createPalette' {
   }
 }
 
-const baseTheme = createTheme({
+const baseTheme: CssVarsThemeOptions = {
+  colorSchemes: {
+    light: {
+      palette: {
+        mode: 'light',
+        background: {
+          default: '#fff',
+        },
+        primary: {
+          main: '#004994',
+        },
+        secondary: {
+          main: '#00A651',
+        },
+        error: {
+          main: '#b72727',
+        },
+        text: {
+          primary: 'rgb(26, 32, 39)',
+        },
+        common: {
+          secondaryBackground: {
+            default: 'rgb(249, 249, 251)',
+            text: 'rgba(0, 0, 0, 0.87)',
+          },
+        },
+        divider: '#eee',
+      },
+    },
+    dark: {
+      palette: {
+        mode: 'dark',
+        background: {
+          default: '#232323',
+        },
+        primary: {
+          main: '#066fdb',
+        },
+        secondary: {
+          main: '#00A651',
+        },
+        error: {
+          main: '#d67a7a',
+        },
+        common: {
+          secondaryBackground: {
+            default: '#1e1e1e',
+            text: '#eee',
+          },
+        },
+        divider: '#2b2b2b',
+      },
+    },
+  },
   components: {
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: ({ theme }) => ({
-          backgroundColor: theme.palette.common.secondaryBackground.default,
-          color: theme.palette.primary.main,
+          backgroundColor:
+            theme.vars.palette.common.secondaryBackground.default,
+          color: theme.vars.palette.primary.main,
+          ...theme.applyStyles('dark', {
+            backgroundColor:
+              theme.vars.palette.common.secondaryBackground.default,
+            color: theme.vars.palette.primary.main,
+          }),
         }),
       },
     },
     MuiToggleButton: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           textTransform: 'none',
-        },
+          variants: [
+            {
+              props: { color: 'primary' },
+              style: {
+                ...theme.applyStyles('dark', {
+                  color: theme.palette.grey[300],
+                  '&.Mui-selected': {
+                    color: '#fff',
+                    borderColor: alpha(theme.palette.primary.main, 0.2),
+                    backgroundColor: alpha(theme.palette.primary.main, 0.2),
+                    '&:hover': {
+                      backgroundColor: alpha(theme.palette.primary.main, 0.3),
+                    },
+                  },
+                }),
+              },
+            },
+          ],
+        }),
       },
     },
     MuiButton: {
@@ -37,88 +116,30 @@ const baseTheme = createTheme({
         },
       },
     },
-  },
-});
-
-const darkTheme = createTheme({
-  ...baseTheme,
-  palette: {
-    mode: 'dark',
-    background: {
-      default: '#232323',
+    MuiPaper: {
+      variants: [
+        // Temporary workaround for https://github.com/mui/material-ui/issues/43683
+        { props: { elevation: 0 }, style: { '--Paper-overlay': 'none' } },
+      ],
     },
-    primary: {
-      main: '#066fdb',
-    },
-    secondary: {
-      main: '#00A651',
-    },
-    error: {
-      main: '#d67a7a',
-    },
-    common: {
-      secondaryBackground: {
-        default: '#1e1e1e',
-        text: '#eee',
-      },
-    },
-    divider: '#2b2b2b',
-  },
-});
-
-darkTheme.components = {
-  ...baseTheme.components,
-  MuiToggleButton: {
-    styleOverrides: {
-      root: ({ theme, ownerState }) => {
-        const selectedColor =
-          ownerState.color && ownerState.color !== 'standard'
-            ? theme.palette[ownerState.color].main
-            : theme.palette.primary.main;
-        return {
-          textTransform: 'none',
-          color: theme.palette.grey[300],
-          '&.Mui-selected': {
-            color: '#fff',
-            borderColor: alpha(selectedColor, 0.2),
-            backgroundColor: alpha(selectedColor, 0.2),
-            '&:hover': {
-              backgroundColor: alpha(selectedColor, 0.3),
+    MuiDialog: {
+      styleOverrides: {
+        root: {
+          variants: [
+            {
+              props: { scroll: 'paper' },
+              style: {
+                '& .MuiPaper-root': {
+                  // Temporary fix until new patch of MUI is released with https://github.com/mui/material-ui/pull/43626
+                  overflowY: 'auto',
+                },
+              },
             },
-          },
-        };
+          ],
+        },
       },
     },
   },
 };
 
-const lightTheme = createTheme({
-  ...baseTheme,
-  palette: {
-    mode: 'light',
-    background: {
-      default: '#fff',
-    },
-    primary: {
-      main: '#004994',
-    },
-    secondary: {
-      main: '#00A651',
-    },
-    error: {
-      main: '#b72727',
-    },
-    text: {
-      primary: 'rgb(26, 32, 39)',
-    },
-    common: {
-      secondaryBackground: {
-        default: 'rgb(249, 249, 251)',
-        text: 'rgba(0, 0, 0, 0.87)',
-      },
-    },
-    divider: '#eee',
-  },
-});
-
-export { darkTheme, lightTheme };
+export default baseTheme;

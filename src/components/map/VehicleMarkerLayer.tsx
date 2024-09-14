@@ -286,13 +286,25 @@ export default function VehicleMarkerLayer({
             <Box
               component="button"
               onClick={() => setIsTracking(!isTracking)}
-              sx={{
-                svg: {
-                  verticalAlign: 'middle',
-                  padding: '4px',
-                  color: isTracking ? 'primary.main' : 'text.primary',
+              sx={[
+                {
+                  svg: {
+                    verticalAlign: 'middle',
+                    padding: '4px',
+                  },
                 },
-              }}
+                isTracking
+                  ? {
+                      svg: {
+                        color: 'primary.main',
+                      },
+                    }
+                  : {
+                      svg: {
+                        color: 'text.primary',
+                      },
+                    },
+              ]}
             >
               {isTracking ? (
                 <CrosshairsGps className="maplibregl-ctrl-icon" />

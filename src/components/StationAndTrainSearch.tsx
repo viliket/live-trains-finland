@@ -100,14 +100,14 @@ export default function StationAndTrainSearch() {
         component="button"
         onClick={handleClickOpen}
         sx={(theme) => ({
-          bgcolor: theme.palette.action.selected,
-          color: theme.palette.text.secondary,
+          bgcolor: theme.vars.palette.action.selected,
+          color: theme.vars.palette.text.secondary,
           border: 'none',
           '&:hover': {
             bgcolor: alpha(
               theme.palette.action.selected,
-              theme.palette.action.selectedOpacity +
-                theme.palette.action.hoverOpacity
+              theme.vars.palette.action.selectedOpacity +
+                theme.vars.palette.action.hoverOpacity
             ),
           },
           fontSize: theme.typography.pxToRem(14),

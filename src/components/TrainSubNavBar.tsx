@@ -76,8 +76,9 @@ function TrainSubNavBar({ train }: TrainSubNavBarProps) {
                 {train.trainNumber}
               </Avatar>
             )}
-            <span
-              style={{
+            <Box
+              component="span"
+              sx={{
                 display: 'flex',
                 flexDirection: 'column',
               }}
@@ -88,7 +89,7 @@ function TrainSubNavBar({ train }: TrainSubNavBarProps) {
                     train
                   )} - ${getTrainDestinationStationName(train)}`}
               </Box>
-            </span>
+            </Box>
           </>
         )}
       </h4>

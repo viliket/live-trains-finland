@@ -1,5 +1,5 @@
 import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
-import { Box, Link, Grid, Skeleton, Divider } from '@mui/material';
+import { Box, Link, Grid2 as Grid, Skeleton, Divider } from '@mui/material';
 import { parseISO } from 'date-fns';
 import RouterLink from 'next/link';
 import { useTranslation } from 'react-i18next';
@@ -78,13 +78,15 @@ const TrainStationTimeline = ({
           />
           <TimelineContent>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <Link
                   component={RouterLink}
                   href={`/${getTrainStationName(station)}`}
-                  color="inherit"
                   underline="none"
-                  sx={{ fontWeight: 500 }}
+                  sx={{
+                    color: 'inherit',
+                    fontWeight: 500,
+                  }}
                 >
                   {getTrainStationName(station)}
                 </Link>
@@ -92,21 +94,21 @@ const TrainStationTimeline = ({
                   {t('track')} {r.commercialTrack}
                 </Box>
               </Grid>
-              <Grid item xs={3} sx={{ marginTop: '1rem' }}>
+              <Grid size={3} sx={{ marginTop: '1rem' }}>
                 {g.arrival ? <TimeTableRowTime row={g.arrival} /> : '-'}
               </Grid>
-              <Grid item xs={3} sx={{ marginTop: '1rem' }}>
+              <Grid size={3} sx={{ marginTop: '1rem' }}>
                 {g.departure ? <TimeTableRowTime row={g.departure} /> : '-'}
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 {realTimeTrain && (
-                  <div style={{ textAlign: 'center' }}>
+                  <Box sx={{ textAlign: 'center' }}>
                     <TrainComposition
                       train={realTimeTrain}
                       stationTimeTableRowGroup={g}
                       onWagonClick={onWagonClick}
                     />
-                  </div>
+                  </Box>
                 )}
                 {stationMessages &&
                   stationMessages[station.shortCode]?.length > 0 && (
@@ -158,8 +160,9 @@ const TrainStationTimeline = ({
           position: 'sticky',
           top: '3.5rem',
           zIndex: 1002,
-          backgroundColor: theme.palette.common.secondaryBackground.default,
-          boxShadow: `inset 0px -1px 1px ${theme.palette.divider}`,
+          backgroundColor:
+            theme.vars.palette.common.secondaryBackground.default,
+          boxShadow: `inset 0px -1px 1px ${theme.vars.palette.divider}`,
           minHeight: 'auto',
           marginX: '-16px', // Negate parent padding to span whole horizontal space
           padding: '0.4rem',
@@ -179,15 +182,9 @@ const TrainStationTimeline = ({
               fontWeight: theme.typography.fontWeightMedium,
             })}
           >
-            <Grid item xs={6}>
-              {t('station')}
-            </Grid>
-            <Grid item xs={3}>
-              {t('arrival')}
-            </Grid>
-            <Grid item xs={3}>
-              {t('departure')}
-            </Grid>
+            <Grid size={6}>{t('station')}</Grid>
+            <Grid size={3}>{t('arrival')}</Grid>
+            <Grid size={3}>{t('departure')}</Grid>
           </Grid>
         </TimelineContent>
       </TimelineItem>
