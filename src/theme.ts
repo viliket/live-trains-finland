@@ -116,29 +116,6 @@ const baseTheme: CssVarsThemeOptions = {
         },
       },
     },
-    MuiPaper: {
-      variants: [
-        // Temporary workaround for https://github.com/mui/material-ui/issues/43683
-        { props: { elevation: 0 }, style: { '--Paper-overlay': 'none' } },
-      ],
-    },
-    MuiDialog: {
-      styleOverrides: {
-        root: {
-          variants: [
-            {
-              props: { scroll: 'paper' },
-              style: {
-                '& .MuiPaper-root': {
-                  // Temporary fix until new patch of MUI is released with https://github.com/mui/material-ui/pull/43626
-                  overflowY: 'auto',
-                },
-              },
-            },
-          ],
-        },
-      },
-    },
   },
 };
 
