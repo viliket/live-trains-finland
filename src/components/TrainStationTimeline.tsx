@@ -1,7 +1,8 @@
+import { useMemo } from 'react';
+
 import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
-import { Box, Link, Grid2 as Grid, Skeleton, Divider } from '@mui/material';
+import { Box, Grid2 as Grid, Skeleton } from '@mui/material';
 import { parseISO } from 'date-fns';
-import RouterLink from 'next/link';
 import { useTranslation } from 'react-i18next';
 
 import { Wagon } from '../graphql/generated/digitraffic/graphql';
@@ -11,12 +12,8 @@ import getTrainLatestArrivalRow from '../utils/getTrainLatestArrivalRow';
 import getTrainLatestDepartureTimeTableRow from '../utils/getTrainLatestDepartureTimeTableRow';
 import getTrainPreviousStation from '../utils/getTrainPreviousStation';
 import { PassengerInformationMessage } from '../utils/passengerInformationMessages';
-import { getTrainStationName } from '../utils/train';
 
-import PassengerInformationMessageAlert from './PassengerInformationMessageAlert';
-import TimelineRouteStopSeparator from './TimelineRouteStopSeparator';
-import TimeTableRowTime from './TimeTableRowTime';
-import TrainComposition from './TrainComposition';
+import TrainStationTimelineItem from './TrainStationTimelineItem';
 
 type TrainStationTimelineProps = {
   train?: TrainExtendedDetails | null;
@@ -35,95 +32,59 @@ const TrainStationTimeline = ({
 }: TrainStationTimelineProps) => {
   const { t } = useTranslation();
 
+  const {
+    trainCurrentStation,
+    trainPreviousStation,
+    trainLatestArrivalRow,
+    trainLatestDepartureRow,
+    timeTableRows,
+  } = useMemo(() => {
+    if (!train) return {};
+    return {
+      trainCurrentStation: getTrainCurrentStation(train),
+      trainPreviousStation: getTrainPreviousStation(train),
+      trainLatestArrivalRow: getTrainLatestArrivalRow(train),
+      trainLatestDepartureRow: getTrainLatestDepartureTimeTableRow(train),
+      timeTableRows: (realTimeTrain ?? train).timeTableGroups,
+    };
+  }, [train, realTimeTrain]);
+
   const getStops = () => {
-    if (!train) return null;
-    const trainCurrentStation = getTrainCurrentStation(train);
-    const trainPreviousStation = getTrainPreviousStation(train);
-    const trainLatestArrivalRow = getTrainLatestArrivalRow(train);
-    const trainLatestDepartureRow = getTrainLatestDepartureTimeTableRow(train);
+    if (!timeTableRows) return null;
 
-    const timeTableRows = (realTimeTrain ?? train).timeTableGroups;
+    return timeTableRows.map((ttGroup, index, { length }) => {
+      const row = ttGroup.departure ?? ttGroup.arrival;
+      if (!row) return null;
+      const station = row.station;
 
-    return timeTableRows?.map((g, i, { length }) => {
-      const r = g.departure ?? g.arrival;
-      if (!r) return <></>;
-      const station = r.station;
       const stationPassed =
-        (r.actualTime != null && parseISO(r.actualTime) < new Date()) ||
-        (trainLatestDepartureRow != null &&
-          r.scheduledTime < trainLatestDepartureRow?.scheduledTime);
+        (row.actualTime && parseISO(row.actualTime) < new Date()) ||
+        (trainLatestDepartureRow &&
+          row.scheduledTime < trainLatestDepartureRow?.scheduledTime);
+
+      const isVehicleAtStation =
+        trainCurrentStation?.shortCode === station.shortCode &&
+        trainLatestArrivalRow?.scheduledTime === ttGroup.arrival?.scheduledTime;
+
+      const wasVehicleAtStation =
+        !trainCurrentStation &&
+        trainPreviousStation?.shortCode === station.shortCode &&
+        trainLatestDepartureRow?.scheduledTime ===
+          ttGroup.departure?.scheduledTime;
+
       return (
-        <TimelineItem
-          key={station.name + r.type + r.scheduledTime}
-          sx={{
-            '&:before': {
-              display: 'none',
-            },
-          }}
-        >
-          <TimelineRouteStopSeparator
-            passed={stationPassed}
-            isVehicleAtStation={
-              trainCurrentStation?.shortCode === station.shortCode &&
-              trainLatestArrivalRow?.scheduledTime === g.arrival?.scheduledTime
-            }
-            wasVehicleAtStation={
-              trainCurrentStation == null &&
-              trainPreviousStation?.shortCode === station.shortCode &&
-              trainLatestDepartureRow?.scheduledTime ===
-                g.departure?.scheduledTime
-            }
-            isFinalStop={i === length - 1}
-            platformSide={g.stationPlatformSide}
-          />
-          <TimelineContent>
-            <Grid container spacing={2}>
-              <Grid size={6}>
-                <Link
-                  component={RouterLink}
-                  href={`/${getTrainStationName(station)}`}
-                  underline="none"
-                  sx={{
-                    color: 'inherit',
-                    fontWeight: 500,
-                  }}
-                >
-                  {getTrainStationName(station)}
-                </Link>
-                <Box sx={{ color: 'text.secondary' }}>
-                  {t('track')} {r.commercialTrack}
-                </Box>
-              </Grid>
-              <Grid size={3} sx={{ marginTop: '1rem' }}>
-                {g.arrival ? <TimeTableRowTime row={g.arrival} /> : '-'}
-              </Grid>
-              <Grid size={3} sx={{ marginTop: '1rem' }}>
-                {g.departure ? <TimeTableRowTime row={g.departure} /> : '-'}
-              </Grid>
-              <Grid size={12}>
-                {realTimeTrain && (
-                  <Box sx={{ textAlign: 'center' }}>
-                    <TrainComposition
-                      train={realTimeTrain}
-                      stationTimeTableRowGroup={g}
-                      onWagonClick={onWagonClick}
-                    />
-                  </Box>
-                )}
-                {stationMessages &&
-                  stationMessages[station.shortCode]?.length > 0 && (
-                    <PassengerInformationMessageAlert
-                      onClick={() => onStationAlertClick(station.shortCode)}
-                      passengerInformationMessages={
-                        stationMessages[station.shortCode]
-                      }
-                    />
-                  )}
-                <Divider />
-              </Grid>
-            </Grid>
-          </TimelineContent>
-        </TimelineItem>
+        <TrainStationTimelineItem
+          key={station.shortCode + row.type + row.scheduledTime}
+          timeTableGroup={ttGroup}
+          stationPassed={stationPassed}
+          isVehicleAtStation={isVehicleAtStation}
+          wasVehicleAtStation={wasVehicleAtStation}
+          isFinalStop={index === length - 1}
+          realTimeTrain={realTimeTrain}
+          passengerInformationMessages={stationMessages?.[station.shortCode]}
+          onWagonClick={onWagonClick}
+          onStationAlertClick={onStationAlertClick}
+        />
       );
     });
   };
