@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material';
 import {
   bearing,
   buffer,
@@ -162,6 +163,7 @@ const TrainCompositionByStationLayer = ({
     train?.trainNumber,
     train?.departureDate
   );
+  const theme = useTheme();
 
   const trainCompositionCollection =
     generateTrainCompositionForEachStationAsGeoJSON(realTimeTrain);
@@ -203,6 +205,14 @@ const TrainCompositionByStationLayer = ({
               'text-size': 10,
               'text-font': ['Gotham Rounded Medium'],
               'text-field': '{wagonSalesNumber}',
+              'text-allow-overlap': true,
+            },
+            paint: {
+              'text-halo-width': 2,
+              'text-color': theme.palette.text.primary,
+              'text-halo-color': theme.palette.getContrastText(
+                theme.palette.text.primary
+              ),
             },
           }}
         />
