@@ -37,6 +37,7 @@
   "wagon": "Wagon",
   "upstairs": "Upstairs",
   "downstairs": "Downstairs",
+  "show_train_stopping_position_on_map": "Show train stopping position on map",
   "reload": "Reload",
   "update_available": "A new version of the app is available!",
   "home": {

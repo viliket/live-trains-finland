@@ -37,6 +37,7 @@
   "wagon": "Vagn",
   "upstairs": "Övervåningen",
   "downstairs": "Nedervåningen",
+  "show_train_stopping_position_on_map": "Visa tågets stoppposition på kartan",
   "reload": "Ladda om",
   "update_available": "En ny version av appen är tillgänglig!",
   "home": {

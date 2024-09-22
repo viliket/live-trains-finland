@@ -106,6 +106,7 @@ const VehicleMapContainer = ({
 
   return (
     <Map
+      id="vehicleMap"
       ref={handleMapRef}
       reuseMaps
       // Disable unneeded RTLTextPlugin that is set by react-map-gl by default

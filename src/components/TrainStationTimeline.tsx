@@ -79,6 +79,7 @@ const TrainStationTimeline = ({
           stationPassed={stationPassed}
           isVehicleAtStation={isVehicleAtStation}
           wasVehicleAtStation={wasVehicleAtStation}
+          isFirstStop={index === 0}
           isFinalStop={index === length - 1}
           realTimeTrain={realTimeTrain}
           passengerInformationMessages={stationMessages?.[station.shortCode]}
@@ -125,10 +126,13 @@ const TrainStationTimeline = ({
             theme.vars.palette.common.secondaryBackground.default,
           boxShadow: `inset 0px -1px 1px ${theme.vars.palette.divider}`,
           minHeight: 'auto',
-          marginX: '-16px', // Negate parent padding to span whole horizontal space
+          // Negate parent padding to span whole horizontal space
+          marginX: '-16px',
           padding: '0.4rem',
-          paddingRight: '16px', // Original parent padding
-          paddingLeft: 'calc(16px + 12px)', // Original parent padding + timeline dot width
+          // Original parent padding + chevron button width + chevron button padding
+          paddingRight: 'calc(16px + 24px + 10px)',
+          // Original parent padding + timeline dot width
+          paddingLeft: 'calc(16px + 12px)',
           marginBottom: '0.4rem',
           '&:before': {
             display: 'none',
