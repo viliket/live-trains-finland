@@ -132,7 +132,11 @@ export default function TrainStationTimelineItem({
             </Grid>
           </Grid>
           <IconButton
-            sx={{ alignSelf: 'flex-start', color: 'grey.400' }}
+            sx={{
+              alignSelf: 'flex-start',
+              marginTop: '0.4rem',
+              color: 'grey.400',
+            }}
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
