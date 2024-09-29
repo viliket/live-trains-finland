@@ -1,9 +1,17 @@
-import { useMemo } from 'react';
+import { useState } from 'react';
 
-import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
-import { Box, Grid2 as Grid, Skeleton } from '@mui/material';
+import {
+  Timeline,
+  TimelineConnector,
+  TimelineContent,
+  TimelineItem,
+  TimelineSeparator,
+} from '@mui/lab';
+import { Box, Button, Collapse, Grid2 as Grid, Skeleton } from '@mui/material';
 import { parseISO } from 'date-fns';
+import { ChevronDown } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 import { Wagon } from '../graphql/generated/digitraffic/graphql';
 import { TrainExtendedDetails } from '../types';
@@ -30,29 +38,23 @@ const TrainStationTimeline = ({
   onStationAlertClick,
   stationMessages,
 }: TrainStationTimelineProps) => {
-  const { t } = useTranslation();
+  const [expanded, setExpanded] = useState(false);
 
-  const {
-    trainCurrentStation,
-    trainPreviousStation,
-    trainLatestArrivalRow,
-    trainLatestDepartureRow,
-    timeTableRows,
-  } = useMemo(() => {
-    if (!train) return {};
-    return {
-      trainCurrentStation: getTrainCurrentStation(train),
-      trainPreviousStation: getTrainPreviousStation(train),
-      trainLatestArrivalRow: getTrainLatestArrivalRow(train),
-      trainLatestDepartureRow: getTrainLatestDepartureTimeTableRow(train),
-      timeTableRows: (realTimeTrain ?? train).timeTableGroups,
-    };
-  }, [train, realTimeTrain]);
+  const handleExpandClick = () => setExpanded(!expanded);
 
   const getStops = () => {
+    if (!train) return null;
+    const trainCurrentStation = getTrainCurrentStation(train);
+    const trainPreviousStation = getTrainPreviousStation(train);
+    const trainLatestArrivalRow = getTrainLatestArrivalRow(train);
+    const trainLatestDepartureRow = getTrainLatestDepartureTimeTableRow(train);
+    const timeTableRows = (realTimeTrain ?? train).timeTableGroups;
     if (!timeTableRows) return null;
 
-    return timeTableRows.map((ttGroup, index, { length }) => {
+    const passedStationElements: React.ReactElement[] = [];
+    const upcomingStationElements: React.ReactElement[] = [];
+
+    timeTableRows.forEach((ttGroup, index, { length }) => {
       const row = ttGroup.departure ?? ttGroup.arrival;
       if (!row) return null;
       const station = row.station;
@@ -72,7 +74,9 @@ const TrainStationTimeline = ({
         trainLatestDepartureRow?.scheduledTime ===
           ttGroup.departure?.scheduledTime;
 
-      return (
+      const isFinalStop = index === length - 1;
+
+      const stopItem = (
         <TrainStationTimelineItem
           key={station.shortCode + row.type + row.scheduledTime}
           timeTableGroup={ttGroup}
@@ -80,14 +84,43 @@ const TrainStationTimeline = ({
           isVehicleAtStation={isVehicleAtStation}
           wasVehicleAtStation={wasVehicleAtStation}
           isFirstStop={index === 0}
-          isFinalStop={index === length - 1}
+          isFinalStop={isFinalStop}
           realTimeTrain={realTimeTrain}
           passengerInformationMessages={stationMessages?.[station.shortCode]}
           onWagonClick={onWagonClick}
           onStationAlertClick={onStationAlertClick}
         />
       );
+
+      if (
+        stationPassed &&
+        !isFinalStop &&
+        trainLatestDepartureRow?.scheduledTime !=
+          ttGroup.departure?.scheduledTime
+      ) {
+        passedStationElements.push(stopItem);
+      } else {
+        upcomingStationElements.push(stopItem);
+      }
     });
+
+    return (
+      <>
+        <Collapse in={expanded}>{passedStationElements}</Collapse>
+        {passedStationElements.length > 0 && (
+          <TimelinePassedStationsToggle
+            expanded={expanded}
+            handleExpandClick={handleExpandClick}
+            passedStationsCount={passedStationElements.length}
+          />
+        )}
+        <TransitionGroup>
+          {upcomingStationElements.map((item) => (
+            <Collapse key={item.key}>{item}</Collapse>
+          ))}
+        </TransitionGroup>
+      </>
+    );
   };
 
   const getLoadingSkeleton = () => {
@@ -117,45 +150,96 @@ const TrainStationTimeline = ({
         },
       })}
     >
-      <TimelineItem
-        sx={(theme) => ({
-          position: 'sticky',
-          top: '3.5rem',
-          zIndex: 1002,
-          backgroundColor:
-            theme.vars.palette.common.secondaryBackground.default,
-          boxShadow: `inset 0px -1px 1px ${theme.vars.palette.divider}`,
-          minHeight: 'auto',
-          // Negate parent padding to span whole horizontal space
-          marginX: '-16px',
-          padding: '0.4rem',
-          // Original parent padding + chevron button width + chevron button padding
-          paddingRight: 'calc(16px + 24px + 10px)',
-          // Original parent padding + timeline dot width
-          paddingLeft: 'calc(16px + 12px)',
-          marginBottom: '0.4rem',
-          '&:before': {
-            display: 'none',
-          },
-        })}
-      >
-        <TimelineContent>
-          <Grid
-            container
-            spacing={2}
-            sx={(theme) => ({
-              fontWeight: theme.typography.fontWeightMedium,
-            })}
-          >
-            <Grid size={6}>{t('station')}</Grid>
-            <Grid size={3}>{t('arrival')}</Grid>
-            <Grid size={3}>{t('departure')}</Grid>
-          </Grid>
-        </TimelineContent>
-      </TimelineItem>
+      <TrainStationTimelineHeader />
       {getStops()}
       {!train && getLoadingSkeleton()}
     </Timeline>
+  );
+};
+
+const TrainStationTimelineHeader = () => {
+  const { t } = useTranslation();
+  return (
+    <TimelineItem
+      sx={(theme) => ({
+        position: 'sticky',
+        top: '3.5rem',
+        zIndex: 1002,
+        backgroundColor: theme.vars.palette.common.secondaryBackground.default,
+        boxShadow: `inset 0px -1px 1px ${theme.vars.palette.divider}`,
+        minHeight: 'auto',
+        // Negate parent padding to span whole horizontal space
+        marginX: '-16px',
+        padding: '0.4rem',
+        // Original parent padding + chevron button width + chevron button padding
+        paddingRight: 'calc(16px + 24px + 10px)',
+        // Original parent padding + timeline dot width
+        paddingLeft: 'calc(16px + 12px)',
+        marginBottom: '0.4rem',
+        '&:before': {
+          display: 'none',
+        },
+      })}
+    >
+      <TimelineContent>
+        <Grid
+          container
+          spacing={2}
+          sx={(theme) => ({
+            fontWeight: theme.typography.fontWeightMedium,
+          })}
+        >
+          <Grid size={6}>{t('station')}</Grid>
+          <Grid size={3}>{t('arrival')}</Grid>
+          <Grid size={3}>{t('departure')}</Grid>
+        </Grid>
+      </TimelineContent>
+    </TimelineItem>
+  );
+};
+
+const TimelinePassedStationsToggle = ({
+  expanded,
+  handleExpandClick,
+  passedStationsCount,
+}: {
+  expanded: boolean;
+  handleExpandClick: () => void;
+  passedStationsCount: number;
+}) => {
+  const { t } = useTranslation();
+  return (
+    <TimelineItem
+      sx={{
+        '&:before': {
+          display: 'none',
+        },
+        '&.MuiTimelineItem-root': {
+          minHeight: 'auto',
+        },
+      }}
+    >
+      <TimelineSeparator>
+        <TimelineConnector sx={{ bgcolor: 'divider', marginLeft: 1 }} />
+      </TimelineSeparator>
+      <TimelineContent sx={{ textAlign: 'center' }}>
+        <Button
+          endIcon={<ChevronDown />}
+          onClick={handleExpandClick}
+          sx={(theme) => ({
+            color: 'text.secondary',
+            '& .MuiButton-endIcon': {
+              transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+              transition: theme.transitions.create('transform', {
+                duration: theme.transitions.duration.shortest,
+              }),
+            },
+          })}
+        >
+          {t('passed_stations', { count: passedStationsCount })}
+        </Button>
+      </TimelineContent>
+    </TimelineItem>
   );
 };
 

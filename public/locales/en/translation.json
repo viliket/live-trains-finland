@@ -24,6 +24,8 @@
   "station": "Station",
   "canceled": "Canceled",
   "alerts": "Alerts",
+  "passed_stations_one": "{{count}} passed station",
+  "passed_stations_other": "{{count}} passed stations",
   "filter_trains": "Filter trains",
   "page_not_found": "Page could not be found.",
   "train_current_composition": "Current composition",
