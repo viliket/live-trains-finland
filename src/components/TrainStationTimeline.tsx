@@ -11,6 +11,7 @@ import { Box, Button, Collapse, Grid2 as Grid, Skeleton } from '@mui/material';
 import { parseISO } from 'date-fns';
 import { ChevronDown } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 import { Wagon } from '../graphql/generated/digitraffic/graphql';
 import { TrainExtendedDetails } from '../types';
@@ -112,7 +113,11 @@ const TrainStationTimeline = ({
             passedStationsCount={passedStationElements.length}
           />
         )}
-        {upcomingStationElements}
+        <TransitionGroup>
+          {upcomingStationElements.map((item) => (
+            <Collapse key={item.key}>{item}</Collapse>
+          ))}
+        </TransitionGroup>
       </>
     );
   };
