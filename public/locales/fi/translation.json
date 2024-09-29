@@ -24,6 +24,8 @@
   "station": "Asema",
   "canceled": "Peruttu",
   "alerts": "Tiedotteet",
+  "passed_stations_one": "{{count}} ohitettu asema",
+  "passed_stations_other": "{{count}} ohitettua asemaa",
   "filter_trains": "Suodata junia",
   "page_not_found": "Etsimääsi sivua ei löytynyt.",
   "train_current_composition": "Nykyinen kokoonpano",
