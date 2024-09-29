@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { Timeline, TimelineContent, TimelineItem } from '@mui/lab';
 import { Box, Grid2 as Grid, Skeleton } from '@mui/material';
 import { parseISO } from 'date-fns';
@@ -32,24 +30,14 @@ const TrainStationTimeline = ({
 }: TrainStationTimelineProps) => {
   const { t } = useTranslation();
 
-  const {
-    trainCurrentStation,
-    trainPreviousStation,
-    trainLatestArrivalRow,
-    trainLatestDepartureRow,
-    timeTableRows,
-  } = useMemo(() => {
-    if (!train) return {};
-    return {
-      trainCurrentStation: getTrainCurrentStation(train),
-      trainPreviousStation: getTrainPreviousStation(train),
-      trainLatestArrivalRow: getTrainLatestArrivalRow(train),
-      trainLatestDepartureRow: getTrainLatestDepartureTimeTableRow(train),
-      timeTableRows: (realTimeTrain ?? train).timeTableGroups,
-    };
-  }, [train, realTimeTrain]);
 
   const getStops = () => {
+    if (!train) return null;
+    const trainCurrentStation = getTrainCurrentStation(train);
+    const trainPreviousStation = getTrainPreviousStation(train);
+    const trainLatestArrivalRow = getTrainLatestArrivalRow(train);
+    const trainLatestDepartureRow = getTrainLatestDepartureTimeTableRow(train);
+    const timeTableRows = (realTimeTrain ?? train).timeTableGroups;
     if (!timeTableRows) return null;
 
     return timeTableRows.map((ttGroup, index, { length }) => {
