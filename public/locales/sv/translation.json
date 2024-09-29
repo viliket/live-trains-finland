@@ -24,6 +24,8 @@
   "station": "Station",
   "canceled": "Inställt",
   "alerts": "Aviseringar",
+  "passed_stations_one": "{{count}} passerad station",
+  "passed_stations_other": "{{count}} passerade stationer",
   "filter_trains": "Filtrera tåg",
   "page_not_found": "Sidan kunde inte hittas.",
   "train_current_composition": "Nuvarande sammansättning",
