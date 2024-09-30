@@ -66,7 +66,7 @@
     "not ie 11"
   ],
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240919.0",
+    "@cloudflare/workers-types": "^4.20240925.0",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/client-preset": "^4.3.3",
     "@svgr/webpack": "^8.1.0",
