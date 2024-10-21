@@ -57,53 +57,79 @@ const isTrainStopSignApplicable = (
   isCommuterLine: boolean
 ) => {
   if (isCommuterLine) {
-    if (stopSignText === 'P') return true;
-
-    const isSm2Or4 = trainJourneySection.wagons?.some(
-      (w) => w?.wagonType && ['Sm2', 'Sm4'].includes(w.wagonType)
-    );
-    const isSm5 = trainJourneySection.wagons?.some(
-      (w) => w?.wagonType === 'Sm5'
-    );
-    const numUnits = trainJourneySection.wagons?.length;
-
-    if (stopSignText === '1') {
-      return numUnits === 1;
-    }
-    if (stopSignText === '2/4') {
-      return (
-        (isSm5 && numUnits === 2) ||
-        (isSm2Or4 && (numUnits === 2 || numUnits === 3))
-      );
-    }
-    if (stopSignText === '1/2') {
-      return (
-        (isSm5 && numUnits === 1) ||
-        (isSm2Or4 && (numUnits === 1 || numUnits === 2))
-      );
-    }
-    if (stopSignText === '4') {
-      return isSm5 && numUnits === 2;
-    }
+    return isCommuterLineStopSignApplicable(stopSignText, trainJourneySection);
   } else {
-    // Long distance trains
-    if (stopSignText === 'P') return true;
-
-    const trainLength = trainJourneySection.totalLength;
-
-    // E.g. a stop sign "1/2" applies to a train with a total length between 100 to 200 meters
-    if (stopSignText.includes('/')) {
-      const [lowerLimit, upperLimit] = stopSignText
-        .split('/')
-        .map((limit) => Number(limit) * 100);
-      return trainLength >= lowerLimit && trainLength <= upperLimit;
-    } else {
-      // E.g. a stop sign "1" applies to a train with a total length less or equal to 100 meters
-      const upperLimit = Number(stopSignText) * 100;
-      return trainLength <= upperLimit;
-    }
+    return isLongDistanceStopSignApplicable(
+      stopSignText,
+      trainJourneySection.totalLength
+    );
   }
-  return false;
+};
+
+/**
+ * The following rules, which specify the "train composition" that each track
+ * sign applies to, were established in collaboration with Väylävirasto, VR,
+ * and HSL in the past.
+ */
+const isCommuterLineStopSignApplicable = (
+  stopSignText: string,
+  trainJourneySection: Pick<JourneySection, 'wagons'>
+): boolean => {
+  if (stopSignText === 'P') return true;
+
+  const wagons = trainJourneySection.wagons ?? [];
+  const isSm2Or4 = wagons.some(
+    (w) => w?.wagonType && ['Sm2', 'Sm4'].includes(w.wagonType)
+  );
+  const isSm5 = wagons.some((w) => w?.wagonType === 'Sm5');
+  const numUnits = wagons.length;
+
+  const isApplicable = (sign: string): boolean => {
+    switch (sign) {
+      case '1':
+        return numUnits === 1 && (isSm2Or4 || isSm5);
+      case '2':
+        return numUnits === 2 && isSm2Or4;
+      case '3':
+        return numUnits === 3 && isSm2Or4;
+      case '4':
+        return numUnits === 2 && isSm5;
+      default:
+        return false;
+    }
+  };
+
+  // E.g. a stop sign "2/4" means that it covers any composition in the
+  // range from 2 to 4, i.e., 2, 3 or 4.
+  if (stopSignText.includes('/')) {
+    const [lowerLimit, upperLimit] = stopSignText.split('/').map(Number);
+    for (let i = lowerLimit; i <= upperLimit; i++) {
+      if (isApplicable(i.toString(10))) return true;
+    }
+    return false;
+  }
+
+  return isApplicable(stopSignText);
+};
+
+const isLongDistanceStopSignApplicable = (
+  stopSignText: string,
+  trainLength: number
+): boolean => {
+  if (stopSignText === 'P') return true;
+
+  const metersPerUnit = 100;
+
+  // E.g. a stop sign "1/2" applies to a train with a total length between 100 to 200 meters
+  if (stopSignText.includes('/')) {
+    const [lowerLimit, upperLimit] = stopSignText
+      .split('/')
+      .map((n) => Number(n) * metersPerUnit);
+    return trainLength >= lowerLimit && trainLength <= upperLimit;
+  }
+
+  const upperLimit = Number(stopSignText) * metersPerUnit;
+  return trainLength <= upperLimit;
 };
 
 const getMaxTrainLengthLimitFromStopSign = (stopSignText: string) => {
