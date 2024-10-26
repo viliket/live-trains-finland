@@ -9,6 +9,7 @@ import {
 import CssBaseline from '@mui/material/CssBaseline';
 import { fiFI, enUS } from '@mui/material/locale';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { NuqsAdapter } from 'nuqs/adapters/next/pages';
 import { useTranslation } from 'react-i18next';
 
 import baseTheme from '../theme';
@@ -50,9 +51,11 @@ const queryClient = new QueryClient({
 });
 
 const Providers = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={queryClient}>
-    <MuiProvider>{children}</MuiProvider>
-  </QueryClientProvider>
+  <NuqsAdapter>
+    <QueryClientProvider client={queryClient}>
+      <MuiProvider>{children}</MuiProvider>
+    </QueryClientProvider>
+  </NuqsAdapter>
 );
 
 export default Providers;
