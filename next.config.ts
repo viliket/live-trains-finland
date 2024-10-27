@@ -1,16 +1,19 @@
-const path = require('path');
+import path from 'path';
 
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+import type { NextConfig } from 'next';
+import { InjectManifest } from 'workbox-webpack-plugin';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   output: 'export',
+  reactStrictMode: true,
   staticPageGenerationTimeout: 60 * 5,
-  /** @param {import('webpack').Configuration} config */
+  experimental: {
+    optimizePackageImports: ['mdi-material-ui'],
+  },
   webpack(config, context) {
     if (process.env.NODE_ENV === 'production') {
       config.plugins.push(
-        new WorkboxWebpackPlugin.InjectManifest({
+        new InjectManifest({
           swSrc: path.join(__dirname, 'src/service-worker.ts'),
           swDest: path.join(__dirname, 'public/service-worker.js'),
           additionalManifestEntries: [
@@ -105,4 +108,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
