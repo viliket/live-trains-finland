@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   output: 'export',
   reactStrictMode: true,
   staticPageGenerationTimeout: 60 * 5,
+  experimental: {
+    optimizePackageImports: ['mdi-material-ui'],
+  },
   webpack(config, context) {
     if (process.env.NODE_ENV === 'production') {
       config.plugins.push(
