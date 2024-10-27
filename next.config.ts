@@ -5,6 +5,7 @@ import { InjectManifest } from 'workbox-webpack-plugin';
 
 const nextConfig: NextConfig = {
   output: 'export',
+  reactStrictMode: true,
   staticPageGenerationTimeout: 60 * 5,
   webpack(config, context) {
     if (process.env.NODE_ENV === 'production') {
