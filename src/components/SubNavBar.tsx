@@ -58,7 +58,7 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
         }}
       >
         <span style={{ fontWeight: 500 }} suppressHydrationWarning>
-          {!isSSR ? format(currentTime, 'HH:mm:ss') : '--:--:--'}
+          {!isSSR && format(currentTime, 'HH:mm:ss')}
         </span>
         <span style={{ fontSize: '0.95rem' }}>{rightElement}</span>
       </span>
