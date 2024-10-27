@@ -1,11 +1,11 @@
+import { useEffect, useState } from 'react';
+
 import { Box, IconButton } from '@mui/material';
 import { format } from 'date-fns';
 import { ArrowLeft } from 'mdi-material-ui';
 import { useRouter } from 'next/navigation';
 
 import { useTime } from '../hooks/useTime';
-
-const isSSR = typeof window === 'undefined';
 
 type SubNavBarProps = {
   children?: React.ReactNode;
@@ -15,6 +15,11 @@ type SubNavBarProps = {
 function SubNavBar({ children, rightElement }: SubNavBarProps) {
   const router = useRouter();
   const currentTime = useTime();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <Box
@@ -57,8 +62,8 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
           flexDirection: 'column',
         }}
       >
-        <span style={{ fontWeight: 500 }} suppressHydrationWarning>
-          {!isSSR ? format(currentTime, 'HH:mm:ss') : '--:--:--'}
+        <span style={{ fontWeight: 500 }}>
+          {isMounted && format(currentTime, 'HH:mm:ss')}
         </span>
         <span style={{ fontSize: '0.95rem' }}>{rightElement}</span>
       </span>
