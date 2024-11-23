@@ -426,7 +426,7 @@ describe('getTrainRouteGtfsId', () => {
       commuterLineid: 'U',
       trainNumber: 1234,
       trainType: {
-        name: '',
+        name: 'HL',
         trainCategory: {
           name: 'Commuter',
         },
@@ -451,7 +451,7 @@ describe('getTrainRouteGtfsId', () => {
       ],
     };
     const displayName = getTrainRouteGtfsId(train);
-    expect(displayName).toBe('digitraffic:HKI_KKN_U_109_10');
+    expect(displayName).toBe('digitraffic:HKI_KKN_U_HL_10');
   });
 
   it('should return correct GTFS ID for a long distance train', () => {
@@ -459,7 +459,7 @@ describe('getTrainRouteGtfsId', () => {
       ...trainBase,
       trainNumber: 1234,
       trainType: {
-        name: '',
+        name: 'IC',
         trainCategory: {
           name: 'Long-distance',
         },
@@ -487,6 +487,6 @@ describe('getTrainRouteGtfsId', () => {
       ],
     };
     const displayName = getTrainRouteGtfsId(train);
-    expect(displayName).toBe('digitraffic:HKI_TPE_1234_102_987');
+    expect(displayName).toBe('digitraffic:HKI_TPE_1234_IC_987');
   });
 });
