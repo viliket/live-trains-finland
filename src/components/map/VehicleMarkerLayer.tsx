@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { CollisionFilterExtension } from '@deck.gl/extensions';
 import { GeoJsonLayer } from '@deck.gl/layers';
+import { MapboxOverlayProps } from '@deck.gl/mapbox';
 import { Box, Button, useTheme } from '@mui/material';
 import { format } from 'date-fns';
 import { mapValues } from 'lodash';
@@ -47,7 +48,7 @@ export default function VehicleMarkerLayer({
   selectedVehicleId,
 }: VehicleMarkerLayerProps) {
   const { current: map } = useMap();
-  const glRef = useRef<WebGLRenderingContext>();
+  const deviceRef = useRef<MapboxOverlayProps['device']>();
   const getVehicleById = useVehicleStore((state) => state.getVehicleById);
   const [vehicleIdForPopup, setVehicleIdForPopup] = useState<number | null>(
     null
@@ -74,10 +75,9 @@ export default function VehicleMarkerLayer({
 
   useEffect(() => {
     return () => {
-      if (glRef.current) {
+      if (deviceRef.current) {
         // Workaround for https://github.com/visgl/deck.gl/issues/1312
-        const extension = glRef.current.getExtension('WEBGL_lose_context');
-        if (extension) extension.loseContext();
+        deviceRef.current.loseDevice();
       }
     };
   }, []);
@@ -278,7 +278,7 @@ export default function VehicleMarkerLayer({
     <>
       <DeckGLOverlay
         layers={[vehiclesLayer]}
-        onWebGLInitialized={(gl) => (glRef.current = gl)}
+        onDeviceInitialized={(device) => (deviceRef.current = device)}
       />
       {selectedVehicleId != null &&
         interpolatedPositions[selectedVehicleId] && (
