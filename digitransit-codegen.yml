@@ -1,6 +1,6 @@
 overwrite: true
 schema:
-  - https://api.digitransit.fi/routing/v1/routers/finland/index/graphql:
+  - https://api.digitransit.fi/routing/v2/finland/gtfs/v1:
       headers:
         digitransit-subscription-key: ${NEXT_PUBLIC_DIGITRANSIT_SUBSCRIPTION_KEY}
 documents: src/graphql/queries/digitransit/**/*.graphql
