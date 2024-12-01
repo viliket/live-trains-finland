@@ -2,6 +2,7 @@ import { parseISO } from 'date-fns';
 import { orderBy } from 'lodash';
 
 import {
+  Station,
   TimeTableRowType,
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic/graphql';
@@ -89,8 +90,12 @@ export function getTrainDestinationStationName(
     : undefined;
 }
 
-export function getTrainStationName(station: { name: string }) {
+export function getTrainStationName(station: Pick<Station, 'name'>) {
   return station.name.replace(' asema', '').trimEnd();
+}
+
+export function getTrainStationGtfsId(station: Pick<Station, 'shortCode'>) {
+  return `digitraffic:${station.shortCode}`;
 }
 
 export function getWagonNumberFromVehicleId(

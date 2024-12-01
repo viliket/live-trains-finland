@@ -17,6 +17,7 @@ import {
   getWagonNumberFromVehicleId,
   getTrainDisplayName,
   getTrainRouteGtfsId,
+  getTrainStationGtfsId,
 } from '../train';
 
 const trainBase: TrainDetailsFragment = {
@@ -489,4 +490,17 @@ describe('getTrainRouteGtfsId', () => {
     const displayName = getTrainRouteGtfsId(train);
     expect(displayName).toBe('digitraffic:HKI_TPE_1234_IC_987');
   });
+});
+
+describe('getTrainStationGtfsId', () => {
+  it.each([
+    ['HKI', 'digitraffic:HKI'],
+    ['PSL', 'digitraffic:PSL'],
+  ])(
+    'should return correct GTFS ID for the station %s',
+    (shortCode, expectedGtfsId) => {
+      const gtfsId = getTrainStationGtfsId({ shortCode });
+      expect(gtfsId).toBe(expectedGtfsId);
+    }
+  );
 });
