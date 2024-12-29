@@ -180,7 +180,11 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           type: 'circle',
           source: 'stops',
           'source-layer': 'stations',
-          filter: ['==', 'type', 'RAIL'],
+          filter: [
+            'all',
+            ['==', ['get', 'type'], 'RAIL'],
+            ['==', ['index-of', 'digitraffic', ['get', 'gtfsId']], 0],
+          ],
           paint: {
             'circle-color': routeStationGtfsIds
               ? getPropertyValueByStationGtfsId(
@@ -203,7 +207,11 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           type: 'symbol',
           source: 'stops',
           'source-layer': 'stations',
-          filter: ['==', 'type', 'RAIL'],
+          filter: [
+            'all',
+            ['==', ['get', 'type'], 'RAIL'],
+            ['==', ['index-of', 'digitraffic', ['get', 'gtfsId']], 0],
+          ],
           layout: {
             'text-optional': true,
             'text-allow-overlap': currentZoom != null && currentZoom > 10,
@@ -278,7 +286,12 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           type: 'symbol',
           source: 'stops',
           'source-layer': 'stops',
-          filter: ['all', ['==', 'type', 'RAIL'], ['has', 'platform']],
+          filter: [
+            'all',
+            ['==', ['get', 'type'], 'RAIL'],
+            ['has', 'platform'],
+            ['==', ['index-of', 'digitraffic', ['get', 'gtfsId']], 0],
+          ],
           minzoom: 14,
           layout: {
             'icon-image': 'stop-marker',
