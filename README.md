@@ -153,6 +153,6 @@ See [getStationPlatformSide.ts](./src/utils/getStationPlatformSide.ts) for the l
 
 ## License
 
-Copyright (C) 2024 [Vili Ketonen](https://github.com/viliket)
+Copyright (C) 2025 [Vili Ketonen](https://github.com/viliket)
 
 [GNU General Public License version 3 (GPLv3)](gpl-3.0.txt)
