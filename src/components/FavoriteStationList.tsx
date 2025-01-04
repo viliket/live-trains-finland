@@ -33,15 +33,16 @@ const FavoriteStationList = () => {
           flexWrap: 'wrap',
         }}
       >
-        {favStations.map((station, i) => (
-          <Chip
-            key={station.stationShortCode}
-            component={Link}
-            href={`/${station.stationName}`}
-            label={station.stationName}
-            clickable
-          />
-        ))}
+        {hasMounted &&
+          favStations.map((station, i) => (
+            <Chip
+              key={station.stationShortCode}
+              component={Link}
+              href={`/${station.stationName}`}
+              label={station.stationName}
+              clickable
+            />
+          ))}
         {hasMounted && favStations.length === 0 && t('no_favorite_stations')}
         {!hasMounted && <Skeleton variant="rounded" width="80%" height={30} />}
       </Stack>
