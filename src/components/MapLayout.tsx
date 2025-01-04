@@ -1,4 +1,4 @@
-import { ComponentType, useEffect, useMemo, useState } from 'react';
+import { ComponentType, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 import {
