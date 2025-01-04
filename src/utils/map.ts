@@ -149,15 +149,6 @@ const generateMapStyle = (options?: Options) => {
   });
   (mapStyle.sources['vector'] as VectorSource).attribution = baseAttribution;
 
-  // Temporary workaround to use v3 vector map instead of v2
-  // To be removed after hsl-map-style package supports v3
-  const sourcesToUpdate = ['vector'];
-  Object.entries(mapStyle.sources).forEach(([sourceKey, source]) => {
-    if (sourcesToUpdate.includes(sourceKey) && 'url' in source) {
-      source.url = source.url?.replace('v2', 'v3');
-    }
-  });
-
   return mapStyle;
 };
 
