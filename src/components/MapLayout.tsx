@@ -8,6 +8,8 @@ import {
   OutPortal,
 } from 'react-reverse-portal';
 
+import { useHasMounted } from '../hooks/useHasMounted';
+
 import type { VehicleMapContainerProps } from './map/VehicleMapContainer';
 
 const VehicleMapContainer = dynamic(() => import('./map/VehicleMapContainer'), {
@@ -40,20 +42,16 @@ export const VehicleMapContainerPortal = ({
 };
 
 export default function MapLayout({ children }: { children: React.ReactNode }) {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const hasMounted = useHasMounted();
 
   mapPortalNode = useMemo(() => {
-    if (!isMounted) {
+    if (!hasMounted) {
       return null;
     }
     return createHtmlPortalNode<typeof VehicleMapContainer>({
       attributes: { style: 'height: 100%;' },
     });
-  }, [isMounted]);
+  }, [hasMounted]);
 
   return (
     <>
