@@ -40,7 +40,7 @@ export default function usePassengerInformationMessages({
   refetchIntervalMs = 10000,
 }: PassengerInformationMessageQuery) {
   const [messages, setMessages] = useState<PassengerInformationMessage[]>();
-  const lastFetchTimeRef = useRef<Date>();
+  const lastFetchTimeRef = useRef<Date>(undefined);
   const [error, setError] = useState<unknown>();
 
   const params = useMemo(

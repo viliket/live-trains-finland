@@ -37,7 +37,9 @@ class OverlayControl implements IControl {
  * A custom control that renders React element
  * Adapted from https://github.com/visgl/react-map-gl/blob/master/examples/custom-overlay/src/custom-overlay.tsx
  */
-function CustomOverlay(props: { children: React.ReactElement }) {
+function CustomOverlay(props: {
+  children: React.ReactElement<{ map: MapboxMap }>;
+}) {
   const [, setIsAdded] = useState(false);
 
   const ctrl = useControl<OverlayControl>(
