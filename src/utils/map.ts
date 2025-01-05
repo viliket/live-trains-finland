@@ -148,6 +148,7 @@ const generateMapStyle = (options?: Options) => {
     ],
   });
   (mapStyle.sources['vector'] as VectorSource).attribution = baseAttribution;
+
   return mapStyle;
 };
 
@@ -190,8 +191,8 @@ const getRasterMapStyle = (
       type: 'raster',
       tiles: [
         isDarkMode
-          ? 'https://cdn.digitransit.fi/map/v2/hsl-map-greyscale/{z}/{x}/{y}.png'
-          : 'https://cdn.digitransit.fi/map/v2/hsl-map/{z}/{x}/{y}.png',
+          ? 'https://cdn.digitransit.fi/map/v3/hsl-map-greyscale/{z}/{x}/{y}.png'
+          : 'https://cdn.digitransit.fi/map/v3/hsl-map/{z}/{x}/{y}.png',
       ],
       tileSize: 512,
       attribution: baseAttribution,

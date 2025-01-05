@@ -10,7 +10,7 @@ export const digitrafficClient = new GraphQLClient(
 );
 
 export const digitransitClient = new GraphQLClient(
-  'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql',
+  'https://api.digitransit.fi/routing/v2/finland/gtfs/v1',
   {
     headers: {
       'digitransit-subscription-key':

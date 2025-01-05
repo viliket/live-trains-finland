@@ -17,6 +17,7 @@ import {
   getWagonNumberFromVehicleId,
   getTrainDisplayName,
   getTrainRouteGtfsId,
+  getTrainStationGtfsId,
 } from '../train';
 
 const trainBase: TrainDetailsFragment = {
@@ -426,7 +427,7 @@ describe('getTrainRouteGtfsId', () => {
       commuterLineid: 'U',
       trainNumber: 1234,
       trainType: {
-        name: '',
+        name: 'HL',
         trainCategory: {
           name: 'Commuter',
         },
@@ -451,7 +452,7 @@ describe('getTrainRouteGtfsId', () => {
       ],
     };
     const displayName = getTrainRouteGtfsId(train);
-    expect(displayName).toBe('digitraffic:HKI_KKN_U_109_10');
+    expect(displayName).toBe('digitraffic:HKI_KKN_U_HL_10');
   });
 
   it('should return correct GTFS ID for a long distance train', () => {
@@ -459,7 +460,7 @@ describe('getTrainRouteGtfsId', () => {
       ...trainBase,
       trainNumber: 1234,
       trainType: {
-        name: '',
+        name: 'IC',
         trainCategory: {
           name: 'Long-distance',
         },
@@ -487,6 +488,19 @@ describe('getTrainRouteGtfsId', () => {
       ],
     };
     const displayName = getTrainRouteGtfsId(train);
-    expect(displayName).toBe('digitraffic:HKI_TPE_1234_102_987');
+    expect(displayName).toBe('digitraffic:HKI_TPE_1234_IC_987');
   });
+});
+
+describe('getTrainStationGtfsId', () => {
+  it.each([
+    ['HKI', 'digitraffic:HKI'],
+    ['PSL', 'digitraffic:PSL'],
+  ])(
+    'should return correct GTFS ID for the station %s',
+    (shortCode, expectedGtfsId) => {
+      const gtfsId = getTrainStationGtfsId({ shortCode });
+      expect(gtfsId).toBe(expectedGtfsId);
+    }
+  );
 });

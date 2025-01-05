@@ -25,7 +25,7 @@ function Footer() {
           href="https://github.com/viliket/live-trains-finland"
           underline="none"
         >
-          © Copyright Junaan.fi 2024
+          © Copyright Junaan.fi 2025
         </Link>
         , <Link href="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3.0</Link>
       </Typography>

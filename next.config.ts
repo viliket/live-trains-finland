@@ -36,7 +36,7 @@ const nextConfig: NextConfig = {
             ({ asset }) =>
               asset.name.startsWith('server/') ||
               asset.name.match(
-                /^((app-|^)build-manifest\.json|react-loadable-manifest\.json)$/
+                /^((app-|^)build-manifest\.json|react-loadable-manifest\.json|dynamic-css-manifest\.json)$/
               ),
           ],
           modifyURLPrefix: {

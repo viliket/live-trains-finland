@@ -2,6 +2,7 @@ import { parseISO } from 'date-fns';
 import { orderBy } from 'lodash';
 
 import {
+  Station,
   TimeTableRowType,
   TrainByStationFragment,
 } from '../graphql/generated/digitraffic/graphql';
@@ -89,8 +90,12 @@ export function getTrainDestinationStationName(
     : undefined;
 }
 
-export function getTrainStationName(station: { name: string }) {
+export function getTrainStationName(station: Pick<Station, 'name'>) {
   return station.name.replace(' asema', '').trimEnd();
+}
+
+export function getTrainStationGtfsId(station: Pick<Station, 'shortCode'>) {
+  return `digitraffic:${station.shortCode}`;
 }
 
 export function getWagonNumberFromVehicleId(
@@ -114,31 +119,18 @@ export function getTrainDisplayName(train: TrainByStationFragment) {
 }
 
 /**
- * A map from the the Digitraffic train category name to the GTFS extended route type (integer).
- * - 109 = Suburban Railway - used in Finland for commuter rails
- * - 102 = Long Distance Trains - used in Finland for IC, S, and regional (HDM) trains
- *
- * @see https://developers.google.com/transit/gtfs/reference/extended-route-type
- */
-const trainCategoryNameToGtfsRouteTypeMap: Record<string, number> = {
-  'Long-distance': 102,
-  Commuter: 109,
-};
-
-/**
  * Gets the train route GTFS ID used in Digitransit routing API.
  *
  * @example
- * // returns "digitraffic:TPE_HKI_R_109_10"
+ * // returns "digitraffic:TPE_HKI_R_HL_10"
  * getTrainRouteGtfsId(<R train from Tampere to Helsinki operated by VR>);
  */
 export function getTrainRouteGtfsId(train: TrainByStationFragment) {
   const deptStationCode = getTrainDepartureStation(train)?.shortCode;
   const destStationCode = getTrainDestinationStation(train)?.shortCode;
-  const routeType =
-    trainCategoryNameToGtfsRouteTypeMap[train.trainType.trainCategory.name];
+  const trainType = train.trainType.name;
   const agency = train.operator.uicCode;
   return `digitraffic:${deptStationCode}_${destStationCode}_${
     train.commuterLineid ? train.commuterLineid : train.trainNumber
-  }_${routeType}_${agency}`;
+  }_${trainType}_${agency}`;
 }
