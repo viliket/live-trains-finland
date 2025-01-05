@@ -48,7 +48,7 @@ export default function VehicleMarkerLayer({
   selectedVehicleId,
 }: VehicleMarkerLayerProps) {
   const { current: map } = useMap();
-  const deviceRef = useRef<MapboxOverlayProps['device']>();
+  const deviceRef = useRef<MapboxOverlayProps['device']>(undefined);
   const getVehicleById = useVehicleStore((state) => state.getVehicleById);
   const [vehicleIdForPopup, setVehicleIdForPopup] = useState<number | null>(
     null
