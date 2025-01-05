@@ -86,7 +86,10 @@ export default function VehicleMarkerLayer({
     const moveStartCallback = (e: ViewStateChangeEvent) => {
       // Check if user-initiated movestart
       // User-initiated movestart has originalEvent set (e.g. TouchEvent or MouseEvent).
-      if (!('triggerSource' in e) && e.originalEvent) {
+      if (
+        (!('triggerSource' in e) && e.originalEvent) ||
+        ('triggerSource' in e && e.triggerSource === 'TrainStationTimelineItem')
+      ) {
         setIsTracking(false);
       }
     };
