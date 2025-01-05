@@ -42,6 +42,20 @@
     "use-local-storage-state": "^19.5.0",
     "zustand": "^5.0.2"
   },
+  "overrides": {
+    "use-sync-external-store": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-svg": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-reverse-portal": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
+  },
   "scripts": {
     "dev": "next dev",
     "build": "npm run extract-tiles && next build",
