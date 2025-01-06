@@ -17,7 +17,7 @@ export default function Home() {
         sx={(theme) => ({
           display: 'flex',
           justifyContent: 'center',
-          background: theme.palette.common.secondaryBackground.default,
+          background: theme.vars.palette.common.secondaryBackground.default,
         })}
       >
         <Box

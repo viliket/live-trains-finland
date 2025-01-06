@@ -13,16 +13,15 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTranslation } from 'react-i18next';
 
-import { gqlClients } from '../graphql/client';
 import {
   TrainByStationFragment,
   Wagon,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
 import {
+  PlaceInfo,
   useWagonMapDataQuery,
   WagonInfo,
-  PlaceInfo,
-} from '../graphql/queries/vr';
+} from '../hooks/useWagonMapDataQuery';
 import {
   getTrainDepartureStation,
   getTrainDestinationStation,
@@ -128,10 +127,20 @@ const DetailsItem = ({
       flexGrow: 1,
     })}
   >
-    <Typography variant="caption" display="block">
+    <Typography
+      variant="caption"
+      sx={{
+        display: 'block',
+      }}
+    >
       {value}
     </Typography>
-    <Typography variant="caption" display="block">
+    <Typography
+      variant="caption"
+      sx={{
+        display: 'block',
+      }}
+    >
       {caption}
     </Typography>
   </Paper>
@@ -194,26 +203,16 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
   const departureDate = getTrainScheduledDepartureTime(train);
   const departureStation = getTrainDepartureStation(train)?.shortCode;
   const destinationStation = getTrainDestinationStation(train)?.shortCode;
-  const { data: wagonMapData } = useWagonMapDataQuery(
-    departureDate &&
-      departureStation &&
-      destinationStation &&
-      // Only query for non-commmuter trains as commuter trains have no wagon map data
-      !train.commuterLineid
-      ? {
-          variables: {
-            departureStation: departureStation,
-            arrivalStation: destinationStation,
-            departureTime: departureDate.toISOString(),
-            trainNumber: train.trainNumber.toString(),
-            trainType: train.trainType.name,
-          },
-          context: { clientName: gqlClients.vr },
-        }
-      : { skip: true }
-  );
+  const { data: wagonMapData } = useWagonMapDataQuery({
+    departureStation,
+    arrivalStation: destinationStation,
+    departureTime: departureDate?.toISOString(),
+    trainNumber: train.trainNumber.toString(),
+    trainType: train.trainType.name,
+    isCommuterLine: !!train.commuterLineid,
+  });
 
-  const wagons = wagonMapData?.wagonMapData;
+  const wagons = wagonMapData?.coaches;
 
   useEffect(() => {
     if (wagons && selectedWagon) {
@@ -279,9 +278,11 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
             spacing={1}
             direction="row"
             useFlexGap
-            flexWrap="wrap"
-            marginY={1}
-            maxWidth={164}
+            sx={{
+              flexWrap: 'wrap',
+              marginY: 1,
+              maxWidth: 164,
+            }}
           >
             <DetailsItem
               value={selectedWagon?.wagonType}

@@ -27,6 +27,7 @@
             "actualTime": null,
             "station": {
               "name": "Kolari",
+              "shortCode": "KLI",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -37,6 +38,7 @@
             "actualTime": null,
             "station": {
               "name": "Oulu asema",
+              "shortCode": "OL",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -325,6 +327,7 @@
             "actualTime": null,
             "station": {
               "name": "Oulu asema",
+              "shortCode": "OL",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -335,6 +338,7 @@
             "actualTime": null,
             "station": {
               "name": "Tampere asema",
+              "shortCode": "TPE",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -601,6 +605,7 @@
             "actualTime": null,
             "station": {
               "name": "Tampere asema",
+              "shortCode": "TPE",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -611,6 +616,7 @@
             "actualTime": null,
             "station": {
               "name": "Pasila tavara",
+              "shortCode": "PSLT",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -847,6 +853,7 @@
             "actualTime": null,
             "station": {
               "name": "Pasila tavara",
+              "shortCode": "PSLT",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -857,6 +864,7 @@
             "actualTime": null,
             "station": {
               "name": "Helsinki asema",
+              "shortCode": "HKI",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"

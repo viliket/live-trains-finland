@@ -1,8 +1,12 @@
 import { orderBy } from 'lodash';
 
-import { TrainDetailsFragment, Wagon } from '../graphql/generated/digitraffic';
+import {
+  TrainDetailsFragment,
+  Wagon,
+} from '../graphql/generated/digitraffic/graphql';
 
-import getTrainJourneySectionForStation from './getTrainJourneySectionForStation';
+import { StationTimeTableRowGroup } from './getTimeTableRowsGroupedByStation';
+import getTrainJourneySectionForTimeTableRow from './getTrainJourneySectionForTimeTableRow';
 
 type DiffStatus = 'unchanged' | 'removed' | 'added';
 
@@ -190,9 +194,14 @@ function isTrainCompositionReversed(
   return locomotivesBefore[0]?.location !== locomotivesAfter[0]?.location;
 }
 
-type WagonCompositionDetails = {
+type WagonCompositionStatus = {
   wagon?: Wagon | null;
   status: DiffStatus;
+};
+
+type TrainCompositionStatus = {
+  status: 'changed' | 'unchanged' | 'unknown';
+  wagonStatuses?: WagonCompositionStatus[];
 };
 
 const getWagonLoc = (w?: Wagon | null) => w?.location ?? w?.salesNumber;
@@ -200,22 +209,70 @@ const getWagonNo = (w?: Wagon | null) =>
   w?.vehicleNumber ?? w?.salesNumber.toString() ?? null;
 
 export default function getTrainCompositionDetailsForStation(
-  station: string,
+  timeTableGroup: StationTimeTableRowGroup,
   train: TrainDetailsFragment
-): WagonCompositionDetails[] | null {
-  const sectionBefore = getTrainJourneySectionForStation(train, station, 'end');
-  const sectionAfter = getTrainJourneySectionForStation(
-    train,
-    station,
-    'start'
+): TrainCompositionStatus {
+  const sectionBefore = timeTableGroup.arrival
+    ? getTrainJourneySectionForTimeTableRow(train, timeTableGroup.arrival)
+    : null;
+  const sectionAfter = timeTableGroup.departure
+    ? getTrainJourneySectionForTimeTableRow(train, timeTableGroup.departure)
+    : null;
+
+  // Handle case if no arrival time table (i.e. this is the departure time table
+  // row) or no depature time table (i.e. this is the destination time table row)
+  if (!sectionBefore || !sectionAfter) {
+    const relevantSection = sectionBefore || sectionAfter;
+
+    if (!relevantSection) {
+      return {
+        status: 'unknown',
+      };
+    }
+
+    const wagons = orderBy(
+      relevantSection?.wagons as Wagon[],
+      getWagonLoc,
+      'asc'
+    );
+
+    return {
+      status: 'unchanged',
+      wagonStatuses: wagons?.map((w) => ({
+        wagon: w,
+        status: 'unchanged',
+      })),
+    };
+  }
+
+  if (sectionBefore == sectionAfter) {
+    const wagons = orderBy(sectionBefore.wagons as Wagon[], getWagonLoc, 'asc');
+
+    return {
+      status: 'unchanged',
+      wagonStatuses: wagons?.map((w) => ({
+        wagon: w,
+        status: 'unchanged',
+      })),
+    };
+  }
+
+  const wagonsBefore = orderBy(
+    sectionBefore.wagons as Wagon[],
+    getWagonLoc,
+    'desc'
+  );
+  const wagonsAfter = orderBy(
+    sectionAfter.wagons as Wagon[],
+    getWagonLoc,
+    'desc'
   );
 
-  if (!sectionBefore || !sectionAfter) return null;
-
-  const wagonsBefore = orderBy(sectionBefore.wagons, getWagonLoc, 'desc');
-  const wagonsAfter = orderBy(sectionAfter.wagons, getWagonLoc, 'desc');
-
-  if (wagonsBefore.length === 0 || wagonsAfter.length === 0) return null;
+  if (wagonsBefore.length === 0 || wagonsAfter.length === 0) {
+    return {
+      status: 'unknown',
+    };
+  }
 
   const isReversed = isTrainCompositionReversed(sectionBefore, sectionAfter);
   if (isReversed) {
@@ -227,8 +284,11 @@ export default function getTrainCompositionDetailsForStation(
     wagonDiff.reverse();
   }
 
-  return wagonDiff.map((w) => ({
-    wagon: w.element,
-    status: w.status,
-  }));
+  return {
+    status: 'changed',
+    wagonStatuses: wagonDiff.map((w) => ({
+      wagon: w.element,
+      status: w.status,
+    })),
+  };
 }

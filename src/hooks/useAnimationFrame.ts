@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 const useAnimationFrame = (callback: FrameRequestCallback) => {
-  const requestIdRef = useRef<number>();
+  const requestIdRef = useRef<number>(undefined);
 
   const animate = (time: DOMHighResTimeStamp) => {
     callback(time);

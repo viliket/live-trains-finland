@@ -2,7 +2,7 @@ import { TimelineConnector, TimelineDot, TimelineSeparator } from '@mui/lab';
 import { alpha, useTheme } from '@mui/material';
 import { ArrowDown, ChevronLeft, ChevronRight } from 'mdi-material-ui';
 
-import { StationPlatformSide } from '../graphql/generated/digitraffic';
+import { StationPlatformSide } from '../graphql/generated/digitraffic/graphql';
 
 type TimelineRouteStopSeparatorProps = {
   passed: boolean;
@@ -38,14 +38,22 @@ const TimelineRouteStopSeparator = ({
       {(isVehicleAtStation || wasVehicleAtStation) && (
         <TimelineDot
           color="secondary"
-          sx={{
-            position: 'absolute',
-            top: wasVehicleAtStation ? '50%' : 'auto',
-            padding: '3px',
-            marginTop: '7.5px',
-            marginLeft: '-4px',
-            zIndex: 1,
-          }}
+          sx={[
+            {
+              position: 'absolute',
+              padding: '3px',
+              marginTop: '7.5px',
+              marginLeft: '-4px',
+              zIndex: 1,
+            },
+            wasVehicleAtStation
+              ? {
+                  top: '50%',
+                }
+              : {
+                  top: 'auto',
+                },
+          ]}
         >
           <ArrowDown sx={{ fontSize: '1rem' }} />
         </TimelineDot>

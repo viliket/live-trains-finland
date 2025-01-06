@@ -1,5 +1,6 @@
 {
   "trainNumber": 9705,
+  "departureDate": "2023-02-24",
   "version": "284979714959",
   "runningCurrently": false,
   "operator": {
@@ -27,6 +28,7 @@
             "actualTime": "2023-02-24T15:10:21.000Z",
             "station": {
               "name": "Helsinki asema",
+              "shortCode": "HKI",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -37,6 +39,7 @@
             "actualTime": "2023-02-24T16:16:53.000Z",
             "station": {
               "name": "Riihimäki asema",
+              "shortCode": "RI",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -144,6 +147,7 @@
             "actualTime": "2023-02-24T16:24:39.000Z",
             "station": {
               "name": "Riihimäki asema",
+              "shortCode": "RI",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"
@@ -154,6 +158,7 @@
             "actualTime": "2023-02-24T17:28:05.000Z",
             "station": {
               "name": "Tampere asema",
+              "shortCode": "TPE",
               "__typename": "Station"
             },
             "__typename": "TimeTableRow"

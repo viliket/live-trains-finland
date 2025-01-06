@@ -1,11 +1,11 @@
 import { orderBy } from 'lodash';
 
-import { TrainDetailsFragment } from '../graphql/generated/digitraffic';
+import { TrainExtendedDetails } from '../types';
 
 import { getTimeTableRowRealTime } from './train';
 
 export default function getTrainCurrentJourneySection(
-  train: TrainDetailsFragment
+  train: TrainExtendedDetails
 ) {
   const journeySectionsSorted = orderBy(
     train.compositions?.[0]?.journeySections,

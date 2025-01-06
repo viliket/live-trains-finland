@@ -36,7 +36,7 @@ const PassengerInformationMessagesDialog = (
           <Alert key={m.id} severity="info" sx={{ mb: 1 }}>
             {getPassengerInformationMessageForLanguage(
               m,
-              i18n.resolvedLanguage
+              i18n.resolvedLanguage ?? i18n.language
             )}
           </Alert>
         ))}

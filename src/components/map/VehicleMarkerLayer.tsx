@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { CollisionFilterExtension } from '@deck.gl/extensions/typed';
-import { GeoJsonLayer } from '@deck.gl/layers/typed';
+import { CollisionFilterExtension } from '@deck.gl/extensions';
+import { GeoJsonLayer } from '@deck.gl/layers';
+import { MapboxOverlayProps } from '@deck.gl/mapbox';
 import { Box, Button, useTheme } from '@mui/material';
 import { format } from 'date-fns';
 import { mapValues } from 'lodash';
@@ -10,12 +11,13 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl';
 
-import { vehiclesVar } from '../../graphql/client';
 import useAnimationFrame from '../../hooks/useAnimationFrame';
+import useVehicleStore from '../../hooks/useVehicleStore';
 import {
   getVehicleMarkerIconImage,
   getVehiclesGeoJsonData,
 } from '../../utils/map';
+import { distanceInKm } from '../../utils/math';
 
 import CustomOverlay from './CustomOverlay';
 import DeckGLOverlay from './DeckGLOverlay';
@@ -33,12 +35,21 @@ type VehicleInterpolatedPosition = {
 
 const animDurationInMs = 1000;
 
+/**
+ * Maximum distance in kilometers between the vehicle's new location
+ * and previous location to use interpolation to animate the position change.
+ * If the distance if larger than than this threshold, the vehicle position will
+ * not be interpolated but updated immediately to the new location.
+ */
+const maxInterpolationDistanceKm = 0.4;
+
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
   selectedVehicleId,
 }: VehicleMarkerLayerProps) {
   const { current: map } = useMap();
-  const glRef = useRef<WebGLRenderingContext>();
+  const deviceRef = useRef<MapboxOverlayProps['device']>(undefined);
+  const getVehicleById = useVehicleStore((state) => state.getVehicleById);
   const [vehicleIdForPopup, setVehicleIdForPopup] = useState<number | null>(
     null
   );
@@ -57,17 +68,16 @@ export default function VehicleMarkerLayer({
       id: `vehiclemarker${theme.palette.mode}-x-0`,
       mapBearing: map?.getBearing() ?? 0,
       colorPrimary: theme.palette.secondary.main,
-      colorSecondary: theme.palette.mode === 'light' ? '#eee' : '#ccc',
-      colorShadow: '#aaa',
+      colorSecondary: theme.palette.mode === 'light' ? '#eee' : '#666',
+      colorShadow: theme.palette.mode === 'light' ? '#aaa' : '#000',
     });
   }, [map, theme.palette.mode, theme.palette.secondary.main]);
 
   useEffect(() => {
     return () => {
-      if (glRef.current) {
+      if (deviceRef.current) {
         // Workaround for https://github.com/visgl/deck.gl/issues/1312
-        const extension = glRef.current.getExtension('WEBGL_lose_context');
-        if (extension) extension.loseContext();
+        deviceRef.current.loseDevice();
       }
     };
   }, []);
@@ -149,7 +159,7 @@ export default function VehicleMarkerLayer({
   }, [selectedVehicleId]);
 
   if (map && isTracking && selectedVehicleId) {
-    const vehicle = vehiclesVar()[selectedVehicleId];
+    const vehicle = getVehicleById(selectedVehicleId);
     if (vehicle && !map.isMoving()) {
       map.flyTo(
         {
@@ -167,7 +177,7 @@ export default function VehicleMarkerLayer({
 
   useAnimationFrame(() => {
     setInterpolatedPositions((prevPositions) => {
-      const currentVehicles = vehiclesVar();
+      const currentVehicles = useVehicleStore.getState().vehicles;
       const nextPositions: Record<number, VehicleInterpolatedPosition> = {};
       Object.keys(currentVehicles).forEach((idString) => {
         const id = Number.parseInt(idString);
@@ -182,6 +192,16 @@ export default function VehicleMarkerLayer({
         ) {
           // Vehicle has received new position from MQTT, set previous position to latest interpolated position
           startPos = vehiclePrevInterpolatedPos.animPos;
+
+          // If the distance between new position and previous position exceeds
+          // the max threshold, skip interpolation by setting start position as
+          // the current vehicle position. This could occur if there is a long
+          // gap between the  previous MQTT message and the next message, e.g.
+          // due to a temporary connection problem.
+          const interpolationDistanceKm = distanceInKm(startPos, curPos);
+          if (interpolationDistanceKm > maxInterpolationDistanceKm) {
+            startPos = curPos;
+          }
         }
 
         const elapsedTime = performance.now() - vehicle.timestamp;
@@ -203,13 +223,13 @@ export default function VehicleMarkerLayer({
   });
 
   const selectedVehicleForPopup = vehicleIdForPopup
-    ? vehiclesVar()[vehicleIdForPopup]
+    ? getVehicleById(vehicleIdForPopup)
     : null;
 
   const vehiclesLayer = new GeoJsonLayer({
     id: 'vehicles',
     data: getVehiclesGeoJsonData(
-      vehiclesVar(),
+      useVehicleStore.getState().vehicles,
       mapValues(interpolatedPositions, (p) => p.animPos)
     ),
     _subLayerProps: {
@@ -217,7 +237,7 @@ export default function VehicleMarkerLayer({
         // Use CollisionFilterExtension to hide overlapping texts.
         extensions: [new CollisionFilterExtension()],
         // Increase text size when computing collisions to provide greater spacing between visible features.
-        collisionTestProps: { sizeScale: 3 },
+        collisionTestProps: { sizeScale: 4 },
       },
     },
     pointType: 'icon+text',
@@ -234,12 +254,13 @@ export default function VehicleMarkerLayer({
       // Disable depth test from this layer to avoid z-fighting issues
       depthTest: false,
     },
-    getIconSize: 50,
+    getIconSize: 60,
     getIconAngle: (d) => -d.properties?.bearing,
     getText: (d: GeoJSON.Feature) => d.properties?.vehicleNumber,
     getTextColor: [255, 255, 255],
     textFontFamily: 'sans-serif',
     getTextSize: 15,
+    textFontWeight: 700,
     pickable: true,
     onClick: (info) => {
       const id = info.object.properties!.vehicleId;
@@ -257,7 +278,7 @@ export default function VehicleMarkerLayer({
     <>
       <DeckGLOverlay
         layers={[vehiclesLayer]}
-        onWebGLInitialized={(gl) => (glRef.current = gl)}
+        onDeviceInitialized={(device) => (deviceRef.current = device)}
       />
       {selectedVehicleId != null &&
         interpolatedPositions[selectedVehicleId] && (
@@ -265,13 +286,25 @@ export default function VehicleMarkerLayer({
             <Box
               component="button"
               onClick={() => setIsTracking(!isTracking)}
-              sx={{
-                svg: {
-                  verticalAlign: 'middle',
-                  padding: '4px',
-                  color: isTracking ? 'primary.main' : 'text.primary',
+              sx={[
+                {
+                  svg: {
+                    verticalAlign: 'middle',
+                    padding: '4px',
+                  },
                 },
-              }}
+                isTracking
+                  ? {
+                      svg: {
+                        color: 'primary.main',
+                      },
+                    }
+                  : {
+                      svg: {
+                        color: 'text.primary',
+                      },
+                    },
+              ]}
             >
               {isTracking ? (
                 <CrosshairsGps className="maplibregl-ctrl-icon" />

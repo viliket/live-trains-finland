@@ -1,4 +1,4 @@
-import { TrainByStationFragment } from '../graphql/generated/digitraffic';
+import { TrainByStationFragment } from '../graphql/generated/digitraffic/graphql';
 
 import getTrainLatestDepartureTimeTableRow from './getTrainLatestDepartureTimeTableRow';
 

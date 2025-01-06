@@ -2,7 +2,8 @@ import {
   TimeTableRowType,
   TrainDetailsFragment,
   TrainDirection,
-} from '../../graphql/generated/digitraffic';
+} from '../../graphql/generated/digitraffic/graphql';
+import { TrainExtendedDetails } from '../../types';
 import getTimeTableRowsGroupedByStation from '../getTimeTableRowsGroupedByStation';
 import getTrainDirection from '../getTrainDirection';
 
@@ -41,7 +42,7 @@ const timeTableRowBase = {
 };
 
 function testTrainDirections(
-  train: TrainDetailsFragment,
+  train: TrainExtendedDetails,
   expectedDirections: string[]
 ) {
   const timeTableGroups = getTimeTableRowsGroupedByStation(train);
@@ -58,7 +59,7 @@ function testTrainDirections(
 
 describe('getTrainDirection', () => {
   it('should be INCREASING on all stations for a train HKI - PSL - TPE', () => {
-    const train: TrainDetailsFragment = {
+    const train: TrainExtendedDetails = {
       ...trainBase,
       timeTableRows: [
         {
@@ -110,7 +111,7 @@ describe('getTrainDirection', () => {
   });
 
   it('should be null on the train has no time table rows', () => {
-    const train: TrainDetailsFragment = {
+    const train: TrainExtendedDetails = {
       ...trainBase,
     };
 
@@ -118,7 +119,7 @@ describe('getTrainDirection', () => {
   });
 
   it('should be null on when no line km info exists for the station code', () => {
-    const train: TrainDetailsFragment = {
+    const train: TrainExtendedDetails = {
       ...trainBase,
       timeTableRows: [
         {
@@ -172,7 +173,7 @@ describe('getTrainDirection', () => {
   });
 
   it('should be INCREASING on all stations for a 4-unit R train from HKI->RI with only two last units continuing from RI->TPE', () => {
-    const train = trainR4Units2LastUnitsContinueFromRi as TrainDetailsFragment;
+    const train = trainR4Units2LastUnitsContinueFromRi as TrainExtendedDetails;
     const timeTableGroups = getTimeTableRowsGroupedByStation(train);
     expectToBeDefined(timeTableGroups);
     train.timeTableGroups = timeTableGroups;
@@ -183,7 +184,7 @@ describe('getTrainDirection', () => {
   });
 
   it('should be INCREASING on all stations for a 4-unit R train from HKI->RI with only two first units continuing from RI->TPE', () => {
-    const train = trainR4Units2FirstUnitsContinueFromRi as TrainDetailsFragment;
+    const train = trainR4Units2FirstUnitsContinueFromRi as TrainExtendedDetails;
     const timeTableGroups = getTimeTableRowsGroupedByStation(train);
     expectToBeDefined(timeTableGroups);
     train.timeTableGroups = timeTableGroups;
@@ -194,7 +195,7 @@ describe('getTrainDirection', () => {
   });
 
   it('should be DECREASING on all stations for a 2-unit R train from TPE->RI with two additional units from RI->HKI', () => {
-    const train = trainR2Units2AdditionalUnitsFromRi as TrainDetailsFragment;
+    const train = trainR2Units2AdditionalUnitsFromRi as TrainExtendedDetails;
     const timeTableGroups = getTimeTableRowsGroupedByStation(train);
     expectToBeDefined(timeTableGroups);
     train.timeTableGroups = timeTableGroups;
@@ -205,7 +206,7 @@ describe('getTrainDirection', () => {
   });
 
   describe('IC 266 ROI->HKI', () => {
-    const train = trainIc266RoiHki as TrainDetailsFragment;
+    const train = trainIc266RoiHki as TrainExtendedDetails;
     const expectedDirections = [
       TrainDirection.Decreasing, // Rovaniemi
       TrainDirection.Decreasing, // Muurola
@@ -239,7 +240,7 @@ describe('getTrainDirection', () => {
   });
 
   describe('PYO 276 KLI->HKI', () => {
-    const train = trainPyo276KliHki as TrainDetailsFragment;
+    const train = trainPyo276KliHki as TrainExtendedDetails;
     const expectedDirections = [
       TrainDirection.Decreasing, // Kolari
       TrainDirection.Decreasing, // Pello
@@ -271,7 +272,7 @@ describe('getTrainDirection', () => {
   });
 
   describe('IC 143 train HKI-PKI which reverses direction at Tampere', () => {
-    const train = trainIc143DirectionReversesAfterTpe as TrainDetailsFragment;
+    const train = trainIc143DirectionReversesAfterTpe as TrainExtendedDetails;
     const expectedDirections = [
       TrainDirection.Increasing, // Helsinki
       TrainDirection.Increasing, // Pasila
@@ -288,7 +289,7 @@ describe('getTrainDirection', () => {
   });
 
   describe('HMD 482 train SK-JY', () => {
-    const train = trainHmd482SkJy as TrainDetailsFragment;
+    const train = trainHmd482SkJy as TrainExtendedDetails;
     const expectedDirections = [
       TrainDirection.Decreasing, // Seinäjoki
       TrainDirection.Decreasing, // Alavus

@@ -14,7 +14,7 @@ import RouterLink from 'next/link';
 import {
   TimeTableRowType,
   TrainByStationFragment,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import {
   getTrainDepartureStation,
@@ -68,8 +68,9 @@ function StationTimeTableRow({
       onClick={() => tableRowOnClick(trainNumber, departureDate)}
     >
       <TableCell scope="row">
-        <span
-          style={{
+        <Box
+          component="span"
+          sx={{
             display: 'flex',
             alignItems: 'center',
           }}
@@ -99,15 +100,17 @@ function StationTimeTableRow({
               departureDate={departureDate}
             />
           </Box>
-        </span>
+        </Box>
       </TableCell>
       <TableCell>
         <Link
           component={RouterLink}
           href={`/${deptOrDestStationName}`}
-          color="inherit"
           underline="none"
           onClick={handleStationClick}
+          sx={{
+            color: 'inherit',
+          }}
         >
           {deptOrDestStationName}
           {deptOrDestStation?.shortCode === 'LEN' && (
@@ -119,8 +122,8 @@ function StationTimeTableRow({
         {stationRow ? <TimeTableRowTime row={stationRow} /> : '?'}
       </TableCell>
       <TableCell align="right">
-        <span
-          style={{
+        <Box
+          sx={{
             display: 'inline-flex',
             alignItems: 'center',
             lineHeight: 'normal',
@@ -132,7 +135,7 @@ function StationTimeTableRow({
           >
             <ChevronRight />
           </IconButton>
-        </span>
+        </Box>
       </TableCell>
     </TableRow>
   );

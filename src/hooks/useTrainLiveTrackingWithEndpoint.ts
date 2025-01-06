@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import { TrainByStationFragment } from '../graphql/generated/digitraffic';
+import { TrainByStationFragment } from '../graphql/generated/digitraffic/graphql';
 import { isDefined } from '../utils/common';
 
 import useMqttClient from './useMqttClient';

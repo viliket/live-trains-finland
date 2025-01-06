@@ -59,18 +59,22 @@ export const getVehicleMarkerIconImage = ({
 
   // Draw base (circle)
   ctx.shadowColor = colorShadow;
-  ctx.shadowBlur = 5;
+  ctx.shadowBlur = 10;
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, 2 * Math.PI);
   ctx.lineWidth = 4;
   ctx.strokeStyle = colorSecondary;
   ctx.fillStyle = colorPrimary;
-  ctx.fill('evenodd');
+  ctx.fill();
+  ctx.shadowBlur = 0;
   ctx.stroke();
 
   // Draw heading angle
   if (heading != null) {
     ctx.rotate(toRadians(heading));
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.05)';
+    ctx.shadowBlur = 3;
+    ctx.shadowOffsetY = -3;
     ctx.beginPath();
     ctx.fillStyle = colorSecondary;
     const height = 15;
@@ -79,7 +83,7 @@ export const getVehicleMarkerIconImage = ({
     ctx.lineTo(0 - width / 2, 0 - radius);
     ctx.lineTo(0 + width / 2, 0 - radius);
     ctx.closePath();
-    ctx.fill('evenodd');
+    ctx.fill();
     ctx.rotate(toRadians(-heading));
   }
 
@@ -132,7 +136,7 @@ const baseAttribution =
   '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap</a>';
 
 const generateMapStyle = (options?: Options) => {
-  const mapStyle = generateStyle({
+  let mapStyle = generateStyle({
     ...options,
     sourcesUrl: 'https://cdn.digitransit.fi/',
     queryParams: [
@@ -144,6 +148,29 @@ const generateMapStyle = (options?: Options) => {
     ],
   });
   (mapStyle.sources['vector'] as VectorSource).attribution = baseAttribution;
+
+  if (options?.components?.greyscale?.enabled) {
+    // Patch wrong fill color on the road_bridge_area layer
+    // due to https://github.com/HSLdevcom/hsl-map-style/blob/master/style/hsl-map-theme-greyscale.json
+    // not having the style of the base theme overridden.
+    mapStyle = {
+      ...mapStyle,
+      layers: mapStyle.layers.map((layer) => {
+        if (layer.id == 'road_bridge_area' && layer.type === 'fill') {
+          return {
+            ...layer,
+            paint: {
+              ...layer.paint,
+              'fill-color': '#0a0a0a',
+            },
+          };
+        } else {
+          return layer;
+        }
+      }),
+    };
+  }
+
   return mapStyle;
 };
 
@@ -163,7 +190,7 @@ const getRasterMapStyle = (
     'raster-tiles': {
       type: 'raster',
       tiles: [
-        `https://cdn.digitransit.fi/map/v2/${getRasterMapSource(
+        `https://cdn.digitransit.fi/map/v3/${getRasterMapSource(
           isDarkMode,
           languageCode
         )}/{z}/{x}/{y}.png`,

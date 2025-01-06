@@ -3,7 +3,7 @@ import {
   TrainDirection,
   TrainTimeTableGroupFragment,
   TrainTimeTableRowFragment,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
 
 import _stationPlatformInfoByStationPlatformId from './generated/station-platform-by-station-platform-id.json';
 

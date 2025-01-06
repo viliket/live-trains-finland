@@ -5,22 +5,20 @@ import {
   differenceInMinutes,
   format,
   formatDistanceToNowStrict,
+  Locale,
 } from 'date-fns';
 import { MapLibreZoomEvent, MapStyleImageMissingEvent } from 'maplibre-gl';
 import { useTranslation } from 'react-i18next';
 import { Layer, Source, useMap } from 'react-map-gl';
 
-import { gqlClients } from '../../graphql/client';
-import {
-  TrainByStationFragment,
-  useTrainQuery,
-} from '../../graphql/generated/digitraffic';
+import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
+import useTrainQuery from '../../hooks/useTrainQuery';
 import { isDefined } from '../../utils/common';
 import { StationTimeTableRowGroup } from '../../utils/getTimeTableRowsGroupedByStation';
 import getTimeTableRowsGroupedByStationUniqueStations from '../../utils/getTimeTableRowsGroupedByStationUniqueStations';
 import {
   getTimeTableRowRealTime,
-  getTrainStationName,
+  getTrainStationGtfsId,
 } from '../../utils/train';
 
 import stopSignSvgPath from './stop-sign.svg?url';
@@ -36,21 +34,9 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
   const [locale, setLocale] = useState<Locale>();
   const { i18n, t } = useTranslation();
 
-  const { data: realTimeData } = useTrainQuery(
-    train
-      ? {
-          variables: {
-            trainNumber: train.trainNumber,
-            departureDate: train.departureDate,
-          },
-          context: { clientName: gqlClients.digitraffic },
-          pollInterval: 10000,
-          // Fetch only from cache as this data is already polled every 10 seconds in TrainInfoContainer
-          fetchPolicy: 'cache-only',
-          // To trigger re-render on every poll interval even when the data has not changed
-          notifyOnNetworkStatusChange: true,
-        }
-      : { skip: true }
+  const { data: realTimeTrain } = useTrainQuery(
+    train?.trainNumber,
+    train?.departureDate
   );
 
   useEffect(() => {
@@ -96,12 +82,12 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
   }, [map]);
 
   useEffect(() => {
-    const fetchAndSetLocale = async (languageCode: string) => {
+    const fetchAndSetLocale = async (languageCode?: string) => {
       let locale: Locale | undefined;
       if (languageCode === 'fi') {
-        locale = (await import(`date-fns/locale/fi`)).default;
-      } else if (i18n.resolvedLanguage === 'sv') {
-        locale = (await import(`date-fns/locale/sv`)).default;
+        locale = (await import(`date-fns/locale/fi`)).fi;
+      } else if (languageCode === 'sv') {
+        locale = (await import(`date-fns/locale/sv`)).sv;
       }
       setLocale(locale);
     };
@@ -109,7 +95,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     fetchAndSetLocale(i18n.resolvedLanguage);
   }, [i18n.resolvedLanguage]);
 
-  const getPropertyValueByStationName = <T,>(
+  const getPropertyValueByStationGtfsId = <T,>(
     stationNames: string[],
     valueMatch: T,
     valueUnmatch: T
@@ -117,7 +103,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     return [
       'match',
       // Get station name
-      ['get', 'name'],
+      ['get', 'gtfsId'],
       // When station name matches any of the given station names use valueMatch as the property value
       ...(stationNames.flatMap((n) => [n, valueMatch]) ?? []),
       /* Otherwise use valueUnmatch as the property value */
@@ -125,17 +111,17 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     ];
   };
 
-  const routeStationNames = train?.timeTableRows
+  const routeStationGtfsIds = train?.timeTableRows
     ? Array.from(
         new Set(
           train.timeTableRows
-            .map((r) => (r ? getTrainStationName(r.station) : undefined))
+            .map((r) => (r ? getTrainStationGtfsId(r.station) : undefined))
             .filter(isDefined)
         )
       )
     : undefined;
 
-  const trainWithRealTimeData = realTimeData?.train?.[0] ?? train;
+  const trainWithRealTimeData = realTimeTrain ?? train;
 
   const trainTimeTableRows = trainWithRealTimeData
     ? getTimeTableRowsGroupedByStationUniqueStations(trainWithRealTimeData)
@@ -172,17 +158,19 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     return color;
   };
 
-  const getStationNameForTimeTableGroup = (group: StationTimeTableRowGroup) => {
+  const getStationGtfsIdForTimeTableGroup = (
+    group: StationTimeTableRowGroup
+  ) => {
     const r = group.departure ?? group.arrival;
     if (!r) return '';
-    return getTrainStationName(r.station);
+    return getTrainStationGtfsId(r.station);
   };
 
   return (
     <Source
       type="vector"
       tiles={[
-        'https://digitransit-prod-cdn-origin.azureedge.net/map/v2/finland-stop-map/{z}/{x}/{y}.pbf',
+        `https://cdn.digitransit.fi/map/v3/finland/${i18n.resolvedLanguage}/stations,stops/{z}/{x}/{y}.pbf`,
       ]}
     >
       <Layer
@@ -192,11 +180,15 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           type: 'circle',
           source: 'stops',
           'source-layer': 'stations',
-          filter: ['==', 'type', 'RAIL'],
+          filter: [
+            'all',
+            ['==', ['get', 'type'], 'RAIL'],
+            ['==', ['index-of', 'digitraffic', ['get', 'gtfsId']], 0],
+          ],
           paint: {
-            'circle-color': routeStationNames
-              ? getPropertyValueByStationName(
-                  routeStationNames,
+            'circle-color': routeStationGtfsIds
+              ? getPropertyValueByStationGtfsId(
+                  routeStationGtfsIds,
                   theme.palette.secondary.main,
                   theme.palette.mode === 'light' ? '#ccc' : '#555'
                 )
@@ -215,7 +207,11 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           type: 'symbol',
           source: 'stops',
           'source-layer': 'stations',
-          filter: ['==', 'type', 'RAIL'],
+          filter: [
+            'all',
+            ['==', ['get', 'type'], 'RAIL'],
+            ['==', ['index-of', 'digitraffic', ['get', 'gtfsId']], 0],
+          ],
           layout: {
             'text-optional': true,
             'text-allow-overlap': currentZoom != null && currentZoom > 10,
@@ -232,12 +228,12 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
                   // 3rd field: Station time table row time
                   [
                     'match',
-                    // Get station name
-                    ['get', 'name'],
+                    // Get station GTFS ID
+                    ['get', 'gtfsId'],
                     // When station name matches one of time table rows,
                     // display extra info about the station time table row
                     ...trainTimeTableRows.flatMap((g) => [
-                      getStationNameForTimeTableGroup(g),
+                      getStationGtfsIdForTimeTableGroup(g),
                       getTimeTableRowGroupDescription(g),
                     ]),
                     // Otherwise display nothing (when station is not on trainTimeTableRows)
@@ -246,12 +242,12 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
                   {
                     'text-color': [
                       'match',
-                      // Get station name
-                      ['get', 'name'],
+                      // Get station GTFS ID
+                      ['get', 'gtfsId'],
                       // When station name matches one of time table rows,
                       // choose text color based on the time table row data
                       ...trainTimeTableRows.flatMap((g) => [
-                        getStationNameForTimeTableGroup(g),
+                        getStationGtfsIdForTimeTableGroup(g),
                         getTimeTableRowGroupColor(g),
                       ]),
                       // Otherwise use fallback text color (when station is not on trainTimeTableRows)
@@ -264,14 +260,14 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
             'text-variable-anchor': ['left', 'right'],
             'text-max-width': 8,
             'text-offset': [0.75, 0.25],
-            'symbol-sort-key': routeStationNames
-              ? getPropertyValueByStationName(routeStationNames, 0, 1)
+            'symbol-sort-key': routeStationGtfsIds
+              ? getPropertyValueByStationGtfsId(routeStationGtfsIds, 0, 1)
               : 0,
           },
           paint: {
-            'text-color': routeStationNames
-              ? getPropertyValueByStationName(
-                  routeStationNames,
+            'text-color': routeStationGtfsIds
+              ? getPropertyValueByStationGtfsId(
+                  routeStationGtfsIds,
                   theme.palette.text.primary,
                   theme.palette.text.secondary
                 )
@@ -290,7 +286,12 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
           type: 'symbol',
           source: 'stops',
           'source-layer': 'stops',
-          filter: ['all', ['==', 'type', 'RAIL'], ['!=', 'platform', 'null']],
+          filter: [
+            'all',
+            ['==', ['get', 'type'], 'RAIL'],
+            ['has', 'platform'],
+            ['==', ['index-of', 'digitraffic', ['get', 'gtfsId']], 0],
+          ],
           minzoom: 14,
           layout: {
             'icon-image': 'stop-marker',

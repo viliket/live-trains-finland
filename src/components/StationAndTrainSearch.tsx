@@ -16,8 +16,7 @@ import { ChevronLeft, Magnify } from 'mdi-material-ui';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
-import { gqlClients } from '../graphql/client';
-import { useRunningTrainsQuery } from '../graphql/generated/digitraffic';
+import { useRunningTrainsQuery } from '../hooks/useRunningTrainsQuery';
 import { useUrlHashState } from '../hooks/useUrlHashState';
 import { isDefined } from '../utils/common';
 import { trainStations } from '../utils/stations';
@@ -66,10 +65,7 @@ export default function StationAndTrainSearch() {
   const [inputValue, setInputValue] = useState('');
   const router = useRouter();
   const { t } = useTranslation();
-  const { loading, error, data } = useRunningTrainsQuery({
-    context: { clientName: gqlClients.digitraffic },
-    pollInterval: 10000,
-  });
+  const { isLoading, error, data } = useRunningTrainsQuery();
   const currentlyRunningTrains = data?.currentlyRunningTrains;
 
   useEffect(() => {
@@ -104,14 +100,14 @@ export default function StationAndTrainSearch() {
         component="button"
         onClick={handleClickOpen}
         sx={(theme) => ({
-          bgcolor: theme.palette.action.selected,
-          color: theme.palette.text.secondary,
+          bgcolor: theme.vars.palette.action.selected,
+          color: theme.vars.palette.text.secondary,
           border: 'none',
           '&:hover': {
             bgcolor: alpha(
               theme.palette.action.selected,
-              theme.palette.action.selectedOpacity +
-                theme.palette.action.hoverOpacity
+              theme.vars.palette.action.selectedOpacity +
+                theme.vars.palette.action.hoverOpacity
             ),
           },
           fontSize: theme.typography.pxToRem(14),
@@ -194,7 +190,7 @@ export default function StationAndTrainSearch() {
           />
           <DialogContentText sx={{ paddingLeft: 2 }}>
             {filteredTrains?.length === 0 && t('no_results')}
-            {loading && '...'}
+            {isLoading && '...'}
             {error?.message}
           </DialogContentText>
         </>

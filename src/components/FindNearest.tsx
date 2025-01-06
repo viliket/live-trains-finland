@@ -21,8 +21,8 @@ import { ChevronLeft, HomeClockOutline, Train } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
-import { gqlClients } from '../graphql/client';
-import { useRunningTrainsQuery } from '../graphql/generated/digitraffic';
+import { useHasMounted } from '../hooks/useHasMounted';
+import { useRunningTrainsQuery } from '../hooks/useRunningTrainsQuery';
 import { useUrlHashState } from '../hooks/useUrlHashState';
 import { isDefined } from '../utils/common';
 import { trainStations } from '../utils/stations';
@@ -34,8 +34,6 @@ import {
 
 import OptionList from './OptionList';
 import SlideUpTransition from './SlideUpTransition';
-
-const isSSR = typeof navigator === 'undefined';
 
 function getDistancesToPosition<T>(
   items: T[],
@@ -61,10 +59,7 @@ function getDistancesToPosition<T>(
 
 function NearestTrainsList({ position }: { position: GeolocationPosition }) {
   const router = useRouter();
-  const { loading, error, data } = useRunningTrainsQuery({
-    context: { clientName: gqlClients.digitraffic },
-    pollInterval: 10000,
-  });
+  const { isLoading, error, data } = useRunningTrainsQuery();
 
   const trainsByDistance = data?.currentlyRunningTrains
     ? getDistancesToPosition(
@@ -95,7 +90,7 @@ function NearestTrainsList({ position }: { position: GeolocationPosition }) {
           router.replace(`/train/${train.trainNumber}/${train.departureDate}`)
         }
       />
-      {loading && (
+      {isLoading && (
         <DialogContent>
           {Array.from(Array(7).keys()).map((i) => (
             <Skeleton
@@ -146,6 +141,8 @@ function FindNearest() {
   const [position, setPosition] = useState<GeolocationPosition>();
   const { t } = useTranslation();
   const router = useRouter();
+  const hasMounted = useHasMounted();
+  const isGeolocationAvailable = hasMounted && navigator.geolocation;
 
   const findNearest = useCallback(
     (nearestType: 'stations' | 'trains') => {
@@ -172,17 +169,23 @@ function FindNearest() {
     }
   }, [findNearest, open, position, router, setOpen]);
 
-  if (!isSSR && !navigator.geolocation) return null;
-
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <>
-      <Stack spacing={1} direction="row" justifyContent="center" mt={2}>
+      <Stack
+        spacing={1}
+        direction="row"
+        sx={{
+          justifyContent: 'center',
+          mt: 2,
+        }}
+      >
         <Button
           variant="contained"
+          disabled={!isGeolocationAvailable}
           onClick={() => findNearest('stations')}
           sx={{
             bgcolor: 'primary.light',
@@ -193,6 +196,7 @@ function FindNearest() {
         </Button>
         <Button
           variant="contained"
+          disabled={!isGeolocationAvailable}
           onClick={() => findNearest('trains')}
           sx={{
             bgcolor: 'primary.light',

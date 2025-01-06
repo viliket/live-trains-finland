@@ -1,4 +1,6 @@
-import { getBearing, toKmsPerHour } from '../math';
+import distance from '@turf/distance';
+
+import { distanceInKm, getBearing, toKmsPerHour } from '../math';
 
 describe('getBearing', () => {
   it('should calculate bearing between two coordinates correctly', () => {
@@ -36,4 +38,29 @@ describe('toKmsPerHour', () => {
     expect(toKmsPerHour(38.8889)).toBe(140);
     expect(toKmsPerHour(-38.8889)).toBe(-140);
   });
+});
+
+describe('distanceInKm', () => {
+  it.each([
+    [
+      [-94.581213, 39.099912],
+      [-90.200203, 38.627089],
+    ],
+    [
+      [24.940928135986344, 60.171648637103424],
+      [24.93080011474611, 60.16917455838713],
+    ],
+    [
+      [24.94, 61.171],
+      [24.94, 60.173],
+    ],
+  ])(
+    'should return the correct distance between coordinates %p and %p',
+    (from: GeoJSON.Position, to: GeoJSON.Position) => {
+      expect(distanceInKm(from, to)).toBeCloseTo(
+        distance(from, to, { units: 'kilometers' }),
+        1
+      );
+    }
+  );
 });

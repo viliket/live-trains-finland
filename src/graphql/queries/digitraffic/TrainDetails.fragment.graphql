@@ -25,6 +25,7 @@ fragment TrainDetails on Train {
         actualTime
         station {
           name
+          shortCode
         }
       }
       endTimeTableRow {
@@ -33,6 +34,7 @@ fragment TrainDetails on Train {
         actualTime
         station {
           name
+          shortCode
         }
       }
       maximumSpeed
@@ -42,7 +44,6 @@ fragment TrainDetails on Train {
         powerTypeAbbreviation
         locomotiveType
         location
-        vehicleId @client
       }
       wagons {
         vehicleNumber
@@ -57,22 +58,11 @@ fragment TrainDetails on Train {
         luggage
         smoking
         disabled
-        vehicleId @client
       }
     }
   }
   timeTableRows(where: { and: [{ trainStopping: { equals: true } }] }) {
     ...TrainTimeTableRow
-  }
-  timeTableGroups @client {
-    arrival {
-      ...TrainTimeTableRow
-    }
-    departure {
-      ...TrainTimeTableRow
-    }
-    trainDirection
-    stationPlatformSide
   }
 }
 

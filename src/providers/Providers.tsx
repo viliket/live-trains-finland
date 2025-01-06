@@ -1,64 +1,37 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { ApolloProvider } from '@apollo/client';
 import {
   createTheme as createMuiTheme,
-  Theme,
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { fiFI, enUS } from '@mui/material/locale';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { NuqsAdapter } from 'nuqs/adapters/next/pages';
 import { useTranslation } from 'react-i18next';
 
-import { client } from '../graphql/client';
-import { lightTheme, darkTheme } from '../theme';
+import baseTheme from '../theme';
 
-import { ThemeProvider, useTheme } from './ThemeProvider';
 import '../i18n';
-
-const getPreferredScheme = () =>
-  window.matchMedia?.('(prefers-color-scheme: dark)')?.matches
-    ? 'dark'
-    : 'light';
-
-const updateMetaThemeColor = (theme: Theme): void => {
-  const themeColorElements = document.querySelectorAll(
-    'meta[name="theme-color"]'
-  );
-  const systemColorScheme = getPreferredScheme();
-
-  themeColorElements.forEach((meta) => {
-    const mediaAttr = meta.getAttribute('media');
-
-    if (mediaAttr?.includes(systemColorScheme)) {
-      meta.setAttribute(
-        'content',
-        theme.palette.common.secondaryBackground.default
-      );
-    }
-  });
-};
 
 const MuiProvider = ({ children }: { children: React.ReactNode }) => {
   const { i18n } = useTranslation();
-  const { theme: themeName } = useTheme();
 
   const theme = useMemo(
     () =>
       createMuiTheme(
         {
-          ...(themeName === 'dark' ? darkTheme : lightTheme),
+          cssVariables: {
+            colorSchemeSelector: 'data-theme',
+          },
+          ...baseTheme,
         },
         i18n.resolvedLanguage === 'fi' ? fiFI : enUS
       ),
-    [i18n.resolvedLanguage, themeName]
+    [i18n.resolvedLanguage]
   );
-
-  useEffect(() => {
-    updateMetaThemeColor(theme);
-  }, [theme]);
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -68,17 +41,21 @@ const MuiProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const NextThemeProvider = ({ children }: { children: React.ReactNode }) => (
-  // Separate ThemeProvider from MUI, so is does not get rerendered on theme switch
-  <ThemeProvider>{children}</ThemeProvider>
-);
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      networkMode: 'always',
+    },
+  },
+});
 
 const Providers = ({ children }: { children: React.ReactNode }) => (
-  <ApolloProvider client={client}>
-    <NextThemeProvider>
+  <NuqsAdapter>
+    <QueryClientProvider client={queryClient}>
       <MuiProvider>{children}</MuiProvider>
-    </NextThemeProvider>
-  </ApolloProvider>
+    </QueryClientProvider>
+  </NuqsAdapter>
 );
 
 export default Providers;

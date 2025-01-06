@@ -1,4 +1,33 @@
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { Html, Head, Main, NextScript } from 'next/document';
+
+function InitMetaThemeColorScript(): React.ReactElement {
+  return (
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+          (function() {
+            try {
+              const currentTheme = document.documentElement.getAttribute('data-theme');
+
+              const matchingMetaTag = document.querySelector(
+                \`meta[name="theme-color"][media*="\${currentTheme}"]\`
+              );
+              if (!matchingMetaTag) return;
+
+              const metaContentColor = matchingMetaTag.getAttribute('content');
+              if (!metaContentColor) return;
+
+              document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+                meta.setAttribute('content', metaContentColor);
+              });
+            } catch (_) {}
+          })();
+        `,
+      }}
+    />
+  );
+}
 
 export default function Document() {
   return (
@@ -31,6 +60,8 @@ export default function Document() {
         />
       </Head>
       <body>
+        <InitColorSchemeScript attribute="data-theme" />
+        <InitMetaThemeColorScript />
         <Main />
         <NextScript />
       </body>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { Box, useTheme } from '@mui/material';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
@@ -12,8 +12,8 @@ import Map, {
 } from 'react-map-gl/maplibre';
 import useLocalStorageState from 'use-local-storage-state';
 
-import { TrainByStationFragment } from '../../graphql/generated/digitraffic';
-import { RouteForRailFragment } from '../../graphql/generated/digitransit';
+import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
+import { RouteForRailFragment } from '../../graphql/generated/digitransit/graphql';
 import { getMapStyle } from '../../utils/map';
 import { TrainStation, trainStations } from '../../utils/stations';
 
@@ -35,6 +35,21 @@ export type VehicleMapContainerProps = {
 const fallbackStation = trainStations.find((s) => s.stationShortCode === 'HKI');
 const initialZoom = 15;
 
+function setMapViewState(
+  map: MapRef,
+  station: TrainStation | undefined,
+  selectedVehicleId: number | null
+) {
+  const stationToCenter = station ?? fallbackStation;
+  if (stationToCenter && selectedVehicleId == null) {
+    map.setCenter({
+      lng: stationToCenter.longitude,
+      lat: stationToCenter.latitude,
+    });
+  }
+  map.setZoom(initialZoom);
+}
+
 const VehicleMapContainer = ({
   selectedVehicleId,
   station,
@@ -42,7 +57,7 @@ const VehicleMapContainer = ({
   train,
   onVehicleSelected,
 }: VehicleMapContainerProps) => {
-  const mapRef = useRef<MapRef>(null);
+  const mapRef = useRef<MapRef | null>(null);
   const theme = useTheme();
   const [useVectorBaseTiles, setUseVectorBaseTiles] = useLocalStorageState(
     'useVectorBaseTiles',
@@ -51,39 +66,41 @@ const VehicleMapContainer = ({
     }
   );
   const { i18n } = useTranslation();
-  const map = mapRef.current;
 
   useEffect(() => {
-    // Set map initial view state
-    // Note: We need to do this when "reuseMaps" flag is set
-    if (map) {
-      const stationToCenter = station ?? fallbackStation;
-      if (stationToCenter && selectedVehicleId == null) {
-        map.setCenter({
-          lng: stationToCenter.longitude,
-          lat: stationToCenter.latitude,
-        });
+    if (mapRef.current) {
+      setMapViewState(mapRef.current, station, selectedVehicleId);
+    }
+  }, [station, selectedVehicleId]);
+
+  const handleMapRef = useCallback(
+    (map: MapRef | null) => {
+      if (map) {
+        mapRef.current = map;
+
+        // Set map initial view state
+        // Note: We need to do this when "reuseMaps" flag is set since the Map
+        // initialViewState has only effect on the first time the map is initialized.
+        // Additionally, because we created VehicleMapContainer initially on a detached
+        // DOM node without specifying a station, the map center defaults to the fallback
+        // station.
+        setMapViewState(map, station, selectedVehicleId);
+
+        // As we are creating VehicleMapContainer initially on a detached DOM node,
+        // the maplibre-gl Map may have wrong initial canvas size as the Map determines
+        // its dimensions from the container element's clientWidth/clientHeight which
+        // would be 0 when the container is detached from DOM.
+        if (map.getContainer().clientHeight !== map.getCanvas().clientHeight) {
+          map.resize();
+        }
       }
-      map.setZoom(initialZoom);
-    }
-  }, [map, station, selectedVehicleId]);
-
-  useEffect(() => {
-    // As we are creating VehicleMapContainer initially on a detached DOM node,
-    // the maplibre-gl Map can have wrong initial canvas size as the Map determines
-    // its dimensions from the container element's clientWidth/clientHeight which
-    // would be 0 when the container is detached from DOM.
-    if (
-      map &&
-      map.getContainer().clientHeight !== map.getCanvas().clientHeight
-    ) {
-      map.resize();
-    }
-  }, [map]);
+    },
+    [selectedVehicleId, station]
+  );
 
   return (
     <Map
-      ref={mapRef}
+      ref={handleMapRef}
       reuseMaps
       // Disable unneeded RTLTextPlugin that is set by react-map-gl by default
       RTLTextPlugin=""

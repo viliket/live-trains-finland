@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import {
   TimeTableRowType,
   TrainByStationFragment,
-} from '../graphql/generated/digitraffic';
+} from '../graphql/generated/digitraffic/graphql';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 
 import StationTimeTableRow from './StationTimeTableRow';
