@@ -37,6 +37,7 @@ declare module 'hsl-map-style' {
       // Themes
       text_sv?: Option;
       text_fisv?: Option;
+      text_en?: Option;
       regular_routes?: Option;
       near_bus_routes?: option;
       routes_with_departures_only?: Option; // Enabled by default. Doesn't do anything until routes is enabled.
