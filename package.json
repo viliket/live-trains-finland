@@ -14,7 +14,7 @@
     "@types/lodash": "^4.17.13",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
-    "@types/react-dom": "^18.3.1",
+    "@types/react-dom": "^19.0.2",
     "autosuggest-highlight": "^3.3.4",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
