@@ -112,7 +112,7 @@ const VehicleMapContainer = ({
       mapStyle={getMapStyle(
         useVectorBaseTiles,
         theme.palette.mode,
-        i18n.resolvedLanguage
+        i18n.resolvedLanguage ?? i18n.language
       )}
       styleDiffing={false}
       transformRequest={(url) => {
