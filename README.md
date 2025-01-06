@@ -6,6 +6,10 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/viliket/live-trains-finland)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fjunaan.fi)](https://junaan.fi)
 
+<p align="center">
+  <img width="100%" height="160" src="/public/hero.svg">
+</p>
+
 A web application made with React that allows checking real-time train
 schedules, locations, and compositions of trains in Finland.
 The app uses data from open APIs provided by
