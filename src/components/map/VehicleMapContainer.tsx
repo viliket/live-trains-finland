@@ -5,7 +5,6 @@ import { QualityHigh, QualityLow } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import Map, {
   FullscreenControl,
-  Layer,
   MapRef,
   NavigationControl,
   ScaleControl,
@@ -114,7 +113,6 @@ const VehicleMapContainer = ({
         theme.palette.mode,
         i18n.resolvedLanguage ?? i18n.language
       )}
-      styleDiffing={false}
       transformRequest={(url) => {
         if (
           url.includes('api.digitransit.fi') ||
@@ -156,23 +154,6 @@ const VehicleMapContainer = ({
           )}
         </Box>
       </CustomOverlay>
-      {
-        /**
-         * Create empty base layers for dynamically changing the layer order
-         * https://github.com/visgl/react-map-gl/issues/939#issuecomment-625290200
-         */
-        Array.from(Array(11).keys()).map((i) => {
-          return (
-            <Layer
-              key={i}
-              id={'z' + i}
-              type="background"
-              layout={{ visibility: 'none' }}
-              paint={{}}
-            />
-          );
-        })
-      }
       <StopsLayer train={train} />
       <RailwayTracksLayer />
       <RailwayPlatformsLayer />

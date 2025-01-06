@@ -245,6 +245,17 @@ export function getMapStyle(
     mapStyle = getRasterMapStyle(mode === 'dark', languageCode);
   }
 
+  // Create empty base layers for dynamically changing the layer order
+  // https://github.com/visgl/react-map-gl/issues/939#issuecomment-625290200
+  for (let i = 0; i < 11; i++) {
+    mapStyle.layers.push({
+      id: 'z' + i,
+      type: 'background',
+      layout: { visibility: 'none' },
+      paint: {},
+    });
+  }
+
   // Store the computed map style in the cache
   mapStyleCache.set(cacheKey, mapStyle);
 
