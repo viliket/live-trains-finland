@@ -5,7 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/lab": "^6.0.0-beta.23",
+    "@mui/lab": "^6.0.0-beta.24",
     "@mui/material": "^6.4.1",
     "@tanstack/react-query": "^5.64.2",
     "@turf/distance": "^7.2.0",
