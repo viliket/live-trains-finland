@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material';
-import { Layer, Source } from 'react-map-gl';
+import { Layer, Source } from 'react-map-gl/maplibre';
 
 const RailwayPlatformsLayer = () => {
   const theme = useTheme();

@@ -1,6 +1,6 @@
 import { PaletteMode } from '@mui/material';
 import { generateStyle, Options } from 'hsl-map-style';
-import { VectorSource } from 'mapbox-gl';
+import { VectorSourceSpecification } from 'maplibre-gl';
 
 import { VehicleDetails } from '../types/vehicles';
 
@@ -147,7 +147,8 @@ const generateMapStyle = (options?: Options) => {
       },
     ],
   });
-  (mapStyle.sources['vector'] as VectorSource).attribution = baseAttribution;
+  (mapStyle.sources['vector'] as VectorSourceSpecification).attribution =
+    baseAttribution;
 
   if (options?.components?.greyscale?.enabled) {
     // Patch wrong fill color on the road_bridge_area layer

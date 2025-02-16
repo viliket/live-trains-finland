@@ -9,7 +9,7 @@ import {
 } from 'date-fns';
 import { MapLibreZoomEvent, MapStyleImageMissingEvent } from 'maplibre-gl';
 import { useTranslation } from 'react-i18next';
-import { Layer, Source, useMap } from 'react-map-gl';
+import { Layer, Source, useMap } from 'react-map-gl/maplibre';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
 import useTrainQuery from '../../hooks/useTrainQuery';
@@ -95,17 +95,25 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     fetchAndSetLocale(i18n.resolvedLanguage);
   }, [i18n.resolvedLanguage]);
 
-  const getPropertyValueByStationGtfsId = <T,>(
-    stationNames: string[],
+  const getPropertyValueByStationGtfsId = <T extends string | number>(
+    stationGtfsIds: string[],
     valueMatch: T,
     valueUnmatch: T
-  ): mapboxgl.Expression => {
+  ): maplibregl.ExpressionSpecification | T => {
+    if (!stationGtfsIds.length) {
+      return valueUnmatch;
+    }
+
     return [
       'match',
-      // Get station name
+      // Get station GTFS ID
       ['get', 'gtfsId'],
-      // When station name matches any of the given station names use valueMatch as the property value
-      ...(stationNames.flatMap((n) => [n, valueMatch]) ?? []),
+      // When station GTFS ID matches any of the given station GTFS IDs use valueMatch as the property value
+      ...(stationGtfsIds.flatMap((n) => [n, valueMatch]) as [
+        string,
+        T,
+        ...[string, T][]
+      ]),
       /* Otherwise use valueUnmatch as the property value */
       valueUnmatch,
     ];
@@ -232,10 +240,10 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
                     ['get', 'gtfsId'],
                     // When station name matches one of time table rows,
                     // display extra info about the station time table row
-                    ...trainTimeTableRows.flatMap((g) => [
+                    ...(trainTimeTableRows.flatMap((g) => [
                       getStationGtfsIdForTimeTableGroup(g),
                       getTimeTableRowGroupDescription(g),
-                    ]),
+                    ]) as [string, string, ...[string, string][]]),
                     // Otherwise display nothing (when station is not on trainTimeTableRows)
                     '',
                   ],
@@ -246,10 +254,10 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
                       ['get', 'gtfsId'],
                       // When station name matches one of time table rows,
                       // choose text color based on the time table row data
-                      ...trainTimeTableRows.flatMap((g) => [
+                      ...(trainTimeTableRows.flatMap((g) => [
                         getStationGtfsIdForTimeTableGroup(g),
                         getTimeTableRowGroupColor(g),
-                      ]),
+                      ]) as [string, string, ...[string, string][]]),
                       // Otherwise use fallback text color (when station is not on trainTimeTableRows)
                       theme.palette.text.secondary,
                     ],
