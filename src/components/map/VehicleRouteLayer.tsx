@@ -1,14 +1,13 @@
 import { useTheme } from '@mui/material';
 import GeoJSON from 'geojson';
-import { Layer, Source } from 'react-map-gl';
+import { Layer, Source } from 'react-map-gl/maplibre';
 
 type VehicleRouteLayerProps = {
   data:
     | GeoJSON.Feature<GeoJSON.Geometry>
     | GeoJSON.FeatureCollection<GeoJSON.Geometry>
     | GeoJSON.Geometry
-    | string
-    | undefined;
+    | string;
 };
 
 const VehicleRouteLayer = ({ data }: VehicleRouteLayerProps) => {
