@@ -88,7 +88,7 @@
     "@testing-library/react": "^16.2.0",
     "dotenv": "^16.4.7",
     "eslint-config-next": "^15.1.7",
-    "eslint-import-resolver-typescript": "^3.8.1",
+    "eslint-import-resolver-typescript": "^4.3.2",
     "eslint-plugin-import": "^2.31.0",
     "husky": "^9.1.7",
     "is-ci": "^4.1.0",
