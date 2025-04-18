@@ -179,16 +179,25 @@ const TrainCompositionByStationLayer = ({
       <Source type="geojson" data={trainCompositionCollection}>
         <Layer
           {...{
-            id: 'train_composition_by_station',
-            beforeId: 'z6',
-            type: 'fill-extrusion',
-            source: 'train_composition_by_station',
+            beforeId: 'z7',
+            type: 'line',
             minzoom: 14,
             paint: {
-              'fill-extrusion-height': 4,
-              'fill-extrusion-color': '#007cbf',
-              'fill-extrusion-base': 0,
-              'fill-extrusion-opacity': 0.5,
+              'line-color': '#004994',
+              'line-width': 2,
+              'line-opacity': 1,
+              'line-dasharray': [1, 1],
+            },
+          }}
+        />
+        <Layer
+          {...{
+            beforeId: 'z7',
+            type: 'fill',
+            minzoom: 14,
+            paint: {
+              'fill-color': '#007cbf',
+              'fill-opacity': 0.2,
             },
           }}
         />
@@ -196,10 +205,8 @@ const TrainCompositionByStationLayer = ({
       <Source type="geojson" data={wagonPositionCollection}>
         <Layer
           {...{
-            id: 'train_composition_by_station_wagon_numbers',
-            beforeId: 'z6',
+            beforeId: 'z7',
             type: 'symbol',
-            source: 'train_composition_by_station_wagon_numbers',
             minzoom: 15,
             layout: {
               'text-size': 10,
