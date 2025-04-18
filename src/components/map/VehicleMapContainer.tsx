@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import { Box, useTheme } from '@mui/material';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
+import dynamic from 'next/dynamic';
 import { useTranslation } from 'react-i18next';
 import Map, {
   FullscreenControl,
@@ -22,6 +23,13 @@ import RailwayTracksLayer from './RailwayTracksLayer';
 import StopsLayer from './StopsLayer';
 import VehicleMarkerLayer from './VehicleMarkerLayer';
 import VehicleRouteLayer from './VehicleRouteLayer';
+
+const TrainCompositionByStationLayer = dynamic(
+  () => import('./TrainCompositionByStationLayer'),
+  {
+    ssr: false,
+  }
+);
 
 export type VehicleMapContainerProps = {
   selectedVehicleId: number | null;
@@ -99,6 +107,7 @@ const VehicleMapContainer = ({
 
   return (
     <Map
+      id="vehicleMap"
       ref={handleMapRef}
       reuseMaps
       // Disable unneeded RTLTextPlugin that is set by react-map-gl by default
@@ -155,6 +164,7 @@ const VehicleMapContainer = ({
         </Box>
       </CustomOverlay>
       <StopsLayer train={train} />
+      <TrainCompositionByStationLayer train={train} />
       <RailwayTracksLayer />
       <RailwayPlatformsLayer />
       {route && (

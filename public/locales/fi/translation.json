@@ -39,6 +39,7 @@
   "wagon": "Vaunu",
   "upstairs": "Yläkerta",
   "downstairs": "Alakerta",
+  "show_train_stopping_position_on_map": "Näytä junan pysähdyspaikka kartalla",
   "reload": "Päivitä",
   "update_available": "Uusi versio sovelluksesta saatavilla!",
   "home": {
