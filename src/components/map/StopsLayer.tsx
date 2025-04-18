@@ -9,7 +9,7 @@ import {
 } from 'date-fns';
 import { MapLibreZoomEvent, MapStyleImageMissingEvent } from 'maplibre-gl';
 import { useTranslation } from 'react-i18next';
-import { Layer, Source, useMap } from 'react-map-gl';
+import { Layer, Source, useMap } from 'react-map-gl/maplibre';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
 import useTrainQuery from '../../hooks/useTrainQuery';
@@ -95,18 +95,16 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     fetchAndSetLocale(i18n.resolvedLanguage);
   }, [i18n.resolvedLanguage]);
 
-  const getPropertyValueByStationGtfsId = <T,>(
-    stationNames: string[],
+  const getPropertyValueByStationGtfsId = <T extends string | number>(
+    stationGtfsIds: string[],
     valueMatch: T,
     valueUnmatch: T
-  ): mapboxgl.Expression => {
+  ): maplibregl.ExpressionSpecification => {
     return [
       'match',
-      // Get station name
       ['get', 'gtfsId'],
-      // When station name matches any of the given station names use valueMatch as the property value
-      ...(stationNames.flatMap((n) => [n, valueMatch]) ?? []),
-      /* Otherwise use valueUnmatch as the property value */
+      stationGtfsIds,
+      valueMatch,
       valueUnmatch,
     ];
   };
@@ -166,6 +164,27 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     return getTrainStationGtfsId(r.station);
   };
 
+  const trainStationEntries = trainTimeTableRows?.map((row) => ({
+    gtfsId: getStationGtfsIdForTimeTableGroup(row),
+    description: getTimeTableRowGroupDescription(row),
+    color: getTimeTableRowGroupColor(row),
+  }));
+
+  const getMatchExpression = (
+    input: maplibregl.ExpressionInputType | maplibregl.ExpressionSpecification,
+    labelOutputPairs: [string, string][],
+    fallback: string
+  ): maplibregl.ExpressionSpecification | string => {
+    if (!labelOutputPairs.length) return fallback;
+
+    return [
+      'match',
+      input,
+      ...labelOutputPairs.flat(),
+      fallback,
+    ] as maplibregl.ExpressionSpecification;
+  };
+
   return (
     <Source
       type="vector"
@@ -216,7 +235,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
             'text-optional': true,
             'text-allow-overlap': currentZoom != null && currentZoom > 10,
             'text-size': 10,
-            'text-field': trainTimeTableRows
+            'text-field': trainStationEntries
               ? [
                   'format',
                   // 1st field: Station name
@@ -226,33 +245,17 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
                   '\n',
                   {},
                   // 3rd field: Station time table row time
-                  [
-                    'match',
-                    // Get station GTFS ID
+                  getMatchExpression(
                     ['get', 'gtfsId'],
-                    // When station name matches one of time table rows,
-                    // display extra info about the station time table row
-                    ...trainTimeTableRows.flatMap((g) => [
-                      getStationGtfsIdForTimeTableGroup(g),
-                      getTimeTableRowGroupDescription(g),
-                    ]),
-                    // Otherwise display nothing (when station is not on trainTimeTableRows)
-                    '',
-                  ],
+                    trainStationEntries.map((e) => [e.gtfsId, e.description]),
+                    ''
+                  ),
                   {
-                    'text-color': [
-                      'match',
-                      // Get station GTFS ID
+                    'text-color': getMatchExpression(
                       ['get', 'gtfsId'],
-                      // When station name matches one of time table rows,
-                      // choose text color based on the time table row data
-                      ...trainTimeTableRows.flatMap((g) => [
-                        getStationGtfsIdForTimeTableGroup(g),
-                        getTimeTableRowGroupColor(g),
-                      ]),
-                      // Otherwise use fallback text color (when station is not on trainTimeTableRows)
-                      theme.palette.text.secondary,
-                    ],
+                      trainStationEntries.map((e) => [e.gtfsId, e.color]),
+                      theme.palette.text.secondary
+                    ),
                   },
                 ]
               : '{name}',

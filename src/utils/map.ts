@@ -1,6 +1,6 @@
 import { PaletteMode } from '@mui/material';
 import { generateStyle, Options } from 'hsl-map-style';
-import { VectorSource } from 'mapbox-gl';
+import { VectorSourceSpecification } from 'maplibre-gl';
 
 import { VehicleDetails } from '../types/vehicles';
 
@@ -136,7 +136,7 @@ const baseAttribution =
   '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap</a>';
 
 const generateMapStyle = (options?: Options) => {
-  const mapStyle = generateStyle({
+  let mapStyle = generateStyle({
     ...options,
     sourcesUrl: 'https://cdn.digitransit.fi/',
     queryParams: [
@@ -147,52 +147,54 @@ const generateMapStyle = (options?: Options) => {
       },
     ],
   });
-  (mapStyle.sources['vector'] as VectorSource).attribution = baseAttribution;
+  (mapStyle.sources['vector'] as VectorSourceSpecification).attribution =
+    baseAttribution;
+
+  if (options?.components?.greyscale?.enabled) {
+    // Patch wrong fill color on the road_bridge_area layer
+    // due to https://github.com/HSLdevcom/hsl-map-style/blob/master/style/hsl-map-theme-greyscale.json
+    // not having the style of the base theme overridden.
+    mapStyle = {
+      ...mapStyle,
+      layers: mapStyle.layers.map((layer) => {
+        if (layer.id == 'road_bridge_area' && layer.type === 'fill') {
+          return {
+            ...layer,
+            paint: {
+              ...layer.paint,
+              'fill-color': '#0a0a0a',
+            },
+          };
+        } else {
+          return layer;
+        }
+      }),
+    };
+  }
 
   return mapStyle;
 };
 
-const mapStyle = generateMapStyle();
-
-let mapStyleDark: maplibregl.StyleSpecification = generateMapStyle({
-  components: {
-    greyscale: {
-      enabled: true,
-    },
-  },
-});
-
-// Patch wrong fill color on the road_bridge_area layer
-// due to https://github.com/HSLdevcom/hsl-map-style/blob/master/style/hsl-map-theme-greyscale.json
-// not having the style of the base theme overridden.
-mapStyleDark = {
-  ...mapStyleDark,
-  layers: mapStyleDark.layers.map((layer) => {
-    if (layer.id == 'road_bridge_area' && layer.type === 'fill') {
-      return {
-        ...layer,
-        paint: {
-          ...layer.paint,
-          'fill-color': '#0a0a0a',
-        },
-      };
-    } else {
-      return layer;
-    }
-  }),
-};
+function getRasterMapSource(isDarkMode: boolean, languageCode: string) {
+  if (isDarkMode) return 'hsl-map-greyscale';
+  if (languageCode == 'sv') return 'hsl-map-sv';
+  if (languageCode == 'en') return 'hsl-map-en';
+  return 'hsl-map';
+}
 
 const getRasterMapStyle = (
-  isDarkMode: boolean
+  isDarkMode: boolean,
+  languageCode: string
 ): maplibregl.StyleSpecification => ({
   version: 8,
   sources: {
     'raster-tiles': {
       type: 'raster',
       tiles: [
-        isDarkMode
-          ? 'https://cdn.digitransit.fi/map/v3/hsl-map-greyscale/{z}/{x}/{y}.png'
-          : 'https://cdn.digitransit.fi/map/v3/hsl-map/{z}/{x}/{y}.png',
+        `https://cdn.digitransit.fi/map/v3/${getRasterMapSource(
+          isDarkMode,
+          languageCode
+        )}/{z}/{x}/{y}.png`,
       ],
       tileSize: 512,
       attribution: baseAttribution,
@@ -211,13 +213,52 @@ const getRasterMapStyle = (
   ],
 });
 
-const rasterMapStyle = getRasterMapStyle(false);
-const rasterMapStyleDark = getRasterMapStyle(true);
+const mapStyleCache = new Map<string, maplibregl.StyleSpecification>();
 
-export function getMapStyle(useVectorBaseTiles: boolean, mode: PaletteMode) {
-  if (useVectorBaseTiles) {
-    return mode === 'light' ? mapStyle : mapStyleDark;
-  } else {
-    return mode === 'light' ? rasterMapStyle : rasterMapStyleDark;
+export function getMapStyle(
+  useVectorBaseTiles: boolean,
+  mode: PaletteMode,
+  languageCode: string
+) {
+  const cacheKey = `${useVectorBaseTiles}_${mode}_${languageCode}`;
+
+  if (mapStyleCache.has(cacheKey)) {
+    return mapStyleCache.get(cacheKey);
   }
+
+  let mapStyle: maplibregl.StyleSpecification;
+
+  if (useVectorBaseTiles) {
+    mapStyle = generateMapStyle({
+      components: {
+        greyscale: {
+          enabled: mode === 'dark',
+        },
+        text_en: {
+          enabled: languageCode === 'en',
+        },
+        text_sv: {
+          enabled: languageCode === 'sv',
+        },
+      },
+    });
+  } else {
+    mapStyle = getRasterMapStyle(mode === 'dark', languageCode);
+  }
+
+  // Create empty base layers for dynamically changing the layer order
+  // https://github.com/visgl/react-map-gl/issues/939#issuecomment-625290200
+  for (let i = 0; i < 11; i++) {
+    mapStyle.layers.push({
+      id: 'z' + i,
+      type: 'background',
+      layout: { visibility: 'none' },
+      paint: {},
+    });
+  }
+
+  // Store the computed map style in the cache
+  mapStyleCache.set(cacheKey, mapStyle);
+
+  return mapStyle;
 }

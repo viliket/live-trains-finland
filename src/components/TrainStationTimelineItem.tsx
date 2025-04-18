@@ -12,7 +12,7 @@ import {
 import { ChevronDown, ChevronUp, MapMarkerRadius } from 'mdi-material-ui';
 import RouterLink from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { useMap } from 'react-map-gl';
+import { useMap } from 'react-map-gl/maplibre';
 
 import {
   TrainTimeTableGroupFragment,

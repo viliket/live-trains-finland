@@ -7,7 +7,11 @@ import {
   TrainDocument,
   Wagon,
 } from '../graphql/generated/digitraffic/graphql';
-import { TrainExtendedDetails } from '../types';
+import {
+  TrainCompositionFragment,
+  TrainExtendedDetails,
+  TrainJourneySectionFragment,
+} from '../types';
 import getStationPlatformSide from '../utils/getStationPlatformSide';
 import getTimeTableRowsGroupedByStation from '../utils/getTimeTableRowsGroupedByStation';
 import getTrainDirection from '../utils/getTrainDirection';
@@ -71,9 +75,6 @@ async function getExtendedTrain(
   return extendedTrain;
 }
 
-type TrainCompositionFragment = NonNullable<
-  NonNullable<TrainDetailsFragment['compositions']>[number]
->;
 function extendComposition(
   composition: TrainCompositionFragment,
   train: TrainDetailsFragment
@@ -86,9 +87,6 @@ function extendComposition(
   };
 }
 
-type TrainJourneySectionFragment = NonNullable<
-  NonNullable<TrainCompositionFragment['journeySections']>[number]
->;
 function extendJourneySection(
   section: TrainJourneySectionFragment,
   train: TrainDetailsFragment

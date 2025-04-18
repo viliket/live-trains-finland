@@ -9,7 +9,7 @@ import { mapValues } from 'lodash';
 import { Crosshairs, CrosshairsGps } from 'mdi-material-ui';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl';
+import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl/maplibre';
 
 import useAnimationFrame from '../../hooks/useAnimationFrame';
 import useVehicleStore from '../../hooks/useVehicleStore';

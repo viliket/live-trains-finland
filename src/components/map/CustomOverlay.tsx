@@ -1,17 +1,17 @@
 import React, { useState, cloneElement } from 'react';
 
 import { createPortal } from 'react-dom';
-import { MapboxMap, IControl, useControl } from 'react-map-gl';
+import { MapInstance, IControl, useControl } from 'react-map-gl/maplibre';
 
 /**
  * Based on template in https://docs.mapbox.com/mapbox-gl-js/api/markers/#icontrol
  * Adapted from https://github.com/visgl/react-map-gl/blob/master/examples/custom-overlay/src/custom-overlay.tsx
  */
 class OverlayControl implements IControl {
-  _map: MapboxMap | null = null;
+  _map: MapInstance | null = null;
   _container: HTMLElement | null = null;
 
-  onAdd(map: MapboxMap) {
+  onAdd(map: MapInstance) {
     this._map = map;
     this._container = document.createElement('div');
     this._container.classList.add('maplibregl-ctrl', 'maplibregl-ctrl-group');
@@ -38,7 +38,7 @@ class OverlayControl implements IControl {
  * Adapted from https://github.com/visgl/react-map-gl/blob/master/examples/custom-overlay/src/custom-overlay.tsx
  */
 function CustomOverlay(props: {
-  children: React.ReactElement<{ map: MapboxMap }>;
+  children: React.ReactElement<{ map: MapInstance }>;
 }) {
   const [, setIsAdded] = useState(false);
 

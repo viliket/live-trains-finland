@@ -3,9 +3,9 @@ import { useCallback, useEffect, useRef } from 'react';
 import { Box, useTheme } from '@mui/material';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'react-i18next';
 import Map, {
   FullscreenControl,
-  Layer,
   MapRef,
   NavigationControl,
   ScaleControl,
@@ -72,6 +72,7 @@ const VehicleMapContainer = ({
       defaultValue: false,
     }
   );
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     if (mapRef.current) {
@@ -116,7 +117,11 @@ const VehicleMapContainer = ({
         latitude: station?.latitude ?? fallbackStation?.latitude,
         zoom: initialZoom,
       }}
-      mapStyle={getMapStyle(useVectorBaseTiles, theme.palette.mode)}
+      mapStyle={getMapStyle(
+        useVectorBaseTiles,
+        theme.palette.mode,
+        i18n.resolvedLanguage ?? i18n.language
+      )}
       transformRequest={(url) => {
         if (
           url.includes('api.digitransit.fi') ||
@@ -158,23 +163,6 @@ const VehicleMapContainer = ({
           )}
         </Box>
       </CustomOverlay>
-      {
-        /**
-         * Create empty base layers for dynamically changing the layer order
-         * https://github.com/visgl/react-map-gl/issues/939#issuecomment-625290200
-         */
-        Array.from(Array(11).keys()).map((i) => {
-          return (
-            <Layer
-              key={i}
-              id={'z' + i}
-              type="background"
-              layout={{ visibility: 'none' }}
-              paint={{}}
-            />
-          );
-        })
-      }
       <StopsLayer train={train} />
       <TrainCompositionByStationLayer train={train} />
       <RailwayTracksLayer />

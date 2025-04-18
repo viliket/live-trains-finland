@@ -11,7 +11,7 @@ import {
   nearestPointOnLine,
 } from '@turf/turf';
 import { orderBy } from 'lodash';
-import { Layer, Source } from 'react-map-gl';
+import { Layer, Source } from 'react-map-gl/maplibre';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
 import useTrainQuery from '../../hooks/useTrainQuery';
