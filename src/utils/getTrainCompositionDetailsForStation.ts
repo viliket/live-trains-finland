@@ -4,6 +4,7 @@ import {
   TrainDetailsFragment,
   Wagon,
 } from '../graphql/generated/digitraffic/graphql';
+import { TrainJourneySectionFragment } from '../types';
 
 import { StationTimeTableRowGroup } from './getTimeTableRowsGroupedByStation';
 import getTrainJourneySectionForTimeTableRow from './getTrainJourneySectionForTimeTableRow';
@@ -166,17 +167,9 @@ function lcs<T, K extends keyof T>(
   })(m, n);
 }
 
-type JourneySection = NonNullable<
-  NonNullable<
-    NonNullable<
-      NonNullable<TrainDetailsFragment['compositions']>[number]
-    >['journeySections']
-  >[number]
->;
-
 function isTrainCompositionReversed(
-  sectionBefore: JourneySection,
-  sectionAfter: JourneySection
+  sectionBefore: TrainJourneySectionFragment,
+  sectionAfter: TrainJourneySectionFragment
 ) {
   const locomotivesBefore = orderBy(
     sectionBefore.locomotives,
