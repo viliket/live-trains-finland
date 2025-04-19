@@ -72,6 +72,7 @@
     "gql-codegen": "npm run digitransit-codegen && npm run digitraffic-codegen",
     "generate-station-line-km-location-data": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/generateStationLineKmLocationData.ts",
     "generate-station-platform-data": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/generateStationPlatformData.ts",
+    "generate-route-data": "NODE_OPTIONS='--max-old-space-size=8192' ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/generateRouteData.ts",
     "prestart": "npm run gql-codegen",
     "prepare": "is-ci || husky"
   },
@@ -86,6 +87,7 @@
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
+    "data-structure-typed": "^2.0.3",
     "dotenv": "^16.4.7",
     "eslint-config-next": "^15.1.7",
     "eslint-import-resolver-typescript": "^3.8.1",

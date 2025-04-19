@@ -13,8 +13,10 @@ import useLocalStorageState from 'use-local-storage-state';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
 import { RouteForRailFragment } from '../../graphql/generated/digitransit/graphql';
+import { useDetailedRouteQuery } from '../../hooks/useDetailedRouteQuery';
 import { getMapStyle } from '../../utils/map';
 import { TrainStation, trainStations } from '../../utils/stations';
+import { getTrainRoutePatternId } from '../../utils/train';
 
 import CustomOverlay from './CustomOverlay';
 import RailwayPlatformsLayer from './RailwayPlatformsLayer';
@@ -65,6 +67,10 @@ const VehicleMapContainer = ({
     }
   );
   const { i18n } = useTranslation();
+
+  const { data: detailedRoute } = useDetailedRouteQuery(
+    train ? getTrainRoutePatternId(train) : null
+  );
 
   useEffect(() => {
     if (mapRef.current) {
@@ -157,19 +163,21 @@ const VehicleMapContainer = ({
       <StopsLayer train={train} />
       <RailwayTracksLayer />
       <RailwayPlatformsLayer />
-      {route && (
+      {(detailedRoute || route) && (
         <VehicleRouteLayer
-          data={{
-            type: 'Feature',
-            properties: {},
-            geometry: {
-              type: 'LineString',
-              coordinates: route.patterns?.[0]?.geometry?.map((c) => [
-                c?.lon!,
-                c?.lat!,
-              ])!,
-            },
-          }}
+          data={
+            detailedRoute ?? {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'LineString',
+                coordinates: route?.patterns?.[0]?.geometry?.map((c) => [
+                  c?.lon!,
+                  c?.lat!,
+                ])!,
+              },
+            }
+          }
         />
       )}
       <VehicleMarkerLayer

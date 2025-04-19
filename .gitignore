@@ -18,6 +18,9 @@
 # auto-generated map tiles
 /public/tiles
 
+# generated train route patterns
+/public/routes
+
 # cloudflare pages functions
 /.wrangler
 .dev.vars

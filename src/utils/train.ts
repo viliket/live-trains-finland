@@ -134,3 +134,29 @@ export function getTrainRouteGtfsId(train: TrainByStationFragment) {
     train.commuterLineid ? train.commuterLineid : train.trainNumber
   }_${trainType}_${agency}`;
 }
+
+const simpleHash = (str: string): string => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+  }
+  // Convert to 32bit unsigned integer in base 36 and pad with "0" to ensure length is 7.
+  return (hash >>> 0).toString(36).padStart(7, '0');
+};
+
+export function getTrainRoutePatternId(
+  train: Pick<TrainByStationFragment, 'trainType' | 'timeTableRows'>
+) {
+  const trainRouteString = Array.from(
+    new Set(
+      train.timeTableRows
+        ?.filter((r) => r?.trainStopping)
+        .map((r) => `${r?.station.shortCode}_${r?.commercialTrack}`)
+    )
+  ).join('-');
+  const trainRouteHash = simpleHash(trainRouteString);
+  return `${train.trainType.name}-${
+    train?.timeTableRows?.[0]?.station.shortCode
+  }-${train?.timeTableRows?.at(-1)?.station.shortCode}-${trainRouteHash}`;
+}
