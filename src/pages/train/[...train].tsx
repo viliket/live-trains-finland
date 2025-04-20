@@ -11,9 +11,9 @@ import MapLayout, {
 } from '../../components/MapLayout';
 import TrainInfoContainer from '../../components/TrainInfoContainer';
 import TrainSubNavBar from '../../components/TrainSubNavBar';
-import { useRouteQuery } from '../../hooks/useRouteQuery';
 import useTrainLiveTracking from '../../hooks/useTrainLiveTracking';
 import useTrainQuery from '../../hooks/useTrainQuery';
+import { useTripQuery } from '../../hooks/useTripQuery';
 import useVehicleStore from '../../hooks/useVehicleStore';
 import getHeadTrainVehicleId from '../../utils/getHeadTrainVehicleId';
 import { trainStations } from '../../utils/stations';
@@ -41,8 +41,14 @@ const Train: NextPageWithLayout = () => {
     error,
     data: train,
   } = useTrainQuery(trainNumber, departureDate);
-  const { data: routeData } = useRouteQuery(
-    train ? getTrainRouteGtfsId(train) : null
+  const { data: tripData } = useTripQuery(
+    train
+      ? {
+          departureDate: train.departureDate,
+          routeId: getTrainRouteGtfsId(train),
+          departureTime: train.timeTableRows?.[0]?.scheduledTime,
+        }
+      : {}
   );
 
   useEffect(() => {
@@ -56,7 +62,7 @@ const Train: NextPageWithLayout = () => {
 
   const stationCode = searchParams.get('station');
   const station = trainStations.find((s) => s.stationShortCode === stationCode);
-  const selectedRoute = routeData?.route;
+  const selectedTrip = tripData?.fuzzyTrip;
 
   const handleVehicleIdSelected = useCallback(
     (vehicleId: number) => setSelectedVehicleId(vehicleId),
@@ -84,7 +90,7 @@ const Train: NextPageWithLayout = () => {
         <VehicleMapContainerPortal
           selectedVehicleId={selectedVehicleId}
           station={station}
-          route={selectedRoute}
+          trip={selectedTrip}
           train={train}
           onVehicleSelected={handleVehicleIdSelected}
         />

@@ -12,7 +12,7 @@ import Map, {
 import useLocalStorageState from 'use-local-storage-state';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
-import { RouteForRailFragment } from '../../graphql/generated/digitransit/graphql';
+import { TripDetailsFragment } from '../../graphql/generated/digitransit/graphql';
 import { getMapStyle } from '../../utils/map';
 import { TrainStation, trainStations } from '../../utils/stations';
 
@@ -26,7 +26,7 @@ import VehicleRouteLayer from './VehicleRouteLayer';
 export type VehicleMapContainerProps = {
   selectedVehicleId: number | null;
   station?: TrainStation;
-  route?: RouteForRailFragment | null;
+  trip?: TripDetailsFragment | null;
   train?: TrainByStationFragment | null;
   onVehicleSelected: (vehicleId: number) => void;
 };
@@ -52,7 +52,7 @@ function setMapViewState(
 const VehicleMapContainer = ({
   selectedVehicleId,
   station,
-  route,
+  trip,
   train,
   onVehicleSelected,
 }: VehicleMapContainerProps) => {
@@ -157,17 +157,14 @@ const VehicleMapContainer = ({
       <StopsLayer train={train} />
       <RailwayTracksLayer />
       <RailwayPlatformsLayer />
-      {route && (
+      {trip?.pattern?.geometry && (
         <VehicleRouteLayer
           data={{
             type: 'Feature',
             properties: {},
             geometry: {
               type: 'LineString',
-              coordinates: route.patterns?.[0]?.geometry?.map((c) => [
-                c?.lon!,
-                c?.lat!,
-              ])!,
+              coordinates: trip.pattern.geometry.map((c) => [c?.lon!, c?.lat!]),
             },
           }}
         />
