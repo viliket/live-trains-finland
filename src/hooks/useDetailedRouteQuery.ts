@@ -15,7 +15,7 @@ const getRouteGeoJson = async (routePatternId: string | null) => {
 
 const detailedRouteQuery = (id: string | null) =>
   queryOptions({
-    queryKey: ['route', id],
+    queryKey: ['detailedRoute', id],
     queryFn: () => getRouteGeoJson(id),
     refetchOnWindowFocus: false,
     refetchOnMount: false,
