@@ -26,9 +26,9 @@ import StationTimeTable from '../components/StationTimeTable';
 import SubNavBar from '../components/SubNavBar';
 import { TimeTableRowType } from '../graphql/generated/digitraffic/graphql';
 import usePassengerInformationMessages from '../hooks/usePassengerInformationMessages';
-import { useRouteQuery } from '../hooks/useRouteQuery';
 import useTrainLiveTracking from '../hooks/useTrainLiveTracking';
 import useTrainsByStationOrRouteQuery from '../hooks/useTrainsByStationOrRouteQuery';
+import { useTripQuery } from '../hooks/useTripQuery';
 import useVehicleStore from '../hooks/useVehicleStore';
 import getTimeTableRowForStation from '../utils/getTimeTableRowForStation';
 import { trainStations } from '../utils/stations';
@@ -103,10 +103,16 @@ const Station: NextPageWithLayout = () => {
     ? trains.find((t) => t?.trainNumber === selectedTrainNo)
     : null;
 
-  const { data: routeData } = useRouteQuery(
-    selectedTrain ? getTrainRouteGtfsId(selectedTrain) : null
+  const { data: tripData } = useTripQuery(
+    selectedTrain
+      ? {
+          departureDate: selectedTrain.departureDate,
+          routeId: getTrainRouteGtfsId(selectedTrain),
+          departureTime: selectedTrain.timeTableRows?.[0]?.scheduledTime,
+        }
+      : {}
   );
-  const selectedRoute = routeData?.route;
+  const selectedTrip = tripData?.fuzzyTrip;
 
   const getLoadingSkeleton = () => {
     return (
@@ -158,7 +164,7 @@ const Station: NextPageWithLayout = () => {
         <VehicleMapContainerPortal
           selectedVehicleId={selectedVehicleId}
           station={station}
-          route={selectedRoute}
+          trip={selectedTrip}
           train={selectedTrain}
           onVehicleSelected={handleVehicleIdSelected}
         />

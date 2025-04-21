@@ -23,7 +23,7 @@ let mapPortalNode: HtmlPortalNode<
 export const VehicleMapContainerPortal = ({
   selectedVehicleId,
   station,
-  route,
+  trip,
   train,
   onVehicleSelected,
 }: VehicleMapContainerProps) => {
@@ -33,7 +33,7 @@ export const VehicleMapContainerPortal = ({
         node={mapPortalNode}
         selectedVehicleId={selectedVehicleId}
         station={station}
-        route={route}
+        trip={trip}
         train={train}
         onVehicleSelected={onVehicleSelected}
       />

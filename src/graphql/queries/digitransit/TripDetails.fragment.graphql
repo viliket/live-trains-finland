@@ -1,0 +1,8 @@
+fragment TripDetails on Trip {
+  pattern {
+    geometry {
+      lat
+      lon
+    }
+  }
+}

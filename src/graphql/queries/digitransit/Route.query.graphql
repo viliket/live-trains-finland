@@ -1,5 +1,0 @@
-query Route($id: String!) {
-  route(id: $id) {
-    ...RouteForRail
-  }
-}

@@ -1,0 +1,5 @@
+query Trip($departureDate: String!, $routeId: String!, $time: Int!) {
+  fuzzyTrip(date: $departureDate, route: $routeId, time: $time) {
+    ...TripDetails
+  }
+}

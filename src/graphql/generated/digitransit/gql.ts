@@ -13,9 +13,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
-const documents = {
-    "query Route($id: String!) {\n  route(id: $id) {\n    ...RouteForRail\n  }\n}": types.RouteDocument,
-    "fragment RouteForRail on Route {\n  gtfsId\n  shortName\n  longName\n  patterns {\n    headsign\n    geometry {\n      lat\n      lon\n    }\n  }\n}": types.RouteForRailFragmentDoc,
+type Documents = {
+    "query Trip($departureDate: String!, $routeId: String!, $time: Int!) {\n  fuzzyTrip(date: $departureDate, route: $routeId, time: $time) {\n    ...TripDetails\n  }\n}": typeof types.TripDocument,
+    "fragment TripDetails on Trip {\n  pattern {\n    geometry {\n      lat\n      lon\n    }\n  }\n}": typeof types.TripDetailsFragmentDoc,
+};
+const documents: Documents = {
+    "query Trip($departureDate: String!, $routeId: String!, $time: Int!) {\n  fuzzyTrip(date: $departureDate, route: $routeId, time: $time) {\n    ...TripDetails\n  }\n}": types.TripDocument,
+    "fragment TripDetails on Trip {\n  pattern {\n    geometry {\n      lat\n      lon\n    }\n  }\n}": types.TripDetailsFragmentDoc,
 };
 
 /**
@@ -35,11 +39,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query Route($id: String!) {\n  route(id: $id) {\n    ...RouteForRail\n  }\n}"): (typeof documents)["query Route($id: String!) {\n  route(id: $id) {\n    ...RouteForRail\n  }\n}"];
+export function graphql(source: "query Trip($departureDate: String!, $routeId: String!, $time: Int!) {\n  fuzzyTrip(date: $departureDate, route: $routeId, time: $time) {\n    ...TripDetails\n  }\n}"): (typeof documents)["query Trip($departureDate: String!, $routeId: String!, $time: Int!) {\n  fuzzyTrip(date: $departureDate, route: $routeId, time: $time) {\n    ...TripDetails\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "fragment RouteForRail on Route {\n  gtfsId\n  shortName\n  longName\n  patterns {\n    headsign\n    geometry {\n      lat\n      lon\n    }\n  }\n}"): (typeof documents)["fragment RouteForRail on Route {\n  gtfsId\n  shortName\n  longName\n  patterns {\n    headsign\n    geometry {\n      lat\n      lon\n    }\n  }\n}"];
+export function graphql(source: "fragment TripDetails on Trip {\n  pattern {\n    geometry {\n      lat\n      lon\n    }\n  }\n}"): (typeof documents)["fragment TripDetails on Trip {\n  pattern {\n    geometry {\n      lat\n      lon\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
