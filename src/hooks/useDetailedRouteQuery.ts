@@ -1,13 +1,15 @@
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
-const getRouteGeoJson = async (routePatternId: string | null) => {
+const getRouteGeoJson = async (
+  routePatternId: string | null
+): Promise<GeoJSON.Feature | null> => {
   if (!routePatternId) {
-    return;
+    return null;
   }
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_EXTERNAL_ASSETS_BASE_URL}/routes/${routePatternId}.json`
   );
-  if (!response.ok) return;
+  if (!response.ok) return null;
 
   const data: GeoJSON.Feature = await response.json();
   return data;
