@@ -166,17 +166,27 @@ const VehicleMapContainer = ({
       {(detailedRoute || route) && (
         <VehicleRouteLayer
           data={
-            detailedRoute ?? {
-              type: 'Feature',
-              properties: {},
-              geometry: {
-                type: 'LineString',
-                coordinates: route?.patterns?.[0]?.geometry?.map((c) => [
-                  c?.lon!,
-                  c?.lat!,
-                ])!,
-              },
-            }
+            detailedRoute
+              ? {
+                  ...detailedRoute,
+                  properties: {
+                    ...detailedRoute.properties,
+                    detailed: true,
+                  },
+                }
+              : {
+                  type: 'Feature',
+                  properties: {
+                    detailed: false,
+                  },
+                  geometry: {
+                    type: 'LineString',
+                    coordinates: route?.patterns?.[0]?.geometry?.map((c) => [
+                      c?.lon!,
+                      c?.lat!,
+                    ])!,
+                  },
+                }
           }
         />
       )}
