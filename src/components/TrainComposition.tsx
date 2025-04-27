@@ -16,11 +16,11 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import {
-  TrainDetailsFragment,
   TrainDirection,
   TrainTimeTableGroupFragment,
   Wagon,
 } from '../graphql/generated/digitraffic/graphql';
+import { TrainExtendedDetails, TrainJourneySectionFragment } from '../types';
 import getTrainCompositionDetailsForStation from '../utils/getTrainCompositionDetailsForStation';
 import getTrainCurrentJourneySection from '../utils/getTrainCurrentJourneySection';
 import getTrainJourneySectionForTimeTableRow from '../utils/getTrainJourneySectionForTimeTableRow';
@@ -28,12 +28,6 @@ import { getDepartureTimeTableRow, getTrainStationName } from '../utils/train';
 
 import TrainWagonSm2And4 from './TrainWagonSm2And4';
 import TrainWagonSm5 from './TrainWagonSm5';
-
-type JourneySectionFragment = NonNullable<
-  NonNullable<
-    NonNullable<TrainDetailsFragment['compositions']>[number]
-  >['journeySections']
->[number];
 
 type WagonElementProps = {
   wagon: Wagon;
@@ -66,8 +60,8 @@ const WagonElement = ({ wagon, isCommuterTrain }: WagonElementProps) => {
 };
 
 const getWagonsAndStatusesToDisplay = (
-  train: TrainDetailsFragment,
-  journeySection?: JourneySectionFragment,
+  train: TrainExtendedDetails,
+  journeySection?: TrainJourneySectionFragment | null,
   stationTimeTableRowGroup?: TrainTimeTableGroupFragment
 ):
   | ((Wagon & { compositionStatus?: string }) | null | undefined)[]
@@ -124,7 +118,7 @@ const getWagonElementWidth = (wagonType?: string | null) => {
 };
 
 const getJourneySectionToDisplay = (
-  train: TrainDetailsFragment,
+  train: TrainExtendedDetails,
   stationTimeTableRowGroup?: TrainTimeTableGroupFragment
 ) => {
   if (!stationTimeTableRowGroup) {
@@ -142,7 +136,7 @@ const getJourneySectionToDisplay = (
 };
 
 type TrainCompositionProps = {
-  train: TrainDetailsFragment;
+  train: TrainExtendedDetails;
   stationTimeTableRowGroup?: TrainTimeTableGroupFragment;
   onWagonClick: (w: Wagon) => void;
 };

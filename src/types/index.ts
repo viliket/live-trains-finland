@@ -1,46 +1,51 @@
 import {
   Locomotive,
+  Maybe,
   StationPlatformSide,
   TrainDetailsFragment,
   TrainDirection,
   Wagon,
 } from '../graphql/generated/digitraffic/graphql';
 
-type TrainCompositionFragment = NonNullable<
+export type TrainCompositionFragment = NonNullable<
   NonNullable<TrainDetailsFragment['compositions']>[number]
 >;
 
-type TrainJourneySectionFragment = NonNullable<
+export type TrainJourneySectionFragment = NonNullable<
   NonNullable<TrainCompositionFragment['journeySections']>[number]
 >;
 
-export type TrainExtendedDetails = TrainDetailsFragment & {
-  timeTableGroups?: Array<{
-    arrival?: NonNullable<TrainDetailsFragment['timeTableRows']>[number];
-    departure?: NonNullable<TrainDetailsFragment['timeTableRows']>[number];
-    trainDirection?: TrainDirection | null;
-    stationPlatformSide?: StationPlatformSide | null;
-  }>;
-  compositions?: Array<
-    | (TrainCompositionFragment & {
-        journeySections?: Array<
-          | (TrainJourneySectionFragment & {
-              locomotives?: Array<
-                | (Locomotive & {
-                    vehicleId?: number | null;
-                  })
-                | null
-              > | null;
-              wagons?: Array<
-                | (Wagon & {
-                    vehicleId?: number | null;
-                  })
-                | null
-              > | null;
-            })
-          | null
-        > | null;
-      })
-    | null
-  > | null;
+type TrainTimeTableGroup = {
+  arrival?: NonNullable<TrainDetailsFragment['timeTableRows']>[number];
+  departure?: NonNullable<TrainDetailsFragment['timeTableRows']>[number];
+  trainDirection?: TrainDirection | null;
+  stationPlatformSide?: StationPlatformSide | null;
+};
+
+type VehicleDetails = {
+  vehicleId?: number | null;
+};
+
+interface LocomotiveWithDetails extends Locomotive, VehicleDetails {}
+
+interface WagonWithDetails extends Wagon, VehicleDetails {}
+
+export type JourneySectionExtendedDetails = Omit<
+  TrainJourneySectionFragment,
+  'locomotives' | 'wagons'
+> & {
+  locomotives?: Maybe<LocomotiveWithDetails>[] | null;
+  wagons?: Maybe<WagonWithDetails>[] | null;
+};
+
+type Composition = Omit<TrainCompositionFragment, 'journeySections'> & {
+  journeySections?: Maybe<JourneySectionExtendedDetails>[] | null;
+};
+
+export type TrainExtendedDetails = Omit<
+  TrainDetailsFragment,
+  'compositions'
+> & {
+  timeTableGroups?: TrainTimeTableGroup[];
+  compositions?: Maybe<Composition>[] | null;
 };
