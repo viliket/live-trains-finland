@@ -11,10 +11,16 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl/maplibre';
 
+import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
 import useAnimationFrame from '../../hooks/useAnimationFrame';
+import useTrainQuery from '../../hooks/useTrainQuery';
 import useVehicleStore from '../../hooks/useVehicleStore';
+import getHeadTrainVehicleId from '../../utils/getHeadTrainVehicleId';
+import getTrainCurrentJourneySection from '../../utils/getTrainCurrentJourneySection';
 import {
+  getTrainCompositionGeometryAlongTrack,
   getVehicleMarkerIconImage,
+  getVehicleRouteFragment,
   getVehiclesGeoJsonData,
 } from '../../utils/map';
 import { distanceInKm } from '../../utils/math';
@@ -25,6 +31,7 @@ import DeckGLOverlay from './DeckGLOverlay';
 type VehicleMarkerLayerProps = {
   onVehicleMarkerClick: (id: number) => void;
   selectedVehicleId: number | null;
+  train?: TrainByStationFragment | null;
 };
 
 type VehicleInterpolatedPosition = {
@@ -46,6 +53,7 @@ const maxInterpolationDistanceKm = 0.4;
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
   selectedVehicleId,
+  train,
 }: VehicleMarkerLayerProps) {
   const { current: map } = useMap();
   const deviceRef = useRef<MapboxOverlayProps['device']>(undefined);
@@ -62,6 +70,11 @@ export default function VehicleMarkerLayer({
   const { t } = useTranslation();
   const theme = useTheme();
   const router = useRouter();
+
+  const { data: realTimeTrain } = useTrainQuery(
+    train?.trainNumber,
+    train?.departureDate
+  );
 
   const iconUrl = useMemo(() => {
     return getVehicleMarkerIconImage({
@@ -226,7 +239,7 @@ export default function VehicleMarkerLayer({
     ? getVehicleById(vehicleIdForPopup)
     : null;
 
-  const vehiclesLayer = new GeoJsonLayer({
+  const vehicleMarkerLayer = new GeoJsonLayer({
     id: 'vehicles',
     data: getVehiclesGeoJsonData(
       useVehicleStore.getState().vehicles,
@@ -274,10 +287,88 @@ export default function VehicleMarkerLayer({
     },
   });
 
+  const vehicleRouteFragment =
+    map && map.getZoom() > 13 && realTimeTrain
+      ? getVehicleRouteFragment(map, realTimeTrain)
+      : null;
+  const headVehicleId = realTimeTrain && getHeadTrainVehicleId(realTimeTrain);
+  const vehicleCompositionGeometry =
+    realTimeTrain &&
+    headVehicleId &&
+    interpolatedPositions[headVehicleId] &&
+    vehicleRouteFragment
+      ? getTrainCompositionGeometryAlongTrack(
+          getTrainCurrentJourneySection(realTimeTrain),
+          interpolatedPositions[headVehicleId].animPos,
+          vehicleRouteFragment
+        )
+      : null;
+
+  const vehicleGeometryLayer = vehicleCompositionGeometry
+    ? new GeoJsonLayer({
+        id: 'vehicle-geometry',
+        data: vehicleCompositionGeometry.features.filter((f) =>
+          ['Polygon'].includes(f.geometry.type)
+        ),
+        getElevation: 5,
+        getFillColor: [51, 109, 169],
+        extruded: true,
+        opacity: 1,
+        pickable: true,
+        onClick: (info) => {
+          const id = info.object.properties!.vehicleId;
+          setVehicleIdForPopup(id);
+          onVehicleMarkerClick(Number.parseInt(id, 10));
+        },
+        onHover: (info) => {
+          if (map) {
+            map.getCanvas().style.cursor = info.picked ? 'pointer' : '';
+          }
+        },
+      })
+    : null;
+
+  const vehicleGeometryLabelLayer = vehicleCompositionGeometry
+    ? new GeoJsonLayer({
+        id: 'vehicle-geometry-label',
+        data: vehicleCompositionGeometry.features.filter(
+          (f) => f.geometry.type === 'Point'
+        ),
+        _subLayerProps: {
+          'points-text': {
+            // Use CollisionFilterExtension to hide overlapping texts.
+            extensions: [new CollisionFilterExtension()],
+            // Increase text size when computing collisions to provide greater spacing between visible features.
+            collisionTestProps: { sizeScale: 4 },
+            parameters: {
+              depthTest: false,
+            },
+          },
+        },
+        pointType: 'text',
+        opacity: 1,
+        getText: (d: GeoJSON.Feature) => `${d.properties?.wagonSalesNumber}`,
+        getTextColor: [255, 255, 255],
+        textFontFamily: 'sans-serif',
+        getTextSize: 16,
+        textFontWeight: 700,
+        textOutlineWidth: 5,
+        textOutlineColor: [0, 0, 0],
+        textFontSettings: {
+          // Needs to be set to true to enable text outline
+          sdf: true,
+        },
+      })
+    : null;
+
   return (
     <>
       <DeckGLOverlay
-        layers={[vehiclesLayer]}
+        layers={[
+          vehicleGeometryLayer,
+          vehicleGeometryLabelLayer,
+          vehicleMarkerLayer,
+        ]}
         onDeviceInitialized={(device) => (deviceRef.current = device)}
       />
       {selectedVehicleId != null &&

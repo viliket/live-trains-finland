@@ -1,9 +1,30 @@
 import { PaletteMode } from '@mui/material';
+import {
+  bearing,
+  buffer,
+  centroid,
+  circle,
+  combine,
+  destination,
+  distance,
+  featureCollection,
+  lineIntersect,
+  lineSliceAlong,
+  lineString,
+  nearestPointOnLine,
+  point,
+} from '@turf/turf';
 import { generateStyle, Options } from 'hsl-map-style';
-import { VectorSourceSpecification } from 'maplibre-gl';
+import { orderBy } from 'lodash';
+import { MapGeoJSONFeature, VectorSourceSpecification } from 'maplibre-gl';
+import { MapRef } from 'react-map-gl/maplibre';
 
+import { TrainByStationFragment } from '../graphql/generated/digitraffic/graphql';
+import { TrainExtendedDetails } from '../types';
 import { VehicleDetails } from '../types/vehicles';
 
+import { isDefined } from './common';
+import getTrainLatestDepartureTimeTableRowIndex from './getTrainLatestDepartureTimeTableRowIndex';
 import { toRadians } from './math';
 
 let canvas: HTMLCanvasElement;
@@ -261,4 +282,280 @@ export function getMapStyle(
   mapStyleCache.set(cacheKey, mapStyle);
 
   return mapStyle;
+}
+
+const WAGON_POLYGON_BUFFER_RADIUS_IN_METERS = 3;
+const MAX_ACCEPTED_START_POINT_DISTANCE_TO_TRACK_IN_METERS = 50;
+
+function getWagonSegmentPlacedAlongRail(
+  track: GeoJSON.Feature<GeoJSON.MultiLineString | GeoJSON.LineString>,
+  wagonLength: number,
+  wagonStartPoint: GeoJSON.Position,
+  readjustWagonStartPoint: boolean,
+  placementDirection: 'forward' | 'backward' = 'backward'
+): GeoJSON.Feature<GeoJSON.LineString, { startPointDistanceToTrack: number }> {
+  const startPointOnRail = nearestPointOnLine(track, point(wagonStartPoint), {
+    units: 'meters',
+  });
+
+  if (readjustWagonStartPoint) {
+    wagonStartPoint = startPointOnRail.geometry.coordinates;
+  }
+
+  const multiFeatureIndex = startPointOnRail.properties.multiFeatureIndex;
+  let railCoordinates =
+    track.geometry.type === 'MultiLineString'
+      ? track.geometry.coordinates[multiFeatureIndex]
+      : track.geometry.coordinates;
+
+  let railSegmentIdx = startPointOnRail.properties.index;
+  if (railSegmentIdx === railCoordinates.length - 1) {
+    railSegmentIdx -= 1;
+  }
+
+  if (placementDirection === 'backward') {
+    railCoordinates = railCoordinates.toReversed();
+    railSegmentIdx = railCoordinates.length - 2 - railSegmentIdx;
+  }
+
+  let wagonEndPoint: GeoJSON.Position | null = findWagonEndPointByCircleMethod(
+    lineString(railCoordinates),
+    wagonStartPoint,
+    startPointOnRail,
+    railSegmentIdx,
+    wagonLength
+  );
+
+  if (wagonEndPoint) {
+    return lineString([wagonStartPoint, wagonEndPoint], {
+      startPointDistanceToTrack: startPointOnRail.properties.dist,
+    });
+  }
+
+  // If we could not find an end point and we have a MultiLineString with multiple parts,
+  // try again without the current line string
+  if (
+    track.geometry.type === 'MultiLineString' &&
+    track.geometry.coordinates.length > 1
+  ) {
+    const alternative = getWagonSegmentPlacedAlongRail(
+      {
+        ...track,
+        geometry: {
+          ...track.geometry,
+          coordinates: [
+            ...track.geometry.coordinates.slice(0, multiFeatureIndex),
+            ...track.geometry.coordinates.slice(multiFeatureIndex + 1),
+          ],
+        },
+      },
+      wagonLength,
+      wagonStartPoint,
+      readjustWagonStartPoint,
+      placementDirection
+    );
+    // Sanity check that the alternative placement's start point's distance to the track
+    // is similar to the original start point's distance to the track
+    // This is to ensure that we are not placing the wagon on a different track
+    // or in a completely different location
+    if (
+      Math.abs(
+        alternative.properties.startPointDistanceToTrack -
+          startPointOnRail.properties.dist
+      ) < 5
+    ) {
+      return alternative;
+    }
+  }
+
+  // Fallback to using the bearing method to determine the end point of the wagon
+  const wagonBearing = bearing(
+    railCoordinates[
+      // If we are at the end of the rail segment, we need to use the previous segment
+      // to calculate the bearing
+      railSegmentIdx !== railCoordinates.length - 1
+        ? railSegmentIdx
+        : railCoordinates.length - 2
+    ],
+    railCoordinates[railCoordinates.length - 1]
+  );
+  wagonEndPoint = destination(wagonStartPoint, wagonLength, wagonBearing, {
+    units: 'meters',
+  }).geometry.coordinates;
+  return lineString([wagonStartPoint, wagonEndPoint], {
+    startPointDistanceToTrack: startPointOnRail.properties.dist,
+  });
+}
+
+/**
+ * Attempts to find wagon end point using circle intersection method
+ */
+function findWagonEndPointByCircleMethod(
+  railLine: GeoJSON.Feature<GeoJSON.LineString>,
+  wagonStartPoint: GeoJSON.Position,
+  startPointOnRail: any,
+  railSegmentIdx: number,
+  wagonLength: number
+): GeoJSON.Position | null {
+  // Create a circle around start point with radius = wagon length
+  const circleSweep = circle(wagonStartPoint, wagonLength, {
+    units: 'meters',
+    steps: 16,
+  });
+
+  // Find where this circle intersects with the rail
+  const intersections = lineIntersect(railLine, circleSweep);
+
+  // Filter intersections to find valid end points
+  const potentialEndPoints = intersections.features
+    .map((f) => nearestPointOnLine(railLine, f))
+    .filter(
+      (f) =>
+        // Keep only points further along the rail than our starting point
+        f.properties.index > railSegmentIdx ||
+        (f.properties.index === railSegmentIdx &&
+          distance(railLine.geometry.coordinates[0], startPointOnRail) <
+            distance(railLine.geometry.coordinates[0], f))
+    );
+
+  // Select the furthest valid point along the rail
+  const furthestPoint = orderBy(
+    potentialEndPoints,
+    (f) => f.properties.location,
+    'desc'
+  ).at(0);
+
+  return furthestPoint?.geometry.coordinates ?? null;
+}
+
+type JourneySectionFragment = NonNullable<
+  NonNullable<
+    NonNullable<TrainExtendedDetails['compositions']>[number]
+  >['journeySections']
+>[number];
+
+export const getTrainCompositionGeometryAlongTrack = (
+  journeySection: JourneySectionFragment,
+  startPoint: GeoJSON.Position,
+  track: GeoJSON.Feature<GeoJSON.MultiLineString | GeoJSON.LineString>
+): GeoJSON.FeatureCollection | null => {
+  if (!journeySection) return null;
+
+  const headPos = startPoint;
+  const headFirst = true;
+
+  const wagonPolygons: GeoJSON.Feature<
+    GeoJSON.Polygon | GeoJSON.MultiPolygon
+  >[] = [];
+
+  const orderedWagons = orderBy(
+    journeySection.wagons?.filter(isDefined),
+    (w) => w.location,
+    headFirst ? 'asc' : 'desc'
+  );
+
+  let wagonHeadPos = headPos;
+
+  for (let i = 0; i < orderedWagons.length; i++) {
+    const wagon = orderedWagons[i];
+    const wagonLengthInMeters = wagon.length / 100;
+
+    let wagonLineString: GeoJSON.LineString;
+    try {
+      const wagonPlacement = getWagonSegmentPlacedAlongRail(
+        track,
+        wagonLengthInMeters,
+        wagonHeadPos,
+        i === 0
+      );
+
+      // Exit early if first wagon is too far from the track
+      if (
+        i === 0 &&
+        wagonPlacement.properties.startPointDistanceToTrack >
+          MAX_ACCEPTED_START_POINT_DISTANCE_TO_TRACK_IN_METERS
+      ) {
+        return null;
+      }
+
+      wagonLineString = wagonPlacement.geometry;
+    } catch (e) {
+      // Turf.js may throw an error from its nearestPointOnLine function
+      // if the start point is too far from the track
+      return null;
+    }
+
+    // Determine head position for next wagon
+    wagonHeadPos =
+      wagonLineString.coordinates[wagonLineString.coordinates.length - 1];
+
+    const wagonPolygon = buffer(
+      // Shorten the wagon lineString from both ends by WAGON_POLYGON_BUFFER_RADIUS_IN_METERS
+      // to account for the added buffer
+      lineSliceAlong(
+        wagonLineString,
+        WAGON_POLYGON_BUFFER_RADIUS_IN_METERS,
+        wagonLengthInMeters - WAGON_POLYGON_BUFFER_RADIUS_IN_METERS,
+        { units: 'meters' }
+      ),
+      WAGON_POLYGON_BUFFER_RADIUS_IN_METERS,
+      {
+        units: 'meters',
+      }
+    );
+
+    if (wagonPolygon) {
+      wagonPolygon.properties = {
+        wagonSalesNumber:
+          wagon.salesNumber !== 0 ? wagon.salesNumber : wagon.location,
+        vehicleId: wagon.vehicleId,
+      };
+      wagonPolygons.push(wagonPolygon);
+    }
+  }
+
+  return {
+    type: 'FeatureCollection',
+    features: [
+      ...wagonPolygons,
+      ...wagonPolygons.map((f) => centroid(f, { properties: f.properties })),
+    ],
+  };
+};
+
+export function getVehicleRouteFragment(
+  map: MapRef,
+  train: TrainByStationFragment
+) {
+  // Query currently visible vehicle route features from the map
+  const routeFeatures = map.querySourceFeatures('vehicle_route', {
+    validate: false,
+  });
+
+  const latestDepartureTimeTableRowIndex =
+    getTrainLatestDepartureTimeTableRowIndex(train);
+
+  const routeLines = routeFeatures.filter(
+    (f): f is MapGeoJSONFeature & GeoJSON.Feature<GeoJSON.LineString> => {
+      if (f.geometry.type !== 'LineString') return false;
+
+      const { startTimeTableRowIndex, endTimeTableRowIndex } = f.properties;
+
+      // Include route segments that are unbounded (null indices) or whose time
+      // table row bounds contain the latest time table row index of the train
+      return (
+        startTimeTableRowIndex == null ||
+        endTimeTableRowIndex == null ||
+        (startTimeTableRowIndex <= latestDepartureTimeTableRowIndex &&
+          endTimeTableRowIndex >= latestDepartureTimeTableRowIndex)
+      );
+    }
+  );
+
+  const combinedFeatures = combine(featureCollection(routeLines)).features;
+  if (combinedFeatures.length > 0) {
+    return combinedFeatures[0] as GeoJSON.Feature<GeoJSON.MultiLineString>;
+  } else {
+    return null;
+  }
 }

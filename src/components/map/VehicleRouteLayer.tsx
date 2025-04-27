@@ -14,7 +14,7 @@ const VehicleRouteLayer = ({ data }: VehicleRouteLayerProps) => {
   const theme = useTheme();
 
   return (
-    <Source type="geojson" data={data}>
+    <Source type="geojson" data={data} id="vehicle_route">
       <Layer
         {...{
           id: 'vehicle_route',
