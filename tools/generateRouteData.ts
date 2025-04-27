@@ -28,15 +28,29 @@ type Train = {
   timeTableRows: TimeTableRow[];
 };
 
-type TimeTableRow = {
+type TimeTableRowBase = {
   stationShortCode: string;
   stationUICCode: number;
   countryCode: string;
   type: 'ARRIVAL' | 'DEPARTURE';
+  scheduledTime: string;
+};
+
+type JourneySection = {
+  beginTimeTableRow: TimeTableRowBase;
+  endTimeTableRow: TimeTableRowBase;
+};
+
+type Composition = {
+  trainNumber: number;
+  departureDate: string;
+  journeySections: JourneySection[];
+};
+
+type TimeTableRow = TimeTableRowBase & {
   trainStopping: boolean;
   commercialStop: boolean;
   commercialTrack: string;
-  scheduledTime: string;
   cancelled: boolean;
 };
 
@@ -236,8 +250,123 @@ function getRoutePatternId(train: Train) {
   });
 }
 
+async function generateRouteDataForJourneySection(
+  train: Train,
+  journeySection: JourneySection,
+  trackDataById: Partial<Record<string, Track>>,
+  timeTableRowsWithStopping: TimeTableRowBase[],
+  startOfDayIsoString: string,
+  fetchOptions?: RequestInit
+) {
+  const findTimeTableRowIndex = (
+    rows: TimeTableRowBase[],
+    targetRow: TimeTableRowBase
+  ) =>
+    rows.findIndex(
+      (r) =>
+        r.type === targetRow.type && r.scheduledTime === targetRow.scheduledTime
+    );
+
+  const startIdx = findTimeTableRowIndex(
+    train.timeTableRows,
+    journeySection.beginTimeTableRow
+  );
+  const endIdx = findTimeTableRowIndex(
+    train.timeTableRows,
+    journeySection.endTimeTableRow
+  );
+  const timeTableRowsForSection = train.timeTableRows.slice(
+    startIdx,
+    endIdx + 1
+  );
+
+  const trainRouteTrackIds = Array.from(
+    new Set(
+      timeTableRowsForSection
+        .filter((r) => r.commercialTrack)
+        .map((r) => getTrackId(r))
+    )
+  );
+
+  trainRouteTrackIds.forEach((trackId) => {
+    if (!trackDataById[trackId]) {
+      console.warn('Missing track data for track', trackId);
+    }
+  });
+
+  const trainRouteLegs = trainRouteTrackIds
+    .map((trackId) => trackDataById[trackId])
+    .filter(isDefined);
+
+  console.log(
+    `Train ${train.trainNumber} route legs`,
+    `${journeySection.beginTimeTableRow.stationShortCode} - ${journeySection.endTimeTableRow.stationShortCode}:`,
+    trainRouteLegs.map(
+      (p, i) => `${i}: ${p.oid} (${p.trackId}, track ${p.commercialTrack})`
+    )
+  );
+
+  if (!trainRouteLegs?.length || trainRouteLegs.length < 2) {
+    throw new Error('Not enough legs to create route');
+  }
+
+  const trainRouteOids = trainRouteLegs.map((r) => r.oid);
+
+  const url = new URL(`${INFRA_API_BASE_URL}/reitit/kaikki`);
+
+  url.pathname += `/${trainRouteOids[0]}/${trainRouteOids
+    .slice(1, -1)
+    .join(',')}/${trainRouteOids.at(-1)}.geojson`;
+
+  url.searchParams.set('propertyName', 'geometria');
+  url.searchParams.set('srsName', 'crs:84');
+  url.searchParams.set('time', `${startOfDayIsoString}/${startOfDayIsoString}`);
+  url.searchParams.set('vaihdekasittely', 'eirajoituksia');
+
+  const response = await fetch(url.toString(), fetchOptions);
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch route data (${url.toString()}): ${
+        response.statusText
+      } ${await response.text()}`
+    );
+  }
+
+  const allPathsData: GeoJSON.Feature<GeoJSON.MultiLineString, {}> =
+    await response.json();
+
+  const shortestPathData = getShortestPath(allPathsData, trainRouteLegs);
+  if (!shortestPathData) {
+    throw new Error('Failed to get shortest path for train');
+  }
+
+  const properties = {
+    startTimeTableRowIndex: findTimeTableRowIndex(
+      timeTableRowsWithStopping,
+      journeySection.beginTimeTableRow
+    ),
+    endTimeTableRowIndex: findTimeTableRowIndex(
+      timeTableRowsWithStopping,
+      journeySection.endTimeTableRow
+    ),
+  };
+
+  return {
+    allPaths: {
+      ...allPathsData,
+      properties,
+    },
+    shortestPath: {
+      ...shortestPathData,
+      properties,
+    },
+  };
+}
+
 async function processTrainRoute(
   train: Train,
+  composition: Composition,
   trackDataById: Partial<Record<string, Track>>,
   skipFetchingTrainIfRouteExists: boolean,
   startOfDayIsoString: string,
@@ -254,77 +383,57 @@ async function processTrainRoute(
     return;
   }
 
-  const trainRouteTrackIds = Array.from(
-    new Set(
-      train.timeTableRows
-        .filter((r) => r.commercialTrack)
-        .map((r) => getTrackId(r))
-    )
-  );
-
-  trainRouteTrackIds.forEach((trackId) => {
-    if (!trackDataById[trackId]) {
-      console.warn('Missing track data for track', trackId);
-    }
-  });
-
-  const trainRouteLegs = trainRouteTrackIds
-    .map((trackId) => trackDataById[trackId])
-    .filter(isDefined);
-
   console.log(`Fetching route for train ${train.trainNumber}`);
 
-  console.log(
-    `Train ${train.trainNumber} route legs:`,
-    trainRouteLegs.map(
-      (p, i) => `${i}: ${p.oid} (${p.trackId}, track ${p.commercialTrack})`
-    )
+  const timeTableRowsWithStopping = train.timeTableRows.filter(
+    (r) => r.trainStopping
   );
 
   try {
-    if (!trainRouteLegs?.length || trainRouteLegs.length < 2) {
-      throw new Error('Not enough legs to create route');
-    }
-
-    const trainRouteOids = trainRouteLegs.map((r) => r.oid);
-
-    const url = new URL(`${INFRA_API_BASE_URL}/reitit/kaikki`);
-
-    url.pathname += `/${trainRouteOids[0]}/${trainRouteOids
-      .slice(1, -1)
-      .join(',')}/${trainRouteOids.at(-1)}.geojson`;
-
-    url.searchParams.set('propertyName', 'geometria');
-    url.searchParams.set('srsName', 'crs:84');
-    url.searchParams.set(
-      'time',
-      `${startOfDayIsoString}/${startOfDayIsoString}`
+    const pathsPerSection = await Promise.all(
+      composition.journeySections.map((section) =>
+        generateRouteDataForJourneySection(
+          train,
+          section,
+          trackDataById,
+          timeTableRowsWithStopping,
+          startOfDayIsoString,
+          fetchOptions
+        )
+      )
     );
-    url.searchParams.set('vaihdekasittely', 'eirajoituksia');
 
-    const response = await fetch(url.toString(), fetchOptions);
+    let shortestPathGeoJSON:
+      | GeoJSON.FeatureCollection<GeoJSON.LineString, {}>
+      | GeoJSON.Feature<GeoJSON.LineString, {}>;
+    let allPathsGeoJSON:
+      | GeoJSON.FeatureCollection<GeoJSON.MultiLineString, {}>
+      | GeoJSON.Feature<GeoJSON.MultiLineString, {}>;
 
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch route data: ${
-          response.statusText
-        } ${await response.text()}`
-      );
+    if (pathsPerSection.length === 1) {
+      // Use the single feature directly if there is only one section
+      shortestPathGeoJSON = {
+        ...pathsPerSection[0].shortestPath,
+        properties: {},
+      };
+      allPathsGeoJSON = { ...pathsPerSection[0].allPaths, properties: {} };
+    } else {
+      // Otherwise create a FeatureCollection
+      shortestPathGeoJSON = {
+        type: 'FeatureCollection',
+        features: pathsPerSection.map((f) => f.shortestPath),
+      };
+
+      allPathsGeoJSON = {
+        type: 'FeatureCollection',
+        features: pathsPerSection.map((f) => f.allPaths),
+      };
     }
 
-    const allPathsData: GeoJSON.Feature<GeoJSON.MultiLineString, {}> =
-      await response.json();
-
-    const shortestPathData = getShortestPath(allPathsData, trainRouteLegs);
-    if (!shortestPathData) {
-      console.warn('Failed to get shortest path for train', train.trainNumber);
-      return;
-    }
-
-    await writeFile(filePath, JSON.stringify(shortestPathData));
+    await writeFile(filePath, JSON.stringify(shortestPathGeoJSON));
     await writeFile(
       `${outputPath}/${trainRoutePatternId}_all.json`,
-      JSON.stringify(allPathsData)
+      JSON.stringify(allPathsGeoJSON)
     );
     console.log(`Route for train ${train.trainNumber} saved to ${filePath}`);
   } catch (e) {
@@ -508,6 +617,26 @@ async function fetchTrains(
   return await response.json();
 }
 
+async function fetchCompositions(
+  dateString: string,
+  fetchOptions?: RequestInit
+): Promise<Record<number, Composition>> {
+  const response = await fetch(
+    `${RATA_API_BASE_URL}/compositions/${dateString}`,
+    fetchOptions
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch compositions: ${response.statusText}`);
+  }
+
+  const compositions: Composition[] = await response.json();
+  return compositions.reduce((acc, composition) => {
+    acc[composition.trainNumber] = composition;
+    return acc;
+  }, {} as Record<number, Composition>);
+}
+
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function fetchAndSaveData({
@@ -537,11 +666,12 @@ async function fetchAndSaveData({
   console.info('Fetching data for date', dateString, dateUtcIsoString);
 
   try {
-    const [trackDataById, trains] = await Promise.all([
+    const [trackDataById, trains, compositions] = await Promise.all([
       fetchTrackData(dateUtcIsoString, fetchOptions),
       fetchTrains(dateString, fetchOptions).then((trains) =>
         trains.filter(shouldFetchTrain)
       ),
+      fetchCompositions(dateString, fetchOptions),
     ]);
 
     console.info(`Processing ${trains.length} trains...`);
@@ -559,6 +689,7 @@ async function fetchAndSaveData({
         batch.map((train) =>
           processTrainRoute(
             train,
+            compositions[train.trainNumber],
             trackDataById,
             skipFetchingTrainIfRouteExists,
             dateUtcIsoString,
@@ -597,9 +728,9 @@ const { values } = parseArgs({
       short: 'd',
       default: formatInTimeZone(new Date(), 'Europe/Helsinki', 'yyyy-MM-dd'),
     },
-    'skip-if-exists': {
+    'overwrite-if-exists': {
       type: 'boolean',
-      short: 's',
+      short: 'f',
       default: true,
     },
     'batch-size': {
@@ -649,7 +780,7 @@ fetchAndSaveData({
 
     return true;
   },
-  skipFetchingTrainIfRouteExists: values['skip-if-exists'],
+  skipFetchingTrainIfRouteExists: !values['overwrite-if-exists'],
   batchSize: Number.parseInt(values['batch-size']),
   // See rate limits at https://www.digitraffic.fi/en/support/instructions/#restricting-requests
   delayInMsBetweenBatches: Number.parseInt(values['wait-after-batch']),
