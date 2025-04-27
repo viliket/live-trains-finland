@@ -13,7 +13,7 @@ import useLocalStorageState from 'use-local-storage-state';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
 import { RouteForRailFragment } from '../../graphql/generated/digitransit/graphql';
-import { useDetailedRouteQuery } from '../../hooks/useDetailedRouteQuery';
+import { useDetailedRouteUrlQuery } from '../../hooks/useDetailedRouteUrlQuery';
 import { getMapStyle } from '../../utils/map';
 import { TrainStation, trainStations } from '../../utils/stations';
 import { getTrainRoutePatternId } from '../../utils/train';
@@ -68,7 +68,7 @@ const VehicleMapContainer = ({
   );
   const { i18n } = useTranslation();
 
-  const { data: detailedRoute } = useDetailedRouteQuery(
+  const { data: detailedRouteUrl } = useDetailedRouteUrlQuery(
     train ? getTrainRoutePatternId(train) : null
   );
 
@@ -163,21 +163,15 @@ const VehicleMapContainer = ({
       <StopsLayer train={train} />
       <RailwayTracksLayer />
       <RailwayPlatformsLayer />
-      {(detailedRoute || route) && (
+      {(detailedRouteUrl || route) && (
         <VehicleRouteLayer
           data={
-            detailedRoute
-              ? {
-                  ...detailedRoute,
-                  properties: {
-                    ...detailedRoute.properties,
-                    detailed: true,
-                  },
-                }
+            detailedRouteUrl
+              ? detailedRouteUrl
               : {
                   type: 'Feature',
                   properties: {
-                    detailed: false,
+                    gtfs: true,
                   },
                   geometry: {
                     type: 'LineString',
