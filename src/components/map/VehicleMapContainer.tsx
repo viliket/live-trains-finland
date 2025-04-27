@@ -187,6 +187,7 @@ const VehicleMapContainer = ({
       <VehicleMarkerLayer
         selectedVehicleId={selectedVehicleId}
         onVehicleMarkerClick={onVehicleSelected}
+        train={train}
       />
     </Map>
   );
