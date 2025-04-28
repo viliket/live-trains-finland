@@ -22,7 +22,7 @@
     "graphql": "^16.10.0",
     "graphql-request": "^7.1.2",
     "hsl-map-style": "github:HSLdevcom/hsl-map-style#master",
-    "i18next": "^24.2.2",
+    "i18next": "^25.0.2",
     "i18next-browser-languagedetector": "^8.0.3",
     "i18next-http-backend": "^3.0.2",
     "lodash": "^4.17.21",
