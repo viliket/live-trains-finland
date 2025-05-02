@@ -5,14 +5,17 @@ import { useTranslation } from 'react-i18next';
 
 import FavoriteStationList from '../components/FavoriteStationList';
 import FindNearest from '../components/FindNearest';
+import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import StationAndTrainSearch from '../components/StationAndTrainSearch';
+import { TopNavBar } from '../components/TopNavBar';
 
 export default function Home() {
   const { t } = useTranslation();
 
   return (
     <>
+      <TopNavBar />
       <Box
         sx={(theme) => ({
           display: 'flex',
@@ -72,6 +75,7 @@ export default function Home() {
           </Card>
         </Box>
       </Container>
+      <Footer />
     </>
   );
 }

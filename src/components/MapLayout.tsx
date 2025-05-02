@@ -26,6 +26,8 @@ export const VehicleMapContainerPortal = ({
   route,
   train,
   onVehicleSelected,
+  bottomPadding,
+  hideMapBottomControls,
 }: VehicleMapContainerProps) => {
   return (
     mapPortalNode && (
@@ -36,6 +38,8 @@ export const VehicleMapContainerPortal = ({
         route={route}
         train={train}
         onVehicleSelected={onVehicleSelected}
+        bottomPadding={bottomPadding}
+        hideMapBottomControls={hideMapBottomControls}
       />
     )
   );

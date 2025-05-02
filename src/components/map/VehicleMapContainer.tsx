@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Box, useTheme } from '@mui/material';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
@@ -29,6 +29,8 @@ export type VehicleMapContainerProps = {
   route?: RouteForRailFragment | null;
   train?: TrainByStationFragment | null;
   onVehicleSelected: (vehicleId: number) => void;
+  bottomPadding?: number;
+  hideMapBottomControls?: boolean;
 };
 
 const fallbackStation = trainStations.find((s) => s.stationShortCode === 'HKI');
@@ -37,7 +39,8 @@ const initialZoom = 15;
 function setMapViewState(
   map: MapRef,
   station: TrainStation | undefined,
-  selectedVehicleId: number | null
+  selectedVehicleId: number | null,
+  bottomPadding?: number | null
 ) {
   const stationToCenter = station ?? fallbackStation;
   if (stationToCenter && selectedVehicleId == null) {
@@ -49,14 +52,45 @@ function setMapViewState(
   map.setZoom(initialZoom);
 }
 
+function updateMapBottomControlPadding(bottomPadding: number) {
+  const classNames = [
+    'maplibregl-ctrl-bottom-left',
+    'maplibregl-ctrl-bottom-right',
+  ];
+
+  classNames.forEach((className) => {
+    const elements = document.getElementsByClassName(className);
+    Array.from(elements).forEach((el) => {
+      (el as HTMLElement).style.bottom = `${bottomPadding}px`;
+    });
+  });
+}
+
+function toggleMapBottomControlsVisibility(visible: boolean) {
+  const classNames = [
+    'maplibregl-ctrl-bottom-left',
+    'maplibregl-ctrl-bottom-right',
+  ];
+
+  const action = visible ? 'remove' : 'add';
+
+  classNames.forEach((className) => {
+    const elements = document.getElementsByClassName(className);
+    Array.from(elements).forEach((el) => el.classList[action]('hidden'));
+  });
+}
+
 const VehicleMapContainer = ({
   selectedVehicleId,
   station,
   route,
   train,
   onVehicleSelected,
+  bottomPadding,
+  hideMapBottomControls,
 }: VehicleMapContainerProps) => {
   const mapRef = useRef<MapRef | null>(null);
+  const [isPendingPaddingUpdate, setIsPendingPaddingUpdate] = useState(false);
   const theme = useTheme();
   const [useVectorBaseTiles, setUseVectorBaseTiles] = useLocalStorageState(
     'useVectorBaseTiles',
@@ -67,15 +101,30 @@ const VehicleMapContainer = ({
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    if (mapRef.current) {
-      setMapViewState(mapRef.current, station, selectedVehicleId);
+    if (hideMapBottomControls != null) {
+      toggleMapBottomControlsVisibility(!hideMapBottomControls);
     }
-  }, [station, selectedVehicleId]);
+  }, [hideMapBottomControls]);
+
+  useEffect(() => {
+    setIsPendingPaddingUpdate(true);
+  }, [station]);
+
+  useEffect(() => {
+    if (mapRef.current && isPendingPaddingUpdate && bottomPadding != null) {
+      mapRef.current.setPadding({ bottom: bottomPadding });
+      setIsPendingPaddingUpdate(false);
+    }
+  }, [isPendingPaddingUpdate, bottomPadding]);
 
   const handleMapRef = useCallback(
     (map: MapRef | null) => {
       if (map) {
         mapRef.current = map;
+
+        if (bottomPadding != null) {
+          updateMapBottomControlPadding(bottomPadding);
+        }
 
         // Set map initial view state
         // Note: We need to do this when "reuseMaps" flag is set since the Map
@@ -83,7 +132,7 @@ const VehicleMapContainer = ({
         // Additionally, because we created VehicleMapContainer initially on a detached
         // DOM node without specifying a station, the map center defaults to the fallback
         // station.
-        setMapViewState(map, station, selectedVehicleId);
+        setMapViewState(map, station, selectedVehicleId, bottomPadding);
 
         // As we are creating VehicleMapContainer initially on a detached DOM node,
         // the maplibre-gl Map may have wrong initial canvas size as the Map determines
@@ -94,7 +143,7 @@ const VehicleMapContainer = ({
         }
       }
     },
-    [selectedVehicleId, station]
+    [bottomPadding, selectedVehicleId, station]
   );
 
   return (
@@ -107,6 +156,7 @@ const VehicleMapContainer = ({
         longitude: station?.longitude ?? fallbackStation?.longitude,
         latitude: station?.latitude ?? fallbackStation?.latitude,
         zoom: initialZoom,
+        padding: { bottom: bottomPadding ?? 0 },
       }}
       mapStyle={getMapStyle(
         useVectorBaseTiles,
@@ -175,6 +225,7 @@ const VehicleMapContainer = ({
       <VehicleMarkerLayer
         selectedVehicleId={selectedVehicleId}
         onVehicleMarkerClick={onVehicleSelected}
+        bottomPadding={bottomPadding}
       />
     </Map>
   );
