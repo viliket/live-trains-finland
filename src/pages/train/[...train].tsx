@@ -6,6 +6,8 @@ import { Box, Snackbar } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 
+import Drawer from '../../components/Drawer';
+import Footer from '../../components/Footer';
 import MapLayout, {
   VehicleMapContainerPortal,
 } from '../../components/MapLayout';
@@ -29,6 +31,18 @@ const Train: NextPageWithLayout = () => {
     ? Number.parseInt(trainNumberParam, 10)
     : null;
   const searchParams = useSearchParams();
+  const [mapBottomPadding, setMapBottomPadding] = useState<
+    number | undefined
+  >();
+  const [hideMapBottomControls, setHideMapBottomControls] =
+    useState<boolean>(false);
+  const onDrawerOffsetChange = useCallback(
+    (offset: number, snap: number | null) => {
+      setMapBottomPadding(offset);
+      setHideMapBottomControls(snap != null && snap <= 0);
+    },
+    []
+  );
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
@@ -79,14 +93,15 @@ const Train: NextPageWithLayout = () => {
 
   return (
     <div style={{ width: '100%' }}>
-      <TrainSubNavBar train={train} />
-      <Box sx={{ height: '30vh' }}>
+      <Box sx={{ height: '100vh' }}>
         <VehicleMapContainerPortal
           selectedVehicleId={selectedVehicleId}
           station={station}
           route={selectedRoute}
           train={train}
           onVehicleSelected={handleVehicleIdSelected}
+          bottomPadding={mapBottomPadding}
+          hideMapBottomControls={hideMapBottomControls}
         />
       </Box>
       <Snackbar
@@ -94,7 +109,14 @@ const Train: NextPageWithLayout = () => {
         autoHideDuration={5000}
         message={error?.message}
       />
-      <TrainInfoContainer train={train} />
+      <Drawer
+        onTransitionStart={() => setHideMapBottomControls(true)}
+        onTransitionEnd={onDrawerOffsetChange}
+      >
+        <TrainSubNavBar train={train} />
+        <TrainInfoContainer train={train} />
+        <Footer />
+      </Drawer>
     </div>
   );
 };

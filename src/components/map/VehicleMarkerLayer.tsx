@@ -25,6 +25,7 @@ import DeckGLOverlay from './DeckGLOverlay';
 type VehicleMarkerLayerProps = {
   onVehicleMarkerClick: (id: number) => void;
   selectedVehicleId: number | null;
+  bottomPadding?: number;
 };
 
 type VehicleInterpolatedPosition = {
@@ -46,6 +47,7 @@ const maxInterpolationDistanceKm = 0.4;
 export default function VehicleMarkerLayer({
   onVehicleMarkerClick,
   selectedVehicleId,
+  bottomPadding,
 }: VehicleMarkerLayerProps) {
   const { current: map } = useMap();
   const deviceRef = useRef<MapboxOverlayProps['device']>(undefined);
@@ -163,6 +165,7 @@ export default function VehicleMarkerLayer({
     if (vehicle && !map.isMoving()) {
       map.flyTo(
         {
+          padding: { bottom: bottomPadding ?? 0 },
           center: vehicle.position,
           animate: true,
           easing: (t) => t,

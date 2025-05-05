@@ -37,10 +37,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         </Head>
         <ServiceWorkerUpdatePrompt />
         <SwitchLanguage />
-        <TopNavBar />
         {getLayout(<Component {...pageProps} />)}
       </div>
-      <Footer />
     </Providers>
   );
 }

@@ -17,8 +17,10 @@ import { useRouter } from 'next/router';
 import { useQueryState } from 'nuqs';
 import { useTranslation } from 'react-i18next';
 
+import Drawer from '../components/Drawer';
 import FavoriteStation from '../components/FavoriteStation';
 import FilterStationTrainsDialog from '../components/FilterStationTrainsDialog';
+import Footer from '../components/Footer';
 import MapLayout, { VehicleMapContainerPortal } from '../components/MapLayout';
 import PassengerInformationMessageAlert from '../components/PassengerInformationMessageAlert';
 import PassengerInformationMessagesDialog from '../components/PassengerInformationMessagesDialog';
@@ -50,6 +52,18 @@ const Station: NextPageWithLayout = () => {
   const [selectedTrainNo, setSelectedTrainNo] = useState<number | null>(null);
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
+  const [mapBottomPadding, setMapBottomPadding] = useState<
+    number | undefined
+  >();
+  const [hideMapBottomControls, setHideMapBottomControls] =
+    useState<boolean>(false);
+  const onDrawerOffsetChange = useCallback(
+    (offset: number, snap: number | null) => {
+      setMapBottomPadding(offset);
+      setHideMapBottomControls(snap != null && snap <= 0);
+    },
+    []
+  );
   const [deptOrArrStationCodeFilter, setDeptOrArrStationCodeFilter] =
     useQueryState('station_filter', {
       history: 'push',
@@ -148,84 +162,92 @@ const Station: NextPageWithLayout = () => {
 
   return (
     <div style={{ width: '100%' }}>
-      <SubNavBar>
-        <h4>{station?.stationName}</h4>
-        {station && (
-          <FavoriteStation stationShortCode={station.stationShortCode} />
-        )}
-      </SubNavBar>
-      <Box sx={{ height: '30vh' }}>
+      <Box sx={{ height: '100vh' }}>
         <VehicleMapContainerPortal
           selectedVehicleId={selectedVehicleId}
           station={station}
           route={selectedRoute}
           train={selectedTrain}
           onVehicleSelected={handleVehicleIdSelected}
+          bottomPadding={mapBottomPadding}
+          hideMapBottomControls={hideMapBottomControls}
         />
       </Box>
-      <Box
-        sx={{
-          padding: '0.5rem',
-          bgcolor: 'common.secondaryBackground.default',
-        }}
+      <Drawer
+        onTransitionStart={() => setHideMapBottomControls(true)}
+        onTransitionEnd={onDrawerOffsetChange}
       >
-        <Box sx={{ display: 'flex' }}>
-          <ToggleButtonGroup
-            color="primary"
-            value={timeTableType}
-            exclusive
-            fullWidth
-            onChange={handleTimeTableTypeChange}
-            sx={{
-              borderRadius: '24px',
-              button: {
-                borderRadius: '24px',
-              },
-            }}
-          >
-            <ToggleButton value={TimeTableRowType.Departure}>
-              {t('departures')} <ClockStart />
-            </ToggleButton>
-            <ToggleButton value={TimeTableRowType.Arrival}>
-              <ClockEnd /> {t('arrivals')}
-            </ToggleButton>
-          </ToggleButtonGroup>
-          <IconButton
-            size="small"
-            onClick={() => setFilterDialogOpen(true)}
-            sx={{ padding: 2 }}
-          >
-            <Badge
-              badgeContent={stationCode && deptOrArrStationCodeFilter ? 1 : 0}
-              color="primary"
-            >
-              <FilterCog fontSize="inherit" />
-            </Badge>
-          </IconButton>
-        </Box>
-        <Box paddingY={1}>
-          {passengerInformationMessages && (
-            <PassengerInformationMessageAlert
-              onClick={() => setStationAlertDialogOpen(true)}
-              passengerInformationMessages={passengerInformationMessages}
-            />
+        <SubNavBar>
+          <h4>{station?.stationName}</h4>
+          {station && (
+            <FavoriteStation stationShortCode={station.stationShortCode} />
           )}
+        </SubNavBar>
+        <Box
+          sx={{
+            padding: '0.5rem',
+            bgcolor: 'common.secondaryBackground.default',
+          }}
+        >
+          <Box sx={{ display: 'flex' }}>
+            <ToggleButtonGroup
+              color="primary"
+              value={timeTableType}
+              exclusive
+              fullWidth
+              onChange={handleTimeTableTypeChange}
+              sx={{
+                borderRadius: '24px',
+                button: {
+                  borderRadius: '24px',
+                },
+              }}
+            >
+              <ToggleButton value={TimeTableRowType.Departure}>
+                {t('departures')} <ClockStart />
+              </ToggleButton>
+              <ToggleButton value={TimeTableRowType.Arrival}>
+                <ClockEnd /> {t('arrivals')}
+              </ToggleButton>
+            </ToggleButtonGroup>
+            <IconButton
+              size="small"
+              onClick={() => setFilterDialogOpen(true)}
+              sx={{ padding: 2 }}
+            >
+              <Badge
+                badgeContent={stationCode && deptOrArrStationCodeFilter ? 1 : 0}
+                color="primary"
+              >
+                <FilterCog fontSize="inherit" />
+              </Badge>
+            </IconButton>
+          </Box>
+          <Box paddingY={1}>
+            {passengerInformationMessages && (
+              <PassengerInformationMessageAlert
+                onClick={() => setStationAlertDialogOpen(true)}
+                passengerInformationMessages={passengerInformationMessages}
+              />
+            )}
+          </Box>
         </Box>
-      </Box>
+        {stationCode && !loading && trains && (
+          <StationTimeTable
+            stationCode={stationCode}
+            timeTableType={timeTableType}
+            trains={relevantTrains}
+            tableRowOnClick={handleTimeTableRowClick}
+          />
+        )}
+        {(!stationCode || loading) && getLoadingSkeleton()}
+        <Footer />
+      </Drawer>
       <Snackbar
         open={!!error}
         autoHideDuration={5000}
         message={error?.message}
       />
-      {stationCode && !loading && trains && (
-        <StationTimeTable
-          stationCode={stationCode}
-          timeTableType={timeTableType}
-          trains={relevantTrains}
-          tableRowOnClick={handleTimeTableRowClick}
-        />
-      )}
-      {(!stationCode || loading) && getLoadingSkeleton()}
       <PassengerInformationMessagesDialog
         open={stationAlertDialogOpen}
         passengerInformationMessages={passengerInformationMessages}

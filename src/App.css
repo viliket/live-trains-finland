@@ -27,6 +27,17 @@
   background-color: hsla(0, 0%, 100%, 0.7);
 }
 
+.maplibregl-ctrl-bottom-left,
+.maplibregl-ctrl-bottom-right {
+  opacity: 1;
+  transition: opacity 0.1s;
+}
+
+.maplibregl-ctrl-bottom-left.hidden,
+.maplibregl-ctrl-bottom-right.hidden {
+  opacity: 0;
+}
+
 [data-theme='dark'] .maplibregl-ctrl-attrib.maplibregl-compact-show {
   background-color: hsla(0, 0%, 28%, 0.7);
 }
