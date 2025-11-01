@@ -21,15 +21,11 @@ function SubNavBar({ children, rightElement }: SubNavBarProps) {
       sx={(theme) => ({
         display: 'flex',
         alignItems: 'center',
-        position: 'sticky',
-        top: '-1px',
-        zIndex: 1001,
         padding: '0.6rem 0',
+        paddingTop: 0,
         paddingLeft: '4px',
         paddingRight: '1rem',
         marginTop: '-0.6rem',
-        backgroundColor: theme.vars.palette.common.secondaryBackground.default,
-        color: theme.vars.palette.common.secondaryBackground.text,
         h4: {
           margin: 0,
           fontWeight: 500,

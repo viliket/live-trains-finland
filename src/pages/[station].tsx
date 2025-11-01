@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   Badge,
@@ -17,10 +17,10 @@ import { useRouter } from 'next/router';
 import { useQueryState } from 'nuqs';
 import { useTranslation } from 'react-i18next';
 
-import Drawer from '../components/Drawer';
 import FavoriteStation from '../components/FavoriteStation';
 import FilterStationTrainsDialog from '../components/FilterStationTrainsDialog';
 import Footer from '../components/Footer';
+import MapBottomSheet from '../components/MapBottomSheet';
 import MapLayout, { VehicleMapContainerPortal } from '../components/MapLayout';
 import PassengerInformationMessageAlert from '../components/PassengerInformationMessageAlert';
 import PassengerInformationMessagesDialog from '../components/PassengerInformationMessagesDialog';
@@ -52,18 +52,6 @@ const Station: NextPageWithLayout = () => {
   const [selectedTrainNo, setSelectedTrainNo] = useState<number | null>(null);
   const [stationAlertDialogOpen, setStationAlertDialogOpen] = useState(false);
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
-  const [mapBottomPadding, setMapBottomPadding] = useState<
-    number | undefined
-  >();
-  const [hideMapBottomControls, setHideMapBottomControls] =
-    useState<boolean>(false);
-  const onDrawerOffsetChange = useCallback(
-    (offset: number, snap: number | null) => {
-      setMapBottomPadding(offset);
-      setHideMapBottomControls(snap != null && snap <= 0);
-    },
-    []
-  );
   const [deptOrArrStationCodeFilter, setDeptOrArrStationCodeFilter] =
     useQueryState('station_filter', {
       history: 'push',
@@ -169,20 +157,18 @@ const Station: NextPageWithLayout = () => {
           route={selectedRoute}
           train={selectedTrain}
           onVehicleSelected={handleVehicleIdSelected}
-          bottomPadding={mapBottomPadding}
-          hideMapBottomControls={hideMapBottomControls}
         />
       </Box>
-      <Drawer
-        onTransitionStart={() => setHideMapBottomControls(true)}
-        onTransitionEnd={onDrawerOffsetChange}
+      <MapBottomSheet
+        header={
+          <SubNavBar>
+            <h4>{station?.stationName}</h4>
+            {station && (
+              <FavoriteStation stationShortCode={station.stationShortCode} />
+            )}
+          </SubNavBar>
+        }
       >
-        <SubNavBar>
-          <h4>{station?.stationName}</h4>
-          {station && (
-            <FavoriteStation stationShortCode={station.stationShortCode} />
-          )}
-        </SubNavBar>
         <Box
           sx={{
             padding: '0.5rem',
@@ -242,7 +228,7 @@ const Station: NextPageWithLayout = () => {
         )}
         {(!stationCode || loading) && getLoadingSkeleton()}
         <Footer />
-      </Drawer>
+      </MapBottomSheet>
       <Snackbar
         open={!!error}
         autoHideDuration={5000}

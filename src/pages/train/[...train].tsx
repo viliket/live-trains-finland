@@ -1,13 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Box, Snackbar } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 
-import Drawer from '../../components/Drawer';
 import Footer from '../../components/Footer';
+import MapBottomSheet from '../../components/MapBottomSheet';
 import MapLayout, {
   VehicleMapContainerPortal,
 } from '../../components/MapLayout';
@@ -31,18 +31,7 @@ const Train: NextPageWithLayout = () => {
     ? Number.parseInt(trainNumberParam, 10)
     : null;
   const searchParams = useSearchParams();
-  const [mapBottomPadding, setMapBottomPadding] = useState<
-    number | undefined
-  >();
-  const [hideMapBottomControls, setHideMapBottomControls] =
-    useState<boolean>(false);
-  const onDrawerOffsetChange = useCallback(
-    (offset: number, snap: number | null) => {
-      setMapBottomPadding(offset);
-      setHideMapBottomControls(snap != null && snap <= 0);
-    },
-    []
-  );
+
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
@@ -100,8 +89,6 @@ const Train: NextPageWithLayout = () => {
           route={selectedRoute}
           train={train}
           onVehicleSelected={handleVehicleIdSelected}
-          bottomPadding={mapBottomPadding}
-          hideMapBottomControls={hideMapBottomControls}
         />
       </Box>
       <Snackbar
@@ -109,14 +96,10 @@ const Train: NextPageWithLayout = () => {
         autoHideDuration={5000}
         message={error?.message}
       />
-      <Drawer
-        onTransitionStart={() => setHideMapBottomControls(true)}
-        onTransitionEnd={onDrawerOffsetChange}
-      >
-        <TrainSubNavBar train={train} />
+      <MapBottomSheet header={<TrainSubNavBar train={train} />}>
         <TrainInfoContainer train={train} />
         <Footer />
-      </Drawer>
+      </MapBottomSheet>
     </div>
   );
 };
