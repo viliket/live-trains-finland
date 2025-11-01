@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { Box, useTheme } from '@mui/material';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
@@ -57,7 +57,6 @@ const VehicleMapContainer = ({
   onVehicleSelected,
 }: VehicleMapContainerProps) => {
   const mapRef = useRef<MapRef | null>(null);
-  const [isPendingPaddingUpdate, setIsPendingPaddingUpdate] = useState(false);
   const theme = useTheme();
   const [useVectorBaseTiles, setUseVectorBaseTiles] = useLocalStorageState(
     'useVectorBaseTiles',
@@ -66,6 +65,12 @@ const VehicleMapContainer = ({
     }
   );
   const { i18n } = useTranslation();
+
+  useEffect(() => {
+    if (mapRef.current) {
+      setMapViewState(mapRef.current, station, selectedVehicleId);
+    }
+  }, [station, selectedVehicleId]);
 
   const handleMapRef = useCallback(
     (map: MapRef | null) => {
