@@ -2,8 +2,6 @@
 /// <reference types="react" />
 /// <reference types="react-dom" />
 
-import 'react';
-
 declare module '*.svg' {
   import * as React from 'react';
 
@@ -22,8 +20,8 @@ declare module '*.svg?url' {
   export default content;
 }
 
-declare module 'react' {
-  interface CSSProperties {
+declare module 'csstype' {
+  interface Properties {
     [key: `--${string}`]: string | number;
   }
 }
