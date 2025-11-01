@@ -7,6 +7,7 @@ import { BottomSheet as BottomSheetBase } from 'pure-web-bottom-sheet/react';
 
 const StyledBottomSheet = styled(BottomSheetBase)(({ theme }) => ({
   '--sheet-background': theme.palette.common.secondaryBackground.default,
+  '--sheet-max-height': 'calc(100vh - 24px)',
   // Must use absolute positioning for position-anchor to work correctly
   // in case the bottom sheet appears later in the DOM tree than the anchored element
   position: 'absolute',
@@ -71,9 +72,9 @@ export default function BottomSheet({
 
   return (
     <StyledBottomSheet ref={innerRef} onScroll={handleScroll} content-height>
-      <div slot="snap" style={{ '--snap': '75%' }}></div>
-      <div slot="snap" style={{ '--snap': '50%' }} className="initial"></div>
-      <div slot="snap" style={{ '--snap': '25%' }}></div>
+      <div slot="snap" style={{ '--snap': '75vh' }}></div>
+      <div slot="snap" style={{ '--snap': '50vh' }} className="initial"></div>
+      <div slot="snap" style={{ '--snap': '25vh' }}></div>
 
       <div slot="header">{header}</div>
       {children}

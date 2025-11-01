@@ -19,19 +19,21 @@ function setMapControlsOffset(
   const container = map.getContainer();
 
   const viewportHeight = window.innerHeight;
-  const viewportConstrainedOffset = Math.min(offset, viewportHeight);
-  const maxScrollHeight = Math.min(
-    bottomSheetEl.scrollHeight - bottomSheetEl.offsetHeight,
-    viewportHeight
+  const clampedScrollOffset = Math.min(offset, viewportHeight);
+  const maxScrollableHeight = Math.max(
+    viewportHeight,
+    Math.min(
+      bottomSheetEl.scrollHeight - bottomSheetEl.offsetHeight,
+      viewportHeight
+    )
   );
 
-  container.style.setProperty(
-    '--control-offset-bottom',
-    `${viewportConstrainedOffset}px`
-  );
+  const sheetRect = bottomSheetEl.getBoundingClientRect();
+  const bottomOffset = viewportHeight - sheetRect.bottom + clampedScrollOffset;
+  container.style.setProperty('--control-offset-bottom', `${bottomOffset}px`);
   container.style.setProperty(
     '--control-offset-progress',
-    `${viewportConstrainedOffset / maxScrollHeight}`
+    `${clampedScrollOffset / maxScrollableHeight}`
   );
 }
 
