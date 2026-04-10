@@ -3,11 +3,13 @@ import { useEffect } from 'react';
 import { useCallback } from 'react';
 
 import { styled } from '@mui/material';
+import { SnapPositionChangeEventDetail } from 'pure-web-bottom-sheet';
 import { BottomSheet as BottomSheetBase } from 'pure-web-bottom-sheet/react';
 
 const StyledBottomSheet = styled(BottomSheetBase)(({ theme }) => ({
   '--sheet-background': theme.palette.common.secondaryBackground.default,
   '--sheet-max-height': 'calc(100vh - 24px)',
+  scrollTimeline: '--sheet-timeline y',
   // Must use absolute positioning for position-anchor to work correctly
   // in case the bottom sheet appears later in the DOM tree than the anchored element
   position: 'absolute',
@@ -30,6 +32,9 @@ type BottomSheetProps = {
   onScroll?: (sheetOffset: number) => void;
   onTransitionStart?: (sheetOffset: number) => void;
   onTransitionEnd?: (sheetOffset: number) => void;
+  onSnapPositionChange?: (
+    event: CustomEvent<SnapPositionChangeEventDetail>
+  ) => void;
 };
 
 export default function BottomSheet({
@@ -38,6 +43,7 @@ export default function BottomSheet({
   onTransitionEnd,
   onTransitionStart,
   onScroll,
+  onSnapPositionChange,
   ref,
 }: BottomSheetProps) {
   const innerRef = useMemo(() => ref ?? createRef<HTMLElement>(), [ref]);
@@ -45,11 +51,13 @@ export default function BottomSheet({
   const onTransitionStartRef = useRef(onTransitionStart);
   const onTransitionEndRef = useRef(onTransitionEnd);
   const onScrollRef = useRef(onScroll);
+  const onSnapPositionChangeRef = useRef(onSnapPositionChange);
   useEffect(() => {
     onTransitionStartRef.current = onTransitionStart;
     onTransitionEndRef.current = onTransitionEnd;
     onScrollRef.current = onScroll;
-  }, [onTransitionStart, onTransitionEnd, onScroll]);
+    onSnapPositionChangeRef.current = onSnapPositionChange;
+  }, [onTransitionStart, onTransitionEnd, onScroll, onSnapPositionChange]);
 
   const handleScroll = useCallback(() => {
     onScrollRef.current?.(innerRef.current ? innerRef.current.scrollTop : 0);
@@ -71,11 +79,12 @@ export default function BottomSheet({
   }, [innerRef]);
 
   return (
-    <StyledBottomSheet ref={innerRef} onScroll={handleScroll} content-height>
-      <div slot="snap" style={{ '--snap': '75vh' }}></div>
-      <div slot="snap" style={{ '--snap': '50vh' }} className="initial"></div>
-      <div slot="snap" style={{ '--snap': '25vh' }}></div>
-
+    <StyledBottomSheet
+      ref={innerRef}
+      onScroll={handleScroll}
+      onsnap-position-change={onSnapPositionChangeRef.current}
+      content-height
+    >
       <div slot="header">{header}</div>
       {children}
     </StyledBottomSheet>

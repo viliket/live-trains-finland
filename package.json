@@ -31,7 +31,7 @@
     "mqtt": "^5.10.3",
     "next": "^15.1.7",
     "nuqs": "^2.4.0",
-    "pure-web-bottom-sheet": "^0.1.0",
+    "pure-web-bottom-sheet": "^0.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-i18next": "^15.4.1",

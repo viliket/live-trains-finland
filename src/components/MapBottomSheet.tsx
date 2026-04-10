@@ -2,6 +2,7 @@ import { createRef, useCallback, useMemo } from 'react';
 import { useEffect } from 'react';
 
 import { MapRef, useMap } from 'react-map-gl/maplibre';
+import { create } from 'zustand';
 
 import BottomSheet from './BottomSheet';
 
@@ -30,12 +31,29 @@ function setMapControlsOffset(
 
   const sheetRect = bottomSheetEl.getBoundingClientRect();
   const bottomOffset = viewportHeight - sheetRect.bottom + clampedScrollOffset;
+  const controlOffsetProgress = clampedScrollOffset / maxScrollableHeight;
   container.style.setProperty('--control-offset-bottom', `${bottomOffset}px`);
   container.style.setProperty(
     '--control-offset-progress',
-    `${clampedScrollOffset / maxScrollableHeight}`
+    `${controlOffsetProgress}`
   );
+  if (controlOffsetProgress > 0.95) {
+    container.dataset.hideControls = '';
+  } else {
+    delete container.dataset.hideControls;
+  }
 }
+
+interface MapBottomSheetState {
+  currentSnapIndex: number;
+  setCurrentSnapIndex: (newSnapIndex: number) => void;
+}
+
+const useMapBottomSheetStore = create<MapBottomSheetState>((set) => ({
+  currentSnapIndex: 2,
+  setCurrentSnapIndex: (newSnapIndex) =>
+    set({ currentSnapIndex: newSnapIndex }),
+}));
 
 type MapBottomSheetProps = {
   ref?: React.RefObject<HTMLElement | null>;
@@ -50,6 +68,12 @@ export default function MapBottomSheet({
 }: MapBottomSheetProps) {
   const { vehicleMap: map } = useMap();
   const innerRef = useMemo(() => ref ?? createRef<HTMLElement>(), [ref]);
+  const currentSnapIndex = useMapBottomSheetStore(
+    (state) => state.currentSnapIndex
+  );
+  const setCurrentSnapIndex = useMapBottomSheetStore(
+    (state) => state.setCurrentSnapIndex
+  );
 
   useEffect(() => {
     if (!map || !innerRef.current) return;
@@ -79,7 +103,23 @@ export default function MapBottomSheet({
         });
       }}
       onScroll={handleScroll}
+      onSnapPositionChange={(e) => setCurrentSnapIndex(e.detail.snapIndex)}
     >
+      {['100%', '75vh', '50vh', '25vh'].map(
+        (snapPoint, i, { length: snapPointCount }) => {
+          const snapIndex = snapPointCount - i;
+          const isInitial = snapIndex === currentSnapIndex;
+          return (
+            <div
+              key={snapPoint}
+              slot="snap"
+              style={{ '--snap': snapPoint }}
+              data-snap={i === 0 ? 'top' : undefined}
+              className={isInitial ? 'initial' : ''}
+            />
+          );
+        }
+      )}
       {children}
     </BottomSheet>
   );
