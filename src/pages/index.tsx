@@ -65,7 +65,12 @@ export default function Home() {
               <Typography gutterBottom variant="h6" component="div">
                 {t('home.title')}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography
+                variant="body2"
+                sx={{
+                  color: 'text.secondary',
+                }}
+              >
                 {t('home.welcome_text')}
               </Typography>
             </CardContent>

@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 
 import {
-  alpha,
   Avatar,
   List,
   ListItemAvatar,
@@ -45,9 +44,9 @@ function OptionList<T>({
                     fontSize: '0.9rem',
                     textAlign: 'center',
                     color: 'text.primary',
-                    backgroundColor: alpha(
-                      theme.palette.primary.main,
-                      theme.palette.action.selectedOpacity
+                    backgroundColor: theme.alpha(
+                      theme.vars.palette.primary.main,
+                      theme.vars.palette.action.selectedOpacity
                     ),
                   })}
                 >

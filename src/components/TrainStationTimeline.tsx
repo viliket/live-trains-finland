@@ -7,7 +7,7 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from '@mui/lab';
-import { Box, Button, Collapse, Grid2 as Grid, Skeleton } from '@mui/material';
+import { Box, Button, Collapse, Grid, Skeleton } from '@mui/material';
 import { parseISO } from 'date-fns';
 import { ChevronDown } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
@@ -181,9 +181,9 @@ const TrainStationTimelineHeader = () => {
         <Grid
           container
           spacing={2}
-          sx={(theme) => ({
-            fontWeight: theme.typography.fontWeightMedium,
-          })}
+          sx={{
+            fontWeight: (theme) => theme.typography.fontWeightMedium,
+          }}
         >
           <Grid size={6}>{t('station')}</Grid>
           <Grid size={3}>{t('arrival')}</Grid>

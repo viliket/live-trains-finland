@@ -123,7 +123,7 @@ const DetailsItem = ({
   <Paper
     sx={(theme) => ({
       ...theme.typography.body2,
-      color: theme.palette.text.secondary,
+      color: theme.vars.palette.text.secondary,
       flexGrow: 1,
     })}
   >
@@ -333,7 +333,7 @@ const TrainWagonDetailsDialog = (props: TrainWagonDetailsDialogProps) => {
               sx={{ m: 1 }}
               checked={showUpstairs}
               onChange={handleFloorSwitchChange}
-              inputProps={{ 'aria-label': 'controlled' }}
+              slotProps={{ input: { 'aria-label': 'controlled' } }}
               disabled={!wagonMap?.upstairs}
             />
           }

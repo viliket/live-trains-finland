@@ -56,8 +56,10 @@ export function LanguageSelector() {
         anchorEl={anchorEl}
         open={isOpen}
         onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'switch-language-button',
+        slotProps={{
+          list: {
+            'aria-labelledby': 'switch-language-button',
+          },
         }}
       >
         {Object.keys(lngs).map((lng) => (

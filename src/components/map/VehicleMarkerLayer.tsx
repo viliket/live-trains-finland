@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { CollisionFilterExtension } from '@deck.gl/extensions';
 import { GeoJsonLayer } from '@deck.gl/layers';
 import { MapboxOverlayProps } from '@deck.gl/mapbox';
-import { Box, Button, useTheme } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { format } from 'date-fns';
 import { mapValues } from 'lodash';
 import { Crosshairs, CrosshairsGps } from 'mdi-material-ui';
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { Popup, useMap, ViewStateChangeEvent } from 'react-map-gl/maplibre';
 
 import useAnimationFrame from '../../hooks/useAnimationFrame';
+import { useResolvedPalette } from '../../hooks/useResolvedPalette';
 import useVehicleStore from '../../hooks/useVehicleStore';
 import {
   getVehicleMarkerIconImage,
@@ -60,18 +61,18 @@ export default function VehicleMarkerLayer({
     Record<number, VehicleInterpolatedPosition>
   >({});
   const { t } = useTranslation();
-  const theme = useTheme();
+  const { resolvedMode, palette } = useResolvedPalette();
   const router = useRouter();
 
   const iconUrl = useMemo(() => {
     return getVehicleMarkerIconImage({
-      id: `vehiclemarker${theme.palette.mode}-x-0`,
+      id: `vehiclemarker${resolvedMode}-x-0`,
       mapBearing: map?.getBearing() ?? 0,
-      colorPrimary: theme.palette.secondary.main,
-      colorSecondary: theme.palette.mode === 'light' ? '#eee' : '#666',
-      colorShadow: theme.palette.mode === 'light' ? '#aaa' : '#000',
+      colorPrimary: palette.secondary.main,
+      colorSecondary: resolvedMode === 'light' ? '#eee' : '#666',
+      colorShadow: resolvedMode === 'light' ? '#aaa' : '#000',
     });
-  }, [map, theme.palette.mode, theme.palette.secondary.main]);
+  }, [map, resolvedMode, palette.secondary.main]);
 
   useEffect(() => {
     return () => {
