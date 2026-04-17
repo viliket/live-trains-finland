@@ -1,6 +1,7 @@
-import { useTheme } from '@mui/material';
 import GeoJSON from 'geojson';
 import { Layer, Source } from 'react-map-gl/maplibre';
+
+import { useResolvedPalette } from '../../hooks/useResolvedPalette';
 
 type VehicleRouteLayerProps = {
   data:
@@ -11,7 +12,7 @@ type VehicleRouteLayerProps = {
 };
 
 const VehicleRouteLayer = ({ data }: VehicleRouteLayerProps) => {
-  const theme = useTheme();
+  const { palette } = useResolvedPalette();
 
   return (
     <Source type="geojson" data={data}>
@@ -22,7 +23,7 @@ const VehicleRouteLayer = ({ data }: VehicleRouteLayerProps) => {
           type: 'line',
           source: 'vehicle_route',
           paint: {
-            'line-color': theme.palette.secondary.main,
+            'line-color': palette.secondary.main,
             'line-width': 3,
             'line-opacity': 1,
           },

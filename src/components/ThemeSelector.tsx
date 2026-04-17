@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import { Menu, MenuItem, Box, IconButton, Skeleton } from '@mui/material';
-import { Theme, useColorScheme, useTheme } from '@mui/material/styles';
+import { useColorScheme } from '@mui/material/styles';
 import { Brightness7, Brightness3, BrightnessAuto } from 'mdi-material-ui';
+
+import { useResolvedPalette } from '../hooks/useResolvedPalette';
 
 const themeOptions: Record<string, { icon: React.ReactElement }> = {
   system: { icon: <BrightnessAuto /> },
@@ -10,24 +12,18 @@ const themeOptions: Record<string, { icon: React.ReactElement }> = {
   dark: { icon: <Brightness3 /> },
 };
 
-const updateMetaThemeColor = (theme: Theme): void => {
-  document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
-    meta.setAttribute(
-      'content',
-      theme.palette.common.secondaryBackground.default
-    );
-  });
-};
-
 export function ThemeSelector() {
   const { mode, setMode } = useColorScheme();
+  const { palette } = useResolvedPalette();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
-  const theme = useTheme();
 
   useEffect(() => {
-    updateMetaThemeColor(theme);
-  }, [theme]);
+    const color = palette.common.secondaryBackground.default;
+    document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+      meta.setAttribute('content', color);
+    });
+  }, [palette]);
 
   const handleOpenMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -81,8 +77,10 @@ export function ThemeSelector() {
         anchorEl={anchorEl}
         open={isOpen}
         onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'switch-theme-button',
+        slotProps={{
+          list: {
+            'aria-labelledby': 'switch-theme-button',
+          },
         }}
       >
         {Object.entries(themeOptions).map(([mode, opts]) => (

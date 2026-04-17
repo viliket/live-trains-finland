@@ -1,5 +1,5 @@
 import { TimelineContent, TimelineItem } from '@mui/lab';
-import { Box, Link, Grid2 as Grid, Divider } from '@mui/material';
+import { Box, Link, Grid, Divider } from '@mui/material';
 import RouterLink from 'next/link';
 import { useTranslation } from 'react-i18next';
 

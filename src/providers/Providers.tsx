@@ -25,6 +25,7 @@ const MuiProvider = ({ children }: { children: React.ReactNode }) => {
         {
           cssVariables: {
             colorSchemeSelector: 'data-theme',
+            nativeColor: true,
           },
           ...baseTheme,
         },

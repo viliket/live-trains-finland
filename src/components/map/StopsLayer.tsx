@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { useTheme } from '@mui/material';
 import {
   differenceInMinutes,
   format,
@@ -12,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { Layer, Source, useMap } from 'react-map-gl/maplibre';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
+import { useResolvedPalette } from '../../hooks/useResolvedPalette';
 import useTrainQuery from '../../hooks/useTrainQuery';
 import { isDefined } from '../../utils/common';
 import { StationTimeTableRowGroup } from '../../utils/getTimeTableRowsGroupedByStation';
@@ -29,7 +29,7 @@ type StopsLayerProps = {
 
 const StopsLayer = ({ train }: StopsLayerProps) => {
   const { current: map } = useMap();
-  const theme = useTheme();
+  const { resolvedMode, palette } = useResolvedPalette();
   const [currentZoom, setCurrentZoom] = useState<number>();
   const [locale, setLocale] = useState<Locale>();
   const { i18n, t } = useTranslation();
@@ -147,12 +147,12 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
 
   const getTimeTableRowGroupColor = (group: StationTimeTableRowGroup) => {
     const r = group.departure ?? group.arrival;
-    if (!r) return theme.palette.text.primary;
+    if (!r) return palette.text.primary;
     const delayInMinutes = r.differenceInMinutes ?? 0;
     const color =
       r.cancelled || delayInMinutes > 0
-        ? theme.palette.error.main
-        : theme.palette.text.primary;
+        ? palette.error.main
+        : palette.text.primary;
     return color;
   };
 
@@ -208,12 +208,11 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
             'circle-color': routeStationGtfsIds
               ? getPropertyValueByStationGtfsId(
                   routeStationGtfsIds,
-                  theme.palette.secondary.main,
-                  theme.palette.mode === 'light' ? '#ccc' : '#555'
+                  palette.secondary.main,
+                  resolvedMode === 'light' ? '#ccc' : '#555'
                 )
               : '#ccc',
-            'circle-stroke-color':
-              theme.palette.mode === 'light' ? '#fff' : '#000',
+            'circle-stroke-color': resolvedMode === 'light' ? '#fff' : '#000',
             'circle-stroke-width': 2,
             'circle-radius': 4,
           },
@@ -254,7 +253,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
                     'text-color': getMatchExpression(
                       ['get', 'gtfsId'],
                       trainStationEntries.map((e) => [e.gtfsId, e.color]),
-                      theme.palette.text.secondary
+                      resolvedMode === 'light' ? '#fff' : '#000'
                     ),
                   },
                 ]
@@ -271,14 +270,12 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
             'text-color': routeStationGtfsIds
               ? getPropertyValueByStationGtfsId(
                   routeStationGtfsIds,
-                  theme.palette.text.primary,
-                  theme.palette.text.secondary
+                  palette.text.primary,
+                  palette.text.secondary
                 )
-              : theme.palette.text.primary,
+              : palette.text.primary,
             'text-halo-width': 2,
-            'text-halo-color': theme.palette.getContrastText(
-              theme.palette.text.primary
-            ),
+            'text-halo-color': palette.background.default,
           },
         }}
       />

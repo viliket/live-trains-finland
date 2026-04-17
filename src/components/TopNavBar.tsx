@@ -36,7 +36,7 @@ export function TopNavBar() {
                 alignItems: 'center',
                 color: 'primary.main',
                 ...theme.applyStyles('dark', {
-                  color: theme.palette.grey[300],
+                  color: theme.vars.palette.grey[300],
                 }),
               })}
             >

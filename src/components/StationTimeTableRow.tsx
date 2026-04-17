@@ -1,13 +1,6 @@
 import React from 'react';
 
-import {
-  alpha,
-  Box,
-  IconButton,
-  Link,
-  TableCell,
-  TableRow,
-} from '@mui/material';
+import { Box, IconButton, Link, TableCell, TableRow } from '@mui/material';
 import { Airplane, ChevronRight } from 'mdi-material-ui';
 import RouterLink from 'next/link';
 
@@ -84,9 +77,9 @@ function StationTimeTableRow({
               alignItems: 'center',
               borderRadius: '1em',
               textAlign: 'center',
-              backgroundColor: alpha(
-                theme.palette.primary.main,
-                theme.palette.action.selectedOpacity
+              backgroundColor: theme.alpha(
+                theme.vars.palette.primary.main,
+                theme.vars.palette.action.selectedOpacity
               ),
               minWidth: '1.8em',
               height: '1.8em',

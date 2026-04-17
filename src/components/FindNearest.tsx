@@ -210,7 +210,9 @@ function FindNearest() {
         fullScreen
         open={open}
         onClose={handleClose}
-        TransitionComponent={SlideUpTransition}
+        slots={{
+          transition: SlideUpTransition,
+        }}
       >
         <AppBar position="fixed" elevation={0}>
           <Toolbar>

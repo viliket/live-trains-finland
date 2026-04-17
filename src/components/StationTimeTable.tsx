@@ -45,10 +45,11 @@ function StationTimeTable({
           'thead tr th': {
             top: '3rem',
             zIndex: 1002,
-            backgroundColor: theme.palette.common.secondaryBackground.default,
+            backgroundColor:
+              theme.vars.palette.common.secondaryBackground.default,
           },
           'tr td, tr th': {
-            borderBottom: `1px solid ${theme.palette.divider}`,
+            borderBottom: `1px solid ${theme.vars.palette.divider}`,
           },
         })}
       >
