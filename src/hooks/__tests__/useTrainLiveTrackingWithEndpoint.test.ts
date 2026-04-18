@@ -47,13 +47,13 @@ describe('useTrainLiveTrackingWithEndpoint', () => {
 
     renderHook(() => useTrainLiveTrackingWithEndpoint(mqttConfig, trains));
 
-    expect(mqttConfig.getTopic).not.toBeCalled();
+    expect(mqttConfig.getTopic).not.toHaveBeenCalled();
 
     act(() => {
       mockMqttClient.emit('connect');
     });
 
-    expect(mqttConfig.getTopic).toBeCalledWith(trainBase);
+    expect(mqttConfig.getTopic).toHaveBeenCalledWith(trainBase);
   });
 
   it('should call handleMessage function of the MQTT config when MQTT client receives new message', () => {
@@ -76,7 +76,7 @@ describe('useTrainLiveTrackingWithEndpoint', () => {
       mockMqttClient.emit('message', 'topic', 'test msg');
     });
 
-    expect(mqttConfig.handleMessage).toBeCalledWith(
+    expect(mqttConfig.handleMessage).toHaveBeenCalledWith(
       'topic',
       'test msg',
       expect.any(Map)
@@ -110,7 +110,7 @@ describe('useTrainLiveTrackingWithEndpoint', () => {
       result.current.unsubscribeAll(unsubscribeCb);
     });
 
-    expect(unsubscribeCb).toBeCalledTimes(1);
+    expect(unsubscribeCb).toHaveBeenCalledTimes(1);
     expect(mockMqttClient.subscriptions).toHaveLength(0);
   });
 
@@ -132,7 +132,7 @@ describe('useTrainLiveTrackingWithEndpoint', () => {
       result.current.unsubscribeAll(unsubscribeCb);
     });
 
-    expect(unsubscribeCb).toBeCalledTimes(1);
+    expect(unsubscribeCb).toHaveBeenCalledTimes(1);
   });
 
   it('should return error when the MQTT client emits an error event', () => {
