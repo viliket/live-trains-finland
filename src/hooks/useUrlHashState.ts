@@ -3,14 +3,15 @@ import { SetStateAction, useEffect, useState } from 'react';
 export function useUrlHashState(
   hash: string
 ): [state: boolean, setState: React.Dispatch<SetStateAction<boolean>>] {
-  const [state, setState] = useState<boolean>(false);
+  const [state, setState] = useState<boolean>(() =>
+    typeof window !== 'undefined' ? window.location.hash === hash : false
+  );
 
   useEffect(() => {
     const onHashChange = () => {
       setState(window.location.hash === hash);
     };
     window.addEventListener('hashchange', onHashChange);
-    setState(window.location.hash === hash);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, [hash]);
 

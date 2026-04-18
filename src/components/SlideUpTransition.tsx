@@ -18,8 +18,9 @@ const SlideUpTransition = ({ ref, children, ...props }: Props) => {
   const handleRef = useForkRef(nodeRef, ref);
   return (
     <Transition nodeRef={nodeRef} timeout={DURATION} {...props}>
-      {(state) =>
-        cloneElement(children, {
+      {(state, childProps) => {
+        const { ownerState: _ownerState, ...restChildProps } = childProps ?? {};
+        return cloneElement(children, {
           ref: handleRef,
           style: {
             transition: `transform ${DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`,
@@ -27,11 +28,11 @@ const SlideUpTransition = ({ ref, children, ...props }: Props) => {
               state === 'entering' || state === 'entered'
                 ? 'translateY(0)'
                 : 'translateY(100%)',
-            visibility:
-              state === 'exited' && !props.in ? 'hidden' : undefined,
+            visibility: state === 'exited' && !props.in ? 'hidden' : undefined,
           },
-        })
-      }
+          ...restChildProps,
+        });
+      }}
     </Transition>
   );
 };

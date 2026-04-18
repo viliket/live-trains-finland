@@ -153,11 +153,14 @@ export default function VehicleMarkerLayer({
     };
   }, [map]);
 
-  useEffect(() => {
+  const [prevSelectedVehicleId, setPrevSelectedVehicleId] =
+    useState(selectedVehicleId);
+  if (selectedVehicleId !== prevSelectedVehicleId) {
+    setPrevSelectedVehicleId(selectedVehicleId);
     if (selectedVehicleId != null) {
       setIsTracking(true);
     }
-  }, [selectedVehicleId]);
+  }
 
   if (map && isTracking && selectedVehicleId) {
     const vehicle = getVehicleById(selectedVehicleId);

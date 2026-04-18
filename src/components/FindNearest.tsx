@@ -21,7 +21,6 @@ import { ChevronLeft, HomeClockOutline, Train } from 'mdi-material-ui';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
-import { useHasMounted } from '../hooks/useHasMounted';
 import { useRunningTrainsQuery } from '../hooks/useRunningTrainsQuery';
 import { useUrlHashState } from '../hooks/useUrlHashState';
 import { isDefined } from '../utils/common';
@@ -140,12 +139,13 @@ function FindNearest() {
   const [nearestType, setNearestType] = useState<'trains' | 'stations'>();
   const [position, setPosition] = useState<GeolocationPosition>();
   const { t } = useTranslation();
-  const router = useRouter();
-  const hasMounted = useHasMounted();
-  const isGeolocationAvailable = hasMounted && navigator.geolocation;
 
   const findNearest = useCallback(
     (nearestType: 'stations' | 'trains') => {
+      if (!navigator.geolocation) {
+        setGeoLocationErrorOpen(true);
+        return;
+      }
       setNearestType(nearestType);
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -165,9 +165,8 @@ function FindNearest() {
     // Handle case where the page is refreshed with the dialog hash in the URL
     if (open && !position) {
       setOpen(false);
-      findNearest('stations');
     }
-  }, [findNearest, open, position, router, setOpen]);
+  }, [open, position, setOpen]);
 
   const handleClose = () => {
     setOpen(false);
@@ -185,7 +184,6 @@ function FindNearest() {
       >
         <Button
           variant="contained"
-          disabled={!isGeolocationAvailable}
           onClick={() => findNearest('stations')}
           sx={{
             bgcolor: 'primary.light',
@@ -196,7 +194,6 @@ function FindNearest() {
         </Button>
         <Button
           variant="contained"
-          disabled={!isGeolocationAvailable}
           onClick={() => findNearest('trains')}
           sx={{
             bgcolor: 'primary.light',

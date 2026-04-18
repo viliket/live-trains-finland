@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import {
   Box,
@@ -67,11 +67,9 @@ export default function StationAndTrainSearch() {
   const { isLoading, error, data } = useRunningTrainsQuery();
   const currentlyRunningTrains = data?.currentlyRunningTrains;
 
-  useEffect(() => {
-    if (!open) {
-      setInputValue('');
-    }
-  }, [open]);
+  if (!open && inputValue) {
+    setInputValue('');
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
