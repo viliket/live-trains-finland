@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 import {
   Autocomplete,
@@ -49,8 +49,9 @@ const FilterStationTrainsDialog = (props: FilterStationTrainsDialogProps) => {
     timeTableType,
   } = props;
   const { t } = useTranslation();
-  const [station, setStation] = useState<StationFragment | null>(
-    stationCodeFilter ? getStationByCode(stationCodeFilter) : null
+  const station = useMemo(
+    () => (stationCodeFilter ? getStationByCode(stationCodeFilter) : null),
+    [stationCodeFilter]
   );
 
   const handleClose = () => {
@@ -58,27 +59,16 @@ const FilterStationTrainsDialog = (props: FilterStationTrainsDialogProps) => {
   };
 
   const resetFilters = () => {
-    setStation(null);
     setStationCodeFilter(null);
   };
 
   const handleChange = (_event: unknown, station: StationFragment | null) => {
     if (station) {
-      setStation(station);
       setStationCodeFilter(station.shortCode);
     } else {
       resetFilters();
     }
   };
-
-  useEffect(() => {
-    // Reset selection when station code filter is changed from the parent
-    if (!stationCodeFilter) {
-      setStation(null);
-    } else {
-      setStation(getStationByCode(stationCodeFilter));
-    }
-  }, [stationCodeFilter]);
 
   return (
     <Dialog onClose={handleClose} open={open} fullWidth maxWidth="sm">

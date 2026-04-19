@@ -4,17 +4,19 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
+    "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.14.1",
     "@mui/lab": "9.0.0-beta.2",
     "@mui/material": "^9.0.0",
+    "@mui/material-nextjs": "^9.0.0",
     "@tanstack/react-query": "^5.99.0",
     "@turf/distance": "^7.3.4",
     "@types/autosuggest-highlight": "^3.2.3",
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.24",
     "@types/node": "^22.13.4",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
     "autosuggest-highlight": "^3.3.4",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
@@ -29,10 +31,10 @@
     "maplibre-gl": "^5.23.0",
     "mdi-material-ui": "^8.0.0",
     "mqtt": "^5.15.1",
-    "next": "^15.1.7",
+    "next": "16.2.4",
     "nuqs": "^2.8.9",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
     "react-i18next": "^15.4.1",
     "react-map-gl": "^8.1.1",
     "react-reverse-portal": "^2.3.0",
@@ -42,27 +44,15 @@
     "use-local-storage-state": "^19.5.0",
     "zustand": "^5.0.12"
   },
-  "overrides": {
-    "use-sync-external-store": {
-      "react": "$react",
-      "react-dom": "$react-dom"
-    },
-    "react-svg": {
-      "react": "$react",
-      "react-dom": "$react-dom"
-    },
-    "react-reverse-portal": {
-      "react": "$react",
-      "react-dom": "$react-dom"
-    }
-  },
   "scripts": {
     "dev": "next dev",
-    "build": "npm run extract-tiles && next build",
+    "build": "npm run extract-tiles && next build && npm run build-service-worker",
+    "build-service-worker": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/buildServiceWorker.ts",
     "start": "next start",
     "test": "jest",
-    "lint": "next lint --max-warnings=0",
-    "lint:fix": "next lint --fix",
+    "lint": "eslint ./src --max-warnings=0",
+    "lint:fix": "eslint ./src --fix",
+    "pretype-check": "next typegen",
     "type-check": "tsc --noEmit",
     "extract-tiles-railway-tracks": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/extractMbtiles.ts --input=./data/railway_tracks.mbtiles --output=./public/tiles/railway_tracks",
     "extract-tiles-railway-platforms": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" tools/extractMbtiles.ts --input=./data/railway_platforms.mbtiles --output=./public/tiles/railway_platforms",
@@ -89,7 +79,9 @@
     "@types/better-sqlite3": "^7.6.13",
     "better-sqlite3": "^12.9.0",
     "dotenv": "^17.4.2",
-    "eslint-config-next": "^15.1.7",
+    "esbuild": "^0.28.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.2.4",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "husky": "^9.1.7",
@@ -98,7 +90,12 @@
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^15.4.3",
     "ts-node": "^10.9.2",
-    "workbox-webpack-plugin": "^7.4.0"
+    "workbox-build": "^7.4.0",
+    "workbox-core": "^7.4.0",
+    "workbox-expiration": "^7.4.0",
+    "workbox-precaching": "^7.4.0",
+    "workbox-routing": "^7.4.0",
+    "workbox-strategies": "^7.4.0"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --max-warnings=0 ./src"

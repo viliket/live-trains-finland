@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 // Adapted from https://github.com/HSLdevcom/jore4-ui/blob/main/ui/src/types/hsl-map-style.d.ts
 // This is a custom typing file, because the origin does not provide typings.
 // Based on https://github.com/HSLdevcom/hsl-map-style

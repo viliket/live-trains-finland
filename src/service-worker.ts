@@ -1,12 +1,4 @@
 /// <reference lib="webworker" />
-/* eslint-disable no-restricted-globals */
-
-// This service worker can be customized!
-// See https://developers.google.com/web/tools/workbox/modules
-// for the list of available Workbox modules, or add any other
-// code you'd like.
-// You can also remove this file if you'd prefer not to use a
-// service worker, and the Workbox build step will be skipped.
 
 import getRouteFromAssetPath from 'next/dist/shared/lib/router/utils/get-route-from-asset-path';
 import { getNamedRouteRegex } from 'next/dist/shared/lib/router/utils/route-regex';
@@ -39,20 +31,25 @@ cleanupOutdatedCaches();
 // (derived from the file name) are fulfilled with that HTML file shell.
 // Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell
-const dynamicPageHandlers = precacheEntries.reduce((acc, e) => {
-  if (typeof e === 'string') return acc;
+const dynamicPageHandlers = precacheEntries.reduce(
+  (acc, e) => {
+    if (typeof e === 'string') return acc;
 
-  if (e.url.endsWith('.html')) {
-    acc.push([
-      // Converts e.g. /train/[...train].html to
-      // RegExp /^\\/train\\/(.+?)(?:\\/)?$/
-      getNamedRouteRegex(getRouteFromAssetPath(e.url, '.html'), true).re,
-      createHandlerBoundToURL(e.url),
-    ]);
-  }
+    if (e.url.endsWith('.html')) {
+      acc.push([
+        // Converts e.g. /train/[...train].html to
+        // RegExp /^\\/train\\/(.+?)(?:\\/)?$/
+        getNamedRouteRegex(getRouteFromAssetPath(`/${e.url}`, '.html'), {
+          prefixRouteKeys: true,
+        }).re,
+        createHandlerBoundToURL(e.url),
+      ]);
+    }
 
-  return acc;
-}, [] as [RegExp, RouteHandlerCallback][]);
+    return acc;
+  },
+  [] as [RegExp, RouteHandlerCallback][]
+);
 
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$');
 dynamicPageHandlers.forEach(([exp, handler]) => {
@@ -74,7 +71,7 @@ dynamicPageHandlers.forEach(([exp, handler]) => {
 
 // Google fonts
 registerRoute(
-  new RegExp('https://fonts.(?:googleapis|gstatic).com/(.*)'),
+  /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\//,
   new StaleWhileRevalidate({
     cacheName: 'google-fonts',
     plugins: [new ExpirationPlugin({ maxEntries: 20 })],
@@ -82,7 +79,7 @@ registerRoute(
 );
 
 // MapLibre GL JS css (from unpkg)
-registerRoute(new RegExp('https://unpkg.com/(.*)'), new StaleWhileRevalidate());
+registerRoute(/^https:\/\/unpkg\.com\//, new StaleWhileRevalidate());
 
 // Same-origin image requests
 registerRoute(
@@ -95,7 +92,7 @@ registerRoute(
 
 // Same-origin static data assets
 registerRoute(
-  /\.(json)$/i,
+  ({ sameOrigin, url }) => sameOrigin && /\.json$/i.test(url.pathname),
   new NetworkFirst({
     cacheName: 'static-data-assets',
     plugins: [new ExpirationPlugin({ maxEntries: 50 })],

@@ -13,9 +13,7 @@ declare module '*.svg' {
 }
 
 declare module '*.svg?url' {
-  const content: {
-    src: string;
-  };
+  const url: string;
 
-  export default content;
+  export default url;
 }

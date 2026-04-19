@@ -1,4 +1,4 @@
-import { ComponentType, useMemo } from 'react';
+import { ComponentType, createContext, useContext, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 import {
@@ -16,9 +16,9 @@ const VehicleMapContainer = dynamic(() => import('./map/VehicleMapContainer'), {
   ssr: false,
 });
 
-let mapPortalNode: HtmlPortalNode<
-  ComponentType<VehicleMapContainerProps>
-> | null = null;
+type MapPortalNode = HtmlPortalNode<ComponentType<VehicleMapContainerProps>>;
+
+const MapPortalContext = createContext<MapPortalNode | null>(null);
 
 export const VehicleMapContainerPortal = ({
   selectedVehicleId,
@@ -27,6 +27,8 @@ export const VehicleMapContainerPortal = ({
   train,
   onVehicleSelected,
 }: VehicleMapContainerProps) => {
+  const mapPortalNode = useContext(MapPortalContext);
+
   return (
     mapPortalNode && (
       <OutPortal<typeof VehicleMapContainer>
@@ -44,7 +46,7 @@ export const VehicleMapContainerPortal = ({
 export default function MapLayout({ children }: { children: React.ReactNode }) {
   const hasMounted = useHasMounted();
 
-  mapPortalNode = useMemo(() => {
+  const mapPortalNode = useMemo<MapPortalNode | null>(() => {
     if (!hasMounted) {
       return null;
     }
@@ -54,7 +56,7 @@ export default function MapLayout({ children }: { children: React.ReactNode }) {
   }, [hasMounted]);
 
   return (
-    <>
+    <MapPortalContext.Provider value={mapPortalNode}>
       {mapPortalNode && (
         <InPortal node={mapPortalNode}>
           <VehicleMapContainer
@@ -64,6 +66,6 @@ export default function MapLayout({ children }: { children: React.ReactNode }) {
         </InPortal>
       )}
       {children}
-    </>
+    </MapPortalContext.Provider>
   );
 }
