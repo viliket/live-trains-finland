@@ -55,19 +55,17 @@ export default function usePassengerInformationMessages({
   );
 
   const fetchData = useCallback(async () => {
+    let url: string;
+    if (!lastFetchTimeRef.current) {
+      url = `${apiBaseUrl}/active?${params}`;
+    } else {
+      url = `${apiBaseUrl}/updated-after/${
+        lastFetchTimeRef.current.toISOString().split('.')[0] + 'Z'
+      }?${params}`;
+    }
+    lastFetchTimeRef.current = new Date();
+
     try {
-      let url: string;
-      if (!lastFetchTimeRef.current) {
-        url = `${apiBaseUrl}/active?${params}`;
-      } else {
-        url = `${apiBaseUrl}/updated-after/${
-          lastFetchTimeRef.current.toISOString().split('.')[0] + 'Z'
-        }?${params}`;
-      }
-
-      setError(undefined);
-      lastFetchTimeRef.current = new Date();
-
       const res = await fetch(url);
 
       if (!res.ok) {
@@ -78,6 +76,7 @@ export default function usePassengerInformationMessages({
         (await res.json()) as PassengerInformationMessage[];
 
       setMessages((msgs) => unionBy(latestMessages, msgs, 'id'));
+      setError(undefined);
     } catch (error) {
       setError(error);
     }

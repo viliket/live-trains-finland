@@ -255,18 +255,18 @@ function TrainComposition({
                   display: 'flex',
                   width: '100%',
                   justifyContent: 'center',
-                  color: theme.palette.primary.main,
+                  color: theme.vars.palette.primary.main,
                   'svg path.door': {
-                    fill: theme.palette.primary.light,
-                    stroke: theme.palette.primary.light,
+                    fill: theme.vars.palette.primary.light,
+                    stroke: theme.vars.palette.primary.light,
                     strokeWidth: '0.5px',
                     ...theme.applyStyles('dark', {
-                      fill: theme.palette.grey[500],
-                      stroke: theme.palette.grey[500],
+                      fill: theme.vars.palette.grey[500],
+                      stroke: theme.vars.palette.grey[500],
                     }),
                   },
                   ...theme.applyStyles('dark', {
-                    color: theme.palette.grey[400],
+                    color: theme.vars.palette.grey[400],
                   }),
                 })}
               >
@@ -310,7 +310,7 @@ function TrainComposition({
               color: 'black',
               backgroundClip: 'padding-box',
               ...theme.applyStyles('dark', {
-                backgroundColor: theme.palette.grey[400],
+                backgroundColor: theme.vars.palette.grey[400],
               }),
             },
           })}

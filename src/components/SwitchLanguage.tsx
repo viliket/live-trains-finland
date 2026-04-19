@@ -2,25 +2,18 @@
 import { useEffect } from 'react';
 
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { useTranslation } from 'react-i18next';
+
+import i18n from '../i18n';
 
 const SwitchLanguage = () => {
-  const { i18n } = useTranslation();
-
   useEffect(() => {
-    // Work-around for SSG: Change to detected language only after the first render
-    // to avoid hydration issues due to potential language mismatch on the first render.
-    const languageDetector = new LanguageDetector(i18n.services);
-    let detectedLanguages = languageDetector.detect();
-    if (Array.isArray(detectedLanguages)) {
-      detectedLanguages = detectedLanguages[0];
-    }
-    if (detectedLanguages) {
-      i18n.changeLanguage(detectedLanguages);
-      document.documentElement.lang = detectedLanguages;
-    }
-    i18n.services.languageDetector = languageDetector;
-  }, [i18n]);
+    // Deferred until after first render to keep SSR/hydration in fallbackLng.
+    const detector = new LanguageDetector(i18n.services);
+    const detected = detector.detect();
+    const lng = Array.isArray(detected) ? detected[0] : detected;
+    if (lng) i18n.changeLanguage(lng);
+    i18n.services.languageDetector = detector;
+  }, []);
 
   return null;
 };

@@ -1,110 +1,41 @@
-import path from 'path';
-
+import type { Config as SvgrConfig } from '@svgr/core';
 import type { NextConfig } from 'next';
-import { InjectManifest } from 'workbox-webpack-plugin';
 
 const nextConfig: NextConfig = {
   output: 'export',
   reactStrictMode: true,
   staticPageGenerationTimeout: 60 * 5,
+  // Workaround for Turbopack + MUI Pages Router hydration mismatch.
+  // See https://github.com/vercel/next.js/issues/82607 and
+  // https://github.com/mui/material-ui/issues/46181#issuecomment-2894160823
+  transpilePackages: ['@mui/material-nextjs', '@mui/lab'],
   experimental: {
     optimizePackageImports: ['mdi-material-ui'],
   },
-  webpack(config, context) {
-    if (process.env.NODE_ENV === 'production') {
-      config.plugins.push(
-        new InjectManifest({
-          swSrc: path.join(__dirname, 'src/service-worker.ts'),
-          swDest: path.join(__dirname, 'public/service-worker.js'),
-          additionalManifestEntries: [
+  turbopack: {
+    rules: {
+      '*.svg': [
+        {
+          condition: { query: '?url' },
+          type: 'asset',
+        },
+        {
+          condition: { not: { query: '?url' } },
+          as: '*.js',
+          loaders: [
             {
-              url: '/index.html',
-              revision: context.buildId,
-            },
-            {
-              url: '/[station].html',
-              revision: context.buildId,
-            },
-            {
-              url: '/train/[...train].html',
-              revision: context.buildId,
+              loader: '@svgr/webpack',
+              options: {
+                prettier: false,
+                svgo: false,
+                titleProp: true,
+                ref: true,
+              } satisfies SvgrConfig,
             },
           ],
-          // Similar config as in
-          // https://github.com/shadowwalker/next-pwa/blob/master/index.js
-          exclude: [
-            ({ asset }) =>
-              asset.name.startsWith('server/') ||
-              asset.name.match(
-                /^((app-|^)build-manifest\.json|react-loadable-manifest\.json|dynamic-css-manifest\.json)$/
-              ),
-          ],
-          modifyURLPrefix: {
-            '/_next/../public/': '/',
-          },
-          dontCacheBustURLsMatching: /^\/_next\/\/?static\/.*/i,
-          manifestTransforms: [
-            async (manifestEntries) => {
-              const manifest = manifestEntries.map((m) => {
-                m.url = m.url.replace(
-                  '/_next//static/image',
-                  '/_next/static/image'
-                );
-                m.url = m.url.replace(
-                  '/_next//static/media',
-                  '/_next/static/media'
-                );
-                m.url = m.url.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
-                return m;
-              });
-              return { manifest, warnings: [] };
-            },
-          ],
-        })
-      );
-    }
-    // From: https://react-svgr.com/docs/next/
-    // and https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/config/webpack.config.js#L389
-
-    // Grab the existing rule that handles SVG imports
-    const fileLoaderRule = config.module.rules.find((rule) =>
-      rule.test?.test?.('.svg')
-    );
-
-    config.module.rules.push(
-      // Reapply the existing rule, but only for svg imports ending in ?url
-      {
-        ...fileLoaderRule,
-        test: /\.svg$/i,
-        resourceQuery: /url/, // *.svg?url
-      },
-      // Convert all other *.svg imports to React components
-      {
-        test: /\.svg$/i,
-        issuer: /\.[jt]sx?$/,
-        resourceQuery: { not: /url/ }, // exclude if *.svg?url
-        use: [
-          {
-            loader: require.resolve('@svgr/webpack'),
-            /** @type {import('@svgr/core').Config} */
-            options: {
-              prettier: false,
-              svgo: false,
-              svgoConfig: {
-                plugins: [{ removeViewBox: false }],
-              },
-              titleProp: true,
-              ref: true,
-            },
-          },
-        ],
-      }
-    );
-
-    // Modify the file loader rule to ignore *.svg, since we have it handled now.
-    fileLoaderRule.exclude = /\.svg$/i;
-
-    return config;
+        },
+      ],
+    },
   },
 };
 

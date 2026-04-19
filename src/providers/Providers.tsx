@@ -1,6 +1,4 @@
-'use client';
-
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import {
   createTheme as createMuiTheme,
@@ -26,6 +24,7 @@ const MuiProvider = ({ children }: { children: React.ReactNode }) => {
         {
           cssVariables: {
             colorSchemeSelector: 'data-theme',
+            nativeColor: true,
           },
           ...baseTheme,
         },
@@ -33,6 +32,12 @@ const MuiProvider = ({ children }: { children: React.ReactNode }) => {
       ),
     [i18n.resolvedLanguage]
   );
+
+  useEffect(() => {
+    if (i18n.resolvedLanguage) {
+      document.documentElement.lang = i18n.resolvedLanguage;
+    }
+  }, [i18n.resolvedLanguage]);
 
   return (
     <MuiThemeProvider theme={theme}>

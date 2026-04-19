@@ -66,15 +66,16 @@ const Train: NextPageWithLayout = () => {
     []
   );
 
-  useEffect(() => {
+  const [prevTrain, setPrevTrain] = useState(train);
+  if (train !== prevTrain) {
+    setPrevTrain(train);
     if (train) {
       const headTrainVehicleId = getHeadTrainVehicleId(train);
       if (headTrainVehicleId) {
-        // set the first unit of the train as selected vehicle
         setSelectedVehicleId(headTrainVehicleId);
       }
     }
-  }, [train]);
+  }
 
   if (trainNumber && departureDate && !isLoading && !train && !error) {
     return <NotFound />;

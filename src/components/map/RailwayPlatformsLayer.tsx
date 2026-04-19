@@ -1,8 +1,9 @@
-import { useTheme } from '@mui/material';
 import { Layer, Source } from 'react-map-gl/maplibre';
 
+import { useResolvedPalette } from '../../hooks/useResolvedPalette';
+
 const RailwayPlatformsLayer = () => {
-  const theme = useTheme();
+  const { palette } = useResolvedPalette();
 
   return (
     <Source
@@ -19,7 +20,7 @@ const RailwayPlatformsLayer = () => {
           source: 'railway_platforms',
           'source-layer': 'railway_platforms',
           paint: {
-            'fill-color': theme.palette.secondary.main,
+            'fill-color': palette.secondary.main,
             'fill-opacity': 0.4,
           },
         }}

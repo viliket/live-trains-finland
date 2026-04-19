@@ -7,7 +7,8 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from '@mui/lab';
-import { Box, Button, Collapse, Grid2 as Grid, Skeleton } from '@mui/material';
+import { Box, Button, Collapse, Grid, Skeleton } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { parseISO } from 'date-fns';
 import { ChevronDown } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
@@ -158,9 +159,12 @@ const TrainStationTimeline = ({
 
 const TrainStationTimelineHeader = () => {
   const { t } = useTranslation();
+  // Resolve theme via hook because MUI TimelineItem hands sx callbacks
+  // a default theme on the server, which has no `theme.vars`
+  const theme = useTheme();
   return (
     <TimelineItem
-      sx={(theme) => ({
+      sx={{
         position: 'sticky',
         top: '3.5rem',
         zIndex: 1002,
@@ -175,15 +179,15 @@ const TrainStationTimelineHeader = () => {
         '&:before': {
           display: 'none',
         },
-      })}
+      }}
     >
       <TimelineContent>
         <Grid
           container
           spacing={2}
-          sx={(theme) => ({
-            fontWeight: theme.typography.fontWeightMedium,
-          })}
+          sx={{
+            fontWeight: (theme) => theme.typography.fontWeightMedium,
+          }}
         >
           <Grid size={6}>{t('station')}</Grid>
           <Grid size={3}>{t('arrival')}</Grid>

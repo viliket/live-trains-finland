@@ -1,8 +1,8 @@
-import { CssVarsThemeOptions, alpha } from '@mui/material';
+import { CssVarsThemeOptions } from '@mui/material';
 
 import type {} from '@mui/material/themeCssVarsAugmentation';
 
-declare module '@mui/material/styles/createPalette' {
+declare module '@mui/material/styles' {
   interface CommonColors {
     secondaryBackground: {
       default: string;
@@ -89,13 +89,22 @@ const baseTheme: CssVarsThemeOptions = {
               props: { color: 'primary' },
               style: {
                 ...theme.applyStyles('dark', {
-                  color: theme.palette.grey[300],
+                  color: theme.vars.palette.grey[300],
                   '&.Mui-selected': {
                     color: '#fff',
-                    borderColor: alpha(theme.palette.primary.main, 0.2),
-                    backgroundColor: alpha(theme.palette.primary.main, 0.2),
+                    borderColor: theme.alpha(
+                      theme.vars.palette.primary.main,
+                      0.2
+                    ),
+                    backgroundColor: theme.alpha(
+                      theme.vars.palette.primary.main,
+                      0.2
+                    ),
                     '&:hover': {
-                      backgroundColor: alpha(theme.palette.primary.main, 0.3),
+                      backgroundColor: theme.alpha(
+                        theme.vars.palette.primary.main,
+                        0.3
+                      ),
                     },
                   },
                 }),

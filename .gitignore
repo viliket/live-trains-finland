@@ -14,6 +14,11 @@
 /out/
 /public/service-worker.js
 /public/service-worker.js.map
+*.tsbuildinfo
+next-env.d.ts
+
+# browser automation artifacts
+.playwright-mcp/
 
 # auto-generated map tiles
 /public/tiles

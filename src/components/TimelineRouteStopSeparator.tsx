@@ -1,5 +1,4 @@
 import { TimelineConnector, TimelineDot, TimelineSeparator } from '@mui/lab';
-import { alpha, useTheme } from '@mui/material';
 import { ArrowDown, ChevronLeft, ChevronRight } from 'mdi-material-ui';
 
 import { StationPlatformSide } from '../graphql/generated/digitraffic/graphql';
@@ -19,7 +18,6 @@ const TimelineRouteStopSeparator = ({
   isFinalStop,
   platformSide,
 }: TimelineRouteStopSeparatorProps) => {
-  const theme = useTheme();
   const sxArrow = {
     color: !passed ? 'secondary.main' : 'text.secondary',
     fontSize: '0.65rem',
@@ -31,7 +29,6 @@ const TimelineRouteStopSeparator = ({
       color: '#fff',
     }),
   };
-  const secondaryPaleColor = alpha(theme.palette.secondary.main, 0.6);
 
   return (
     <TimelineSeparator>
@@ -59,11 +56,13 @@ const TimelineRouteStopSeparator = ({
         </TimelineDot>
       )}
       <TimelineDot
-        sx={{
+        sx={(theme) => ({
           position: 'relative',
           padding: '2px',
-          borderColor: !passed ? secondaryPaleColor : 'divider',
-        }}
+          borderColor: !passed
+            ? theme.alpha(theme.vars.palette.secondary.main, 0.6)
+            : 'divider',
+        })}
         variant="outlined"
       >
         {platformSide === StationPlatformSide.Right && (
@@ -91,10 +90,12 @@ const TimelineRouteStopSeparator = ({
       </TimelineDot>
       {!isFinalStop && (
         <TimelineConnector
-          sx={{
+          sx={(theme) => ({
             bgcolor:
-              !passed || wasVehicleAtStation ? secondaryPaleColor : 'divider',
-          }}
+              !passed || wasVehicleAtStation
+                ? theme.alpha(theme.vars.palette.secondary.main, 0.6)
+                : 'divider',
+          })}
         />
       )}
     </TimelineSeparator>

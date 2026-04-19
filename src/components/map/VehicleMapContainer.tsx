@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import { Box, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import { QualityHigh, QualityLow } from 'mdi-material-ui';
 import { useTranslation } from 'react-i18next';
 import Map, {
@@ -13,6 +13,7 @@ import useLocalStorageState from 'use-local-storage-state';
 
 import { TrainByStationFragment } from '../../graphql/generated/digitraffic/graphql';
 import { RouteForRailFragment } from '../../graphql/generated/digitransit/graphql';
+import { useResolvedPalette } from '../../hooks/useResolvedPalette';
 import { getMapStyle } from '../../utils/map';
 import { TrainStation, trainStations } from '../../utils/stations';
 
@@ -57,7 +58,7 @@ const VehicleMapContainer = ({
   onVehicleSelected,
 }: VehicleMapContainerProps) => {
   const mapRef = useRef<MapRef | null>(null);
-  const theme = useTheme();
+  const { resolvedMode } = useResolvedPalette();
   const [useVectorBaseTiles, setUseVectorBaseTiles] = useLocalStorageState(
     'useVectorBaseTiles',
     {
@@ -111,7 +112,7 @@ const VehicleMapContainer = ({
       }}
       mapStyle={getMapStyle(
         useVectorBaseTiles,
-        theme.palette.mode,
+        resolvedMode,
         i18n.resolvedLanguage ?? i18n.language
       )}
       transformRequest={(url) => {

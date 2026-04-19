@@ -209,7 +209,7 @@ const Station: NextPageWithLayout = () => {
               </Badge>
             </IconButton>
           </Box>
-          <Box paddingY={1}>
+          <Box sx={{ paddingY: 1 }}>
             {passengerInformationMessages && (
               <PassengerInformationMessageAlert
                 onClick={() => setStationAlertDialogOpen(true)}

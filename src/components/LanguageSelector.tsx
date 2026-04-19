@@ -20,7 +20,6 @@ export function LanguageSelector() {
 
   const handleSelectLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    document.documentElement.lang = lng;
     handleClose();
   };
 
@@ -56,8 +55,10 @@ export function LanguageSelector() {
         anchorEl={anchorEl}
         open={isOpen}
         onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'switch-language-button',
+        slotProps={{
+          list: {
+            'aria-labelledby': 'switch-language-button',
+          },
         }}
       >
         {Object.keys(lngs).map((lng) => (

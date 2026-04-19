@@ -1,4 +1,4 @@
-import { darken, lighten, styled, Switch } from '@mui/material';
+import { styled, Switch } from '@mui/material';
 
 const FloorSwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -18,7 +18,7 @@ const FloorSwitch = styled(Switch)(({ theme }) => ({
       },
       '& + .MuiSwitch-track': {
         opacity: 1,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.vars.palette.primary.main,
       },
     },
     '&.Mui-disabled': {
@@ -26,15 +26,15 @@ const FloorSwitch = styled(Switch)(({ theme }) => ({
         opacity: 0.1,
       },
       '& .MuiSwitch-thumb': {
-        backgroundColor: lighten(theme.palette.primary.main, 0.62),
+        backgroundColor: theme.lighten(theme.vars.palette.primary.main, 0.62),
         ...theme.applyStyles('dark', {
-          backgroundColor: darken(theme.palette.primary.main, 0.55),
+          backgroundColor: theme.darken(theme.vars.palette.primary.main, 0.55),
         }),
       },
     },
   },
   '& .MuiSwitch-thumb': {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.vars.palette.primary.main,
     width: 32,
     height: 32,
     '&:before': {

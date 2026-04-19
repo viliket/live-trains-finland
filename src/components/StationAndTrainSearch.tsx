@@ -1,8 +1,7 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import {
   Box,
-  alpha,
   DialogContentText,
   InputBase,
   ListSubheader,
@@ -68,11 +67,9 @@ export default function StationAndTrainSearch() {
   const { isLoading, error, data } = useRunningTrainsQuery();
   const currentlyRunningTrains = data?.currentlyRunningTrains;
 
-  useEffect(() => {
-    if (!open) {
-      setInputValue('');
-    }
-  }, [open]);
+  if (!open && inputValue) {
+    setInputValue('');
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -104,10 +101,9 @@ export default function StationAndTrainSearch() {
           color: theme.vars.palette.text.secondary,
           border: 'none',
           '&:hover': {
-            bgcolor: alpha(
-              theme.palette.action.selected,
-              theme.vars.palette.action.selectedOpacity +
-                theme.vars.palette.action.hoverOpacity
+            bgcolor: theme.alpha(
+              theme.vars.palette.action.selected,
+              `${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}`
             ),
           },
           fontSize: theme.typography.pxToRem(14),
@@ -131,7 +127,9 @@ export default function StationAndTrainSearch() {
         fullScreen
         open={open}
         onClose={handleClose}
-        TransitionComponent={SlideUpTransition}
+        slots={{
+          transition: SlideUpTransition,
+        }}
       >
         <AppBar position="fixed" elevation={0}>
           <Toolbar>
