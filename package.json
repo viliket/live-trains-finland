@@ -35,7 +35,7 @@
     "nuqs": "^2.8.9",
     "react": "19.2.5",
     "react-dom": "19.2.5",
-    "react-i18next": "^15.4.1",
+    "react-i18next": "^17.0.4",
     "react-map-gl": "^8.1.1",
     "react-reverse-portal": "^2.3.0",
     "react-svg": "^17.2.4",
