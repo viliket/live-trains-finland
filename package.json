@@ -88,7 +88,7 @@
     "is-ci": "^4.1.0",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
-    "lint-staged": "^15.4.3",
+    "lint-staged": "^16.4.0",
     "ts-node": "^10.9.2",
     "workbox-build": "^7.4.0",
     "workbox-core": "^7.4.0",
