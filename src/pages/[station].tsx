@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   Badge,
@@ -19,6 +19,8 @@ import { useTranslation } from 'react-i18next';
 
 import FavoriteStation from '../components/FavoriteStation';
 import FilterStationTrainsDialog from '../components/FilterStationTrainsDialog';
+import Footer from '../components/Footer';
+import MapBottomSheet from '../components/MapBottomSheet';
 import MapLayout, { VehicleMapContainerPortal } from '../components/MapLayout';
 import PassengerInformationMessageAlert from '../components/PassengerInformationMessageAlert';
 import PassengerInformationMessagesDialog from '../components/PassengerInformationMessagesDialog';
@@ -148,13 +150,7 @@ const Station: NextPageWithLayout = () => {
 
   return (
     <div style={{ width: '100%' }}>
-      <SubNavBar>
-        <h4>{station?.stationName}</h4>
-        {station && (
-          <FavoriteStation stationShortCode={station.stationShortCode} />
-        )}
-      </SubNavBar>
-      <Box sx={{ height: '30vh' }}>
+      <Box sx={{ height: '100vh' }}>
         <VehicleMapContainerPortal
           selectedVehicleId={selectedVehicleId}
           station={station}
@@ -163,69 +159,81 @@ const Station: NextPageWithLayout = () => {
           onVehicleSelected={handleVehicleIdSelected}
         />
       </Box>
-      <Box
-        sx={{
-          padding: '0.5rem',
-          bgcolor: 'common.secondaryBackground.default',
-        }}
+      <MapBottomSheet
+        header={
+          <SubNavBar>
+            <h4>{station?.stationName}</h4>
+            {station && (
+              <FavoriteStation stationShortCode={station.stationShortCode} />
+            )}
+          </SubNavBar>
+        }
       >
-        <Box sx={{ display: 'flex' }}>
-          <ToggleButtonGroup
-            color="primary"
-            value={timeTableType}
-            exclusive
-            fullWidth
-            onChange={handleTimeTableTypeChange}
-            sx={{
-              borderRadius: '24px',
-              button: {
-                borderRadius: '24px',
-              },
-            }}
-          >
-            <ToggleButton value={TimeTableRowType.Departure}>
-              {t('departures')} <ClockStart />
-            </ToggleButton>
-            <ToggleButton value={TimeTableRowType.Arrival}>
-              <ClockEnd /> {t('arrivals')}
-            </ToggleButton>
-          </ToggleButtonGroup>
-          <IconButton
-            size="small"
-            onClick={() => setFilterDialogOpen(true)}
-            sx={{ padding: 2 }}
-          >
-            <Badge
-              badgeContent={stationCode && deptOrArrStationCodeFilter ? 1 : 0}
+        <Box
+          sx={{
+            padding: '0.5rem',
+            bgcolor: 'common.secondaryBackground.default',
+          }}
+        >
+          <Box sx={{ display: 'flex' }}>
+            <ToggleButtonGroup
               color="primary"
+              value={timeTableType}
+              exclusive
+              fullWidth
+              onChange={handleTimeTableTypeChange}
+              sx={{
+                borderRadius: '24px',
+                button: {
+                  borderRadius: '24px',
+                },
+              }}
             >
-              <FilterCog fontSize="inherit" />
-            </Badge>
-          </IconButton>
+              <ToggleButton value={TimeTableRowType.Departure}>
+                {t('departures')} <ClockStart />
+              </ToggleButton>
+              <ToggleButton value={TimeTableRowType.Arrival}>
+                <ClockEnd /> {t('arrivals')}
+              </ToggleButton>
+            </ToggleButtonGroup>
+            <IconButton
+              size="small"
+              onClick={() => setFilterDialogOpen(true)}
+              sx={{ padding: 2 }}
+            >
+              <Badge
+                badgeContent={stationCode && deptOrArrStationCodeFilter ? 1 : 0}
+                color="primary"
+              >
+                <FilterCog fontSize="inherit" />
+              </Badge>
+            </IconButton>
+          </Box>
+          <Box sx={{ paddingY: 1 }}>
+            {passengerInformationMessages && (
+              <PassengerInformationMessageAlert
+                onClick={() => setStationAlertDialogOpen(true)}
+                passengerInformationMessages={passengerInformationMessages}
+              />
+            )}
+          </Box>
         </Box>
-        <Box sx={{ paddingY: 1 }}>
-          {passengerInformationMessages && (
-            <PassengerInformationMessageAlert
-              onClick={() => setStationAlertDialogOpen(true)}
-              passengerInformationMessages={passengerInformationMessages}
-            />
-          )}
-        </Box>
-      </Box>
+        {stationCode && !loading && trains && (
+          <StationTimeTable
+            stationCode={stationCode}
+            timeTableType={timeTableType}
+            trains={relevantTrains}
+            tableRowOnClick={handleTimeTableRowClick}
+          />
+        )}
+        {(!stationCode || loading) && getLoadingSkeleton()}
+        <Footer />
+      </MapBottomSheet>
       <Snackbar
         open={!!error}
         autoHideDuration={5000}
         message={error?.message}
       />
-      {stationCode && !loading && trains && (
-        <StationTimeTable
-          stationCode={stationCode}
-          timeTableType={timeTableType}
-          trains={relevantTrains}
-          tableRowOnClick={handleTimeTableRowClick}
-        />
-      )}
-      {(!stationCode || loading) && getLoadingSkeleton()}
       <PassengerInformationMessagesDialog
         open={stationAlertDialogOpen}
         passengerInformationMessages={passengerInformationMessages}

@@ -17,3 +17,9 @@ declare module '*.svg?url' {
 
   export default url;
 }
+
+declare module 'csstype' {
+  interface Properties {
+    [key: `--${string}`]: string | number;
+  }
+}

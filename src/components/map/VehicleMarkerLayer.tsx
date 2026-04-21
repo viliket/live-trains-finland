@@ -167,6 +167,7 @@ export default function VehicleMarkerLayer({
     if (vehicle && !map.isMoving()) {
       map.flyTo(
         {
+          padding: map.getPadding(),
           center: vehicle.position,
           animate: true,
           easing: (t) => t,

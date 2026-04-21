@@ -2,6 +2,11 @@
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  timeline-scope: --sheet-timeline;
+}
+
+body {
+  position: relative;
 }
 
 /**
@@ -17,7 +22,7 @@
  * Restores the order changed by the rule above so that the actual top-left control is still
  * higher than maplibre popups (.maplibregl-popup).
  */
-.maplibregl-ctrl-top-left div:first-child {
+.maplibregl-ctrl-top-left > :not(:has(#deckgl-overlay)) {
   z-index: 1;
   position: absolute;
 }
@@ -25,6 +30,72 @@
 .maplibregl-ctrl-attrib.maplibregl-compact-show {
   max-width: 58%;
   background-color: hsla(0, 0%, 100%, 0.7);
+}
+
+.maplibregl-ctrl-bottom-left,
+.maplibregl-ctrl-bottom-right {
+  opacity: 1;
+  transition: opacity 0.1s;
+  position: fixed;
+  position-anchor: --sheet;
+  bottom: anchor(top);
+}
+
+@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+  .maplibregl-control-container > * > * {
+    animation: fade-out linear forwards;
+    animation-timeline: --sheet-timeline;
+    animation-range-start: 75vh;
+    animation-range-end: 85vh;
+  }
+
+  .maplibregl-control-container
+    .maplibregl-ctrl-top-left
+    :has(#deckgl-overlay) {
+    animation: none;
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      display: none;
+    }
+  }
+}
+
+@supports (
+  not ((animation-timeline: scroll()) and (animation-range: 0% 100%))
+) {
+  .maplibregl-map[data-hide-controls] .maplibregl-control-container {
+    display: none;
+  }
+
+  .maplibregl-control-container > * > * {
+    opacity: clamp(
+      0,
+      calc((0.85 - var(--control-offset-progress, 0)) / 0.1),
+      1
+    );
+  }
+
+  .maplibregl-control-container
+    .maplibregl-ctrl-top-left
+    :has(#deckgl-overlay) {
+    opacity: 1;
+  }
+
+  .maplibregl-ctrl-bottom-left,
+  .maplibregl-ctrl-bottom-right {
+    bottom: var(--control-offset-bottom, 0);
+  }
+}
+
+.maplibregl-ctrl-bottom-left.hidden,
+.maplibregl-ctrl-bottom-right.hidden {
+  opacity: 0;
 }
 
 [data-theme='dark'] .maplibregl-ctrl-attrib.maplibregl-compact-show {

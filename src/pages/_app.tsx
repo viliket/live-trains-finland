@@ -5,10 +5,8 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import type { NextPage } from 'next/types';
 
-import Footer from '../components/Footer';
 import ServiceWorkerUpdatePrompt from '../components/ServiceWorkerUpdatePrompt';
 import SwitchLanguage from '../components/SwitchLanguage';
-import { TopNavBar } from '../components/TopNavBar';
 import Providers from '../providers/Providers';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -43,10 +41,8 @@ export default function App(props: AppPropsWithLayout) {
           </Head>
           <ServiceWorkerUpdatePrompt />
           <SwitchLanguage />
-          <TopNavBar />
           {getLayout(<Component {...pageProps} />)}
         </div>
-        <Footer />
       </Providers>
     </AppCacheProvider>
   );

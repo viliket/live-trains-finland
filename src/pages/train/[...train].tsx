@@ -1,11 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Box, Snackbar } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 
+import Footer from '../../components/Footer';
+import MapBottomSheet from '../../components/MapBottomSheet';
 import MapLayout, {
   VehicleMapContainerPortal,
 } from '../../components/MapLayout';
@@ -29,6 +31,7 @@ const Train: NextPageWithLayout = () => {
     ? Number.parseInt(trainNumberParam, 10)
     : null;
   const searchParams = useSearchParams();
+
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
     null
   );
@@ -80,8 +83,7 @@ const Train: NextPageWithLayout = () => {
 
   return (
     <div style={{ width: '100%' }}>
-      <TrainSubNavBar train={train} />
-      <Box sx={{ height: '30vh' }}>
+      <Box sx={{ height: '100vh' }}>
         <VehicleMapContainerPortal
           selectedVehicleId={selectedVehicleId}
           station={station}
@@ -95,7 +97,10 @@ const Train: NextPageWithLayout = () => {
         autoHideDuration={5000}
         message={error?.message}
       />
-      <TrainInfoContainer train={train} />
+      <MapBottomSheet header={<TrainSubNavBar train={train} />}>
+        <TrainInfoContainer train={train} />
+        <Footer />
+      </MapBottomSheet>
     </div>
   );
 };
