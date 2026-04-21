@@ -17,3 +17,5 @@ declare module '*.svg?url' {
 
   export default url;
 }
+
+declare module '*.css';
