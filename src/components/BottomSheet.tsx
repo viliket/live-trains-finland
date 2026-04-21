@@ -23,6 +23,8 @@ const StyledBottomSheet = styled(BottomSheetBase)(({ theme }) => ({
   '&::part(handle)': {
     backgroundColor: theme.palette.divider,
   },
+  // Re-anchor box-sizing as slotted content cannot inherit it across the shadow boundary
+  '& > *': { boxSizing: 'border-box' },
 }));
 
 type BottomSheetProps = {
@@ -59,6 +61,13 @@ export default function BottomSheet({
     onSnapPositionChangeRef.current = onSnapPositionChange;
   }, [onTransitionStart, onTransitionEnd, onScroll, onSnapPositionChange]);
 
+  const handleSnapPositionChange = useCallback(
+    (event: CustomEvent<SnapPositionChangeEventDetail>) => {
+      onSnapPositionChangeRef.current?.(event);
+    },
+    []
+  );
+
   const handleScroll = useCallback(() => {
     onScrollRef.current?.(innerRef.current ? innerRef.current.scrollTop : 0);
     if (scrollEndTimerRef.current) {
@@ -82,7 +91,7 @@ export default function BottomSheet({
     <StyledBottomSheet
       ref={innerRef}
       onScroll={handleScroll}
-      onsnap-position-change={onSnapPositionChangeRef.current}
+      onsnap-position-change={handleSnapPositionChange}
       content-height
     >
       <div slot="header">{header}</div>
