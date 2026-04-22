@@ -92,7 +92,12 @@ async function fetchAndSaveData() {
 
   const stationPlatformInfoByStationPlatformId = Object.values(
     platformParts.features
-  ).reduce(
+  ).reduce<
+    Record<
+      string,
+      { platform_side: string; oid: string; platformType?: string }
+    >
+  >(
     (a, v) => ({
       ...a,
       [v.properties.platform_id.toUpperCase().trim()]: {
@@ -100,10 +105,7 @@ async function fetchAndSaveData() {
         oid: v.properties.oid,
       },
     }),
-    {} as Record<
-      string,
-      { platform_side: string; oid: string; platformType?: string }
-    >
+    {}
   );
 
   // Update correct platform type on each platform part based on platforms and their platform_part array
@@ -176,7 +178,9 @@ async function fetchAndSaveData() {
   // Convert to final simplified format
   const stationPlatformByStationPlatformId = Object.entries(
     stationPlatformInfoByStationPlatformId
-  ).reduce((entries, [platformId, platformData]) => {
+  ).reduce<
+    Record<string, { platformSide: string; platformType: string | undefined }>
+  >((entries, [platformId, platformData]) => {
     entries[platformId.replace('LAITURI', '').trim()] = {
       platformSide: convertPlatformSideToCleanFormat(
         platformData.platform_side
@@ -184,7 +188,7 @@ async function fetchAndSaveData() {
       platformType: convertPlatformTypeToCleanFormat(platformData.platformType),
     };
     return entries;
-  }, {} as Record<string, { platformSide: string; platformType: string | undefined }>);
+  }, {});
 
   fs.writeFile(
     'src/utils/generated/station-platform-by-station-platform-id.json',
