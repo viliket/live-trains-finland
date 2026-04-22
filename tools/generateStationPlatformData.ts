@@ -93,7 +93,10 @@ async function fetchAndSaveData() {
   const stationPlatformInfoByStationPlatformId = Object.values(
     platformParts.features
   ).reduce<
-    Record<string, { platform_side: string; oid: string; platformType?: string }>
+    Record<
+      string,
+      { platform_side: string; oid: string; platformType?: string }
+    >
   >(
     (a, v) => ({
       ...a,
@@ -175,7 +178,9 @@ async function fetchAndSaveData() {
   // Convert to final simplified format
   const stationPlatformByStationPlatformId = Object.entries(
     stationPlatformInfoByStationPlatformId
-  ).reduce((entries, [platformId, platformData]) => {
+  ).reduce<
+    Record<string, { platformSide: string; platformType: string | undefined }>
+  >((entries, [platformId, platformData]) => {
     entries[platformId.replace('LAITURI', '').trim()] = {
       platformSide: convertPlatformSideToCleanFormat(
         platformData.platform_side
@@ -183,7 +188,7 @@ async function fetchAndSaveData() {
       platformType: convertPlatformTypeToCleanFormat(platformData.platformType),
     };
     return entries;
-  }, {} as Record<string, { platformSide: string; platformType: string | undefined }>);
+  }, {});
 
   fs.writeFile(
     'src/utils/generated/station-platform-by-station-platform-id.json',
