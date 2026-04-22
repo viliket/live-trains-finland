@@ -92,7 +92,9 @@ async function fetchAndSaveData() {
 
   const stationPlatformInfoByStationPlatformId = Object.values(
     platformParts.features
-  ).reduce(
+  ).reduce<
+    Record<string, { platform_side: string; oid: string; platformType?: string }>
+  >(
     (a, v) => ({
       ...a,
       [v.properties.platform_id.toUpperCase().trim()]: {
@@ -100,10 +102,7 @@ async function fetchAndSaveData() {
         oid: v.properties.oid,
       },
     }),
-    {} as Record<
-      string,
-      { platform_side: string; oid: string; platformType?: string }
-    >
+    {}
   );
 
   // Update correct platform type on each platform part based on platforms and their platform_part array
