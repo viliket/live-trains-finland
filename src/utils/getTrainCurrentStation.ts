@@ -10,10 +10,10 @@ export default function getTrainCurrentStation(train: TrainByStationFragment) {
   const latestArrivalRow = getTrainLatestArrivalRow(train);
 
   const nextDepatureRow = latestArrivalRow
-    ? train.timeTableRows?.find(
+    ? train.timeTableRows.find(
         (r) =>
-          r?.station.shortCode === latestArrivalRow.station.shortCode &&
-          r?.type === TimeTableRowType.Departure &&
+          r.station?.shortCode === latestArrivalRow.station?.shortCode &&
+          r.type === TimeTableRowType.Departure &&
           r.scheduledTime > latestArrivalRow.scheduledTime
       )
     : getDepartureTimeTableRow(train);
@@ -29,7 +29,7 @@ export default function getTrainCurrentStation(train: TrainByStationFragment) {
     new Date() < new Date(nextDepatureRow.actualTime)
   ) {
     // Train has arrived at station and is waiting to depart from that station
-    return nextDepatureRow?.station;
+    return nextDepatureRow.station;
   }
 
   return undefined;

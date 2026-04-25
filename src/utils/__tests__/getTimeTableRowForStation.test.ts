@@ -25,6 +25,8 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 describe('getTimeTableRowForStation', () => {
@@ -54,6 +56,7 @@ describe('getTimeTableRowForStation', () => {
           scheduledTime: '2023-01-25T09:00:00Z',
           trainStopping: false,
           type: TimeTableRowType.Departure,
+          causes: [],
           station: {
             name: 'Helsinki',
             shortCode: 'HKI',
@@ -70,7 +73,7 @@ describe('getTimeTableRowForStation', () => {
       );
 
       expectToBeDefined(row);
-      expect(row.station.name).toBe('Helsinki');
+      expect(row.station?.name).toBe('Helsinki');
     });
 
     it('should be undefined when the station matches but time table row type does not match', () => {
@@ -103,6 +106,7 @@ describe('getTimeTableRowForStation', () => {
           scheduledTime: '2023-01-25T08:55:00Z',
           trainStopping: false,
           type: TimeTableRowType.Arrival,
+          causes: [],
           station: {
             name: 'Pasila',
             shortCode: 'PSL',
@@ -113,6 +117,7 @@ describe('getTimeTableRowForStation', () => {
           scheduledTime: '2023-01-25T09:00:00Z',
           trainStopping: false,
           type: TimeTableRowType.Departure,
+          causes: [],
           station: {
             name: 'Pasila',
             shortCode: 'PSL',
@@ -123,6 +128,7 @@ describe('getTimeTableRowForStation', () => {
           scheduledTime: '2023-01-25T10:55:00Z',
           trainStopping: false,
           type: TimeTableRowType.Arrival,
+          causes: [],
           station: {
             name: 'Pasila',
             shortCode: 'PSL',
@@ -133,6 +139,7 @@ describe('getTimeTableRowForStation', () => {
           scheduledTime: '2023-01-25T11:00:00Z',
           trainStopping: false,
           type: TimeTableRowType.Departure,
+          causes: [],
           station: {
             name: 'Pasila',
             shortCode: 'PSL',

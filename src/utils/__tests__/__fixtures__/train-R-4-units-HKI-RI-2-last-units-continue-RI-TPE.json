@@ -239,7 +239,7 @@
       "differenceInMinutes": 1,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -257,7 +257,7 @@
       "differenceInMinutes": 1,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -275,7 +275,7 @@
       "differenceInMinutes": 1,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -293,7 +293,7 @@
       "differenceInMinutes": 1,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -311,7 +311,7 @@
       "differenceInMinutes": 0,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -329,7 +329,7 @@
       "differenceInMinutes": 1,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -347,7 +347,7 @@
       "differenceInMinutes": 1,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -365,7 +365,7 @@
       "differenceInMinutes": 2,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -383,7 +383,7 @@
       "differenceInMinutes": 2,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -401,7 +401,7 @@
       "differenceInMinutes": 2,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -419,7 +419,7 @@
       "differenceInMinutes": 2,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -437,7 +437,7 @@
       "differenceInMinutes": 1,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -455,7 +455,7 @@
       "differenceInMinutes": 2,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -473,7 +473,7 @@
       "differenceInMinutes": 2,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -491,7 +491,7 @@
       "differenceInMinutes": 2,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -509,7 +509,7 @@
       "differenceInMinutes": 2,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -527,7 +527,7 @@
       "differenceInMinutes": 2,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -545,7 +545,7 @@
       "differenceInMinutes": 0,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -596,7 +596,7 @@
       "differenceInMinutes": 19,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -614,7 +614,7 @@
       "differenceInMinutes": 18,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -632,7 +632,7 @@
       "differenceInMinutes": 19,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -650,7 +650,7 @@
       "differenceInMinutes": 19,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -668,7 +668,7 @@
       "differenceInMinutes": 19,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -686,7 +686,7 @@
       "differenceInMinutes": 19,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -704,7 +704,7 @@
       "differenceInMinutes": 19,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -722,7 +722,7 @@
       "differenceInMinutes": 19,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -740,7 +740,7 @@
       "differenceInMinutes": 20,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -758,7 +758,7 @@
       "differenceInMinutes": 20,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -776,7 +776,7 @@
       "differenceInMinutes": 20,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -794,7 +794,7 @@
       "differenceInMinutes": 20,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -812,7 +812,7 @@
       "differenceInMinutes": 20,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -830,7 +830,7 @@
       "differenceInMinutes": 20,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -848,7 +848,7 @@
       "differenceInMinutes": 20,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",
@@ -866,7 +866,7 @@
       "differenceInMinutes": 20,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "__typename": "Station",
@@ -884,7 +884,7 @@
       "differenceInMinutes": 19,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "__typename": "Station",

@@ -113,7 +113,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     ? Array.from(
         new Set(
           train.timeTableRows
-            .map((r) => (r ? getTrainStationGtfsId(r.station) : undefined))
+            .map((r) => (r?.station ? getTrainStationGtfsId(r.station) : undefined))
             .filter(isDefined)
         )
       )
@@ -160,7 +160,7 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     group: StationTimeTableRowGroup
   ) => {
     const r = group.departure ?? group.arrival;
-    if (!r) return '';
+    if (!r?.station) return '';
     return getTrainStationGtfsId(r.station);
   };
 

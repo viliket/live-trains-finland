@@ -117,8 +117,8 @@ function getTrainDepartureTimeForHslMqttTopic(
   train: TrainByStationFragment
 ): Date | undefined {
   const orderedDepartureRows = orderBy(
-    train.timeTableRows?.filter((r) => r?.type === TimeTableRowType.Departure),
-    (t) => t?.scheduledTime,
+    train.timeTableRows.filter((r) => r.type === TimeTableRowType.Departure),
+    (t) => t.scheduledTime,
     'asc'
   );
   const destStation = getTrainDestinationStation(train);
@@ -127,11 +127,11 @@ function getTrainDepartureTimeForHslMqttTopic(
   if (train.commuterLineid === 'R' && destStation?.shortCode === 'HKI') {
     // R TPE -> HKI and R HL -> HKI are actually RI -> HKI from HSL MQTT topic perspective
     // so we have to get departure time from RI station
-    departureRow = orderedDepartureRows?.find(
-      (r) => r?.station.shortCode === 'RI'
+    departureRow = orderedDepartureRows.find(
+      (r) => r.station?.shortCode === 'RI'
     );
   } else {
-    departureRow = orderedDepartureRows?.[0];
+    departureRow = orderedDepartureRows.at(0);
   }
   const departureTime = departureRow
     ? parseISO(departureRow.scheduledTime)

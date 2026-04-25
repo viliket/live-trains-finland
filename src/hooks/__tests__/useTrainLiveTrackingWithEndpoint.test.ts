@@ -23,6 +23,8 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 const mockMqttClient = new MqttClient();

@@ -8,22 +8,21 @@ export default function getTrainCurrentJourneySection(
   train: TrainExtendedDetails
 ) {
   const journeySectionsSorted = orderBy(
-    train.compositions?.[0]?.journeySections,
+    train.compositions.at(0)?.journeySections,
     (s) =>
-      s?.startTimeTableRow
+      s.startTimeTableRow
         ? getTimeTableRowRealTime(s.startTimeTableRow)
         : undefined,
     'desc'
   );
 
-  let currentJourneySection = journeySectionsSorted?.find(
+  let currentJourneySection = journeySectionsSorted.find(
     (s) =>
-      s?.startTimeTableRow &&
+      s.startTimeTableRow &&
       getTimeTableRowRealTime(s.startTimeTableRow) <= new Date()
   );
   if (!currentJourneySection) {
-    currentJourneySection =
-      journeySectionsSorted[journeySectionsSorted.length - 1];
+    currentJourneySection = journeySectionsSorted.at(-1);
   }
   return currentJourneySection;
 }

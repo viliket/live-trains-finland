@@ -17,7 +17,7 @@ describe('getTrainCompositionDetailsForStation', () => {
   ) => {
     const timeTableGroups = getTimeTableRowsGroupedByStation(train);
     const timeTableGroupForStation = timeTableGroups?.find(
-      (g) => (g.departure ?? g.arrival)?.station.shortCode === stationCode
+      (g) => (g.departure ?? g.arrival)?.station?.shortCode === stationCode
     );
     expectToBeDefined(timeTableGroupForStation);
     return timeTableGroupForStation;

@@ -30,7 +30,7 @@ function testStationPlatformSides(
     }))
     .forEach((g, i) => {
       const row = g.departure ?? g.arrival;
-      it(`should be ${expectedPlatformSides[i]} for station ${row?.station.name} ${row?.station.shortCode} track ${row?.commercialTrack}`, () => {
+      it(`should be ${expectedPlatformSides[i]} for station ${row?.station?.name} ${row?.station?.shortCode} track ${row?.commercialTrack}`, () => {
         expect(getStationPlatformSide(g)).toBe(expectedPlatformSides[i]);
       });
     });

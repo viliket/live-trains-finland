@@ -12,12 +12,11 @@ export default function getTimeTableRowForStation(
   type: TimeTableRowType
 ): TrainTimeTableRowFragment | undefined | null {
   // Filter time table rows that match stationShortCode and type
-  const matchingRows = train.timeTableRows?.filter(
-    (r): r is NonNullable<typeof r> =>
-      r?.station?.shortCode === stationShortCode && r?.type === type
+  const matchingRows = train.timeTableRows.filter(
+    (r) => r.station?.shortCode === stationShortCode && r.type === type
   );
 
-  if (!matchingRows || matchingRows.length === 0) {
+  if (matchingRows.length === 0) {
     return undefined;
   }
 

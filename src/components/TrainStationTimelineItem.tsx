@@ -42,7 +42,7 @@ export default function TrainStationTimelineItem({
   const { t } = useTranslation();
 
   const row = timeTableGroup.departure ?? timeTableGroup.arrival;
-  if (!row) return null;
+  if (!row?.station) return null;
   const station = row.station;
 
   return (

@@ -28,6 +28,7 @@ function getPlatformSide(
   timeTableRow: TrainTimeTableRowFragment,
   trainDirection: TrainDirection
 ): StationPlatformSide | null {
+  if (!timeTableRow.station) return null;
   const stationTrackNumberKey = `${timeTableRow.station.shortCode} L${timeTableRow.commercialTrack}`;
   const platform =
     stationPlatformInfoByStationPlatformId[stationTrackNumberKey];

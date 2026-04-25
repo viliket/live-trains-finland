@@ -39,18 +39,22 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 const departureTimeTableRowBase = {
   cancelled: false,
   trainStopping: true,
   type: TimeTableRowType.Departure,
+  causes: [],
 };
 
 const arrivalTimeTableRowBase = {
   cancelled: false,
   trainStopping: true,
   type: TimeTableRowType.Arrival,
+  causes: [],
 };
 
 /**
@@ -258,7 +262,7 @@ describe('getDepartureTimeTableRow', () => {
     const row = getDepartureTimeTableRow(train);
 
     expectToBeDefined(row);
-    expect(row.station.name).toBe('Helsinki');
+    expect(row.station?.name).toBe('Helsinki');
   });
 });
 
@@ -267,7 +271,7 @@ describe('getDestinationTimeTableRow', () => {
     const row = getDestinationTimeTableRow(train);
 
     expectToBeDefined(row);
-    expect(row.station.name).toBe('Tampere');
+    expect(row.station?.name).toBe('Tampere');
   });
 });
 

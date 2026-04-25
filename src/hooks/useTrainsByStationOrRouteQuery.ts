@@ -54,23 +54,23 @@ export default function useTrainsByStationOrRouteQuery({
 
 function getTrains(
   deptOrArrStationCodeFilter: string | null,
-  trainsByStation: TrainsByStationQuery['trainsByStationAndQuantity'],
+  trainsByStation: TrainsByStationQuery['trainsByStationAndQuantity'] | undefined,
   trainsByRoute: TrainByStationFragment[] | undefined
 ): TrainByStationFragment[] {
-  const trains = deptOrArrStationCodeFilter
-    ? trainsByRoute
-    : trainsByStation?.filter(isDefined);
+  const trains = deptOrArrStationCodeFilter ? trainsByRoute : trainsByStation;
   return trains ?? [];
 }
 
 function getStationsFromCurrentStation(
-  trainsByStation: TrainsByStationQuery['trainsByStationAndQuantity']
+  trainsByStation:
+    | TrainsByStationQuery['trainsByStationAndQuantity']
+    | undefined
 ): Pick<Station, 'name' | 'shortCode'>[] {
   if (!trainsByStation) return [];
 
   return sortBy(
     uniqBy(
-      trainsByStation.flatMap((t) => t?.timeTableRows?.map((r) => r?.station)),
+      trainsByStation.flatMap((t) => t.timeTableRows.map((r) => r.station)),
       (s) => s?.shortCode
     ),
     (s) => s?.shortCode

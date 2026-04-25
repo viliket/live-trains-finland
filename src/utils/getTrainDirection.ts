@@ -15,8 +15,8 @@ type LineKmLocation = {
 };
 
 function getLineKmLocation(timeTableRow: TrainTimeTableRowFragment) {
-  const stationCode = timeTableRow.station.shortCode;
-  if (isIn(stationCode, lineKmLocationByStationCode)) {
+  const stationCode = timeTableRow.station?.shortCode;
+  if (stationCode && isIn(stationCode, lineKmLocationByStationCode)) {
     return lineKmLocationByStationCode[stationCode];
   } else {
     return null;

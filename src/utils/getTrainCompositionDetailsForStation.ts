@@ -173,16 +173,14 @@ function isTrainCompositionReversed(
 ) {
   const locomotivesBefore = orderBy(
     sectionBefore.locomotives,
-    (l) => l?.location,
+    (l) => l.location,
     'asc'
   );
   const locomotivesAfter = orderBy(
     sectionAfter.locomotives,
-    (l) => l?.location,
+    (l) => l.location,
     'asc'
   );
-
-  if (!locomotivesBefore || !locomotivesAfter) return false;
 
   return locomotivesBefore[0]?.location !== locomotivesAfter[0]?.location;
 }
@@ -224,14 +222,14 @@ export default function getTrainCompositionDetailsForStation(
     }
 
     const wagons = orderBy(
-      relevantSection?.wagons as Wagon[],
+      relevantSection.wagons as Wagon[],
       getWagonLoc,
       'asc'
     );
 
     return {
       status: 'unchanged',
-      wagonStatuses: wagons?.map((w) => ({
+      wagonStatuses: wagons.map((w) => ({
         wagon: w,
         status: 'unchanged',
       })),
@@ -243,7 +241,7 @@ export default function getTrainCompositionDetailsForStation(
 
     return {
       status: 'unchanged',
-      wagonStatuses: wagons?.map((w) => ({
+      wagonStatuses: wagons.map((w) => ({
         wagon: w,
         status: 'unchanged',
       })),

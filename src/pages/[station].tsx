@@ -100,7 +100,7 @@ const Station: NextPageWithLayout = () => {
   );
 
   const selectedTrain = selectedTrainNo
-    ? trains.find((t) => t?.trainNumber === selectedTrainNo)
+    ? trains.find((t) => t.trainNumber === selectedTrainNo)
     : null;
 
   const { data: routeData } = useRouteQuery(
@@ -192,7 +192,9 @@ const Station: NextPageWithLayout = () => {
           </ToggleButtonGroup>
           <IconButton
             size="small"
-            onClick={() => setFilterDialogOpen(true)}
+            onClick={() => {
+              setFilterDialogOpen(true);
+            }}
             sx={{ padding: 2 }}
           >
             <Badge
@@ -206,7 +208,9 @@ const Station: NextPageWithLayout = () => {
         <Box sx={{ paddingY: 1 }}>
           {passengerInformationMessages && (
             <PassengerInformationMessageAlert
-              onClick={() => setStationAlertDialogOpen(true)}
+              onClick={() => {
+                setStationAlertDialogOpen(true);
+              }}
               passengerInformationMessages={passengerInformationMessages}
             />
           )}
@@ -217,7 +221,7 @@ const Station: NextPageWithLayout = () => {
         autoHideDuration={5000}
         message={error?.message}
       />
-      {stationCode && !loading && trains && (
+      {stationCode && !loading && (
         <StationTimeTable
           stationCode={stationCode}
           timeTableType={timeTableType}
@@ -229,7 +233,9 @@ const Station: NextPageWithLayout = () => {
       <PassengerInformationMessagesDialog
         open={stationAlertDialogOpen}
         passengerInformationMessages={passengerInformationMessages}
-        onClose={() => setStationAlertDialogOpen(false)}
+        onClose={() => {
+          setStationAlertDialogOpen(false);
+        }}
       />
       <FilterStationTrainsDialog
         open={filterDialogOpen}
@@ -237,7 +243,9 @@ const Station: NextPageWithLayout = () => {
         stationCodeFilter={deptOrArrStationCodeFilter}
         setStationCodeFilter={setDeptOrArrStationCodeFilter}
         timeTableType={timeTableType}
-        onClose={() => setFilterDialogOpen(false)}
+        onClose={() => {
+          setFilterDialogOpen(false);
+        }}
       />
     </div>
   );

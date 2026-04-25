@@ -1,23 +1,18 @@
 import {
   Locomotive,
-  Maybe,
   StationPlatformSide,
   TrainDetailsFragment,
   TrainDirection,
   Wagon,
 } from '../graphql/generated/digitraffic/graphql';
 
-export type TrainCompositionFragment = NonNullable<
-  NonNullable<TrainDetailsFragment['compositions']>[number]
->;
+export type TrainCompositionFragment = TrainDetailsFragment['compositions'][number];
 
-export type TrainJourneySectionFragment = NonNullable<
-  NonNullable<TrainCompositionFragment['journeySections']>[number]
->;
+export type TrainJourneySectionFragment = TrainCompositionFragment['journeySections'][number];
 
 type TrainTimeTableGroup = {
-  arrival?: NonNullable<TrainDetailsFragment['timeTableRows']>[number];
-  departure?: NonNullable<TrainDetailsFragment['timeTableRows']>[number];
+  arrival?: TrainDetailsFragment['timeTableRows'][number] | null;
+  departure?: TrainDetailsFragment['timeTableRows'][number] | null;
   trainDirection?: TrainDirection | null;
   stationPlatformSide?: StationPlatformSide | null;
 };
@@ -34,12 +29,12 @@ export type JourneySectionExtendedDetails = Omit<
   TrainJourneySectionFragment,
   'locomotives' | 'wagons'
 > & {
-  locomotives?: Maybe<LocomotiveWithDetails>[] | null;
-  wagons?: Maybe<WagonWithDetails>[] | null;
+  locomotives: LocomotiveWithDetails[];
+  wagons: WagonWithDetails[];
 };
 
 type Composition = Omit<TrainCompositionFragment, 'journeySections'> & {
-  journeySections?: Maybe<JourneySectionExtendedDetails>[] | null;
+  journeySections: JourneySectionExtendedDetails[];
 };
 
 export type TrainExtendedDetails = Omit<
@@ -47,5 +42,5 @@ export type TrainExtendedDetails = Omit<
   'compositions'
 > & {
   timeTableGroups?: TrainTimeTableGroup[];
-  compositions?: Maybe<Composition>[] | null;
+  compositions: Composition[];
 };

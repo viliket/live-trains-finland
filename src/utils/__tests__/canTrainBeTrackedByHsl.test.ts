@@ -23,6 +23,8 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 describe('canTrainBeTrackedByHsl', () => {
@@ -31,6 +33,7 @@ describe('canTrainBeTrackedByHsl', () => {
     trainStopping: true,
     type: TimeTableRowType.Departure,
     scheduledTime: '2023-03-11T10:01:00Z',
+    causes: [],
   };
 
   it('should be false when train is not commuter train', () => {

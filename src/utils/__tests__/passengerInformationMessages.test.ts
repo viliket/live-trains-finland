@@ -99,7 +99,7 @@ describe('getPassengerInformationMessagesByStation', () => {
     );
 
     expectToBeDefined(messagesByStation);
-    expect(messagesByStation['PSL']).toBeDefined();
+    expectToBeDefined(messagesByStation['PSL']);
     expect(messagesByStation['PSL'].length).toBe(1);
   });
 
@@ -120,12 +120,12 @@ describe('getPassengerInformationMessagesByStation', () => {
     );
 
     expectToBeDefined(messagesByStation);
-    expect(messagesByStation['HKI']).toBeDefined();
+    expectToBeDefined(messagesByStation['HKI']);
     expect(messagesByStation['HKI'].length).toBe(1);
     expect(messagesByStation['PSL']).toBeUndefined();
     expect(messagesByStation['TKL']).toBeUndefined();
     expect(messagesByStation['KE']).toBeUndefined();
-    expect(messagesByStation['RI']).toBeDefined();
+    expectToBeDefined(messagesByStation['RI']);
     expect(messagesByStation['RI'].length).toBe(1);
   });
 });
@@ -205,7 +205,8 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
           audio: {
             text: defaultPassengerInformationTextContent,
             deliveryRules: {
-              deliveryType: 'NO_SUPPORT_FOR_SUCH_TYPE' as any,
+              // @ts-expect-error intentionally unsupported value to verify it is filtered out
+              deliveryType: 'NO_SUPPORT_FOR_SUCH_TYPE',
             },
           },
         },
@@ -469,6 +470,7 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
               },
               trainStopping: true,
               type: TimeTableRowType.Arrival,
+              causes: [],
             },
             {
               scheduledTime: '2023-09-02T16:00:00Z',
@@ -479,6 +481,7 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
               },
               trainStopping: true,
               type: TimeTableRowType.Arrival,
+              causes: [],
             },
           ],
         };
@@ -562,7 +565,8 @@ describe('getPassengerInformationMessagesCurrentlyRelevant', () => {
           video: {
             text: defaultPassengerInformationTextContent,
             deliveryRules: {
-              deliveryType: 'NO_SUPPORT_FOR_SUCH_TYPE' as any,
+              // @ts-expect-error intentionally unsupported value to verify it is filtered out
+              deliveryType: 'NO_SUPPORT_FOR_SUCH_TYPE',
             },
           },
         },

@@ -41,14 +41,14 @@ async function getExtendedTrain(
 ): Promise<TrainExtendedDetails | null> {
   const data = await digitrafficClient.request(TrainDocument, {
     trainNumber: trainNumber ?? 0,
-    departureDate: departureDate,
+    departureDate: departureDate ?? '',
   });
-  const train = data.train?.[0];
+  const train = data.train.at(0);
 
   if (!train) return null;
 
   const timeTableGroups = getTimeTableRowsGroupedByStation({
-    timeTableRows: train?.timeTableRows,
+    timeTableRows: train.timeTableRows,
   });
 
   const extendedTrain: TrainExtendedDetails = {
@@ -67,8 +67,8 @@ async function getExtendedTrain(
         stationPlatformSide: getStationPlatformSide(timeTableGroupExtended),
       };
     }),
-    compositions: train?.compositions?.map((composition) =>
-      composition ? extendComposition(composition, train) : composition
+    compositions: train.compositions.map((composition) =>
+      extendComposition(composition, train)
     ),
   };
 
@@ -81,8 +81,8 @@ function extendComposition(
 ): TrainCompositionFragment {
   return {
     ...composition,
-    journeySections: composition?.journeySections?.map((section) =>
-      section ? extendJourneySection(section, train) : section
+    journeySections: composition.journeySections.map((section) =>
+      extendJourneySection(section, train)
     ),
   };
 }
@@ -93,12 +93,10 @@ function extendJourneySection(
 ): TrainJourneySectionFragment {
   return {
     ...section,
-    locomotives: section?.locomotives?.map((locomotive) =>
-      locomotive ? extendLocomotive(locomotive) : locomotive
+    locomotives: section.locomotives.map((locomotive) =>
+      extendLocomotive(locomotive)
     ),
-    wagons: section?.wagons?.map((wagon) =>
-      wagon ? extendWagon(wagon, train) : wagon
-    ),
+    wagons: section.wagons.map((wagon) => extendWagon(wagon, train)),
   };
 }
 
