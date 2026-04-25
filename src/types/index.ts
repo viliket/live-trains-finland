@@ -6,9 +6,11 @@ import {
   Wagon,
 } from '../graphql/generated/digitraffic/graphql';
 
-export type TrainCompositionFragment = TrainDetailsFragment['compositions'][number];
+export type TrainCompositionFragment =
+  TrainDetailsFragment['compositions'][number];
 
-export type TrainJourneySectionFragment = TrainCompositionFragment['journeySections'][number];
+export type TrainJourneySectionFragment =
+  TrainCompositionFragment['journeySections'][number];
 
 type TrainTimeTableGroup = {
   arrival?: TrainDetailsFragment['timeTableRows'][number] | null;

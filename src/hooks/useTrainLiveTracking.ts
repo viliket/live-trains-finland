@@ -13,7 +13,6 @@ function useTrainLiveTracking(trains?: TrainByStationFragment[]) {
   const nonHslTrains = trains?.filter((t) => !canTrainBeTrackedByHsl(t));
   const removeAllVehicles = useVehicleStore((state) => state.removeAllVehicles);
 
-
   const { unsubscribeAll: unsubscribeAllHsl } =
     useTrainLiveTrackingWithEndpoint(mqttDigitransit, hslTrains);
   const { unsubscribeAll: unsubscribeAllDigitraffic } =

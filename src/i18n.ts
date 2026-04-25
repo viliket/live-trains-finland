@@ -20,12 +20,15 @@ i18n
     resources: runsOnServerSide
       ? {
           fi: {
+            // eslint-disable-next-line @typescript-eslint/no-require-imports -- avoid client-side bundling of all locales
             translation: require('../public/locales/fi/translation.json'),
           },
           sv: {
+            // eslint-disable-next-line @typescript-eslint/no-require-imports -- avoid client-side bundling of all locales
             translation: require('../public/locales/sv/translation.json'),
           },
           en: {
+            // eslint-disable-next-line @typescript-eslint/no-require-imports -- avoid client-side bundling of all locales
             translation: require('../public/locales/en/translation.json'),
           },
         }

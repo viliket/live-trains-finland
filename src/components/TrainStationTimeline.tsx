@@ -62,8 +62,8 @@ const TrainStationTimeline = ({
 
       const stationPassed = Boolean(
         (row.actualTime && parseISO(row.actualTime) < new Date()) ||
-          (trainLatestDepartureRow &&
-            row.scheduledTime < trainLatestDepartureRow.scheduledTime)
+        (trainLatestDepartureRow &&
+          row.scheduledTime < trainLatestDepartureRow.scheduledTime)
       );
 
       const isVehicleAtStation =

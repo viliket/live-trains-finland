@@ -54,7 +54,9 @@ export default function useTrainsByStationOrRouteQuery({
 
 function getTrains(
   deptOrArrStationCodeFilter: string | null,
-  trainsByStation: TrainsByStationQuery['trainsByStationAndQuantity'] | undefined,
+  trainsByStation:
+    | TrainsByStationQuery['trainsByStationAndQuantity']
+    | undefined,
   trainsByRoute: TrainByStationFragment[] | undefined
 ): TrainByStationFragment[] {
   const trains = deptOrArrStationCodeFilter ? trainsByRoute : trainsByStation;
