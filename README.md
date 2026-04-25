@@ -29,8 +29,9 @@ See the instructions below for development.
 
 You need the following tools:
 
-- Node.js `>= 18`
-- npm `>= 10`
+- Node.js `>= 24` (see [`.node-version`](./.node-version) for the exact version
+  used in CI)
+- npm `>= 11` (bundled with Node.js 24)
 
 Register to the [Digitransit API Portal](https://portal-api.digitransit.fi/)
 and create yourself a new API subscription key.
@@ -87,7 +88,6 @@ to `public/tiles` using `npm run extract-tiles-public`.
 
 1. Download the railway network map layer data from
    [Finnish Transport Infrastructure Agency's Download- and viewing service](https://julkinen.vayla.fi/oskari/?lang=en)
-
    - Choose Map layers -> Rail traffic -> Finnish rail network
      -> Railway network (multi-track).
 
@@ -110,7 +110,6 @@ to `public/tiles` using `npm run extract-tiles-public`.
 
 1. Fetch the OpenStreetMap (OSM) railway platform GeoJSON data through Overpass
    API for each station. See steps to do this below (CLI tool to be released later).
-
    - Perform the following query for each station:
 
      ```overpassql
