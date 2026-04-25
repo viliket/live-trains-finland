@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 
 import fs from 'fs';
+import { DatabaseSync } from 'node:sqlite';
 import path from 'path';
-
-import Database from 'better-sqlite3';
 
 type TileRow = {
   zoom_level: number;
   tile_column: number;
   tile_row: number;
-  tile_data: Buffer;
+  tile_data: Uint8Array;
 };
 
 type MetadataRow = { name: string; value: string };
@@ -47,23 +46,20 @@ function extensionFromFormat(format: string | undefined): string {
 function main(): void {
   const { input, output } = parseArgs(process.argv);
 
-  const db = new Database(input, { readonly: true, fileMustExist: true });
-  db.pragma('journal_mode = OFF');
+  const db = new DatabaseSync(input, { readOnly: true });
+  db.exec('PRAGMA journal_mode = OFF');
 
   const metadata = db
-    .prepare<[], MetadataRow>('SELECT name, value FROM metadata')
-    .all();
+    .prepare('SELECT name, value FROM metadata')
+    .all() as MetadataRow[];
   const format = metadata.find((row) => row.name === 'format')?.value;
   const ext = extensionFromFormat(format);
 
   fs.mkdirSync(output, { recursive: true });
 
   const tiles = db
-    .prepare<
-      [],
-      TileRow
-    >('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles')
-    .all();
+    .prepare('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles')
+    .all() as TileRow[];
 
   for (const tile of tiles) {
     const { zoom_level: z, tile_column: x, tile_row: tmsY, tile_data } = tile;
