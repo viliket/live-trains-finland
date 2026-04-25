@@ -34,7 +34,7 @@ const FavoriteStationList = () => {
         }}
       >
         {hasMounted &&
-          favStations.map((station, i) => (
+          favStations.map((station) => (
             <Chip
               key={station.stationShortCode}
               component={Link}

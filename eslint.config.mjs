@@ -1,7 +1,11 @@
 import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
+import prettier from 'eslint-config-prettier/flat';
 
 const config = [
   ...nextCoreWebVitals,
+  ...nextTs,
+  prettier,
   {
     ignores: ['src/graphql/generated/**'],
   },

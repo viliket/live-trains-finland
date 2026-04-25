@@ -17,12 +17,12 @@ export function register(config?: Config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     const isLocalhost = Boolean(
       window.location.hostname === 'localhost' ||
-        // [::1] is the IPv6 localhost address.
-        window.location.hostname === '[::1]' ||
-        // 127.0.0.0/8 are considered localhost for IPv4.
-        /^127(?:\.(?:25[0-5]|2[0-4]\d|[01]?\d\d?)){3}$/.exec(
-          window.location.hostname
-        ) != null
+      // [::1] is the IPv6 localhost address.
+      window.location.hostname === '[::1]' ||
+      // 127.0.0.0/8 are considered localhost for IPv4.
+      /^127(?:\.(?:25[0-5]|2[0-4]\d|[01]?\d\d?)){3}$/.exec(
+        window.location.hostname
+      ) != null
     );
 
     const swUrl = `/service-worker.js`;

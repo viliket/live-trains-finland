@@ -146,7 +146,7 @@ const getPerson3LimbAnimKeyframes = (
 `;
 };
 
-const getPerson1And2LegAnimKeyframes = (person: 'person1' | 'person2') => {
+const getPerson1And2LegAnimKeyframes = () => {
   return keyframes`
 0% {
   transform: skewY(0deg) translateY(0px);
@@ -272,9 +272,7 @@ const Hero = () => {
           animationDelay: `-${animDuration / 4}s`,
         },
         '#Person2 #Legs': {
-          animation: `${getPerson1And2LegAnimKeyframes(
-            'person2'
-          )} ${animDuration}s infinite ease-in-out`,
+          animation: `${getPerson1And2LegAnimKeyframes()} ${animDuration}s infinite ease-in-out`,
           animationDelay: `-${animDuration / 4}s`,
           transformOrigin: 'center',
           transformBox: 'fill-box',
@@ -284,9 +282,7 @@ const Hero = () => {
           animationDelay: '0s',
         },
         '#Person #Legs': {
-          animation: `${getPerson1And2LegAnimKeyframes(
-            'person1'
-          )} ${animDuration}s infinite ease-in-out`,
+          animation: `${getPerson1And2LegAnimKeyframes()} ${animDuration}s infinite ease-in-out`,
           animationDelay: '0s',
           transformOrigin: 'center',
           transformBox: 'fill-box',

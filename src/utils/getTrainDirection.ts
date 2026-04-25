@@ -87,7 +87,7 @@ export default function getTrainDirection(
     );
 
     // Get the departure row of the previous station
-    let prevStationDepartureRow = timeTableGroups[index - 1]?.departure;
+    const prevStationDepartureRow = timeTableGroups[index - 1]?.departure;
     if (!prevStationDepartureRow) return null;
 
     const stationLineKmLoc = getLineKmLocation(stationArrivalRow);

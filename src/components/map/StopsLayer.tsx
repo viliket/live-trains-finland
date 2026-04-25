@@ -113,7 +113,9 @@ const StopsLayer = ({ train }: StopsLayerProps) => {
     ? Array.from(
         new Set(
           train.timeTableRows
-            .map((r) => (r?.station ? getTrainStationGtfsId(r.station) : undefined))
+            .map((r) =>
+              r?.station ? getTrainStationGtfsId(r.station) : undefined
+            )
             .filter(isDefined)
         )
       )

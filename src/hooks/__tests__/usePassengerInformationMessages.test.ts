@@ -20,7 +20,7 @@ describe('usePassengerInformationMessages', () => {
     ({
       json: async () => mockResponse,
       ok: true,
-    } as Response);
+    }) as Response;
 
   afterEach(() => {
     jest.useRealTimers();

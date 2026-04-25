@@ -123,7 +123,7 @@ export function getVehiclesGeoJsonData(
         vehicleId: id,
         vehicleNumber: message.routeShortName
           ? message.routeShortName
-          : message.jrn?.toString() ?? '?',
+          : (message.jrn?.toString() ?? '?'),
         bearing: message.heading ?? null,
       },
     })),

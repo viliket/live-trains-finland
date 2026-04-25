@@ -143,11 +143,10 @@ function lcs<T, K extends keyof T>(
   b: T[],
   selector: (x: T) => KeyOrStringOrNull<K>
 ): number[] {
-  let m = a.length,
+  const m = a.length,
     n = b.length,
-    C: number[][] = [],
-    i: number,
-    j: number;
+    C: number[][] = [];
+  let i: number, j: number;
   for (i = 0; i <= m; i++) C.push([0]);
   for (j = 0; j < n; j++) C[0].push(0);
   for (i = 0; i < m; i++)

@@ -165,10 +165,10 @@ const VehicleMapContainer = ({
             properties: {},
             geometry: {
               type: 'LineString',
-              coordinates: route.patterns?.[0]?.geometry?.map((c) => [
-                c?.lon!,
-                c?.lat!,
-              ])!,
+              coordinates:
+                route.patterns?.[0]?.geometry?.flatMap((c) =>
+                  c?.lon != null && c.lat != null ? [[c.lon, c.lat]] : []
+                ) ?? [],
             },
           }}
         />

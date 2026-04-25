@@ -38,9 +38,7 @@ const WagonElement = ({ wagon, isCommuterTrain }: WagonElementProps) => {
   const wagonType = wagon.wagonType;
   return (
     <>
-      {(wagonType === 'Sm2' || wagonType === 'Sm4') && (
-        <TrainWagonSm2And4 vehicleId={wagon.vehicleId} />
-      )}
+      {(wagonType === 'Sm2' || wagonType === 'Sm4') && <TrainWagonSm2And4 />}
       {wagonType === 'Sm5' && <TrainWagonSm5 vehicleId={wagon.vehicleId} />}
       {!isCommuterTrain && (
         <Box

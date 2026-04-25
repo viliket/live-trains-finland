@@ -19,7 +19,8 @@ const SlideUpTransition = ({ ref, children, ...props }: Props) => {
   return (
     <Transition nodeRef={nodeRef} timeout={DURATION} {...props}>
       {(state, childProps) => {
-        const { ownerState: _ownerState, ...restChildProps } = childProps ?? {};
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars -- strip ownerState before forwarding to cloned element
+        const { ownerState, ...restChildProps } = childProps ?? {};
         return cloneElement(children, {
           ref: handleRef,
           style: {
