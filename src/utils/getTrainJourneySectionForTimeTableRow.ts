@@ -8,11 +8,13 @@ export default function getTrainJourneySectionForTimeTableRow(
   ttRow: TrainTimeTableRowFragment
 ) {
   // Note that train has only single composition for specific depature date
-  const composition = train.compositions?.[0];
+  const composition = train.compositions.at(0);
 
-  return composition?.journeySections?.find(
+  return composition?.journeySections.find(
     (section) =>
-      section?.startTimeTableRow?.scheduledTime <= ttRow?.scheduledTime &&
-      ttRow?.scheduledTime <= section?.endTimeTableRow?.scheduledTime
+      section.startTimeTableRow &&
+      section.endTimeTableRow &&
+      section.startTimeTableRow.scheduledTime <= ttRow.scheduledTime &&
+      ttRow.scheduledTime <= section.endTimeTableRow.scheduledTime
   );
 }

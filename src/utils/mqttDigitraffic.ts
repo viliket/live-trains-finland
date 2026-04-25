@@ -87,7 +87,6 @@ export const handleTrainLocationMessage = (
 };
 
 export function getTopic(train: TrainByStationFragment) {
-  if (!train.timeTableRows) return null;
   const departureRow = getDepartureTimeTableRow(train);
   if (!departureRow) return null;
   const departureDate = parseISO(departureRow.scheduledTime);

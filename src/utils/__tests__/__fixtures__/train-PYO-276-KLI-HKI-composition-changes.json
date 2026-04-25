@@ -1,5 +1,6 @@
 {
   "trainNumber": 276,
+  "departureDate": "2023-02-25",
   "version": "284983805133",
   "runningCurrently": false,
   "operator": {
@@ -1062,7 +1063,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Kolari",
@@ -1080,7 +1081,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Pello",
@@ -1098,7 +1099,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Pello",
@@ -1116,7 +1117,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Ylitornio",
@@ -1134,7 +1135,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Ylitornio",
@@ -1152,7 +1153,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Tornio-Itäinen",
@@ -1170,7 +1171,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Tornio-Itäinen",
@@ -1188,7 +1189,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Laurila",
@@ -1206,7 +1207,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Laurila",
@@ -1224,7 +1225,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Kemi asema",
@@ -1242,7 +1243,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Kemi asema",
@@ -1260,7 +1261,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Simo",
@@ -1278,7 +1279,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Simo",
@@ -1296,7 +1297,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Oulu asema",
@@ -1314,7 +1315,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Oulu asema",
@@ -1332,7 +1333,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Kempele",
@@ -1350,7 +1351,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Kempele",
@@ -1368,7 +1369,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Hirvineva",
@@ -1386,7 +1387,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Hirvineva",
@@ -1404,7 +1405,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Ylivieska",
@@ -1422,7 +1423,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Ylivieska",
@@ -1440,7 +1441,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Kokkola",
@@ -1458,7 +1459,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Kokkola",
@@ -1476,7 +1477,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Pännäinen",
@@ -1494,7 +1495,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Pännäinen",
@@ -1512,7 +1513,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Kauhava",
@@ -1530,7 +1531,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Kauhava",
@@ -1548,7 +1549,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Seinäjoki asema",
@@ -1566,7 +1567,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Seinäjoki asema",
@@ -1584,7 +1585,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Ratikylä",
@@ -1602,7 +1603,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Ratikylä",
@@ -1620,7 +1621,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Tampere asema",
@@ -1638,7 +1639,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Tampere asema",
@@ -1656,7 +1657,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Toijala",
@@ -1674,7 +1675,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Toijala",
@@ -1692,7 +1693,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Hämeenlinna",
@@ -1710,7 +1711,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Hämeenlinna",
@@ -1728,7 +1729,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Riihimäki asema",
@@ -1746,7 +1747,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Riihimäki asema",
@@ -1764,7 +1765,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Tikkurila asema",
@@ -1782,7 +1783,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Tikkurila asema",
@@ -1800,7 +1801,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Pasila tavara",
@@ -1818,7 +1819,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Pasila tavara",
@@ -1836,7 +1837,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Pasila asema",
@@ -1854,7 +1855,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "DEPARTURE",
       "station": {
         "name": "Pasila asema",
@@ -1872,7 +1873,7 @@
       "differenceInMinutes": null,
       "unknownDelay": null,
       "cancelled": false,
-      "causes": null,
+      "causes": [],
       "type": "ARRIVAL",
       "station": {
         "name": "Helsinki asema",

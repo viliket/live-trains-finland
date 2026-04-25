@@ -15,7 +15,7 @@ describe('getTrainPreviousStation', () => {
   it('should be null when the train latest departure time table row is null', () => {
     jest
       .spyOn(getTrainLatestDepartureTimeTableRowModule, 'default')
-      .mockReturnValue(null);
+      .mockReturnValue(undefined);
 
     const station = getTrainPreviousStation({} as TrainByStationFragment);
 
@@ -30,6 +30,7 @@ describe('getTrainPreviousStation', () => {
         scheduledTime: '',
         trainStopping: false,
         type: TimeTableRowType.Departure,
+        causes: [],
         station: {
           name: 'Helsinki',
           shortCode: 'HKI',
@@ -39,6 +40,6 @@ describe('getTrainPreviousStation', () => {
     const station = getTrainPreviousStation({} as TrainByStationFragment);
 
     expectToBeDefined(station);
-    expect(station.name).toBe('Helsinki');
+    expect(station?.name).toBe('Helsinki');
   });
 });

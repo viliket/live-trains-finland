@@ -23,18 +23,21 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 const timeTableRowBase = {
   cancelled: false,
   trainStopping: true,
+  causes: [],
 };
 
 describe('getTimeTableRowsGroupedByStation', () => {
-  it('should be undefined when the train has no time table rows', () => {
+  it('should be empty when the train has no time table rows', () => {
     const rows = getTimeTableRowsGroupedByStation(trainBase);
 
-    expect(rows).toBeUndefined();
+    expect(rows).toEqual([]);
   });
 
   describe('train with multiple time table rows with same station', () => {
@@ -88,15 +91,15 @@ describe('getTimeTableRowsGroupedByStation', () => {
 
       expect(rows[0].arrival).toBeNull();
       expectToBeDefined(rows[0].departure);
-      expect(rows[0].departure.station.name).toBe('Helsinki');
+      expect(rows[0].departure.station?.name).toBe('Helsinki');
 
       expectToBeDefined(rows[1].arrival);
-      expect(rows[1].arrival.station.name).toBe('Pasila');
+      expect(rows[1].arrival.station?.name).toBe('Pasila');
       expectToBeDefined(rows[1].departure);
-      expect(rows[1].departure.station.name).toBe('Pasila');
+      expect(rows[1].departure.station?.name).toBe('Pasila');
 
       expectToBeDefined(rows[2].arrival);
-      expect(rows[2].arrival.station.name).toBe('Tampere');
+      expect(rows[2].arrival.station?.name).toBe('Tampere');
       expect(rows[2].departure).toBeNull();
     });
   });

@@ -13,7 +13,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
-const documents = {
+type Documents = {
+    "query Route($id: String!) {\n  route(id: $id) {\n    ...RouteForRail\n  }\n}": typeof types.RouteDocument,
+    "fragment RouteForRail on Route {\n  gtfsId\n  shortName\n  longName\n  patterns {\n    headsign\n    geometry {\n      lat\n      lon\n    }\n  }\n}": typeof types.RouteForRailFragmentDoc,
+};
+const documents: Documents = {
     "query Route($id: String!) {\n  route(id: $id) {\n    ...RouteForRail\n  }\n}": types.RouteDocument,
     "fragment RouteForRail on Route {\n  gtfsId\n  shortName\n  longName\n  patterns {\n    headsign\n    geometry {\n      lat\n      lon\n    }\n  }\n}": types.RouteForRailFragmentDoc,
 };

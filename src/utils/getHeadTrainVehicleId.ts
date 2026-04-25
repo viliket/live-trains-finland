@@ -15,7 +15,7 @@ export default function getHeadTrainVehicleId(train: TrainExtendedDetails) {
   const currentJourneySection = getTrainCurrentJourneySection(train);
   const locomotives = currentJourneySection?.locomotives;
   if (locomotives) {
-    const headTrain = minBy(locomotives, (l) => l?.location);
+    const headTrain = minBy(locomotives, (l) => l.location);
     if (headTrain) {
       return headTrain.vehicleId ?? train.trainNumber;
     }

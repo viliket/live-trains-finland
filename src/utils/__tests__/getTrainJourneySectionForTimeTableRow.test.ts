@@ -31,8 +31,8 @@ describe('getTrainJourneySectionForTimeTableRow', () => {
         getTimeTableRow(train, 'TPE', TimeTableRowType.Departure)
       );
 
-      expect(journeySection?.startTimeTableRow?.station.shortCode).toBe('TPE');
-      expect(journeySection?.endTimeTableRow?.station.shortCode).toBe('RI');
+      expect(journeySection?.startTimeTableRow?.station?.shortCode).toBe('TPE');
+      expect(journeySection?.endTimeTableRow?.station?.shortCode).toBe('RI');
     });
 
     it('should be journey section TPE-RI at HL on departure', () => {
@@ -41,8 +41,8 @@ describe('getTrainJourneySectionForTimeTableRow', () => {
         getTimeTableRow(train, 'HL', TimeTableRowType.Departure)
       );
 
-      expect(journeySection?.startTimeTableRow?.station.shortCode).toBe('TPE');
-      expect(journeySection?.endTimeTableRow?.station.shortCode).toBe('RI');
+      expect(journeySection?.startTimeTableRow?.station?.shortCode).toBe('TPE');
+      expect(journeySection?.endTimeTableRow?.station?.shortCode).toBe('RI');
     });
 
     it('should should be journey section TPE-RI at HL on arrival', () => {
@@ -51,8 +51,8 @@ describe('getTrainJourneySectionForTimeTableRow', () => {
         getTimeTableRow(train, 'HL', TimeTableRowType.Arrival)
       );
 
-      expect(journeySection?.startTimeTableRow?.station.shortCode).toBe('TPE');
-      expect(journeySection?.endTimeTableRow?.station.shortCode).toBe('RI');
+      expect(journeySection?.startTimeTableRow?.station?.shortCode).toBe('TPE');
+      expect(journeySection?.endTimeTableRow?.station?.shortCode).toBe('RI');
     });
 
     it('should be journey section TPE-RI at RI on arrival', () => {
@@ -61,8 +61,8 @@ describe('getTrainJourneySectionForTimeTableRow', () => {
         getTimeTableRow(train, 'RI', TimeTableRowType.Arrival)
       );
 
-      expect(journeySection?.startTimeTableRow?.station.shortCode).toBe('TPE');
-      expect(journeySection?.endTimeTableRow?.station.shortCode).toBe('RI');
+      expect(journeySection?.startTimeTableRow?.station?.shortCode).toBe('TPE');
+      expect(journeySection?.endTimeTableRow?.station?.shortCode).toBe('RI');
     });
 
     it('should be journey section RI-HKI at RI on departure', () => {
@@ -71,8 +71,8 @@ describe('getTrainJourneySectionForTimeTableRow', () => {
         getTimeTableRow(train, 'RI', TimeTableRowType.Departure)
       );
 
-      expect(journeySection?.startTimeTableRow?.station.shortCode).toBe('RI');
-      expect(journeySection?.endTimeTableRow?.station.shortCode).toBe('HKI');
+      expect(journeySection?.startTimeTableRow?.station?.shortCode).toBe('RI');
+      expect(journeySection?.endTimeTableRow?.station?.shortCode).toBe('HKI');
     });
 
     it('should be journey section RI-HKI at HKI on arrival', () => {
@@ -81,8 +81,8 @@ describe('getTrainJourneySectionForTimeTableRow', () => {
         getTimeTableRow(train, 'HKI', TimeTableRowType.Arrival)
       );
 
-      expect(journeySection?.startTimeTableRow?.station.shortCode).toBe('RI');
-      expect(journeySection?.endTimeTableRow?.station.shortCode).toBe('HKI');
+      expect(journeySection?.startTimeTableRow?.station?.shortCode).toBe('RI');
+      expect(journeySection?.endTimeTableRow?.station?.shortCode).toBe('HKI');
     });
   });
 });

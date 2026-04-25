@@ -28,18 +28,22 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 const timeTableRowDepartureBase = {
   cancelled: false,
   trainStopping: true,
   type: TimeTableRowType.Departure,
+  causes: [],
 };
 
 const timeTableRowArrivalBase = {
   cancelled: false,
   trainStopping: true,
   type: TimeTableRowType.Arrival,
+  causes: [],
 };
 
 describe('getTopic', () => {
@@ -48,7 +52,7 @@ describe('getTopic', () => {
     expect(
       getTopic({
         ...trainBase,
-        timeTableRows: [null],
+        timeTableRows: [],
       })
     ).toBeNull();
   });

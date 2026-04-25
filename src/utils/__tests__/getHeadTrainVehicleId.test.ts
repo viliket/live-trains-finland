@@ -1,8 +1,5 @@
-import {
-  JourneySection,
-  Maybe,
-  TrainDetailsFragment,
-} from '../../graphql/generated/digitraffic/graphql';
+import { TrainDetailsFragment } from '../../graphql/generated/digitraffic/graphql';
+import { JourneySectionExtendedDetails } from '../../types';
 import * as canTrainBeTrackedByHslModule from '../canTrainBeTrackedByHsl';
 import getHeadTrainVehicleId from '../getHeadTrainVehicleId';
 import * as getTrainCurrentJourneySectionModule from '../getTrainCurrentJourneySection';
@@ -36,10 +33,12 @@ const train: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 const setTrainCurrentJourneySection = (
-  trainJourneySection: Maybe<JourneySection>
+  trainJourneySection: JourneySectionExtendedDetails | undefined
 ) => {
   jest
     .spyOn(getTrainCurrentJourneySectionModule, 'default')
@@ -59,7 +58,7 @@ describe('getHeadTrainVehicleId', () => {
     });
 
     it('should be the train number of the train when the train has no current journey section', () => {
-      setTrainCurrentJourneySection(null);
+      setTrainCurrentJourneySection(undefined);
 
       const vehicleId = getHeadTrainVehicleId(train);
 
@@ -78,6 +77,7 @@ describe('getHeadTrainVehicleId', () => {
             powerTypeAbbreviation: 'S',
           },
         ],
+        wagons: [],
       });
 
       const vehicleId = getHeadTrainVehicleId(train);
@@ -92,7 +92,7 @@ describe('getHeadTrainVehicleId', () => {
     });
 
     it('should be the null when the train has no current journey section', () => {
-      setTrainCurrentJourneySection(null);
+      setTrainCurrentJourneySection(undefined);
 
       const vehicleId = getHeadTrainVehicleId(train);
 
@@ -103,19 +103,8 @@ describe('getHeadTrainVehicleId', () => {
       setTrainCurrentJourneySection({
         maximumSpeed: 0,
         totalLength: 0,
-        locomotives: null,
-      });
-
-      const vehicleId = getHeadTrainVehicleId(train);
-
-      expect(vehicleId).toBe(null);
-    });
-
-    it('should be the null if the train current journey section has null locomotive', () => {
-      setTrainCurrentJourneySection({
-        maximumSpeed: 0,
-        totalLength: 0,
-        locomotives: [null],
+        locomotives: [],
+        wagons: [],
       });
 
       const vehicleId = getHeadTrainVehicleId(train);
@@ -135,6 +124,7 @@ describe('getHeadTrainVehicleId', () => {
             powerTypeAbbreviation: 'S',
           },
         ],
+        wagons: [],
       });
 
       const vehicleId = getHeadTrainVehicleId(train);
@@ -154,6 +144,7 @@ describe('getHeadTrainVehicleId', () => {
             powerTypeAbbreviation: 'S',
           },
         ],
+        wagons: [],
       });
 
       const vehicleId = getHeadTrainVehicleId(train);
@@ -185,6 +176,7 @@ describe('getHeadTrainVehicleId', () => {
             powerTypeAbbreviation: 'S',
           },
         ],
+        wagons: [],
       });
 
       const vehicleId = getHeadTrainVehicleId(train);

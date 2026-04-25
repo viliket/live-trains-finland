@@ -1,7 +1,6 @@
 import { parseISO } from 'date-fns';
 
 import {
-  Maybe,
   TimeTableRowType,
   TrainDetailsFragment,
   TrainTimeTableRowFragment,
@@ -34,22 +33,26 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 const timeTableRowDepartureBase = {
   cancelled: false,
   trainStopping: true,
   type: TimeTableRowType.Departure,
+  causes: [],
 };
 
 const timeTableRowArrivalBase = {
   cancelled: false,
   trainStopping: true,
   type: TimeTableRowType.Arrival,
+  causes: [],
 };
 
 const setTrainLatestArrivalRow = (
-  arrivalTimeRow: Maybe<TrainTimeTableRowFragment>
+  arrivalTimeRow: TrainTimeTableRowFragment | undefined
 ) => {
   jest
     .spyOn(getTrainLatestArrivalRowModule, 'default')
@@ -92,7 +95,7 @@ describe('getTrainCurrentStation', () => {
     });
 
     it('should be the station of the first departure row when the train has no latest arrival row and the first departure row has no actual time', () => {
-      setTrainLatestArrivalRow(null);
+      setTrainLatestArrivalRow(undefined);
 
       const station = getTrainCurrentStation(train);
 
@@ -102,7 +105,7 @@ describe('getTrainCurrentStation', () => {
 
     it('should be the undefined when the train has no latest arrival row and the first departure row has actual time that has passed', () => {
       jest.setSystemTime(parseISO('2023-01-25T09:00:01Z'));
-      setTrainLatestArrivalRow(null);
+      setTrainLatestArrivalRow(undefined);
 
       const station = getTrainCurrentStation({
         ...trainBase,

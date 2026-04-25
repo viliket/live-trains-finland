@@ -34,11 +34,14 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 const timeTableRowBase = {
   cancelled: false,
   trainStopping: true,
+  causes: [],
 };
 
 function testTrainDirections(
@@ -51,7 +54,7 @@ function testTrainDirections(
 
   timeTableGroups.forEach((g, i) => {
     const row = g.departure ?? g.arrival;
-    it(`should be ${expectedDirections[i]} for station ${row?.station.name} ${row?.station.shortCode} track ${row?.commercialTrack}`, () => {
+    it(`should be ${expectedDirections[i]} for station ${row?.station?.name} ${row?.station?.shortCode} track ${row?.commercialTrack}`, () => {
       expect(getTrainDirection(train, g)).toBe(expectedDirections[i]);
     });
   });

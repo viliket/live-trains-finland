@@ -1,10 +1,11 @@
 overwrite: true
 schema:
   - https://rata.digitraffic.fi/api/v2/graphql/graphql:
-      # Using node-fetch to avoid Digitraffic GraphQL API responding with the following HTTP 406 error:
+      # Digitraffic GraphQL API requires accept-encoding: gzip, otherwise it responds with HTTP 406:
       # "Please add http header "accept-encoding : gzip" to your request. Requests without compression
       # are not allowed"
-      customFetch: node-fetch
+      headers:
+        accept-encoding: gzip
   - src/graphql/queries/digitraffic/client-schema.graphql
 documents: src/graphql/queries/digitraffic/**/*.graphql
 generates:
@@ -12,3 +13,7 @@ generates:
     preset: 'client'
     presetConfig:
       fragmentMasking: false
+    config:
+      scalars:
+        Date: string
+        DateTime: string

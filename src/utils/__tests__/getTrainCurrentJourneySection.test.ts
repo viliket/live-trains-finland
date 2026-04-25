@@ -22,6 +22,8 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 describe('getTrainCurrentJourneySection', () => {
@@ -38,6 +40,8 @@ describe('getTrainCurrentJourneySection', () => {
             {
               maximumSpeed: 0,
               totalLength: 0,
+              locomotives: [],
+              wagons: [],
               startTimeTableRow: {
                 scheduledTime: '2023-01-25T10:00:00Z',
                 station: {
@@ -88,6 +92,8 @@ describe('getTrainCurrentJourneySection', () => {
             {
               maximumSpeed: 0,
               totalLength: 0,
+              locomotives: [],
+              wagons: [],
               startTimeTableRow: {
                 scheduledTime: '2023-01-25T10:00:00Z',
                 station: {
@@ -99,6 +105,8 @@ describe('getTrainCurrentJourneySection', () => {
             {
               maximumSpeed: 0,
               totalLength: 0,
+              locomotives: [],
+              wagons: [],
               startTimeTableRow: {
                 scheduledTime: '2023-01-25T11:00:00Z',
                 station: {
@@ -149,10 +157,14 @@ describe('getTrainCurrentJourneySection', () => {
             {
               maximumSpeed: 10,
               totalLength: 0,
+              locomotives: [],
+              wagons: [],
             },
             {
               maximumSpeed: 20,
               totalLength: 0,
+              locomotives: [],
+              wagons: [],
             },
           ],
         },

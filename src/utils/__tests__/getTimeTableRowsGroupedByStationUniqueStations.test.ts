@@ -25,18 +25,21 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 const timeTableRowBase = {
   cancelled: false,
   trainStopping: true,
+  causes: [],
 };
 
 describe('getTimeTableRowsGroupedByStation', () => {
-  it('should be null when the train has no time table rows', () => {
+  it('should be empty when the train has no time table rows', () => {
     const rows = getTimeTableRowsGroupedByStationUniqueStations(trainBase);
 
-    expect(rows).toBeNull();
+    expect(rows).toEqual([]);
   });
 
   describe('train with multiple time table rows with same station', () => {
@@ -132,18 +135,18 @@ describe('getTimeTableRowsGroupedByStation', () => {
 
       expect(rows[0].arrival).toBeNull();
       expectToBeDefined(rows[0].departure);
-      expect(rows[0].departure.station.name).toBe('Helsinki');
+      expect(rows[0].departure.station?.name).toBe('Helsinki');
       expect(rows[0].departure.scheduledTime).toBe('2023-01-25T08:55:00Z');
 
       expectToBeDefined(rows[1].arrival);
-      expect(rows[1].arrival.station.name).toBe('Pasila');
+      expect(rows[1].arrival.station?.name).toBe('Pasila');
       expect(rows[1].arrival.scheduledTime).toBe('2023-01-25T09:00:00Z');
       expectToBeDefined(rows[1].departure);
-      expect(rows[1].departure.station.name).toBe('Pasila');
+      expect(rows[1].departure.station?.name).toBe('Pasila');
       expect(rows[1].departure.scheduledTime).toBe('2023-01-25T10:55:00Z');
 
       expectToBeDefined(rows[2].arrival);
-      expect(rows[2].arrival.station.name).toBe('Lentoasema');
+      expect(rows[2].arrival.station?.name).toBe('Lentoasema');
       expect(rows[2].departure).toBeDefined();
     });
 
@@ -157,18 +160,18 @@ describe('getTimeTableRowsGroupedByStation', () => {
 
       expect(rows[0].arrival).toBeNull();
       expectToBeDefined(rows[0].departure);
-      expect(rows[0].departure.station.name).toBe('Helsinki');
+      expect(rows[0].departure.station?.name).toBe('Helsinki');
       expect(rows[0].departure.scheduledTime).toBe('2023-01-25T08:55:00Z');
 
       expectToBeDefined(rows[1].arrival);
-      expect(rows[1].arrival.station.name).toBe('Pasila');
+      expect(rows[1].arrival.station?.name).toBe('Pasila');
       expect(rows[1].arrival.scheduledTime).toBe('2023-01-25T09:00:00Z');
       expectToBeDefined(rows[1].departure);
-      expect(rows[1].departure.station.name).toBe('Pasila');
+      expect(rows[1].departure.station?.name).toBe('Pasila');
       expect(rows[1].departure.scheduledTime).toBe('2023-01-25T10:55:00Z');
 
       expectToBeDefined(rows[2].arrival);
-      expect(rows[2].arrival.station.name).toBe('Lentoasema');
+      expect(rows[2].arrival.station?.name).toBe('Lentoasema');
       expect(rows[2].departure).toBeDefined();
     });
 
@@ -181,19 +184,19 @@ describe('getTimeTableRowsGroupedByStation', () => {
       expect(rows.length).toBe(3);
 
       expectToBeDefined(rows[0].arrival);
-      expect(rows[0].arrival.station.name).toBe('Helsinki');
+      expect(rows[0].arrival.station?.name).toBe('Helsinki');
       expect(rows[0].arrival.scheduledTime).toBe('2023-01-25T11:40:00Z');
       expect(rows[0].departure).toBeNull();
 
       expectToBeDefined(rows[1].arrival);
-      expect(rows[1].arrival.station.name).toBe('Pasila');
+      expect(rows[1].arrival.station?.name).toBe('Pasila');
       expect(rows[1].arrival.scheduledTime).toBe('2023-01-25T09:00:00Z');
       expectToBeDefined(rows[1].departure);
-      expect(rows[1].departure.station.name).toBe('Pasila');
+      expect(rows[1].departure.station?.name).toBe('Pasila');
       expect(rows[1].departure.scheduledTime).toBe('2023-01-25T10:55:00Z');
 
       expectToBeDefined(rows[2].arrival);
-      expect(rows[2].arrival.station.name).toBe('Lentoasema');
+      expect(rows[2].arrival.station?.name).toBe('Lentoasema');
       expect(rows[2].departure).toBeDefined();
     });
 
@@ -206,19 +209,19 @@ describe('getTimeTableRowsGroupedByStation', () => {
       expect(rows.length).toBe(3);
 
       expectToBeDefined(rows[0].arrival);
-      expect(rows[0].arrival.station.name).toBe('Helsinki');
+      expect(rows[0].arrival.station?.name).toBe('Helsinki');
       expect(rows[0].arrival.scheduledTime).toBe('2023-01-25T11:40:00Z');
       expect(rows[0].departure).toBeNull();
 
       expectToBeDefined(rows[1].arrival);
-      expect(rows[1].arrival.station.name).toBe('Pasila');
+      expect(rows[1].arrival.station?.name).toBe('Pasila');
       expect(rows[1].arrival.scheduledTime).toBe('2023-01-25T11:30:00Z');
       expectToBeDefined(rows[1].departure);
-      expect(rows[1].departure.station.name).toBe('Pasila');
+      expect(rows[1].departure.station?.name).toBe('Pasila');
       expect(rows[1].departure.scheduledTime).toBe('2023-01-25T11:35:00Z');
 
       expectToBeDefined(rows[2].arrival);
-      expect(rows[2].arrival.station.name).toBe('Lentoasema');
+      expect(rows[2].arrival.station?.name).toBe('Lentoasema');
       expect(rows[2].departure).toBeDefined();
     });
   });

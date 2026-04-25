@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
+export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -15,9 +15,9 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   /** An RFC-3339 compliant Full Date Scalar */
-  Date: { input: any; output: any; }
+  Date: { input: string; output: string; }
   /** A slightly refined version of RFC-3339 compliant DateTime Scalar */
-  DateTime: { input: any; output: any; }
+  DateTime: { input: string; output: string; }
 };
 
 /** # PRIMITIVE FILTERS */
@@ -81,7 +81,7 @@ export type CauseWhere = {
 
 export type Composition = {
   __typename?: 'Composition';
-  journeySections?: Maybe<Array<Maybe<JourneySection>>>;
+  journeySections: Array<JourneySection>;
   train?: Maybe<Train>;
   version: Scalars['String']['output'];
 };
@@ -112,7 +112,7 @@ export type CompositionWhere = {
 };
 
 export type CoordinateWhere = {
-  inside?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  inside: Array<Scalars['Float']['input']>;
 };
 
 export type DateTimeWhere = {
@@ -140,8 +140,8 @@ export enum DayOfWeek {
 }
 
 export type DayOfWeekCollectionWhere = {
-  equals?: InputMaybe<Array<InputMaybe<DayOfWeek>>>;
-  notEquals?: InputMaybe<Array<InputMaybe<DayOfWeek>>>;
+  equals: Array<DayOfWeek>;
+  notEquals: Array<DayOfWeek>;
 };
 
 export type DayOfWeekOrderBy = {
@@ -204,11 +204,11 @@ export type IntWhere = {
 export type JourneySection = {
   __typename?: 'JourneySection';
   endTimeTableRow?: Maybe<TimeTableRow>;
-  locomotives?: Maybe<Array<Maybe<Locomotive>>>;
+  locomotives: Array<Locomotive>;
   maximumSpeed: Scalars['Int']['output'];
   startTimeTableRow?: Maybe<TimeTableRow>;
   totalLength: Scalars['Int']['output'];
-  wagons?: Maybe<Array<Maybe<Wagon>>>;
+  wagons: Array<Wagon>;
 };
 
 
@@ -331,7 +331,7 @@ export type PassengerInformationAudioDeliveryRules = {
   repetitions?: Maybe<Scalars['Int']['output']>;
   startDateTime?: Maybe<Scalars['DateTime']['output']>;
   startTime?: Maybe<Scalars['String']['output']>;
-  weekDays?: Maybe<Array<Maybe<DayOfWeek>>>;
+  weekDays: Array<DayOfWeek>;
 };
 
 
@@ -395,7 +395,7 @@ export type PassengerInformationMessage = {
   creationDateTime: Scalars['DateTime']['output'];
   endValidity: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
-  messageStations?: Maybe<Array<Maybe<PassengerInformationMessageStation>>>;
+  messageStations: Array<PassengerInformationMessageStation>;
   startValidity: Scalars['DateTime']['output'];
   train?: Maybe<Train>;
   trainDepartureDate?: Maybe<Scalars['Date']['output']>;
@@ -520,7 +520,7 @@ export type PassengerInformationVideoDeliveryRules = {
   endTime?: Maybe<Scalars['String']['output']>;
   startDateTime?: Maybe<Scalars['DateTime']['output']>;
   startTime?: Maybe<Scalars['String']['output']>;
-  weekDays?: Maybe<Array<Maybe<DayOfWeek>>>;
+  weekDays: Array<DayOfWeek>;
 };
 
 
@@ -572,19 +572,20 @@ export type PassengerInformationVideoWhere = {
 
 export type Query = {
   __typename?: 'Query';
-  compositionsGreaterThanVersion?: Maybe<Array<Maybe<Composition>>>;
-  currentlyRunningTrains?: Maybe<Array<Maybe<Train>>>;
-  latestTrainLocations?: Maybe<Array<Maybe<TrainLocation>>>;
-  passengerInformationMessages?: Maybe<Array<Maybe<PassengerInformationMessage>>>;
-  passengerInformationMessagesByStation?: Maybe<Array<Maybe<PassengerInformationMessage>>>;
-  passengerInformationMessagesByTrain?: Maybe<Array<Maybe<PassengerInformationMessage>>>;
-  routesetMessagesByVersionGreaterThan?: Maybe<Array<Maybe<RoutesetMessage>>>;
-  stations?: Maybe<Array<Maybe<Station>>>;
-  train?: Maybe<Array<Maybe<Train>>>;
-  trainTrackingMessagesByVersionGreaterThan?: Maybe<Array<Maybe<TrainTrackingMessage>>>;
-  trainsByDepartureDate?: Maybe<Array<Maybe<Train>>>;
-  trainsByStationAndQuantity?: Maybe<Array<Maybe<Train>>>;
-  trainsByVersionGreaterThan?: Maybe<Array<Maybe<Train>>>;
+  compositionsGreaterThanVersion: Array<Composition>;
+  currentlyRunningTrains: Array<Train>;
+  latestTrainLocations: Array<TrainLocation>;
+  passengerInformationMessages: Array<PassengerInformationMessage>;
+  passengerInformationMessagesByStation: Array<PassengerInformationMessage>;
+  passengerInformationMessagesByTrain: Array<PassengerInformationMessage>;
+  routesetMessagesByVersionGreaterThan: Array<RoutesetMessage>;
+  stations: Array<Station>;
+  train: Array<Train>;
+  trainTrackingMessagesByVersionGreaterThan: Array<TrainTrackingMessage>;
+  trainsByDepartureDate: Array<Train>;
+  trainsByRoute: Array<Train>;
+  trainsByStationAndQuantity: Array<Train>;
+  trainsByVersionGreaterThan: Array<Train>;
 };
 
 
@@ -686,6 +687,21 @@ export type QueryTrainsByDepartureDateArgs = {
 };
 
 
+export type QueryTrainsByRouteArgs = {
+  arrivalStation: Scalars['String']['input'];
+  departureDate?: InputMaybe<Scalars['Date']['input']>;
+  departureStation: Scalars['String']['input'];
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  includeNonStopping?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<InputMaybe<TrainOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TrainWhere>;
+};
+
+
 export type QueryTrainsByStationAndQuantityArgs = {
   arrivedTrains?: InputMaybe<Scalars['Int']['input']>;
   arrivingTrains?: InputMaybe<Scalars['Int']['input']>;
@@ -711,10 +727,10 @@ export type QueryTrainsByVersionGreaterThanArgs = {
 
 export type Routesection = {
   __typename?: 'Routesection';
-  commercialTrackId: Scalars['String']['output'];
+  commercialTrackId?: Maybe<Scalars['String']['output']>;
   routesetId: Scalars['Int']['output'];
   sectionId: Scalars['String']['output'];
-  station: Station;
+  station?: Maybe<Station>;
 };
 
 export type RoutesectionCollectionWhere = {
@@ -743,7 +759,7 @@ export type RoutesetMessage = {
   id: Scalars['Int']['output'];
   messageTime: Scalars['DateTime']['output'];
   routeType: Scalars['String']['output'];
-  routesections?: Maybe<Array<Maybe<Routesection>>>;
+  routesections: Array<Routesection>;
   train?: Maybe<Train>;
   version: Scalars['String']['output'];
 };
@@ -784,12 +800,12 @@ export type RoutesetMessageWhere = {
 export type Station = {
   __typename?: 'Station';
   countryCode: Scalars['String']['output'];
-  location?: Maybe<Array<Maybe<Scalars['Float']['output']>>>;
+  location: Array<Scalars['Float']['output']>;
   name: Scalars['String']['output'];
   passengerTraffic: Scalars['Boolean']['output'];
   shortCode: Scalars['String']['output'];
-  stationMessages?: Maybe<Array<Maybe<PassengerInformationMessageStation>>>;
-  timeTableRows?: Maybe<Array<Maybe<TimeTableRow>>>;
+  stationMessages: Array<PassengerInformationMessageStation>;
+  timeTableRows: Array<TimeTableRow>;
   type: StationType;
   uicCode: Scalars['Int']['output'];
 };
@@ -897,14 +913,15 @@ export type TimeTableRow = {
   __typename?: 'TimeTableRow';
   actualTime?: Maybe<Scalars['DateTime']['output']>;
   cancelled: Scalars['Boolean']['output'];
-  causes?: Maybe<Array<Maybe<Cause>>>;
+  causes: Array<Cause>;
   commercialStop?: Maybe<Scalars['Boolean']['output']>;
   commercialTrack?: Maybe<Scalars['String']['output']>;
   differenceInMinutes?: Maybe<Scalars['Int']['output']>;
   estimateSourceType?: Maybe<EstimateSourceType>;
   liveEstimateTime?: Maybe<Scalars['DateTime']['output']>;
   scheduledTime: Scalars['DateTime']['output'];
-  station: Station;
+  station?: Maybe<Station>;
+  stopSector?: Maybe<Scalars['String']['output']>;
   train: Train;
   trainStopping: Scalars['Boolean']['output'];
   type: TimeTableRowType;
@@ -933,6 +950,7 @@ export type TimeTableRowOrderBy = {
   liveEstimateTime?: InputMaybe<OrderDirection>;
   scheduledTime?: InputMaybe<OrderDirection>;
   station?: InputMaybe<StationOrderBy>;
+  stopSector?: InputMaybe<OrderDirection>;
   train?: InputMaybe<TrainOrderBy>;
   trainStopping?: InputMaybe<OrderDirection>;
   type?: InputMaybe<OrderDirection>;
@@ -957,6 +975,7 @@ export type TimeTableRowWhere = {
   or?: InputMaybe<Array<InputMaybe<TimeTableRowWhere>>>;
   scheduledTime?: InputMaybe<DateTimeWhere>;
   station?: InputMaybe<StationWhere>;
+  stopSector?: InputMaybe<StringWhere>;
   train?: InputMaybe<TrainWhere>;
   trainStopping?: InputMaybe<BooleanWhere>;
   type?: InputMaybe<EnumWhere>;
@@ -1006,10 +1025,18 @@ export type TrackRangeWhere = {
 export type TrackSection = {
   __typename?: 'TrackSection';
   id: Scalars['Int']['output'];
-  ranges: Array<Maybe<TrackRange>>;
+  ranges: Array<TrackRange>;
   station?: Maybe<Station>;
   stationShortCode: Scalars['String']['output'];
   trackSectionCode: Scalars['String']['output'];
+};
+
+
+export type TrackSectionRangesArgs = {
+  orderBy?: InputMaybe<Array<InputMaybe<TrackRangeOrderBy>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TrackRangeWhere>;
 };
 
 export type TrackSectionCollectionWhere = {
@@ -1027,6 +1054,7 @@ export type TrackSectionWhere = {
   and?: InputMaybe<Array<InputMaybe<TrackSectionWhere>>>;
   id?: InputMaybe<IntWhere>;
   or?: InputMaybe<Array<InputMaybe<TrackSectionWhere>>>;
+  ranges?: InputMaybe<TrackRangeCollectionWhere>;
   station?: InputMaybe<StationWhere>;
   stationShortCode?: InputMaybe<StringWhere>;
   trackSectionCode?: InputMaybe<StringWhere>;
@@ -1036,20 +1064,20 @@ export type Train = {
   __typename?: 'Train';
   cancelled: Scalars['Boolean']['output'];
   commuterLineid?: Maybe<Scalars['String']['output']>;
-  compositions?: Maybe<Array<Maybe<Composition>>>;
+  compositions: Array<Composition>;
   deleted?: Maybe<Scalars['Boolean']['output']>;
   departureDate: Scalars['Date']['output'];
   operator: Operator;
-  passengerInformationMessages?: Maybe<Array<Maybe<PassengerInformationMessage>>>;
-  routesetMessages?: Maybe<Array<Maybe<RoutesetMessage>>>;
+  passengerInformationMessages: Array<PassengerInformationMessage>;
+  routesetMessages: Array<RoutesetMessage>;
   runningCurrently: Scalars['Boolean']['output'];
   timeTableGroups?: Maybe<Array<TimeTableGroup>>;
-  timeTableRows?: Maybe<Array<Maybe<TimeTableRow>>>;
+  timeTableRows: Array<TimeTableRow>;
   timetableAcceptanceDate: Scalars['DateTime']['output'];
   timetableType: TimetableType;
-  trainLocations?: Maybe<Array<Maybe<TrainLocation>>>;
+  trainLocations: Array<TrainLocation>;
   trainNumber: Scalars['Int']['output'];
-  trainTrackingMessages?: Maybe<Array<Maybe<TrainTrackingMessage>>>;
+  trainTrackingMessages: Array<TrainTrackingMessage>;
   trainType: TrainType;
   /**  Represents the version number of a train. Will be parsed as a number in where clauses. */
   version: Scalars['String']['output'];
@@ -1134,7 +1162,7 @@ export enum TrainDirection {
 export type TrainLocation = {
   __typename?: 'TrainLocation';
   accuracy?: Maybe<Scalars['Int']['output']>;
-  location?: Maybe<Array<Maybe<Scalars['Float']['output']>>>;
+  location: Array<Scalars['Float']['output']>;
   speed: Scalars['Int']['output'];
   timestamp: Scalars['DateTime']['output'];
   train?: Maybe<Train>;
@@ -1181,7 +1209,7 @@ export type TrainTrackingMessage = {
   nextTrackSectionCode?: Maybe<Scalars['String']['output']>;
   previousStation?: Maybe<Station>;
   previousTrackSectionCode?: Maybe<Scalars['String']['output']>;
-  station: Station;
+  station?: Maybe<Station>;
   timestamp: Scalars['DateTime']['output'];
   trackSection?: Maybe<TrackSection>;
   trackSectionCode: Scalars['String']['output'];
@@ -1338,12 +1366,12 @@ export type WagonWhere = {
 export type RunningTrainsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RunningTrainsQuery = { __typename?: 'Query', currentlyRunningTrains?: Array<{ __typename?: 'Train', trainNumber: number, commuterLineid?: string | null, departureDate: any, version: string, operator: { __typename?: 'Operator', uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, trainLocations?: Array<{ __typename?: 'TrainLocation', speed: number, timestamp: any, location?: Array<number | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
+export type RunningTrainsQuery = { __typename?: 'Query', currentlyRunningTrains: Array<{ __typename?: 'Train', trainNumber: number, commuterLineid?: string | null, departureDate: string, version: string, operator: { __typename?: 'Operator', uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, trainLocations: Array<{ __typename?: 'TrainLocation', speed: number, timestamp: string, location: Array<number> }>, timeTableRows: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null }>, station?: { __typename?: 'Station', name: string, shortCode: string } | null }> }> };
 
 export type StationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StationQuery = { __typename?: 'Query', stations?: Array<{ __typename?: 'Station', name: string, shortCode: string } | null> | null };
+export type StationQuery = { __typename?: 'Query', stations: Array<{ __typename?: 'Station', name: string, shortCode: string }> };
 
 export type StationSummaryFragment = { __typename?: 'Station', name: string, shortCode: string };
 
@@ -1353,15 +1381,15 @@ export type TrainQueryVariables = Exact<{
 }>;
 
 
-export type TrainQuery = { __typename?: 'Query', train?: Array<{ __typename?: 'Train', trainNumber: number, departureDate: any, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions?: Array<{ __typename?: 'Composition', journeySections?: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, locomotives?: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number } | null> | null, wagons?: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null } | null> | null } | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
+export type TrainQuery = { __typename?: 'Query', train: Array<{ __typename?: 'Train', trainNumber: number, departureDate: string, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions: Array<{ __typename?: 'Composition', journeySections: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, station?: { __typename?: 'Station', name: string, shortCode: string } | null } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, station?: { __typename?: 'Station', name: string, shortCode: string } | null } | null, locomotives: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number }>, wagons: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null }> }> }>, timeTableRows: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null }>, station?: { __typename?: 'Station', name: string, shortCode: string } | null }> }> };
 
-export type TrainByStationFragment = { __typename?: 'Train', commuterLineid?: string | null, trainNumber: number, departureDate: any, version: string, operator: { __typename?: 'Operator', uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null };
+export type TrainByStationFragment = { __typename?: 'Train', commuterLineid?: string | null, trainNumber: number, departureDate: string, version: string, operator: { __typename?: 'Operator', uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null }>, station?: { __typename?: 'Station', name: string, shortCode: string } | null }> };
 
-export type TrainDetailsFragment = { __typename?: 'Train', trainNumber: number, departureDate: any, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions?: Array<{ __typename?: 'Composition', journeySections?: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, locomotives?: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number } | null> | null, wagons?: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null } | null> | null } | null> | null } | null> | null, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null };
+export type TrainDetailsFragment = { __typename?: 'Train', trainNumber: number, departureDate: string, version: string, runningCurrently: boolean, commuterLineid?: string | null, operator: { __typename?: 'Operator', name: string, shortCode: string, uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, compositions: Array<{ __typename?: 'Composition', journeySections: Array<{ __typename?: 'JourneySection', maximumSpeed: number, totalLength: number, startTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, station?: { __typename?: 'Station', name: string, shortCode: string } | null } | null, endTimeTableRow?: { __typename?: 'TimeTableRow', scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, station?: { __typename?: 'Station', name: string, shortCode: string } | null } | null, locomotives: Array<{ __typename?: 'Locomotive', vehicleNumber?: string | null, powerTypeAbbreviation: string, locomotiveType: string, location: number }>, wagons: Array<{ __typename?: 'Wagon', vehicleNumber?: string | null, salesNumber: number, wagonType?: string | null, location: number, length: number, playground?: boolean | null, pet?: boolean | null, catering?: boolean | null, video?: boolean | null, luggage?: boolean | null, smoking?: boolean | null, disabled?: boolean | null }> }> }>, timeTableRows: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null }>, station?: { __typename?: 'Station', name: string, shortCode: string } | null }> };
 
-export type TrainTimeTableGroupFragment = { __typename?: 'TimeTableGroup', trainDirection?: TrainDirection | null, stationPlatformSide?: StationPlatformSide | null, arrival?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null, departure?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null };
+export type TrainTimeTableGroupFragment = { __typename?: 'TimeTableGroup', trainDirection?: TrainDirection | null, stationPlatformSide?: StationPlatformSide | null, arrival?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null }>, station?: { __typename?: 'Station', name: string, shortCode: string } | null } | null, departure?: { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null }>, station?: { __typename?: 'Station', name: string, shortCode: string } | null } | null };
 
-export type TrainTimeTableRowFragment = { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } };
+export type TrainTimeTableRowFragment = { __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null }>, station?: { __typename?: 'Station', name: string, shortCode: string } | null };
 
 export type TrainsByStationQueryVariables = Exact<{
   station: Scalars['String']['input'];
@@ -1372,7 +1400,7 @@ export type TrainsByStationQueryVariables = Exact<{
 }>;
 
 
-export type TrainsByStationQuery = { __typename?: 'Query', trainsByStationAndQuantity?: Array<{ __typename?: 'Train', commuterLineid?: string | null, trainNumber: number, departureDate: any, version: string, operator: { __typename?: 'Operator', uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows?: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: any, liveEstimateTime?: any | null, actualTime?: any | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes?: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null } | null> | null, station: { __typename?: 'Station', name: string, shortCode: string } } | null> | null } | null> | null };
+export type TrainsByStationQuery = { __typename?: 'Query', trainsByStationAndQuantity: Array<{ __typename?: 'Train', commuterLineid?: string | null, trainNumber: number, departureDate: string, version: string, operator: { __typename?: 'Operator', uicCode: number }, trainType: { __typename?: 'TrainType', name: string, trainCategory: { __typename?: 'TrainCategory', name: string } }, timeTableRows: Array<{ __typename?: 'TimeTableRow', trainStopping: boolean, scheduledTime: string, liveEstimateTime?: string | null, actualTime?: string | null, differenceInMinutes?: number | null, unknownDelay?: boolean | null, cancelled: boolean, type: TimeTableRowType, commercialTrack?: string | null, causes: Array<{ __typename?: 'Cause', categoryCode: { __typename?: 'CategoryCode', code: string, name: string }, detailedCategoryCode?: { __typename?: 'DetailedCategoryCode', name: string, code: string } | null, thirdCategoryCode?: { __typename?: 'ThirdCategoryCode', name: string, code: string } | null }>, station?: { __typename?: 'Station', name: string, shortCode: string } | null }> }> };
 
 export const StationSummaryFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"StationSummary"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Station"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}}]} as unknown as DocumentNode<StationSummaryFragment, unknown>;
 export const TrainTimeTableRowFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TrainTimeTableRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TimeTableRow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trainStopping"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledTime"}},{"kind":"Field","name":{"kind":"Name","value":"liveEstimateTime"}},{"kind":"Field","name":{"kind":"Name","value":"actualTime"}},{"kind":"Field","name":{"kind":"Name","value":"differenceInMinutes"}},{"kind":"Field","name":{"kind":"Name","value":"unknownDelay"}},{"kind":"Field","name":{"kind":"Name","value":"cancelled"}},{"kind":"Field","name":{"kind":"Name","value":"causes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"detailedCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thirdCategoryCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"station"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"shortCode"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commercialTrack"}}]}}]} as unknown as DocumentNode<TrainTimeTableRowFragment, unknown>;

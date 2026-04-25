@@ -29,7 +29,7 @@ type TrainStationTimelineProps = {
   realTimeTrain?: TrainExtendedDetails | null;
   onWagonClick: (w: Wagon) => void;
   onStationAlertClick: (stationCode: string) => void;
-  stationMessages?: Record<string, PassengerInformationMessage[]>;
+  stationMessages?: Partial<Record<string, PassengerInformationMessage[]>>;
 };
 
 const TrainStationTimeline = ({
@@ -57,13 +57,14 @@ const TrainStationTimeline = ({
 
     timeTableRows.forEach((ttGroup, index, { length }) => {
       const row = ttGroup.departure ?? ttGroup.arrival;
-      if (!row) return null;
+      if (!row?.station) return null;
       const station = row.station;
 
-      const stationPassed =
+      const stationPassed = Boolean(
         (row.actualTime && parseISO(row.actualTime) < new Date()) ||
-        (trainLatestDepartureRow &&
-          row.scheduledTime < trainLatestDepartureRow?.scheduledTime);
+          (trainLatestDepartureRow &&
+            row.scheduledTime < trainLatestDepartureRow.scheduledTime)
+      );
 
       const isVehicleAtStation =
         trainCurrentStation?.shortCode === station.shortCode &&

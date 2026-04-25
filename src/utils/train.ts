@@ -23,11 +23,11 @@ export function getTrainScheduledDepartureTime(train: TrainByStationFragment) {
 }
 
 export function getDepartureTimeTableRow(train: TrainByStationFragment) {
-  return orderBy(train.timeTableRows, (t) => t?.scheduledTime, 'asc')?.[0];
+  return orderBy(train.timeTableRows, (t) => t.scheduledTime, 'asc').at(0);
 }
 
 export function getDestinationTimeTableRow(train: TrainByStationFragment) {
-  return orderBy(train.timeTableRows, (t) => t?.scheduledTime, 'desc')?.[0];
+  return orderBy(train.timeTableRows, (t) => t.scheduledTime, 'desc').at(0);
 }
 
 export function getTrainDepartureStation(train: TrainByStationFragment) {
@@ -46,17 +46,16 @@ export function getTrainDestinationStation(
   if (
     stationCode &&
     train.commuterLineid &&
-    train.timeTableRows &&
     ['I', 'P'].includes(train.commuterLineid)
   ) {
     const stationDepartureRowIdx = train.timeTableRows.findIndex(
       (r) =>
-        r?.station?.shortCode === stationCode &&
-        r?.type === TimeTableRowType.Departure
+        r.station?.shortCode === stationCode &&
+        r.type === TimeTableRowType.Departure
     );
     const airportArrivalRowIndex = train.timeTableRows.findIndex(
       (r) =>
-        r?.station?.shortCode === 'LEN' && r?.type === TimeTableRowType.Arrival
+        r.station?.shortCode === 'LEN' && r.type === TimeTableRowType.Arrival
     );
 
     if (
@@ -64,10 +63,7 @@ export function getTrainDestinationStation(
       stationDepartureRowIdx < airportArrivalRowIndex
     ) {
       const airportArrivalRow = train.timeTableRows[airportArrivalRowIndex];
-      if (
-        airportArrivalRow &&
-        new Date() < getTimeTableRowRealTime(airportArrivalRow)
-      ) {
+      if (new Date() < getTimeTableRowRealTime(airportArrivalRow)) {
         return airportArrivalRow.station;
       }
     }

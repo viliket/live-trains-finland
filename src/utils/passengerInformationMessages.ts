@@ -97,7 +97,9 @@ export function getPassengerInformationMessageForLanguage(
 export function getPassengerInformationMessagesByStation(
   passengerInformationMessages: PassengerInformationMessage[] | undefined
 ) {
-  return passengerInformationMessages?.reduce((acc, message) => {
+  return passengerInformationMessages?.reduce<
+    Partial<Record<string, PassengerInformationMessage[]>>
+  >((acc, message) => {
     // When there are more than one stations, only add this message to the first
     // and last station in the array (which are ordered according to the train
     // schedule).
@@ -111,7 +113,7 @@ export function getPassengerInformationMessagesByStation(
       acc[station].push(message);
     });
     return acc;
-  }, {} as Record<string, PassengerInformationMessage[]>);
+  }, {});
 }
 
 export function getPassengerInformationMessagesCurrentlyRelevant(
@@ -240,18 +242,17 @@ function isMessageRelevantBasedOnTrainSchedule(
 
   // Get train latest arrival row by scheduled times
   const latestArrivalRow = orderBy(
-    train.timeTableRows?.filter(
+    train.timeTableRows.filter(
       (r) =>
-        r &&
         r.type === TimeTableRowType.Arrival &&
         r.scheduledTime &&
         parseISO(r.scheduledTime) <= now
     ),
-    (r) => r?.scheduledTime,
+    (r) => r.scheduledTime,
     'desc'
-  )[0];
+  ).at(0);
 
-  if (!latestArrivalRow) return false;
+  if (!latestArrivalRow?.station) return false;
   if (!stations.includes(latestArrivalRow.station.shortCode)) return false;
   const latestArrivalRowTime = getTimeTableRowRealTime(latestArrivalRow);
   const diffInMinutes = differenceInMinutes(now, latestArrivalRowTime);

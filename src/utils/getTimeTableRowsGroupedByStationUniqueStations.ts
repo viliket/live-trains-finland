@@ -25,30 +25,29 @@ export default function getTimeTableRowsGroupedByStationUniqueStations(
   // table row (departure / arrival) time after this time.
   const dateForComparison = addMinutes(new Date(), -10);
 
-  const trainTimeTableRowsWithUniqueStations = trainTimeTableRows?.reduce(
-    (groups, timeTableRowGroup) => {
-      const row = timeTableRowGroup.departure ?? timeTableRowGroup.arrival;
-      if (!row) return groups;
+  const trainTimeTableRowsWithUniqueStations = trainTimeTableRows.reduce<
+    Record<string, StationTimeTableRowGroup>
+  >((groups, timeTableRowGroup) => {
+    const row = timeTableRowGroup.departure ?? timeTableRowGroup.arrival;
+    if (!row?.station) return groups;
 
-      const stationName = row.station.name;
+    const stationName = row.station.name;
 
-      if (!(stationName in groups)) {
-        groups[stationName] = timeTableRowGroup;
-        return groups;
-      }
-
-      const existingRow =
-        groups[stationName].departure ?? groups[stationName].arrival;
-      if (!existingRow) return groups;
-
-      if (dateForComparison > getTimeTableRowRealTime(existingRow)) {
-        // Replace existing time table row group with this group if the time of the existing row
-        // has already been passed recently
-        groups[stationName] = timeTableRowGroup;
-      }
+    if (!(stationName in groups)) {
+      groups[stationName] = timeTableRowGroup;
       return groups;
-    },
-    {} as Record<string, StationTimeTableRowGroup>
-  );
+    }
+
+    const existingRow =
+      groups[stationName].departure ?? groups[stationName].arrival;
+    if (!existingRow) return groups;
+
+    if (dateForComparison > getTimeTableRowRealTime(existingRow)) {
+      // Replace existing time table row group with this group if the time of the existing row
+      // has already been passed recently
+      groups[stationName] = timeTableRowGroup;
+    }
+    return groups;
+  }, {});
   return Object.values(trainTimeTableRowsWithUniqueStations);
 }

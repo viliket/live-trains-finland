@@ -25,12 +25,15 @@ const trainBase: TrainDetailsFragment = {
     __typename: 'TrainType',
   },
   version: '1',
+  compositions: [],
+  timeTableRows: [],
 };
 
 const timeTableRowDepartureBase = {
   cancelled: false,
   trainStopping: true,
   type: TimeTableRowType.Departure,
+  causes: [],
 };
 
 describe('getTrainLatestDepartureTimeTableRow', () => {
@@ -89,7 +92,7 @@ describe('getTrainLatestDepartureTimeTableRow', () => {
       const latestDepartureRow = getTrainLatestDepartureTimeTableRow(train);
 
       expectToBeDefined(latestDepartureRow);
-      expect(latestDepartureRow.station.name).toBe('Helsinki');
+      expect(latestDepartureRow.station?.name).toBe('Helsinki');
     });
   });
 });
