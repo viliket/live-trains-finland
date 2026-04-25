@@ -90,7 +90,7 @@ const wagonMapDataQuery = ({
       departureTime &&
       departureStation &&
       arrivalStation &&
-      // Only query for non-commmuter trains as commuter trains have no wagon map data
+      // Only query for non-commuter trains as commuter trains have no wagon map data
       !isCommuterLine
     ),
     refetchOnWindowFocus: false,
