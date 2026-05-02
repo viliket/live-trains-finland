@@ -4,206 +4,253 @@ interface Env {
   VR_API_KEY: string;
   VR_API_USERNAME: string;
   VR_API_PASSWORD: string;
+  VR_ID_API: string;
+  VR_CLIENT_ID: string;
+  VR_ID_TENANT: string;
+  VR_ID_CONNECTION: string;
+  VR_ID_CHANNEL_ID: string;
 }
 
-type LoginResponse = {
-  identityToken: string;
-  expiresOn: string;
-  refreshToken: string;
-  refreshTokenExpiresOn: string;
-};
+type CachedAuth = { bffToken: string; expiresOn: string };
 
-type RefreshTokenResponse = {
-  accessToken: string;
-  expiresOn: string;
-  refreshToken: string;
-  refreshTokenExpiresOn: string;
-};
+const authCacheKey = 'vr-ciam-auth';
+const tokenExpiryBufferMs = 2 * 60 * 1000;
+const maxRedirects = 10;
 
-type AuthCredentials = {
-  token: string;
-  expiresOn: string;
-  refreshToken: string;
-  refreshTokenExpiresOn: string;
-};
+const base64Url = (bytes: Uint8Array): string =>
+  bytes.toBase64({ alphabet: 'base64url', omitPadding: true });
 
-const authCredentialsCacheKey = 'vr-auth-credentials';
-
-function fetchWithDefaults(
-  url: string,
-  options: RequestInit,
-  env: Env
-): Promise<Response> {
-  const defaultHeaders = {
-    'Content-Type': 'application/json',
-    'User-Agent': 'Junaan.fi',
-    'aste-apikey': env.VR_API_KEY,
-    ...options.headers,
-  };
-
-  return fetch(url, { ...options, headers: defaultHeaders });
-}
-
-async function fetchNewToken(
-  username: string,
-  password: string,
-  env: Env
-): Promise<AuthCredentials> {
-  const response = await fetchWithDefaults(
-    `${env.VR_API_URL}/auth/login`,
-    {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-    },
-    env
+const sha256 = async (input: string): Promise<string> =>
+  base64Url(
+    new Uint8Array(
+      await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input))
+    )
   );
 
-  if (!response.ok) {
+const randomVerifier = (): string =>
+  base64Url(crypto.getRandomValues(new Uint8Array(48)));
+
+// Cookie-aware redirect follower. Workers' fetch(redirect:'follow') does not
+// carry Set-Cookie between hops, which the Auth0 login chain requires.
+const chase = async (
+  startUrl: string,
+  init: RequestInit,
+  jar: Map<string, string>
+): Promise<Response> => {
+  let url = startUrl;
+  let nextInit = init;
+  for (let hop = 0; hop < maxRedirects; hop++) {
+    const headers = new Headers(nextInit.headers);
+    if (jar.size)
+      headers.set('Cookie', [...jar].map(([k, v]) => `${k}=${v}`).join('; '));
+    const response = await fetch(url, {
+      ...nextInit,
+      headers,
+      redirect: 'manual',
+    });
+    for (const value of response.headers.getSetCookie()) {
+      const eq = value.indexOf('=');
+      if (eq > 0)
+        jar.set(
+          value.slice(0, eq).trim(),
+          value
+            .slice(eq + 1)
+            .split(';')[0]
+            .trim()
+        );
+    }
+    const isRedirect = response.status >= 300 && response.status < 400;
+    if (!isRedirect) return response;
+    const location = response.headers.get('location');
+    if (!location) return response;
+    url = new URL(location, url).toString();
+    const preserveMethod = response.status === 307 || response.status === 308;
+    if (!preserveMethod) nextInit = { method: 'GET' };
+  }
+  throw new Error('CIAM: too many redirects');
+};
+
+// Decodes raw HTML entities that Auth0 embeds in <input> values (&#34; in wctx
+// JSON, etc.).
+const decodeEntities = (s: string): string =>
+  s.replaceAll('&#34;', '"').replaceAll('&amp;', '&');
+
+const vrHeaders = (env: Env, extra?: HeadersInit): Headers => {
+  const h = new Headers(extra);
+  h.set('User-Agent', 'Junaan.fi');
+  h.set('aste-apikey', env.VR_API_KEY);
+  return h;
+};
+
+const ciamLogin = async (env: Env): Promise<CachedAuth> => {
+  const jar = new Map<string, string>();
+  const verifier = randomVerifier();
+
+  const initParams = new URLSearchParams({
+    redirect_uri: 'https://www.vr.fi/ciam-authorization',
+    channel_id: env.VR_ID_CHANNEL_ID,
+    code_challenge: await sha256(verifier),
+    code_challenge_method: 'S256',
+    locale: 'fi',
+  });
+  const loginPage = await chase(
+    `${env.VR_ID_API}/vrgroup/uaa/v1/api/login?${initParams}`,
+    { method: 'GET' },
+    jar
+  );
+  const sessionKey = jar.get('session_key');
+  if (!sessionKey) throw new Error('CIAM init: session_key cookie missing');
+  let auth0Config: string | undefined;
+  await new HTMLRewriter()
+    .on('[data-auth0config]', {
+      element(el) {
+        auth0Config = el.getAttribute('data-auth0config') ?? undefined;
+      },
+    })
+    .transform(loginPage)
+    .arrayBuffer();
+  if (!auth0Config) throw new Error('CIAM init: data-auth0config missing');
+  const state = (
+    JSON.parse(atob(auth0Config)) as { extraParams: { state: string } }
+  ).extraParams.state;
+
+  const formPage = await chase(
+    `${env.VR_ID_API}/usernamepassword/login`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: env.VR_CLIENT_ID,
+        tenant: env.VR_ID_TENANT,
+        response_type: 'token',
+        connection: env.VR_ID_CONNECTION,
+        state,
+        username: env.VR_API_USERNAME,
+        password: env.VR_API_PASSWORD,
+      }),
+    },
+    jar
+  );
+  if (!formPage.ok)
     throw new Error(
-      `Failed to login and fetch new token: ${response.statusText}`
+      `usernamepassword/login: ${formPage.status} ${await formPage.text()}`
+    );
+
+  const fields: Record<string, string> = {};
+  await new HTMLRewriter()
+    .on('input[name][value]', {
+      element(el) {
+        const name = el.getAttribute('name');
+        const value = el.getAttribute('value');
+        if (name && value != null) fields[name] = decodeEntities(value);
+      },
+    })
+    .transform(formPage)
+    .arrayBuffer();
+  if (!fields.wa || !fields.wresult || !fields.wctx)
+    throw new Error('Login form: missing wa/wresult/wctx');
+
+  const callback = await chase(
+    `${env.VR_ID_API}/login/callback`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(fields).toString(),
+    },
+    jar
+  );
+  if (!callback.ok)
+    throw new Error(
+      `login/callback: ${callback.status} ${await callback.text()}`
+    );
+
+  const tokensResp = await fetch(`${env.VR_API_URL}/ciam/tokens`, {
+    method: 'POST',
+    headers: vrHeaders(env, { 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ sessionKey, verifier }),
+  });
+  if (!tokensResp.ok)
+    throw new Error(
+      `ciam/tokens: ${tokensResp.status} ${await tokensResp.text()}`
+    );
+  return tokensResp.json<CachedAuth>();
+};
+
+const getAuth = async (env: Env, forceLogin = false): Promise<CachedAuth> => {
+  const cached = forceLogin
+    ? null
+    : await env.KV.get<CachedAuth>(authCacheKey, 'json');
+
+  if (
+    cached &&
+    new Date(cached.expiresOn).getTime() - tokenExpiryBufferMs > Date.now()
+  )
+    return cached;
+
+  if (cached) {
+    const refresh = await fetch(`${env.VR_API_URL}/auth/token`, {
+      method: 'POST',
+      headers: vrHeaders(env, {
+        'Content-Type': 'application/json',
+        'x-jwt-token': cached.bffToken,
+      }),
+      body: '{}',
+    });
+    if (refresh.ok) {
+      const refreshed = await refresh.json<CachedAuth>();
+      await env.KV.put(authCacheKey, JSON.stringify(refreshed));
+      return refreshed;
+    }
+    console.warn(
+      `CIAM refresh failed (${refresh.status}), falling back to full login`
     );
   }
 
-  const tokenResponse = await response.json<LoginResponse>();
+  const fresh = await ciamLogin(env);
+  await env.KV.put(authCacheKey, JSON.stringify(fresh));
+  return fresh;
+};
 
-  return {
-    token: tokenResponse.identityToken,
-    expiresOn: tokenResponse.expiresOn,
-    refreshToken: tokenResponse.refreshToken,
-    refreshTokenExpiresOn: tokenResponse.refreshTokenExpiresOn,
-  };
-}
-
-async function refreshToken(
-  existingToken: AuthCredentials,
-  env: Env
-): Promise<AuthCredentials> {
-  const response = await fetchWithDefaults(
-    `${env.VR_API_URL}/auth/token`,
-    {
-      method: 'POST',
-      headers: {
-        'x-jwt-token': existingToken.token,
-      },
-      body: JSON.stringify({ refreshToken: existingToken.refreshToken }),
-    },
-    env
-  );
-
-  if (!response.ok) {
-    throw new Error(`Failed to refresh token: ${response.statusText}`);
-  }
-
-  const tokenResponse = await response.json<RefreshTokenResponse>();
-
-  return {
-    token: tokenResponse.accessToken,
-    expiresOn: tokenResponse.expiresOn,
-    refreshToken: tokenResponse.refreshToken,
-    refreshTokenExpiresOn: tokenResponse.refreshTokenExpiresOn,
-  };
-}
-
-async function getToken(env: Env): Promise<AuthCredentials> {
-  const rawExistingAuthCredentials = await env.KV.get(authCredentialsCacheKey);
-  const existingAuthCredentials: AuthCredentials | null =
-    rawExistingAuthCredentials ? JSON.parse(rawExistingAuthCredentials) : null;
-
-  if (existingAuthCredentials) {
-    const now = new Date();
-    if (now < new Date(existingAuthCredentials.expiresOn)) {
-      return existingAuthCredentials;
-    }
-
-    if (now < new Date(existingAuthCredentials.refreshTokenExpiresOn)) {
-      try {
-        const refreshedToken = await refreshToken(existingAuthCredentials, env);
-        await env.KV.put(
-          authCredentialsCacheKey,
-          JSON.stringify(refreshedToken)
-        );
-        return refreshedToken;
-      } catch (error) {
-        console.warn('Failed to refresh token:', error);
-      }
-    }
-  }
-
-  const newAuthCredentials = await fetchNewToken(
-    env.VR_API_USERNAME,
-    env.VR_API_PASSWORD,
-    env
-  );
-  await env.KV.put(authCredentialsCacheKey, JSON.stringify(newAuthCredentials));
-  return newAuthCredentials;
-}
-
-type WagonMapDataParams = {
-  trainNumber: string;
+type WagonMapVariables = {
   departureStation: string;
   arrivalStation: string;
   departureTime: string;
-  token: string;
-  env: Env;
+  trainNumber: string;
+  trainType: string;
 };
 
-async function getWagonMapData({
-  trainNumber,
-  departureStation,
-  arrivalStation,
-  departureTime,
-  token,
-  env,
-}: WagonMapDataParams): Promise<unknown> {
-  const params = new URLSearchParams({
-    departureStation,
-    arrivalStation,
-    departureTime,
-  });
-  const response = await fetchWithDefaults(
-    `${env.VR_API_URL}/trains/${trainNumber}/wagonmap/v3?${params}`,
-    {
-      headers: {
-        'x-jwt-token': token,
-      },
-    },
-    env
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch wagon map data for train ${trainNumber} departing at ${departureTime}: ${response.statusText}`
+const fetchWagonMapData = async (
+  vars: WagonMapVariables,
+  env: Env
+): Promise<unknown> => {
+  const get = (auth: CachedAuth) =>
+    fetch(
+      `${env.VR_API_URL}/trains/${vars.trainNumber}/wagonmap/v3?` +
+        new URLSearchParams({
+          departureStation: vars.departureStation,
+          arrivalStation: vars.arrivalStation,
+          departureTime: vars.departureTime,
+        }),
+      {
+        headers: vrHeaders(env, { 'x-jwt-token': auth.bffToken }),
+      }
     );
+
+  let response = await get(await getAuth(env));
+  if (response.status === 401) {
+    response = await get(await getAuth(env, true));
   }
-
+  if (!response.ok)
+    throw new Error(
+      `wagonmap/v3 train ${vars.trainNumber}: ${response.status} ${response.statusText}`
+    );
   return response.json();
-}
-
-type WagonMapDataRequest = {
-  variables: {
-    departureStation: string;
-    arrivalStation: string;
-    departureTime: string;
-    trainNumber: string;
-    trainType: string;
-  };
 };
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  const authCredentials = await getToken(context.env);
-  const wagonMapDataRequest = await context.request.json<WagonMapDataRequest>();
-  const { trainNumber, departureStation, arrivalStation, departureTime } =
-    wagonMapDataRequest.variables;
-  const wagonMapData = await getWagonMapData({
-    trainNumber,
-    departureStation,
-    arrivalStation,
-    departureTime,
-    token: authCredentials.token,
-    env: context.env,
-  });
-  // Wrap original response body JSON to data field to make response GraphQL compliant
-  return new Response(JSON.stringify({ data: wagonMapData }), {
-    headers: { 'Content-Type': 'application/json' },
-  });
+  const { variables } = await context.request.json<{
+    variables: WagonMapVariables;
+  }>();
+  const wagonMapData = await fetchWagonMapData(variables, context.env);
+  return Response.json({ data: wagonMapData });
 };
