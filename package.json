@@ -38,7 +38,7 @@
     "react-i18next": "^17.0.8",
     "react-map-gl": "^8.1.1",
     "react-reverse-portal": "^2.3.0",
-    "react-svg": "^17.2.4",
+    "react-svg": "^19.2.7",
     "react-transition-group": "^4.4.5",
     "typescript": "^6.0.3",
     "use-local-storage-state": "^19.5.0",
